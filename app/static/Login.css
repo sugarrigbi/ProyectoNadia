@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body, html {
+    scroll-behavior: smooth;
+    width: 99.2vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.Desktop{
+    width: fit-content;
+    height: fit-content;
+}
+.Frame{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    height: fit-content;
+    margin-top: 100px;
+}
+.Botones{
+    height: auto;
+    width: 1863px;
+    margin-top: 25px;
+    gap: 1350px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.Boton_Superior{
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-radius: 100px;
+    border-color: #517ded;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_Superior:hover{
+    background-color: #2fb2de;
+    transform: scale(1.02);
+}
+.Boton_Superior_Imagen1{
+    width: 40px;
+    height: 40px;
+}
+.Boton_Superior_Imagen2{
+    width: 40px;
+    height: 40px;
+}
+.Fotter_Texto{
+    color: rgb(106, 106, 106);
+    text-decoration: none;
+    width: auto;
+    display: inline-block;
+    font-size: 16px;
+    height: fit-content;
+    cursor: default;
+    font-weight: 400;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Formulario{
+    margin-top: 0px;
+    margin-bottom: 5px;
+    width: 33%;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    display: flex;
+    gap: 0px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+.Formulario_Contenedor{
+    width: auto;
+    margin-top: 25px;
+    height: auto;
+    border-radius: 20px;
+    background-color: #5883f0;
+    border-color: #1956EC;
+    border-style: solid;
+    border-width: 7px;   
+    padding: 15px;     
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+.Formulario_Contenedor_Texto{
+    display: flex;
+    cursor: default;
+    align-items: center;
+    margin: 0;
+    font-weight: bold;
+    color: black;
+    font-size: 45px;
+    font-family: 'Montserrat', sans-serif;
+}
+.Formulario1{
+    width: 100%;
+    height: 70%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+}
+.Formulario2{
+    width: 90%;
+    height: 70%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.Formulario1_Input{
+    position: relative;
+    margin: 10px 0 0 0;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center; 
+}
+.Formulario1_Input_Input{
+    display: flex;
+    width: 80%;
+    cursor: pointer;
+    border: none;
+    border: 3px solid #414141;
+    background: white;
+    font-size: 16px;
+    outline: none;
+    border-radius: 15px;
+    font-weight: 400;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;  
+}
+.Boton_VerPassword {
+    position: absolute;
+    right: 68px;
+    margin-bottom: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #414141;
+    transition: 0.10s ease;
+}
+.Imagen_Ver{
+    width: 40px;
+    height: 40px;
+}
+.Boton_VerPassword:hover {
+    color: #002A91;
+}
+.Formulario1_Boton{
+    height: auto;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-radius: 100px;
+    border-color: #7b9cf0;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Formulario1_Boton:hover{
+    background-color: #2fb2de;
+    transform: scale(1.02);
+}
+.Formulario1_Texto1{
+    color: #002A91;
+    text-decoration: none;
+    width: auto;
+    display: inline-block;
+    font-size: 20px;
+    height: auto;
+    margin: 10px 0 0 0;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Formulario1_Texto span{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    width: auto;
+    display: inline-block;
+    font-size: 20px;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Links {   
+    text-decoration: none;
+    cursor: pointer;
+    color: #002A91;
+    width: auto;
+    display: inline-block;
+    font-size: 20px;
+    margin: 0;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;        
+}
+.Links:hover {
+    background-color: transparent;
+    cursor: pointer;
+    color: #2fb2de;
+    text-decoration: underline;
+}
+.Formulario1_Texto{
+    color: #002A91;
+    text-decoration: none;
+    width: auto;
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 15px;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Imagen_User{
+    margin-top: 15px;
+    width: 150px;
+    height: 150px;
+}
+.Fotter{
+    width: auto;
+    height: fit-content;
+}
+.slot1{
+    top: 477px;
+}

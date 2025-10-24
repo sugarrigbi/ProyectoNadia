@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Recuperar</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='recuperar-token.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>    
+</head>
+<body>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>    
+    <div class="slot1">Recuperar<br>Contraseña</div>
+    <div class="Desktop">
+        <div class="Redes">
+                <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
+                <div class="Redes_Contenedor">
+                    <a href="https://www.instagram.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Instagram1.svg') }}" alt="Instagram1"></a>
+                    <a href="https://www.facebook.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Facebook1.svg') }}" alt="Facebook1"></a>
+                    <a href="https://www.x.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Twitter1.svg') }}" alt="Twitter1"></a>
+                    <a href="https://www.youtube.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Youtube1.svg') }}" alt="Youtube1"></a>
+                    <a href="https://wa.me/573125261601" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Whatsapp1.svg') }}" alt="Whatsapp1"></a>
+                </div>
+        </div>
+        <nav class="Hotbar">
+            <img class="Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+            <h1 class="Texto_Logo">Gaialink</h1>
+            <div class="Selector">
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Inicio</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place1">Página principal</a>
+                        <a href="/#Index_Place2">¿Que es?</a>
+                    </div>
+                </div>
+                <div class="Frame_Flecha">            
+                    <h3 class="Texto_Selector">Nosotros</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="mision#Mision_Place1">Mision</a> 
+                        <a href="mision#Mision_Place2">Vision</a>
+                        <a href="/#Index_Place5">Lideres</a>
+                    </div>                    
+                </div>
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Contacto</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place6">Ayuda</a>
+                        <a href="/#Index_Place7">Contactanos</a>
+                    </div>                    
+                </div>      
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Servicios</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="soporte#Soporte_Place1">Creacion de tickets</a>
+                        <a href="soporte#Soporte_Place2">Soporte</a>
+                    </div>                    
+                </div>
+            </div>
+            <div class="Botones_Hotbar">
+                <button class="Boton_Idioma" onclick="Enviar_Registro()">Registrate</button>
+                <button class="Boton_Ingresar" onclick="Enviar_Login()">Ingresar</button>
+            </div>
+        </nav>
+        <div class="Frame" id="ContraseñaRecuperar_Place1">
+            <div class="Botones" data-aos="fade-right">
+                <button class="Boton_Superior" onclick="Enviar_Ayuda()">
+                    <img class="Boton_Superior_Imagen1" src="{{ url_for('static', filename='img/Ayuda.svg') }}" alt="Ayuda">
+                    Ayuda
+                </button>
+                <button class="Boton_Superior" onclick="Enviar_Home()">
+                    <img class="Boton_Superior_Imagen2" src="{{ url_for('static', filename='img/Volver.svg') }}" alt="Volver">
+                    Volver
+                </button>
+            </div>
+            <div class="Formulario" data-aos="fade-up">
+            <img class="Imagen_User" src="{{ url_for('static', filename='img/Candado.svg') }}" alt="Candado">
+                <div class="Formulario_Contenedor">
+                    <h3 class="Formulario_Contenedor_Texto">Recuperar Contraseña</h3>
+                </div>
+                {% if confirmacion %}
+                <div class="confirmacion {{ tipo }}" data-aos="fade-up">
+                    <ul>
+                        <li>{{ confirmacion }}</li>
+                    </ul>
+                </div>
+                {% endif %}                   
+                <form action="/recuperar-token" class="FormularioEmail" method="POST">
+                    <div class="FormularioEmail_Input">
+                        <input id="Input_Token"class="FormularioEmail_Input_Input" type="text" required name="token" placeholder="Codigo de recuperacion">
+                        <input id="Input_Contraseña1"class="FormularioEmail_Input_Input" type="password" required name="Contraseña" placeholder="Contraseña nueva">
+                        <input id="Input_Contraseña2"class="FormularioEmail_Input_Input" type="password" required name="Contraseña2" placeholder="Confirma la Contraseña">
+                    </div>
+                    <input class="FormularioEmail_Boton" type="submit" placeholder="Enviar" value="Cambiar contraseña">
+                </form>
+                <div class="Formulario2">
+                    <a class="Links" href="login">Volver a inicio de sesion</a>
+                </div>  
+            </div>
+            <div class="Fotter" data-aos="fade-up">
+            <h3 class="Fotter_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+            </div>         
+        </div>
+        <div class="Frame8" id="ContraseñaRecuperar_Place8" data-aos="fade-up">
+            <div class="Frame8_Contenedor">
+                <div class="Lista1_Contenedor">
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Inicio</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place1">Pagina Principal</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place2">¿Que es?</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Nosotros</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1">Mision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2">Vision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place5">Lideres</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Contacto</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda">Ayuda</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place7">Contactanos</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Servicios</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1">Creacion de tickets</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2">Soporte</a></li>
+                </ul>
+                </div>
+                <div class="Lista2_Contenedor">
+                <ul class="Lista2">
+                    <li class="Lista2_Titulo">Contactanos</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                </ul>
+                </div>
+            </div>
+            <div class="Frame8_Contenedor2">
+                <div class="Logo2_Contenedor">
+                    <div class="Logo2_Contenedor4">
+                        <img class="Logo2_Contenedor_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+                        <h2 class="Logo2_Contenedor_Texto">Gaialink</h2>
+                    </div>
+                    <div class="Logo2_Contenedor_Redes">
+                        <a href="https://www.instagram.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Instagram2.svg') }}" alt="Instagram1"></a>
+                        <a href="https://www.facebook.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Facebook2.svg') }}" alt="Facebook1"></a>
+                        <a href="https://www.x.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Twitter2.svg') }}" alt="Twitter1"></a>
+                        <a href="https://www.youtube.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Youtube2.svg') }}" alt="Youtube1"></a>
+                        <a href="https://wa.me/573125261601" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Whatsapp2.svg') }}" alt="Whatsapp1"></a>
+                    </div>              
+                </div>
+                <div class="Logo2_Contenedor2">
+                    <div class="Logo2_Linea"></div>
+                    <h3 class="Logo2_Contenedor2_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+                    <div class="Logo2_Contenedor3">
+                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2">Politica de Privacidad</a>
+                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2">Terminos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+

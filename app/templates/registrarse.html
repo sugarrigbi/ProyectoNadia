@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registrarse</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registrarse.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>      
+</head>
+<body> 
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>    
+    <div class="Desktop">
+        <div class="Redes">
+                <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
+                <div class="Redes_Contenedor">
+                    <a href="https://www.instagram.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Instagram1.svg') }}" alt="Instagram1"></a>
+                    <a href="https://www.facebook.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Facebook1.svg') }}" alt="Facebook1"></a>
+                    <a href="https://www.x.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Twitter1.svg') }}" alt="Twitter1"></a>
+                    <a href="https://www.youtube.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Youtube1.svg') }}" alt="Youtube1"></a>
+                    <a href="https://wa.me/573125261601" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Whatsapp1.svg') }}" alt="Whatsapp1"></a>
+                </div>
+        </div>
+        <nav class="Hotbar">
+            <img class="Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+            <h1 class="Texto_Logo">Gaialink</h1>
+            <div class="Selector">
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Inicio</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place1">Página principal</a>
+                        <a href="/#Index_Place2">¿Que es?</a>
+                    </div>
+                </div>
+                <div class="Frame_Flecha">            
+                    <h3 class="Texto_Selector">Nosotros</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="mision#Mision_Place1">Mision</a> 
+                        <a href="mision#Mision_Place2">Vision</a>
+                        <a href="/#Index_Place5">Lideres</a>
+                    </div>                    
+                </div>
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Contacto</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place6">Ayuda</a>
+                        <a href="/#Index_Place7">Contactanos</a>
+                    </div>                    
+                </div>      
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Servicios</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="soporte#Soporte_Place1">Creacion de tickets</a>
+                        <a href="soporte#Soporte_Place2">Soporte</a>
+                    </div>                    
+                </div>
+            </div>
+            <div class="Botones_Hotbar">
+                <button class="Boton_Idioma" onclick="Enviar_Registro()">Registrate</button>
+                <button class="Boton_Ingresar" onclick="Enviar_Login()">Ingresar</button>
+            </div>
+        </nav>
+        <div class="Frame" id="Recuperar_Place1">
+            <div class="Botones" data-aos="fade-right">
+                <button class="Boton_Superior" onclick="Enviar_Ayuda()">
+                    <img class="Boton_Superior_Imagen1" src="{{ url_for('static', filename='img/Ayuda.svg') }}" alt="Ayuda">
+                    Ayuda
+                </button>
+                <button class="Boton_Superior" onclick="Enviar_Home()">
+                    <img class="Boton_Superior_Imagen2" src="{{ url_for('static', filename='img/Volver.svg') }}" alt="Volver">
+                    Volver
+                </button>
+            </div>
+            <div class="Formulario" data-aos="fade-up">
+                <div class="Formulario_Contenedor">
+                    <h3 class="Formulario_Contenedor_Texto">Registrarse</h3>
+                </div>
+                {% if confirmacion %}
+                <div class="confirmacion {{ tipo }}" data-aos="fade-up">
+                    <ul>
+                        <li>{{ confirmacion }}</li>
+                    </ul>
+                </div>
+                {% endif %}                 
+                <form class="FormularioRegistrarse" method="POST">
+                    <div class="FormularioRegistrarse_Contenedor1">
+                        <h3 class="FormularioRegistrarse_Titulo">Datos Personales</h3>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Primer_Nombre') %}
+                                    <div class="confirmacion_error">{{ errores['Primer_Nombre'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_PrimerNombre">Primer nombre<span>*</span></label>
+                                <input value="{{ datos.Primer_Nombre if datos else '' }}" id="Input_PrimerNombre"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Nombre">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Segundo_Nombre') %}
+                                    <div class="confirmacion_error">{{ errores['Segundo_Nombre'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_SegundoNombre">Segundo nombre</label>
+                                <input value="{{ datos.Segundo_Nombre if datos else '' }}" id="Input_SegundoNombre"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Nombre">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Primer_Apellido') %}
+                                    <div class="confirmacion_error">{{ errores['Primer_Apellido'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_PrimerApellido">Primer apellido<span>*</span></label>
+                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" id="Input_PrimerApellido"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Apellido">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Segundo_Apellido') %}
+                                    <div class="confirmacion_error">{{ errores['Segundo_Apellido'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_SegundoApellido">Segundo apellido</label>
+                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" id="Input_SegundoApellido"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Apellido">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                <label class="FormularioRegistrarse_Label" for="Input_TipoDocumento">Tipo de documento<span>*</span></label>
+                                <select  id="Input_TipoDocumento"class="FormularioRegistrarse_Input_Input2" name="Tipo_Documento" required>
+                                    <option value="">Seleccion</option>
+                                    <option value="CC" {% if datos and datos.Tipo_Documento == 'CC' %}selected{% endif %}>Cédula de ciudadanía</option>
+                                    <option value="CE" {% if datos and datos.Tipo_Documento == 'CE' %}selected{% endif %}>Cédula de extranjería</option>
+                                    <option value="TI" {% if datos and datos.Tipo_Documento == 'TI' %}selected{% endif %}>Tarjeta de identidad</option>
+                                    <option value="PA" {% if datos and datos.Tipo_Documento == 'PA' %}selected{% endif %}>Pasaporte</option>
+                                    <option value="RC" {% if datos and datos.Tipo_Documento == 'RC' %}selected{% endif %}>Registro Civil</option>
+                                </select>
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Documento') %}
+                                    <div class="confirmacion_error">{{ errores['Documento'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Documento">Documento<span>*</span></label>
+                                <input value="{{ datos.Documento if datos else '' }}" id="Input_Documento"class="FormularioRegistrarse_Input_Input" type="text" required name="Documento">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                <label class="FormularioRegistrarse_Label" for="Input_Fecha">Fecha de nacimiento<span>*</span></label>
+                                <input value="{{ datos.Fecha_Nacimiento if datos else '' }}" id="Input_Fecha"class="FormularioRegistrarse_Input_Input3" type="date" required name="Fecha_Nacimiento">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="FormularioRegistrarse_Contenedor1">
+                        <h3 class="FormularioRegistrarse_Titulo">Direccion</h3>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Departamento') %}
+                                    <div class="confirmacion_error">{{ errores['Departamento'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Departamento">Departamento<span>*</span></label>
+                                <input value="{{ datos.Departamento if datos else '' }}" id="Input_Departamento"class="FormularioRegistrarse_Input_Input" type="text" required name="Departamento">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Ciudad') %}
+                                    <div class="confirmacion_error">{{ errores['Ciudad'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Ciudad">Ciudad<span>*</span></label>
+                                <input value="{{ datos.Ciudad if datos else '' }}" id="Input_Ciudad"class="FormularioRegistrarse_Input_Input" type="text" required name="Ciudad">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Localidad') %}
+                                    <div class="confirmacion_error">{{ errores['Localidad'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Localidad">Localidad</label>
+                                <input value="{{ datos.Localidad if datos else '' }}" id="Input_Localidad"class="FormularioRegistrarse_Input_Input" type="text" name="Localidad">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Barrio') %}
+                                    <div class="confirmacion_error">{{ errores['Barrio'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Barrio">Barrio</label>
+                                <input value="{{ datos.Barrio if datos else '' }}" id="Input_Barrio"class="FormularioRegistrarse_Input_Input" type="text" name="Barrio">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Direccion') %}
+                                    <div class="confirmacion_error">{{ errores['Direccion'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Direccion">Direccion<span>*</span></label>
+                                <input value="{{ datos.Direccion if datos else '' }}" id="Input_Direccion"class="FormularioRegistrarse_Input_Input3" type="text" required name="Direccion">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="FormularioRegistrarse_Contenedor1">
+                        <h3 class="FormularioRegistrarse_Titulo">Datos de la cuenta</h3>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Correo') %}
+                                    <div class="confirmacion_error">{{ errores['Correo'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Correo">Correo<span>*</span></label>
+                                <input value="{{ datos.Correo if datos else '' }}" id="Input_Correo" class="FormularioRegistrarse_Input_Input" type="text" required name="Correo">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Usuario') %}
+                                    <div class="confirmacion_error">{{ errores['Usuario'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Usuario">Nombre de usuario<span>*</span></label>
+                                <input value="{{ datos.Usuario if datos else '' }}" id="Input_Usuario" class="FormularioRegistrarse_Input_Input" type="text" required name="Usuario">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Contraseña') %}
+                                    <div class="confirmacion_error">{{ errores['Contraseña'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Contraseña">Contraseña<span>*</span></label>
+                                <input value="{{ datos.Contraseña if datos else '' }}" id="Input_Contraseña" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña">
+                            </div>
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Contraseña2') %}
+                                    <div class="confirmacion_error">{{ errores['Contraseña2'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Contraseña2">Confirmar Contraseña<span>*</span></label>
+                                <input value="{{ datos.Contraseña2 if datos else '' }}" id="Input_Contraseña2" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña2">
+                            </div>
+                        </div>
+                        <div class="FormularioRegistrarse_Contenedor">
+                            <div class="FormularioRegistrarse_Input">
+                                {% if errores and errores.get('Telefono') %}
+                                    <div class="confirmacion_error">{{ errores['Telefono'] }}</div>
+                                {% endif %}
+                                <label class="FormularioRegistrarse_Label" for="Input_Telefono">Telefono<span>*</span></label>
+                                <input value="{{ datos.Telefono if datos else '' }}" id="Input_Telefono" class="FormularioRegistrarse_Input_Input3" type="text" required name="Telefono">
+                            </div>                  
+                        </div>
+                    </div>
+                    <div class="Contenedor_Checkbox">
+                        <input class="checkbox" id="Input_Checkbox" type="checkbox" name="Terminos" required value="1">
+                        <label class="FormularioRegistrarse_Label" for="Input_Checkbox">Acepto terminos y condiciones<span>*</span></label>
+                    </div>                 
+                    <input class="FormularioRegistrarse_Boton" type="submit" placeholder="Enviar" value="Enviar registro">
+                </form>
+                <div class="Formulario2">
+                    <a class="Links" href="login">Volver a inicio de sesion</a>
+                </div>
+            </div> 
+            <div class="Fotter" data-aos="fade-up">
+            <h3 class="Fotter_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+            </div>         
+        </div>
+        <div class="Frame8" id="Recuperar_Place8" data-aos="fade-up">
+            <div class="Frame8_Contenedor">
+                <div class="Lista1_Contenedor">
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Inicio</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place1">Pagina Principal</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place2">¿Que es?</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Nosotros</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1">Mision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2">Vision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place5">Lideres</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Contacto</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda">Ayuda</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place7">Contactanos</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Servicios</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1">Creacion de tickets</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2">Soporte</a></li>
+                </ul>
+                </div>
+                <div class="Lista2_Contenedor">
+                <ul class="Lista2">
+                    <li class="Lista2_Titulo">Contactanos</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                </ul>
+                </div>
+            </div>
+            <div class="Frame8_Contenedor2">
+                <div class="Logo2_Contenedor">
+                    <div class="Logo2_Contenedor4">
+                        <img class="Logo2_Contenedor_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+                        <h2 class="Logo2_Contenedor_Texto">Gaialink</h2>
+                    </div>
+                    <div class="Logo2_Contenedor_Redes">
+                        <a href="https://www.instagram.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Instagram2.svg') }}" alt="Instagram1"></a>
+                        <a href="https://www.facebook.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Facebook2.svg') }}" alt="Facebook1"></a>
+                        <a href="https://www.x.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Twitter2.svg') }}" alt="Twitter1"></a>
+                        <a href="https://www.youtube.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Youtube2.svg') }}" alt="Youtube1"></a>
+                        <a href="https://wa.me/573125261601" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Whatsapp2.svg') }}" alt="Whatsapp1"></a>
+                    </div>              
+                </div>
+                <div class="Logo2_Contenedor2">
+                    <div class="Logo2_Linea"></div>
+                    <h3 class="Logo2_Contenedor2_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+                    <div class="Logo2_Contenedor3">
+                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2">Politica de Privacidad</a>
+                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2">Terminos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+

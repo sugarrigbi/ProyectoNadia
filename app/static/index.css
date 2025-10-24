@@ -1,0 +1,802 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body, html {
+    scroll-behavior: smooth;
+    width: 99.2vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.Frame1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 855px;
+    margin-top: 100px;
+    box-sizing: border-box;
+}
+.Fondo{
+    width: 100%;
+    height: 100%;
+    background-image: url("img/Fondo2.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.Vinil{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(25, 25, 25, 0.7);
+    align-items: center;
+    display: flex;    
+    flex-direction: row;
+    gap: 45px;
+    justify-content: center;
+}
+.Prueba{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.Desktop{
+    width: fit-content;
+    height: auto;
+}
+.Balanza{
+    width: 450px;
+    height: 550px;      
+}
+.Imagen_Balanza {
+    width: 100%;
+    height: 100%;
+}
+.Reporta_Home{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;   
+}
+.Reporta_Hoy{
+    width: 700px;
+    height: auto;
+    margin: 0;
+    line-height: 1;    
+    color: white;
+    cursor: default;
+    font-size: 80px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+.Haz_Reporte{
+    width: 800px;
+    height: auto;
+    padding: 10px 0 10px 0;
+    color: white;
+    cursor: default;
+    font-size: 32px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Boton_EmpiezaYa{
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-radius: 100px;
+    border-color: #517ded;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_EmpiezaYa:hover{
+    background-color: #2fb2de;
+    transform: scale(1.08);
+}
+.Frame2{
+    width: 100%;
+    height: 800px;
+    background-color: #92AFF6;
+    position: static;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    display: flex;
+}
+.Frame2_Texto1{
+    display: block;
+    text-align: center;  
+    cursor: default;
+    color: black;
+    font-size: 48px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    margin-top: 10px;
+}
+.Frame2_Texto2{
+    display: block;
+    cursor: default;
+    width: 80%;
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px;
+}
+.Contenedor_Cuadros{
+    width: 1470px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+.Cuadro1{
+    background-color: #5682F1;
+    width: 450px;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    position: relative;
+    height: 400px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.Cuadro2{
+    background-color: #1956EC;
+    width: 92px;
+    height: 92px;
+    margin: 30px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Cuadro2_Texto{
+    display: flex;
+    width: auto;
+    height: 92px;
+    cursor: default;
+    margin-left: 142px;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 40px;
+}
+.Cuadro2_Texto2{
+    width: 300px;
+    height: auto;
+    margin: 0;
+    margin-bottom: 40px;
+    margin-left: 35px;
+    cursor: default;
+    text-align: left;
+    font-weight: 400;
+    color: white;
+    justify-content: left;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+}
+.Cuadro3{
+    width: 80px;
+    height: 80px;
+}
+.Cuadro4{
+    position: absolute;
+    width: 450px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.Frame3{
+    width: 100%;
+    height: 800px;
+    position: static;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.Campesino{
+    width: 405px;
+    height: 506px;
+}
+.Comillas_Cont{
+    background-color: #92AFF6;
+    width: 82px;
+    height: 82px; 
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+.Comillas{
+    width: 70px;
+    height: 70px; 
+}
+.Texto_Comillas{
+    display: block;
+    cursor: default;
+    text-align: left;  
+    color: black;
+    font-size: 48px;
+    width: 800px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+.Linea{
+    width: 100%;
+    height: 7px;
+    background-color: #1956EC;
+    border-radius: 15px;
+    display: flex;
+}
+.Texto_Comillas2{
+    display: block;
+    text-align: left;  
+    cursor: default;
+    color: black;
+    font-size: 35px;
+    margin: 5px;
+    margin-top: 15px;
+    margin-left: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+.Texto_Comillas3{
+    display: block;
+    text-align: left;  
+    color: black;
+    font-size: 22px;
+    margin: 5px;
+    cursor: default;
+    margin-left: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+.Cuadro5{
+    width: 100%;
+    height: 850px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+.Cuadro6{
+    height: 506px;
+    margin: 0;
+    gap: 4px;
+    position: static;
+    align-items: left;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.Frame4{
+    width: 100%;
+    height: 800px;
+    background-color: #92AFF6;
+    position: static;
+    align-items: center;
+    flex-direction: column;
+    gap: 45px;
+    justify-content: center;
+    display: flex;
+}
+.Cuadro9{
+    width: 100%;
+    height: auto;
+    gap: 70px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.Cuadro7{
+    width: 450px;
+    height: 400px;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    background-color: #5682F1;
+    border-radius: 20px;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+}
+.Cuadro8{
+    width: 400px;
+    height: 100px;
+    background-color: #1956EC;
+    border-radius: 20px;
+    margin-top: 25px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.Estrella{
+    width: 60px;
+    height: 60px;
+}
+.Texto_Estrella{
+    display: block;
+    cursor: default;
+    width: 80%;
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px;
+    margin-top: 43px;
+}
+.Boton_Calificanos{
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-width: 0px;
+    border-radius: 100px;
+    border-color: #7b9cf0;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_Calificanos:hover{
+    background-color: #2fb2de;
+    transform: scale(1.08);
+}
+.Boton_Calificanos{
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-width: 0px;
+    border-radius: 100px;
+    border-color: #0031ac;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_Calificanos:hover{
+    background-color: #2fb2de;
+    transform: scale(1.08);
+}
+.Frame5{
+    width: 100%;
+    height: 800px;
+    position: static;
+    align-items: center;
+    flex-direction: column;
+    gap: 45px;
+    justify-content: center;
+    display: flex;
+}
+.Lideres{
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    gap: 150px;
+}
+.Lideres2{
+    width: 400px;
+    height: 550px;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    background-color: #5682F1;
+    border-radius: 20px;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+}
+.Frame5_Texto{
+    display: block;
+    text-align: center;  
+    cursor: default;
+    color: black;
+    font-size: 48px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    margin-bottom: 20px;
+}
+.Persona_Imagen{
+    width: 350px;
+    margin-top: 25px;
+    border-radius: 15px;
+}
+.Frame5_Texto1{
+    display: flex;
+    cursor: default;
+    font-weight: bold;
+    color: white;
+    font-size: 38px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.Frame5_Texto2{
+    display: flex;
+    cursor: default;
+    align-items: center;
+    font-weight: 600;
+    color: black;
+    font-size: 32px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.Frame5_Texto3{
+    display: flex;
+    cursor: default;
+    align-items: center;
+    font-weight: 400;
+    color: white;
+    font-size: 25px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.Frame5_Texto_Cont{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    gap: 25px;
+}
+.Frame6{
+    width: 100%;
+    position: relative;
+    height: 800px;
+    background-color: #92AFF6;
+    position: static;
+    flex-direction: column;
+    gap: 45px;
+    display: flex;
+}
+.Persona_Pensando{
+    width: 389px;
+    height: 562px;
+    position: absolute;
+    margin-top: 240px;
+    margin-left: 1200px;
+    z-index: 4;
+}
+.Nube1{
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 1190px;
+    z-index: 3;
+}
+.Nube2{
+    width: 356px;
+    height: 365px;
+    position: absolute;
+    z-index: 2;    
+    margin-top: 175px;
+    margin-left: 1250px;
+}
+.Pregunta1{
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    margin-top: 270px;
+    margin-left: 1535px;
+    z-index: 5;
+}
+.Pregunta2{
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    margin-top: 210px;
+    margin-left: 1495px;
+    z-index: 6;
+}
+.Pregunta3{
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    margin-top: 237px;
+    margin-left: 1520px;
+    z-index: 7;
+}
+.Ayuda_Contenedor{
+    width: 600px;
+    height: 500px;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    background-color: #5682F1;
+    border-radius: 20px;
+    margin-top: 180px;
+    margin-left: 350px;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    display: flex;
+}
+.Ayuda_Contenedor2{
+    width: auto;
+    padding: 15px;
+    height: auto;
+    background-color: #dadada;
+    border-color: #1956EC;
+    border-style: solid;
+    border-width: 7px;
+    border-radius: 20px;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.Ayuda_Texto{
+    display: flex;
+    cursor: default;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+    font-size: 47px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.Ayuda_Texto1{
+    display: flex;
+    width: 500px;
+    height: 92px;
+    cursor: default;
+    text-align: center;
+    align-items: center;
+    font-weight: 400;
+    color: white;
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 100px;
+}
+.Boton_Ayuda{
+    height: auto;
+    position: absolute;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-width: 0px;
+    border-radius: 100px;
+    border-color: #0035bb;
+    border-width: 6px;
+    border-style: solid;
+    margin-top: 418px;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_Ayuda:hover{
+    background-color: #2fb2de;
+    transform: scale(1.08);
+}
+.Frame7{
+    width: 100%;
+    height: 800px;
+    position: static;
+    align-items: center;
+    flex-direction: row;
+    gap: 90px;
+    justify-content: center;
+    display: flex;
+}
+.Formulario{
+    width: 600px;
+    height: 600px;
+    border-style: solid;
+    border-color: #003bcf;
+    border-width: 10px;
+    background-color: #5682F1;
+    border-radius: 20px;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+.input-container {
+    position: relative;
+    width: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    display: flex;
+    justify-content: center; 
+}
+.Input1{
+    display: flex;
+    width: 480px;
+    cursor: pointer;
+    border: none;
+    border-bottom: 4px solid #414141;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;    
+    font-weight: 400;
+    color: white;
+    font-size: 26px;
+    font-family: 'Montserrat', sans-serif;    
+}
+.Input1:focus{
+    border-bottom-color: #ffffff;
+}
+.Label1{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    color: #414141;
+    pointer-events: none;
+    transition: all 0.3s ease;  
+    font-weight: 400;
+    font-size: 26px;
+    font-family: 'Montserrat', sans-serif;          
+}
+.input-container .Input1:focus + .Label1,
+.input-container .Input1:valid + .Label1{
+    top: -22px;
+    left: 0px;
+    margin: 0;
+    font-size: 16px;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+.Frame7_Cont{
+    width: auto;
+    height: auto;
+    background-color: #1956EC;
+    border-radius: 20px;
+    background-color: #dadada;
+    border-color: #1956EC;
+    border-style: solid;
+    border-width: 7px;    
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+.Frame7_Texto{
+    display: flex;
+    cursor: default;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+    font-size: 40px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.Boton_Contactanos{
+    height: auto;
+    padding: 10px 20px; 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #1956EC;
+    border-width: 0px;
+    border-radius: 100px;
+    border-color: #00278b;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: all 0.3s ease;    
+}
+.Boton_Contactanos:hover{
+    background-color: #2fb2de;
+    transform: scale(1.08);
+}
+.Frame7_Texto1{
+    display: block;
+    text-align: center;  
+    cursor: default;
+    color: black;
+    width: auto;
+    font-size: 48px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    margin-top: 10px;
+}
+.Frame7_Texto2{
+    display: block;
+    cursor: default;
+    width: auto;
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+}
+.Frame7_Cont2{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+}
+#Index_Place1 {
+    scroll-margin-top: 130px;
+}
+#Index_Place2 {
+    scroll-margin-top: 130px;
+}
+#Index_Place3 {
+    scroll-margin-top: 130px;
+}
+#Index_Place4 {
+    scroll-margin-top: 130px;
+}
+#Index_Place5 {
+    scroll-margin-top: 130px;
+}
+#Index_Place6 {
+    scroll-margin-top: 130px;
+}
+#Index_Place7 {
+    scroll-margin-top: 130px;
+}
+#Index_Place8 {
+    scroll-margin-top: 0px;
+}
+.slot1{
+    top: 477px;
+}
+.slot2{
+    top: 1327px;
+}
+.slot3{
+    top: 2127px;
+}
+.slot4{
+    top: 2927px;
+    right: 0px;
+}
+.slot5{
+    top: 3727px;
+}
+.slot6{
+    top: 4527px;
+    right: 5px;
+}
+.slot7{
+    top: 5327px;
+}

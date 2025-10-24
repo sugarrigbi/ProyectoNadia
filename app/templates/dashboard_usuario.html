@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <title>dashboard</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_usuario.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    <div class="Barra_Lateral" data-aos="fade-right">
+        <div class="Logo">
+            <img class="Imagen_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}">
+            <h2>Gaialink</h2>
+        </div>
+        <ul>
+            <li data-target="Frame1" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}">Inicio</li>
+            <li data-target="Frame3" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}">Casos</li>
+            <li data-target="Frame4" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}">Entidades</li>
+            <li data-target="Frame2" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
+            <li data-target="Frame5" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
+        </ul>
+        <button><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" alt="">Cerrar Sesion</button>
+    </div>
+    <div class="Desktop">
+        <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Bienvenido USUARIO</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <div class="Cuadro1" data-target="Frame3">
+                    <img src="{{ url_for('static', filename='img/Casos1.svg') }}">
+                    <h2>Casos</h2>
+                    <h3>Reporta nuevos incidentes y consulta el <br>estado de los casos que has registrado.</h3>
+                </div>
+                <div class="Cuadro1" data-target="Frame4">
+                    <img src="{{ url_for('static', filename='img/Entidades1.svg') }}">
+                    <h2>Entidades</h2>
+                    <h3>Conoce las instituciones disponibles y su <br>participación en la gestión de emergencias.</h3>
+                </div>            
+                <div class="Cuadro1" data-target="Frame2">
+                    <img src="{{ url_for('static', filename='img/Usuario1.svg') }}">
+                    <h2>Cuenta</h2>
+                    <h3>Gestiona tu información personal, cambia <br>tu contraseña y ajusta tus datos de perfil.</h3>
+                </div>
+                <div class="Cuadro1" data-target="Frame5">
+                    <img src="{{ url_for('static', filename='img/Ayuda2.svg') }}">
+                    <h2>Ayuda</h2>
+                    <h3>Aquí puedes ver información de soporte, contacto o calificarnos.</h3>
+                </div>                        
+            </div>
+        </div>
+        <div id="Frame2" class="Frame {% if frame_activo == 'Frame2' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Mi Perfil</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <a class="Cuadro1" href="/dashboard/user/persona/datos">
+                    <img src="{{ url_for('static', filename='img/Usuario/Ver.svg') }}">
+                    <h2>Ver datos</h2>
+                    <h3>Consulta tu información registrada de <br>manera rápida y segura.</h3>
+                </a>
+                <div class="Cuadro1" data-target="Frame6">
+                    <img src="{{ url_for('static', filename='img/Usuario/Modificar.svg') }}">
+                    <h2>Modificar datos</h2>
+                    <h3>Actualiza o corrige la información de tu <br>cuenta fácilmente.</h3>
+                </div>       
+                <div class="Cuadro1" data-target="FrameEliminarUsuario">
+                    <img src="{{ url_for('static', filename='img/Usuario/Eliminar.svg') }}">
+                    <h2>Eliminar cuenta</h2>
+                    <h3>Desactiva o elimina permanentemente <br>tu cuenta de manera segura.</h3>
+                </div>                          
+            </div>                        
+        </div>
+        <div id="Frame3" class="Frame {% if frame_activo == 'Frame3' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Casos</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <div class="Cuadro1" data-target="FrameCrearCaso">
+                    <img src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}">
+                    <h2>Crear caso</h2>
+                    <h3>Reporta un nuevo incidente y <br>genera un caso para su seguimiento.</h3>
+                </div>
+                <a href="/dashboard/user/casos" class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Buscar.svg') }}">
+                    <h2>Mis casos</h2>
+                    <h3>Consulta el estado y los detalles <br>de los casos que has registrado.</h3>
+                </a>            
+            </div>                        
+        </div>
+        <div id="Frame4" class="Frame {% if frame_activo == 'Frame4' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Entidades</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <div class="Cuadro1" data-target="FrameBuscarEntidad">
+                    <img src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}">
+                    <h2>Buscar entidad</h2>
+                    <h3>Encuentra instituciones registradas por <br>nombre o categoría.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Directorio.svg') }}">
+                    <h2>Lista de entidades</h2>
+                    <h3>Consulta el directorio completo de organizaciones vinculadas al sistema.</h3>
+                </div>            
+            </div>                        
+        </div>   
+        <div id="Frame5" class="Frame {% if frame_activo == 'Frame5' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Ayuda</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <a class="Cuadro1" href="/ayuda">
+                    <img src="{{ url_for('static', filename='img/Usuario/Soporte.svg') }}">
+                    <h2>Soporte</h2>
+                    <h3>Comunícate con el equipo de soporte para resolver dudas o reportar problemas.</h3>
+                </a>
+                <a class="Cuadro1" href="/calificanos">
+                    <img src="{{ url_for('static', filename='img/Usuario/Calificanos.svg') }}">
+                    <h2>Calificanos</h2>
+                    <h3>Déjanos tu opinión y ayuda a mejorar la experiencia de Gaialink.</h3>
+                </a>   
+                <a class="Cuadro1" href="/terminos#Terminos_Place1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Terminos.svg') }}">
+                    <h2>Terminos</h2>
+                    <h3>Consulta las políticas de uso y protección de datos de la plataforma.</h3>
+                </a>                            
+            </div>                        
+        </div>
+        <div id="Frame6" class="Frame {% if frame_activo == 'Frame6' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Modificar Datos</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Cuadros">
+                <a class="Cuadro1" href="/dashboard/user/persona/modificar">
+                    <img src="{{ url_for('static', filename='img/Usuario/Modificar.svg') }}">
+                    <h2>Modificar Datos</h2>
+                    <h3>Actualiza tu información personal y de <br>contacto fácilmente.</h3>
+                </a>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Candado.svg') }}">
+                    <h2>Editar Contraseña</h2>
+                    <h3>Cambia tu contraseña de forma segura <br>para proteger tu cuenta.</h3>
+                </div>            
+            </div>                        
+        </div> 
+        <div id="FrameCrearCaso" class="Frame {% if frame_activo == 'FrameCrearCaso' %}visible{% endif %}">
+            <div class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Crear Caso</h2>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Crear Caso</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/crear-caso">
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <label for="Input_TipoIncidente">Tipo de incidente<span>*</span></label>
+                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input" name="Tipo_Incidente" required>
+                                    <option value="">Seleccion</option>
+                                    <option value="Despl">Desplazamiento</option>
+                                    <option value="Despo">Despojo de predios</option>
+                                    <option value="Expro">Expropiacion</option>
+                                    <option value="Hurt">Hurto</option>
+                                </select>
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <label for="Input_Fecha">Fecha del incidente<span>*</span></label>
+                                <input id="Input_Fecha" class="Formulario_CrearCaso_Input2" type="date" required name="Fecha_Incidente">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <label for="Input_Direccion">Direccion<span>*</span></label>
+                                <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="Direccion">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <label for="Input_Personas">Personas Afectadas<span>*</span></label>
+                                <input id="Input_Personas"class="Formulario_CrearCaso_Input" type="number" required name="Personas_Afectadas">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Contenedor2">
+                                <label for="Input_Descripcion">Descripcion del incidente<span>*</span></label>
+                                <textarea id="Input_Descripcion" class="Formulario_CrearCaso_Input3" required name="Descripcion"></textarea>
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
+                    </form>
+                </div> 
+            </div>
+        </div> 
+        <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Mis casos</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>            
+            <div class="FrameVerCasos2">
+                {% if lista_casos %}
+                    {% for caso in lista_casos %}
+                        <div class="FrameVerCasos_Caso">
+                            <h3>Caso: {{ caso.Radicado }}</h3>
+                            <span class="ver-FrameVerCasos_VerCaso" onclick="abrirModal('modal-{{ loop.index }}')">Ver caso</span>
+                        </div> 
+                        
+                        <div id="modal-{{ loop.index }}" class="modal">
+                            <div class="modal-content">
+                                <span class="cerrar" onclick="cerrarModal('modal-{{ loop.index }}')">&times;</span>
+                                <h4 class="FrameVerCasos_Caso_Texto">Detalles del caso</h4>
+                                <p><strong>Radicado:</strong> {{ caso.Radicado }}</p>
+                                <p><strong>Fecha:</strong> {{ caso.Fecha }}</p>
+                                <p><strong>Descripción:</strong> {{ caso.Descripción }}</p>
+                                <p><strong>Personas afectadas:</strong> {{ caso.Personas_Afectadas }}</p>
+                                <p><strong>Departamento:</strong> {{ caso.Departamento }}</p>
+                                <p><strong>Incidente:</strong> {{ caso.Incidente }}</p>
+                                <p><strong>Estado:</strong> {{ caso.Estado }}</p>
+                                <p><strong>Usuario:</strong> {{ caso.Nombre }}</p>
+                            </div>
+                        </div>                    
+                    {% endfor %}
+                {% else %}
+                    <p>No hay casos asociados al usuario.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Buscar Entidad</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="FrameCrearCaso2">
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Buscar Entidad</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <label for="Input_Direccion">Numero de la entidad<span>*</span></label>
+                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
+                    </form>
+                </div>            
+            </div>
+        </div> 
+        <div id="FrameBuscarEntidad2" class="Frame {% if frame_activo == 'FrameBuscarEntidad2' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Buscar Entidad</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>            
+            {% if confirmacion %}
+            <div class="Buscar_Entidad">
+                <div class="Buscar_Entidad_Nombre">
+                    <h3>{{ confirmacion.Nombre }}</h3>
+                </div>
+                <div class="Buscar_Entidad_Contenedor">
+                    <p><span>Código:</span> {{ confirmacion.Codigo }}</p>
+                    <p><span>Descripción:</span> {{ confirmacion.Descripcion }}</p>
+                    <p><span>Incidente:</span> {{ confirmacion.Incidente }}</p>
+                    <p><span>Dirección:</span> {{ confirmacion.Direccion }}</p>
+                    <p><span>Teléfono:</span> {{ confirmacion.Telefono }}</p>
+                    <p><span>Web:</span> <a href="{{ confirmacion.Web }}" target="_blank">{{ confirmacion.Web }}</a></p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Mis Datos</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>            
+            {% if lista_persona %}
+            <div class="Buscar_Entidad">
+                <div class="Buscar_Entidad_Nombre">
+                    <h3>{{ lista_persona.Nombre }}</h3>
+                </div>
+                <div class="Buscar_Entidad_Contenedor">
+                    <p><span>Codigo: </span>{{ lista_persona.Codigo }}</p>
+                    <p><span>Tipodedocumento: </span>{{ lista_persona.Tipo_Documento }}</p>
+                    <p><span>Documento: </span>{{ lista_persona.Documento }}</p>
+                    <p><span>Primer Nombre:</span>{{ lista_persona.Primer_Nombre }}</p>
+                    <p><span>Segundo Nombre:</span>{{ lista_persona.Segundo_Nombre }}</p>
+                    <p><span>Primer Apellido:</span>{{ lista_persona.Primer_Apellido }}</p>
+                    <p><span>Segundo Apellido:</span>{{ lista_persona.Segundo_Apellido }}</p>
+                    <p><span>Fecha de Nacimiento:</span>{{ lista_persona.Fecha_Nacimiento }}</p>
+                    <p><span>Edad: </span>{{ lista_persona.Edad }}</p>
+                    <p><span>Direccion: </span>{{ lista_persona.Direccion }}</p>
+                    <p><span>Departamento: </span>{{ lista_persona.Departamento }}</p>
+                    <p><span>Ciudad: </span>{{ lista_persona.Ciudad }}</p>
+                    <p><span>Localidad: </span>{{ lista_persona.Localidad }}</p>
+                    <p><span>Barrio: </span>{{ lista_persona.Barrio }}</p>
+                    <p><span>Telefono: </span>{{ lista_persona.Numero_Contacto }}</p>
+                    <p><span>Correo: </span>{{ lista_persona.Email }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>  
+        <div id="FrameEliminarUsuario" class="Frame {% if frame_activo == 'FrameEliminarUsuario' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Eliminar Usuario</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="FrameCrearCaso2">
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Eliminar.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Eliminar</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}                     
+                    <form id="formEliminarUsuario" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/persona/eliminar">
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <label for="Input_Direccion">Contraseña<span>*</span></label>
+                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="password" required name="contraseña">
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Eliminar">                                                                       
+                    </form>
+                </div>            
+            </div>
+        </div>     
+        <div id="FrameModificarDatos" class="Frame {% if frame_activo == 'FrameModificarDatos' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Modificar Datos</h2>
+                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            </div>
+            <div class="Mod_Todo">
+                {% if lista_datos %}
+                <div class="Buscar_Entidad2">
+                    <div class="Buscar_Entidad_Nombre">
+                        <h3>{{ lista_datos.Nombre }}</h3>
+                    </div>
+                    <form class="Buscar_Entidad_Contenedor2" method="POST" action="/dashboard/user/persona/modificar/enviar">
+                        <div class="Mod_Contenedor">
+                            <div>
+                                <label class="Mod_Label">Primer Nombre</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Primer_Nombre" value="{{ lista_datos['Primer_Nombre'] }}" placeholder="Primer Nombre" required>
+                            </div>
+                            <div>
+                                <label class="Mod_Label">Segundo Nombre</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Segundo_Nombre" value="{{ lista_datos['Segundo_Nombre'] }}" placeholder="Segundo Nombre">
+                            </div>        
+                        </div>
+                        <div class="Mod_Contenedor">
+                            <div>
+                                <label class="Mod_Label">Primer Apellido</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Primer_Apellido" value="{{ lista_datos['Primer_Apellido'] }}" placeholder="Primer Apellido" required>
+                            </div>
+                            <div>   
+                                <label class="Mod_Label">Segundo Apellido</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Segundo_Apellido" value="{{ lista_datos['Segundo_Apellido'] }}" placeholder="Segundo Apellido">
+                            </div>
+                        </div>
+                        <div class="Mod_Contenedor">
+                            <div>
+                                <label class="Mod_Label">Tipo de Documento</label>
+                                <select class="Formulario_CrearCaso_Input5" name="Tipo_Documento" required>
+                                    <option value="">Selección</option>
+                                    <option value="CC" {% if lista_datos and lista_datos['Tipo_Documento'] in ['CC', 'Cedula Ciudadania', 'Cédula Ciudadanía'] %}selected{% endif %}>Cédula de ciudadanía</option>
+                                    <option value="CE" {% if lista_datos and lista_datos['Tipo_Documento'] in ['CE', 'Cedula Extranjeria', 'Cédula Extranjería'] %}selected{% endif %}>Cédula de extranjería</option>
+                                    <option value="TI" {% if lista_datos and lista_datos['Tipo_Documento'] in ['TI', 'Tarjeta Identidad', 'Tarjeta de Identidad'] %}selected{% endif %}>Tarjeta de identidad</option>
+                                    <option value="PA" {% if lista_datos and lista_datos['Tipo_Documento'] in ['PA', 'Pasaporte'] %}selected{% endif %}>Pasaporte</option>
+                                    <option value="RC" {% if lista_datos and lista_datos['Tipo_Documento'] in ['RC', 'Registro Civil'] %}selected{% endif %}>Registro Civil</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="Mod_Label">Fecha de Nacimiento</label>
+                                <input class="Formulario_CrearCaso_Input52" type="date" name="Fecha_Nacimiento" value="{{ fecha }}" required>
+                            </div>        
+                        </div>
+                        <div class="Mod_Contenedor">
+                            <div>
+                                <label class="Mod_Label">Dirección</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Direccion" value="{{ lista_datos['Direccion'] }}" placeholder="Dirección" required>
+                            </div>
+                            <div>
+                                <label class="Mod_Label">Número de Contacto</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Numero_Contacto" value="{{ lista_datos['Numero_Contacto'] }}" placeholder="Número de contacto" required>
+                            </div>
+                        </div>
+                        <div class="Mod_Contenedor">
+                            <div>
+                                <label class="Mod_Label">Email</label>
+                                <input class="Formulario_CrearCaso_Input5" type="email" name="Email" value="{{ lista_datos['Email'] }}" placeholder="Correo electrónico" required>
+                            </div>
+                            <div>
+                                <label class="Mod_Label">Nombre de Usuario</label>
+                                <input class="Formulario_CrearCaso_Input5" type="text" name="Usuario" value="{{ lista_datos['Nombre'] }}" placeholder="Usuario" required>
+                            </div>
+                        </div>
+                        <button class="Formulario_CrearCaso_Boton2" type="submit">Guardar cambios</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>            
+    </div>
+    <script>
+    const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
+    const frames = document.querySelectorAll('.Frame, Frame1');
+
+    cuadros.forEach(cuadro => {
+        cuadro.addEventListener('click', () => {
+        const target = cuadro.getAttribute('data-target');
+        if (target) {
+            if (window.location.pathname.includes("/casos") && target !== "FrameVerCasos") {
+                window.location.href = "/dashboard/user?frame=" + target;
+                return;
+            }        
+            if (window.location.pathname.includes("/entidad/buscar") && target !== "FrameBuscarEntidad2") {
+                window.location.href = "/dashboard/user?frame=" + target;
+                return;
+            }   
+            if (window.location.pathname.includes("/persona/datos") && target !== "FrameVerDatos") {
+                window.location.href = "/dashboard/user?frame=" + target;
+                return;
+            }     
+            if (window.location.pathname.includes("/persona/modificar/enviar") && target !== "FrameModificarDatos") {
+                window.location.href = "/dashboard/user?frame=" + target;
+                return;
+            }                             
+
+            frames.forEach(frame => frame.classList.remove('visible'));
+            document.getElementById(target).classList.add('visible');
+        }
+    });
+    });
+
+    document.getElementById("formEliminarUsuario").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        if (confirm("¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.")) {
+            this.submit();
+        }
+    });
+
+    function abrirModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+    function cerrarModal(id) {
+        document.getElementById(id).style.display = "none";
+    }  
+    window.onclick = function(event) {
+        if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+        }
+    }      
+    </script>
+</body> 
+</html>

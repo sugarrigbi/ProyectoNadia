@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div>Admin Dashboard</div>
+    <div>
+      <span>{{ username }}</span>
+      <a class="link-logout" href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </div>
+  </header>
+  <main class="container">
+    <h1>Bienvenido, administrador {{ username }}</h1>
+    <p>Aquí van las estadísticas y herramientas de administración.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gaialink</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>      
+</head>
+<body>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>    
+    <div class="slot1">Inicio</div>
+    <div class="slot2">Que es</div>
+    <div class="slot3">Opinion</div>
+    <div class="slot4">Calificaciones</div>
+    <div class="slot5">Lideres</div>
+    <div class="slot6">Ayuda</div>
+    <div class="slot7">Contactanos</div>
+    <div class="Desktop">
+        <div class="Redes">
+                <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
+                <div class="Redes_Contenedor">
+                    <a href="https://www.instagram.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Instagram1.svg') }}" alt="Instagram1"></a>
+                    <a href="https://www.facebook.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Facebook1.svg') }}" alt="Facebook1"></a>
+                    <a href="https://www.x.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Twitter1.svg') }}" alt="Twitter1"></a>
+                    <a href="https://www.youtube.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Youtube1.svg') }}" alt="Youtube1"></a>
+                    <a href="https://wa.me/573125261601" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Whatsapp1.svg') }}" alt="Whatsapp1"></a>
+                </div>
+        </div>
+        <nav class="Hotbar">
+            <img class="Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+            <h1 class="Texto_Logo">Gaialink</h1>
+            <div class="Selector">
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Inicio</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="#Index_Place1">Página principal</a>
+                        <a href="#Index_Place2">¿Que es?</a>
+                    </div>
+                </div>
+                <div class="Frame_Flecha">            
+                    <h3 class="Texto_Selector">Nosotros</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="mision#Mision_Place1">Mision</a> 
+                        <a href="mision#Mision_Place2">Vision</a>
+                        <a href="#Index_Place5">Lideres</a>
+                    </div>                    
+                </div>
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Contacto</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="#Index_Place6">Ayuda</a>
+                        <a href="#Index_Place7">Contactanos</a>
+                    </div>                    
+                </div>      
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector">Servicios</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="soporte#Soporte_Place1">Creacion de tickets</a>
+                        <a href="soporte#Soporte_Place2">Soporte</a>
+                    </div>                    
+                </div>
+            </div>
+            <div class="Botones_Hotbar">
+                <button class="Boton_Idioma" onclick="Enviar_Registro()">Registrate</button>
+                <button class="Boton_Ingresar" onclick="Enviar_Login()">Ingresar</button>
+            </div>
+        </nav>
+        <div class="Frame1" id="Index_Place1">
+            <div class="Fondo" >
+                <div class="Vinil" >
+                    <div class="Prueba" >
+                        <div class="Reporta_Home">
+                            <h2 class="Reporta_Hoy" data-aos="fade-down">Reporta hoy, actúa ya</h2>
+                            <h3 class="Haz_Reporte" data-aos="fade-up">Haz tu reporte, Nosotros lo llevamos ante quienes deben actuar.</h3>
+                            <button class="Boton_EmpiezaYa" onclick="Enviar_Login()">Empieza Ya</button>
+                        </div>                                     
+                        <div class="Balanza">
+                            <div class="Imagen_Balanza"></div>
+                        </div>   
+                    </div>              
+                </div>
+            </div>
+        </div>
+        <div class="Frame2" id="Index_Place2">
+            <h2 class="Frame2_Texto1"data-aos="zoom-in">Restitución de bienes con GaiaLink</h2>
+            <p class="Frame2_Texto2" data-aos="zoom-in">¿Fuiste víctima de despojo, hurto o pérdida de tu propiedad? En GaiaLink te ayudamos a registrar tu caso de forma rápida y segura, sin trámites presenciales. Nuestro equipo recibe tu solicitud y la remite a la entidad correspondiente para que inicie el proceso legal. Todo desde nuestra plataforma, sin filas, sin traslados, sin complicaciones.</p>
+            <div class="Contenedor_Cuadros">
+                <div class="Cuadro1" data-aos="zoom-in">
+                    <div class="Cuadro2" data-aos="fade-down">
+                        <img class="Cuadro3" src="{{ url_for('static', filename='img/Carpeta.svg') }}" alt="Carpeta">
+                    </div>
+                    <div class="Cuadro4" >
+                        <h4 class="Cuadro2_Texto" data-aos="fade-down">Fácil registro</h4>
+                        <h4 class="Cuadro2_Texto2">Nuestra plataforma está diseñada para ayudarte sin barreras económicas. Registrar tu usuario y presentar tus casos será siempre un servicio gratuito.</h4>
+                    </div>    
+                </div>
+                <div class="Cuadro1" data-aos="zoom-in">
+                    <div class="Cuadro2" data-aos="fade-down">
+                        <img class="Cuadro3" src="{{ url_for('static', filename='img/Rayo.svg') }}" alt="Carpeta">
+                    </div>
+                    <div class="Cuadro4">
+                        <h4 class="Cuadro2_Texto" data-aos="fade-down">Consulta en línea</h4>
+                        <h4 class="Cuadro2_Texto2">Recibe actualizaciones del estado de tu caso sin necesidad de desplazarte. Nuestro equipo garantiza que llegue a la entidad correspondiente.</h4>
+                    </div>
+                </div>
+                <div class="Cuadro1" data-aos="zoom-in">
+                    <div class="Cuadro2" data-aos="fade-down">
+                        <img class="Cuadro3" src="{{ url_for('static', filename='img/Dinero.svg') }}" alt="Carpeta">
+                    </div>
+                    <div class="Cuadro4">
+                        <h4 class="Cuadro2_Texto" data-aos="fade-down">Sin Costo</h4>
+                        <h4 class="Cuadro2_Texto2">El proceso de registro es rápido y simple: crea tu usuario y carga la información de tu caso desde cualquier dispositivo con acceso a internet.</h4>
+                    </div>
+                </div>
+            </div>
+            <button class="Boton_EmpiezaYa" onclick="Enviar_Login()">Empieza Ya</button>
+        </div>
+        <div class="Frame3" id="Index_Place3">
+            <div class="Cuadro5">
+                <img class="Campesino" src="{{ url_for('static', filename='img/Campensino.svg') }}" alt="Campesino" data-aos="fade-right">
+                <div class="Cuadro6">
+                    <div class="Comillas_Cont" data-aos="fade-down">
+                        <img class="Comillas" src="{{ url_for('static', filename='img/Comillas.svg') }}" alt="Comilla" >
+                    </div>
+                    <h3 class="Texto_Comillas" data-aos="fade-left">La plataforma me dio confianza al tener mi caso registrado y accesible sin complicaciones.</h3>
+                    <div class="Linea" data-aos="fade-left"></div>
+                    <h3 class="Texto_Comillas2"data-aos="fade-left">Anselmo Cárdenas</h3>
+                    <h4 class="Texto_Comillas3"data-aos="fade-left">Campesino de San Francisco</h4>
+                </div>
+            </div>
+        </div>
+        <div class="Frame4" id="Index_Place4">
+            <h2 class="Frame2_Texto1">Calificaciones de GaiaLink</h2>
+            <div class="Cuadro9">
+                <div class="Cuadro7" data-aos="fade-right">
+                    <div class="Cuadro8" data-aos="fade-down">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                    </div>
+                    <p class="Texto_Estrella">"Antes tenía que viajar horas para poner mi denuncia. Ahora lo hice en minutos y con la tranquilidad de que mi caso llegó a la entidad correcta."</p>
+                </div>
+                <div class="Cuadro7" data-aos="fade-up">
+                    <div class="Cuadro8" data-aos="zoom-in">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/MediaEstrella.svg') }}" alt="Estrella">
+                    </div>
+                    <p class="Texto_Estrella">"Gracias a la plataforma pude registrar mi caso sin complicaciones y dar seguimiento desde el celular. Todo fue más fácil y rápido."</p>
+                </div>
+                <div class="Cuadro7" data-aos="fade-left">
+                    <div class="Cuadro8" data-aos="fade-down">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/Estrella.svg') }}" alt="Estrella">
+                        <img class="Estrella" src="{{ url_for('static', filename='img/MenosEstrella.svg') }}" alt="Estrella">
+                    </div>
+                    <p class="Texto_Estrella">"Lo mejor es que toda mi información quedó organizada y segura. Sentí confianza desde el primer momento en que registré mi caso."</p>
+                </div>
+            </div> 
+            <button class="Boton_Calificanos" onclick="Enviar_Calificanos()">Califícanos</button>
+        </div>
+        <div class="Frame5" id="Index_Place5">
+            <h2 class="Frame5_Texto" data-aos="fade-down">Lideres de GaiaLink</h2>
+            <div class="Lideres">
+                <div class="Lideres2" data-aos="fade-right">
+                    <img class="Persona_Imagen" src="{{ url_for('static', filename='img/Ingrid.png') }}" alt="Persona">
+                    <div class="Frame5_Texto_Cont">
+                        <h4 class="Frame5_Texto1">Nadia Urrego</h4>
+                        <h4 class="Frame5_Texto2">Fundadora</h4>
+                        <h4 class="Frame5_Texto3">ndurregov@sanmateo.edu.co</h4>
+                    </div>
+                </div>
+                <div class="Lideres2" data-aos="fade-left">
+                    <img class="Persona_Imagen" src="{{ url_for('static', filename='img/Ingrid.png') }}" alt="Persona">
+                    <div class="Frame5_Texto_Cont">
+                        <h4 class="Frame5_Texto1">Ingrid Moreno</h4>
+                        <h4 class="Frame5_Texto2">Fundadora</h4>
+                        <h4 class="Frame5_Texto3">ferdianith006@gmail.com</h4>
+                    </div>
+                </div>   
+            </div>         
+        </div>
+        <div class="Frame6" id="Index_Place6">
+            <div class="Ayuda_Contenedor" data-aos="fade-right">
+                <div class="Ayuda_Contenedor2">
+                    <h3 class="Ayuda_Texto">¿Necesitas Ayuda?</h3>
+                </div>
+                <p class="Ayuda_Texto1">Estamos aquí para orientarte. Si tienes dudas sobre el registro, la carga de tu caso o el seguimiento en línea, nuestro equipo te acompañará en cada paso.</p>
+                <button class="Boton_Ayuda" onclick="Enviar_Ayuda()">Ayuda</button>
+            </div>
+            <div class="Frame6" > 
+                <img class="Persona_Pensando" src="{{ url_for('static', filename='img/Pensando.svg') }}" alt="Persona Pensando">
+                <img class="Nube1" src="{{ url_for('static', filename='img/Nube1.svg') }}" alt="Nube">
+                <img class="Nube2" src="{{ url_for('static', filename='img/Nube2.svg') }}" alt="Nube">
+                <img class="Pregunta1" src="{{ url_for('static', filename='img/Pregunta1.svg') }}" alt="Pregunta1">
+                <img class="Pregunta2" src="{{ url_for('static', filename='img/Pregunta2.svg') }}" alt="Pregunta2">
+                <img class="Pregunta3" src="{{ url_for('static', filename='img/Pregunta3.svg') }}" alt="Pregunta2">
+            </div>
+        </div>
+        <div class="Frame7" id="Index_Place7">
+            <div class ="Frame7_Cont2" data-aos="fade-down">
+                <h2 class="Frame7_Texto1">Contáctanos con nuestro soporte</h2>
+                <p class="Frame7_Texto2">Nuestro equipo de soporte está disponible las 24 horas para atenderte y brindarte la mejor solución de forma rápida y eficiente, trabajamos con compromiso y dedicación para asegurarnos de que recibas la ayuda que necesitas en el menor tiempo posible.</p>            
+            </div>
+            <form class="Formulario" method="POST" action="{{ url_for('form.contactanos') }}" data-aos="fade-right">
+                <div class="Frame7_Cont">
+                    <h3 class="Frame7_Texto">Contáctanos!</h3>
+                </div>
+                {% if confirmacion %}
+                <div class="confirmacion1 {{ tipo }}" data-aos="fade-up">
+                    <ul>
+                        <li>{{ confirmacion }}</li>
+                    </ul>
+                </div>
+                {% endif %}                     
+                <div class="input-container">
+                    <input id="Input_Nombre" class="Input1" type="text" required name="Nombre">
+                    <label class="Label1" for="Input_Nombre">Nombre</label>
+                </div>
+                <div class="input-container">
+                    <input id="Input_Telefono"class="Input1" type="number" required name="Telefono">
+                    <label class="Label1" for="Input_Telefono">Telefono</label>
+                </div>
+                <div class="input-container">
+                    <input id="Input_Correo"class="Input1" type="email" required name="Correo">
+                    <label class="Label1" for="Input_Correo">Correo</label>
+                </div>
+                <div class="input-container">
+                    <input id="Input_Descripcion"class="Input1" type="text" required name="Descripcion">
+                    <label class="Label1" for="Input_Descripcion">Como podemos ayudarte</label> 
+                </div>               
+                <input class="Boton_Contactanos" type="submit" placeholder="Enviar"> 
+            </form>
+        </div>
+        <div class="Frame8" id="Index_Place8" data-aos="fade-up">
+            <div class="Frame8_Contenedor">
+                <div class="Lista1_Contenedor">
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Inicio</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="#Index_Place1">Pagina Principal</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="#Index_Place2">¿Que es?</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Nosotros</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1">Mision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2">Vision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="#Index_Place5">Lideres</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Contacto</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda">Ayuda</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="#Index_Place7">Contactanos</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo">Servicios</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1">Creacion de tickets</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2">Soporte</a></li>
+                </ul>
+                </div>
+                <div class="Lista2_Contenedor">
+                <ul class="Lista2">
+                    <li class="Lista2_Titulo">Contactanos</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                </ul>
+                </div>
+            </div>
+            <div class="Frame8_Contenedor2">
+                <div class="Logo2_Contenedor">
+                    <div class="Logo2_Contenedor4">
+                        <img class="Logo2_Contenedor_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+                        <h2 class="Logo2_Contenedor_Texto">Gaialink</h2>
+                    </div>
+                    <div class="Logo2_Contenedor_Redes">
+                        <a href="https://www.instagram.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/instagram2.svg') }}" alt="Instagram1"></a>
+                        <a href="https://www.facebook.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Facebook2.svg') }}" alt="Facebook1"></a>
+                        <a href="https://www.x.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Twitter2.svg') }}" alt="Twitter1"></a>
+                        <a href="https://www.youtube.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Youtube2.svg') }}" alt="Youtube1"></a>
+                        <a href="https://wa.me/573125261601" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Whatsapp2.svg') }}" alt="Whatsapp1"></a>
+                    </div>              
+                </div>
+                <div class="Logo2_Contenedor2">
+                    <div class="Logo2_Linea"></div>
+                    <h3 class="Logo2_Contenedor2_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+                    <div class="Logo2_Contenedor3">
+                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2">Politica de Privacidad</a>
+                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2">Terminos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% if anchor %}
+    <script>
+        window.location.hash = "{{ anchor }}";
+    </script>
+    {% endif %}
+</body>
+</html> 
+
