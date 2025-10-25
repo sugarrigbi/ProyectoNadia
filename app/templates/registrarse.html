@@ -246,7 +246,7 @@
                     </div>
                     <div class="Contenedor_Checkbox">
                         <input class="checkbox" id="Input_Checkbox" type="checkbox" name="Terminos" required value="1">
-                        <label class="FormularioRegistrarse_Label" for="Input_Checkbox">Acepto terminos y condiciones<span>*</span></label>
+                        <label value="{{ datos.Terminos if datos else '' }}" class="FormularioRegistrarse_Label" for="Input_Checkbox">Acepto terminos y condiciones<span>*</span></label>
                     </div>                 
                     <input class="FormularioRegistrarse_Boton" type="submit" placeholder="Enviar" value="Enviar registro">
                 </form>

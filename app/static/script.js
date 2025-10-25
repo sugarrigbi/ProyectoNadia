@@ -15,7 +15,7 @@ function Enviar_Registro() {
     window.location.href = "/registro";
 }
 function Enviar_Home() {
-    window.location.href = "/index";
+    window.location.href = "/";
 }
 function Enviar_Ayuda() {
     window.location.href = "/ayuda";

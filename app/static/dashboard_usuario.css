@@ -183,8 +183,6 @@ body, html {
 .Boton{
     background-color: #1956EC;
     width: fit-content;
-    margin-top: 15px;
-    margin-right: 35px;
     height: fit-content;
     border-radius: 100px;
     display: flex;
@@ -656,4 +654,14 @@ body, html {
     display: flex;
     width: 100%;
     justify-content: center;
+}
+.Botones{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin: 0 20px 0 20px
+}
+.Formulario_CrearCaso_Boton2:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

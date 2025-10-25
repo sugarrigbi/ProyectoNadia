@@ -144,7 +144,8 @@ Sistema de notificaciones de GaiaLink
         cursor.execute("SELECT Id_Caso_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
         casos = cursor.fetchall()
         if not casos:
-            return "El usuario no tiene casos asociados", "error"
+            Close_BaseDatos(conexion, cursor)
+            return []
         
         for i in casos:
             id_caso = i["Id_Caso_Incidente"]
@@ -155,28 +156,18 @@ Sistema de notificaciones de GaiaLink
 
         cursor.execute("SELECT Fecha FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
         Fecha = cursor.fetchall()
-        if not Fecha:
-            return "El usuario no tiene casos asociados", "error"
 
         cursor.execute("SELECT Descripción FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
         Descripción = cursor.fetchall()
-        if not Descripción:
-            return "El usuario no tiene casos asociados", "error"
 
         cursor.execute("SELECT Personas_Afectadas FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
         Personas_Afectadas = cursor.fetchall()
-        if not Personas_Afectadas:
-            return "El usuario no tiene casos asociados", "error"
 
         cursor.execute("SELECT Nombre FROM prueba.tbl_usuario WHERE Id_usuario = %s", (id_usuario,))
         Nombre = cursor.fetchall()
-        if not Nombre:
-            return "El usuario no tiene casos asociados", "error"
 
         cursor.execute("SELECT Fk_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
         Fk_Incidente = cursor.fetchall()
-        if not Fk_Incidente:
-            return "El usuario no tiene casos asociados", "error"
         for i in Fk_Incidente:
             convertir = i["Fk_Incidente"]
             Incidente = Incidente_Valores.get(convertir)
@@ -190,14 +181,10 @@ Sistema de notificaciones de GaiaLink
             WHERE Fk_Usuario = %s
         """
         cursor.execute(query, (id_usuario,))
-        Departamento = cursor.fetchall()
-        if not Departamento:
-            return "El usuario no tiene casos asociados", "error"          
+        Departamento = cursor.fetchall()  
 
         cursor.execute("SELECT Fk_Estado FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
-        Fk_Estado = cursor.fetchall()
-        if not Fk_Estado:
-            return "El usuario no tiene casos asociados", "error"      
+        Fk_Estado = cursor.fetchall()     
         for i in Fk_Estado:
             convertir = i["Fk_Estado"]
             Estado = Estado_Valores.get(convertir)
@@ -205,16 +192,22 @@ Sistema de notificaciones de GaiaLink
                 Estados.append(Estado)
 
         for i in range(len(Numeros)):
-            caso = {
-                "Radicado": Numeros[i]["Radicado"],
-                "Fecha": Fecha[i]["Fecha"],
-                "Descripción": Descripción[i]["Descripción"],
-                "Personas_Afectadas": Personas_Afectadas[i]["Personas_Afectadas"],
-                "Nombre": Nombre[0]["Nombre"],
-                "Incidente": Incidentes[i],
-                "Departamento": Departamento[i]["Nom_departamento"],
-                "Estado": Estados[i]
-            }
-            lista_fusionada.append(caso)
+            try:
+                if (i < len(Fecha) and i < len(Descripción) and i < len(Personas_Afectadas) and i < len(Incidentes) and i < len(Departamento) and i < len(Estados)):                
+                    caso = {
+                        "Radicado": Numeros[i]["Radicado"],
+                        "Fecha": Fecha[i]["Fecha"],
+                        "Descripción": Descripción[i]["Descripción"],
+                        "Personas_Afectadas": Personas_Afectadas[i]["Personas_Afectadas"],
+                        "Nombre": Nombre[0]["Nombre"],
+                        "Incidente": Incidentes[i],
+                        "Departamento": Departamento[i]["Nom_departamento"],
+                        "Estado": Estados[i]
+                    }
+                if all(caso.values()) and caso["Radicado"]:
+                    lista_fusionada.append(caso)                    
+            except Exception as e:
+                print(f"⚠️ Error procesando caso {i}: {e}")
+                continue                    
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada

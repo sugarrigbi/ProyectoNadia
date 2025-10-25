@@ -336,4 +336,47 @@ El equipo de soporte de GaiaLink
             print(e)
             return f"no se pudo modificar el usuario: {e}", "error"
         finally:
+            mensaje = MIMEMultipart()
+            mensaje["From"] = correo_emisor
+            mensaje["To"] = self.Email
+            mensaje["Subject"] = f"Estimado/a {self.Usuario}"
+            cuerpo = '''
+Queremos informarte que los datos de tu cuenta han sido modificados exitosamente en el módulo de usuarios del sistema GaiaLink.
+
+Si no fuiste tú quien solicitó esta acción, por favor comunícate de inmediato con nuestro equipo de soporte para garantizar la seguridad de tu cuenta.
+
+Si necesitas asistencia adicional, no dudes en escribirnos.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+'''
+            mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] = correo_emisor
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Estimado/a Soporte"
+            cuerpo2 = f'''
+Le informamos que se ha modificado la cuenta de un usuario identificado con {self.Tipo_Documento} {self.Documento}, del sistema GaiaLink.
+
+Si esta acción no fue realizada por usted o no estaba programada, por favor revise los registros de actividad y comuníquese con el equipo de soporte para garantizar la integridad del sistema.
+
+Para cualquier duda o requerimiento adicional, no dude en ponerse en contacto con nosotros.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+'''
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
+
+            try:
+                servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+                servidor.login(correo_emisor, contraseña)
+                servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
+                servidor.quit()
+                print('Correo del usuario:', self.Email)
+                print("Correo enviado exitosamente")
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+            Close_BaseDatos(conexion, cursor)            
             Close_BaseDatos(conexion, cursor)

@@ -17,7 +17,7 @@
             once: true
         });
     </script>
-    <div class="Barra_Lateral" data-aos="fade-right">
+    <div class="Barra_Lateral">
         <div class="Logo">
             <img class="Imagen_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}">
             <h2>Gaialink</h2>
@@ -145,7 +145,10 @@
         <div id="Frame6" class="Frame {% if frame_activo == 'Frame6' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Modificar Datos</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <a class="Cuadro1" href="/dashboard/user/persona/modificar">
@@ -164,7 +167,10 @@
             <div class="FrameCrearCaso2">
                 <div class="Superior">
                     <h2>Crear Caso</h2>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
                 </div>
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}" alt="Candado">
@@ -217,7 +223,10 @@
         <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Mis casos</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>            
             <div class="FrameVerCasos2">
                 {% if lista_casos %}
@@ -243,14 +252,19 @@
                         </div>                    
                     {% endfor %}
                 {% else %}
-                    <p>No hay casos asociados al usuario.</p>
+                    <div class="FrameVerCasos_Caso">
+                        <h3>No hay casos asociados al usuario.</h3>
+                    </div>
                 {% endif %}
-            </div>
+            </div>  
         </div>
         <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Buscar Entidad</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="FrameCrearCaso2">
                 <div class="Formulario">
@@ -278,7 +292,10 @@
         <div id="FrameBuscarEntidad2" class="Frame {% if frame_activo == 'FrameBuscarEntidad2' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Buscar Entidad</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>            
             {% if confirmacion %}
             <div class="Buscar_Entidad">
@@ -299,7 +316,10 @@
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Mis Datos</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>            
             {% if lista_persona %}
             <div class="Buscar_Entidad">
@@ -330,7 +350,10 @@
         <div id="FrameEliminarUsuario" class="Frame {% if frame_activo == 'FrameEliminarUsuario' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Eliminar Usuario</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="FrameCrearCaso2">
                 <div class="Formulario">
@@ -358,7 +381,10 @@
         <div id="FrameModificarDatos" class="Frame {% if frame_activo == 'FrameModificarDatos' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Modificar Datos</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Mod_Todo">
                 {% if lista_datos %}
@@ -431,12 +457,15 @@
             </div>
         </div>            
     </div>
-    <script>
-    const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
-    const frames = document.querySelectorAll('.Frame, Frame1');
+<script>
+const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
+const frames = document.querySelectorAll('.Frame, Frame1');
+const form = document.querySelector(".Buscar_Entidad_Contenedor2");
+const submitButton = form ? form.querySelector(".Formulario_CrearCaso_Boton2") : null;
+const fields = form ? form.querySelectorAll("input, select") : [];
 
-    cuadros.forEach(cuadro => {
-        cuadro.addEventListener('click', () => {
+cuadros.forEach(cuadro => {
+    cuadro.addEventListener('click', () => {
         const target = cuadro.getAttribute('data-target');
         if (target) {
             if (window.location.pathname.includes("/casos") && target !== "FrameVerCasos") {
@@ -460,27 +489,63 @@
             document.getElementById(target).classList.add('visible');
         }
     });
-    });
+});
 
-    document.getElementById("formEliminarUsuario").addEventListener("submit", function(e) {
-        e.preventDefault();
+document.getElementById("formEliminarUsuario")?.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-        if (confirm("¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.")) {
-            this.submit();
-        }
-    });
-
-    function abrirModal(id) {
-        document.getElementById(id).style.display = "block";
+    if (confirm("¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.")) {
+        this.submit();
     }
-    function cerrarModal(id) {
-        document.getElementById(id).style.display = "none";
-    }  
-    window.onclick = function(event) {
-        if (event.target.classList.contains("modal")) {
-            event.target.style.display = "none";
+});
+
+function abrirModal(id) {
+    document.getElementById(id).style.display = "block";
+}
+function cerrarModal(id) {
+    document.getElementById(id).style.display = "none";
+}  
+window.onclick = function(event) {
+    if (event.target.classList.contains("modal")) {
+        event.target.style.display = "none";
+    }
+}  
+
+if (form && submitButton) {
+    const originalValues = {};
+    fields.forEach(field => {
+        originalValues[field.name] = field.value;
+    });
+
+    submitButton.disabled = true;
+    submitButton.style.opacity = "0.6";
+    submitButton.style.cursor = "not-allowed";
+
+    function verificarCambios() {
+        let cambioDetectado = false;
+
+        fields.forEach(field => {
+            if (field.value !== originalValues[field.name]) {
+                cambioDetectado = true;
+            }
+        });
+
+        if (cambioDetectado) {
+            submitButton.disabled = false;
+            submitButton.style.opacity = "1";
+            submitButton.style.cursor = "pointer";
+        } else {
+            submitButton.disabled = true;
+            submitButton.style.opacity = "0.6";
+            submitButton.style.cursor = "not-allowed";
         }
-    }      
-    </script>
+    }
+
+    fields.forEach(field => {
+        field.addEventListener("input", verificarCambios);
+        field.addEventListener("change", verificarCambios);
+    });
+}
+</script>
 </body> 
 </html>
