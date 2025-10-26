@@ -16,7 +16,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #dbe1fd;
     margin-top: 100px;
 }
 .slot1{
@@ -33,6 +33,9 @@ body, html {
 }
 .Boton_Superior{
     height: auto;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -44,9 +47,6 @@ body, html {
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #517ded;
-    border-width: 6px;
-    border-style: solid;
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -65,13 +65,13 @@ body, html {
 .Formulario{
     margin-top: 40px;
     margin-bottom: 62px;
-    width: 33%;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    width: 60%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     display: flex;
     gap: 20px;
     padding: 40px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -98,26 +98,31 @@ body, html {
     height: auto;
     padding: 10px;
     border-radius: 20px;
-    background-color: #5883f0;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;        
+    background-color: #7196f2;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;    
 }
 .FormularioRegistrarse_Input{
-    margin: 10px 0 0 0;
     width: 100%;
-    align-items: left;
     flex-direction: column;
     display: flex;
 }
 .Contenedor_Checkbox{
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
+    align-items: center;
     width: auto;
     height: auto;
+}
+.Contenedor_Checkbox label{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 25px;
 }
 .checkbox {
     width: 25px;
@@ -146,46 +151,74 @@ body, html {
 .FormularioRegistrarse_Input_Input{
     display: flex;
     width: 80%;
+    margin-top: 8px;
     cursor: pointer;
     border: none;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 26px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease; 
+}
+.FormularioRegistrarse_Input_Input:focus,
+select:focus,
+.FormularioRegistrarse_Input_Input3:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
+}
+.FormularioRegistrarse_Input label{
+    pointer-events: none;
+    font-weight: 500;
+    font-size: 20px;
     font-family: 'Montserrat', sans-serif;  
+}
+.FormularioRegistrarse_Input label span{
+    color: red;
+}
+.FormularioRegistrarse_Input select{
+    font-size: 20px;
+    height: 40px;
+    margin-top: 8px;
+    width: 85%;
+    font-family: 'Montserrat', sans-serif;
 }
 .FormularioRegistrarse_Input_Input2{
     display: flex;
-    width: 248px;
+    width: auto;
     cursor: pointer;
     border: none;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
     gap: 0;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
+    transition: all 0.3s ease; 
     font-family: 'Montserrat', sans-serif;  
 }
 .FormularioRegistrarse_Input_Input3{
     display: flex;
-    width: 235px;
+    width: 40%;
+    margin-top: 8px;
     cursor: pointer;
     border: none;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
-    gap: 0;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 26px;
+    transition: all 0.3s ease;
     font-family: 'Montserrat', sans-serif;  
 }
 .FormularioRegistrarse_Contenedor{
     width: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
     height: auto;
     align-items: center;
     justify-content: center;
@@ -195,25 +228,24 @@ body, html {
 .FormularioRegistrarse{
     width: 100%;
     height: auto;
-    margin-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 35px;
+    gap: 10px;
 }
 .FormularioRegistrarse_Boton{
     height: auto;
     padding: 10px 20px; 
     color: rgb(255, 255, 255);
     font-family: 'Montserrat', sans-serif;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     font-size: 30px;
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #7b9cf0;
-    border-width: 6px;
-    border-style: solid;
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -231,6 +263,22 @@ body, html {
     cursor: default;
     font-weight: bold;
     font-family: 'Montserrat', sans-serif;        
+}
+.Contenedor_Checkbox a {   
+    text-decoration: none;
+    color: #002A91;
+    width: auto;
+    display: inline-block;
+    font-size: 25px;
+    margin: 0;
+    cursor: default;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;        
+}
+.Contenedor_Checkbox a:hover {
+    background-color: transparent;
+    color: #2fb2de;
+    text-decoration: underline;
 }
 .Links:hover {
     background-color: transparent;
@@ -253,29 +301,10 @@ body, html {
     width: auto;
     height: auto;
 }
-.FormularioRegistrarse_Label{
-    margin: 0;
-    cursor: default;
-    text-align: left;
-    font-weight: 400;
-    color: rgb(0, 0, 0);
-    justify-content: left;
-    font-size: 22px;
-    font-family: 'Montserrat', sans-serif;
-}
-span{
-    margin: 0;
-    cursor: default;
-    text-align: left;
-    font-weight: 400;
-    color: rgb(169, 0, 0);
-    justify-content: left;
-    font-size: 25px;
-    font-family: 'Montserrat', sans-serif;
-}
 .FormularioRegistrarse_Contenedor1{
-    width: auto;
-    height: auto;
+    width: fit-content;
+    height: fit-content;
+    margin-left: 28px;
 }
 .FormularioRegistrarse_Titulo{
     cursor: default;
@@ -321,4 +350,35 @@ span{
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding-left: 20px;
+}
+.FormularioRegistrarse h3 {
+    margin: 0px;
+    width: 95%;
+    padding: 5px;
+    color: #1956EC;
+    border-radius: 7px;
+    border-bottom: 4px solid #1956EC;
+    font-family: 'Montserrat', sans-serif;    
+    font-size: 30px;
+    text-justify: left;
+}
+.FormularioRegistrarse_Input2{
+    width: fit-content;
+    pointer-events: none;
+    font-weight: 500;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;  
+    height: fit-content;
+    border-left: 5px solid #1956ec;
+    background-color: #dcefff;
+    padding: 6px;
+    border-radius: 8px;
+}
+.a{
+    color: red;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: relative;
+    right: 8px;
+    transform: translateX(-12px);
 }

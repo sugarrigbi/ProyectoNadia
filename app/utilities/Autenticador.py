@@ -218,6 +218,16 @@ def Verificar_Usuario(Usuario):
 def Validar_Datos(Datos):
     errores = {}
 
+    resultado = Datos["Fecha_Nacimiento"]
+    fecha_nac_obj = datetime.strptime(resultado, "%Y-%m-%d").date()
+    hoy = datetime.today().date()
+    edad = hoy.year - fecha_nac_obj.year
+    if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
+        edad -= 1
+
+    if edad < 13:
+        errores["Fecha_Nacimiento"] = "Debes tener al menos 13 años para registrarte."
+
     resultado = Validar_Contraseña(Datos["Contraseña"])
     if resultado:
         errores["Contraseña"] = resultado    

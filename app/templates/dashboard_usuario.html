@@ -35,7 +35,9 @@
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Bienvenido USUARIO</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <div class="Cuadro1" data-target="Frame3">
@@ -63,7 +65,9 @@
         <div id="Frame2" class="Frame {% if frame_activo == 'Frame2' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Mi Perfil</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <a class="Cuadro1" href="/dashboard/user/persona/datos">
@@ -86,7 +90,9 @@
         <div id="Frame3" class="Frame {% if frame_activo == 'Frame3' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Casos</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <div class="Cuadro1" data-target="FrameCrearCaso">
@@ -104,7 +110,9 @@
         <div id="Frame4" class="Frame {% if frame_activo == 'Frame4' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Entidades</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <div class="Cuadro1" data-target="FrameBuscarEntidad">
@@ -122,7 +130,9 @@
         <div id="Frame5" class="Frame {% if frame_activo == 'Frame5' %}visible{% endif %}">
             <div class="Superior">
                 <h2>Ayuda</h2>
-                <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
             </div>
             <div class="Cuadros">
                 <a class="Cuadro1" href="/ayuda">
@@ -204,7 +214,7 @@
                         <div class="Formulario_CrearCaso_Doble">
                             <div class="Formulario_CrearCaso_Contenedor">
                                 <label for="Input_Direccion">Direccion<span>*</span></label>
-                                <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="Direccion">
+                                <input id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input" type="text" required name="Direccion">
                             </div>
                             <div class="Formulario_CrearCaso_Contenedor">
                                 <label for="Input_Personas">Personas Afectadas<span>*</span></label>
@@ -213,7 +223,7 @@
                         </div>
                         <div class="Formulario_CrearCaso_Contenedor2">
                                 <label for="Input_Descripcion">Descripcion del incidente<span>*</span></label>
-                                <textarea id="Input_Descripcion" class="Formulario_CrearCaso_Input3" required name="Descripcion"></textarea>
+                                <textarea id="Input_Descripcion" minlength="15" class="Formulario_CrearCaso_Input3" required name="Descripcion"></textarea>
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
                     </form>
@@ -455,7 +465,7 @@
                 </div>
                 {% endif %}
             </div>
-        </div>            
+        </div>        
     </div>
 <script>
 const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');

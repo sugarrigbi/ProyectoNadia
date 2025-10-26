@@ -95,43 +95,41 @@
                 </div>
                 {% endif %}                 
                 <form class="FormularioRegistrarse" method="POST">
+                    <h3>Datos Personales</h3>
                     <div class="FormularioRegistrarse_Contenedor1">
-                        <h3 class="FormularioRegistrarse_Titulo">Datos Personales</h3>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Primer_Nombre') %}
                                     <div class="confirmacion_error">{{ errores['Primer_Nombre'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_PrimerNombre">Primer nombre<span>*</span></label>
-                                <input value="{{ datos.Primer_Nombre if datos else '' }}" id="Input_PrimerNombre"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Nombre">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_PrimerNombre">Primer nombre<span>*</span></label></div>
+                                <input value="{{ datos.Primer_Nombre if datos else '' }}" minlength="2" id="Input_PrimerNombre"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Nombre">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Segundo_Nombre') %}
                                     <div class="confirmacion_error">{{ errores['Segundo_Nombre'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_SegundoNombre">Segundo nombre</label>
-                                <input value="{{ datos.Segundo_Nombre if datos else '' }}" id="Input_SegundoNombre"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Nombre">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_SegundoNombre">Segundo nombre</label></div>
+                                <input value="{{ datos.Segundo_Nombre if datos else '' }}" minlength="2" id="Input_SegundoNombre"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Nombre">
                             </div>
-                        </div>
-                        <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Primer_Apellido') %}
                                     <div class="confirmacion_error">{{ errores['Primer_Apellido'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_PrimerApellido">Primer apellido<span>*</span></label>
-                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" id="Input_PrimerApellido"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Apellido">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_PrimerApellido">Primer apellido<span>*</span></label></div>
+                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" minlength="2" id="Input_PrimerApellido"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Apellido">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Segundo_Apellido') %}
                                     <div class="confirmacion_error">{{ errores['Segundo_Apellido'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_SegundoApellido">Segundo apellido</label>
-                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" id="Input_SegundoApellido"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Apellido">
-                            </div>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_SegundoApellido">Segundo apellido</label></div>
+                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" minlength="2" id="Input_SegundoApellido"class="FormularioRegistrarse_Input_Input" type="text" name="Segundo_Apellido">
+                            </div>                            
                         </div>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
-                                <label class="FormularioRegistrarse_Label" for="Input_TipoDocumento">Tipo de documento<span>*</span></label>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_TipoDocumento">Tipo de documento<span class="a">*</span></label></div>
                                 <select  id="Input_TipoDocumento"class="FormularioRegistrarse_Input_Input2" name="Tipo_Documento" required>
                                     <option value="">Seleccion</option>
                                     <option value="CC" {% if datos and datos.Tipo_Documento == 'CC' %}selected{% endif %}>Cédula de ciudadanía</option>
@@ -145,111 +143,122 @@
                                 {% if errores and errores.get('Documento') %}
                                     <div class="confirmacion_error">{{ errores['Documento'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Documento">Documento<span>*</span></label>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Documento">Documento<span class="a">*</span></label></div>
                                 <input value="{{ datos.Documento if datos else '' }}" id="Input_Documento"class="FormularioRegistrarse_Input_Input" type="text" required name="Documento">
-                            </div>
-                        </div>
-                        <div class="FormularioRegistrarse_Contenedor">
+                            </div> 
                             <div class="FormularioRegistrarse_Input">
-                                <label class="FormularioRegistrarse_Label" for="Input_Fecha">Fecha de nacimiento<span>*</span></label>
-                                <input value="{{ datos.Fecha_Nacimiento if datos else '' }}" id="Input_Fecha"class="FormularioRegistrarse_Input_Input3" type="date" required name="Fecha_Nacimiento">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_TipoDocumento">Fecha de nacimiento<span class="a">*</span></label></div>
+                                {% if errores and errores.get('Fecha_Nacimiento') %}
+                                    <div class="confirmacion_error">{{ errores['Fecha_Nacimiento'] }}</div>
+                                {% endif %}
+                                <input value="{{ datos.Fecha_Nacimiento if datos else '' }}" id="Input_Fecha"class="FormularioRegistrarse_Input_Input" type="date" required name="Fecha_Nacimiento">
                             </div>
+                            <div class="FormularioRegistrarse_Input">
+
+                            </div>                                                        
                         </div>
                     </div>
+                    <h3>Direccion</h3>
                     <div class="FormularioRegistrarse_Contenedor1">
-                        <h3 class="FormularioRegistrarse_Titulo">Direccion</h3>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Departamento') %}
                                     <div class="confirmacion_error">{{ errores['Departamento'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Departamento">Departamento<span>*</span></label>
-                                <input value="{{ datos.Departamento if datos else '' }}" id="Input_Departamento"class="FormularioRegistrarse_Input_Input" type="text" required name="Departamento">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Departamento">Departamento<span>*</span></label></div>
+                                <input value="{{ datos.Departamento if datos else '' }}" minlength="4" id="Input_Departamento"class="FormularioRegistrarse_Input_Input" type="text" required name="Departamento">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Ciudad') %}
                                     <div class="confirmacion_error">{{ errores['Ciudad'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Ciudad">Ciudad<span>*</span></label>
-                                <input value="{{ datos.Ciudad if datos else '' }}" id="Input_Ciudad"class="FormularioRegistrarse_Input_Input" type="text" required name="Ciudad">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Ciudad">Ciudad<span>*</span></label></div>
+                                <input value="{{ datos.Ciudad if datos else '' }}" minlength="3" id="Input_Ciudad"class="FormularioRegistrarse_Input_Input" type="text" required name="Ciudad">
                             </div>
-                        </div>
-                        <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Localidad') %}
                                     <div class="confirmacion_error">{{ errores['Localidad'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Localidad">Localidad</label>
-                                <input value="{{ datos.Localidad if datos else '' }}" id="Input_Localidad"class="FormularioRegistrarse_Input_Input" type="text" name="Localidad">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Localidad">Localidad</label></div>
+                                <input value="{{ datos.Localidad if datos else '' }}" minlength="3" id="Input_Localidad"class="FormularioRegistrarse_Input_Input" type="text" name="Localidad">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Barrio') %}
                                     <div class="confirmacion_error">{{ errores['Barrio'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Barrio">Barrio</label>
-                                <input value="{{ datos.Barrio if datos else '' }}" id="Input_Barrio"class="FormularioRegistrarse_Input_Input" type="text" name="Barrio">
-                            </div>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Barrio">Barrio</label></div>
+                                <input value="{{ datos.Barrio if datos else '' }}" minlength="3" id="Input_Barrio"class="FormularioRegistrarse_Input_Input" type="text" name="Barrio">
+                            </div>                            
                         </div>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Direccion') %}
                                     <div class="confirmacion_error">{{ errores['Direccion'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Direccion">Direccion<span>*</span></label>
-                                <input value="{{ datos.Direccion if datos else '' }}" id="Input_Direccion"class="FormularioRegistrarse_Input_Input3" type="text" required name="Direccion">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Direccion">Direccion<span>*</span></label></div>
+                                <input value="{{ datos.Direccion if datos else '' }}" minlength="6" id="Input_Direccion"class="FormularioRegistrarse_Input_Input" type="text" required name="Direccion">
                             </div>
+                            <div class="FormularioRegistrarse_Input">
+                            </div>  
+                            <div class="FormularioRegistrarse_Input">
+                            </div>   
+                            <div class="FormularioRegistrarse_Input">
+                            </div>                                                                                        
                         </div>
                     </div>
+                    <h3>Datos de la cuenta</h3>
                     <div class="FormularioRegistrarse_Contenedor1">
-                        <h3 class="FormularioRegistrarse_Titulo">Datos de la cuenta</h3>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Correo') %}
                                     <div class="confirmacion_error">{{ errores['Correo'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Correo">Correo<span>*</span></label>
-                                <input value="{{ datos.Correo if datos else '' }}" id="Input_Correo" class="FormularioRegistrarse_Input_Input" type="text" required name="Correo">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Correo">Correo<span>*</span></label></div>
+                                <input value="{{ datos.Correo if datos else '' }}" id="Input_Correo" minlength="10" class="FormularioRegistrarse_Input_Input" type="text" required name="Correo">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Usuario') %}
                                     <div class="confirmacion_error">{{ errores['Usuario'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Usuario">Nombre de usuario<span>*</span></label>
-                                <input value="{{ datos.Usuario if datos else '' }}" id="Input_Usuario" class="FormularioRegistrarse_Input_Input" type="text" required name="Usuario">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Usuario">Nombre de usuario<span>*</span></label></div>
+                                <input value="{{ datos.Usuario if datos else '' }}" id="Input_Usuario" minlength="5" class="FormularioRegistrarse_Input_Input" type="text" required name="Usuario">
                             </div>
-                        </div>
-                        <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Contraseña') %}
                                     <div class="confirmacion_error">{{ errores['Contraseña'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Contraseña">Contraseña<span>*</span></label>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Contraseña<span>*</span></label></div>
                                 <input value="{{ datos.Contraseña if datos else '' }}" id="Input_Contraseña" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Contraseña2') %}
                                     <div class="confirmacion_error">{{ errores['Contraseña2'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Contraseña2">Confirmar Contraseña<span>*</span></label>
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña2">Confirmar Contraseña<span>*</span></label></div>
                                 <input value="{{ datos.Contraseña2 if datos else '' }}" id="Input_Contraseña2" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña2">
-                            </div>
+                            </div>                            
                         </div>
                         <div class="FormularioRegistrarse_Contenedor">
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Telefono') %}
                                     <div class="confirmacion_error">{{ errores['Telefono'] }}</div>
                                 {% endif %}
-                                <label class="FormularioRegistrarse_Label" for="Input_Telefono">Telefono<span>*</span></label>
-                                <input value="{{ datos.Telefono if datos else '' }}" id="Input_Telefono" class="FormularioRegistrarse_Input_Input3" type="text" required name="Telefono">
-                            </div>                  
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Telefono">Telefono<span>*</span></label></div>
+                                <input value="{{ datos.Telefono if datos else '' }}" id="Input_Telefono" class="FormularioRegistrarse_Input_Input" type="text" required name="Telefono">
+                            </div>     
+                            <div class="FormularioRegistrarse_Input">
+                            </div> 
+                            <div class="FormularioRegistrarse_Input">
+                            </div> 
+                            <div class="FormularioRegistrarse_Input">
+                            </div>                                                                                                  
                         </div>
                     </div>
                     <div class="Contenedor_Checkbox">
                         <input class="checkbox" id="Input_Checkbox" type="checkbox" name="Terminos" required value="1">
-                        <label value="{{ datos.Terminos if datos else '' }}" class="FormularioRegistrarse_Label" for="Input_Checkbox">Acepto terminos y condiciones<span>*</span></label>
-                    </div>                 
+                        <label value="{{ datos.Terminos if datos else '' }}" for="Input_Checkbox">Acepto <a href="terminos#Terminos_Place2">terminos</a> y <a href="terminos#Terminos_Place1">condiciones</a><span class="">*</span></label></div>                
                     <input class="FormularioRegistrarse_Boton" type="submit" placeholder="Enviar" value="Enviar registro">
-                </form>
+                </form> 
                 <div class="Formulario2">
                     <a class="Links" href="login">Volver a inicio de sesion</a>
                 </div>
