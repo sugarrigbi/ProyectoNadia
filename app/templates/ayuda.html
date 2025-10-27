@@ -18,7 +18,6 @@
             once: true
         });
     </script>
-    <div class="slot1">Ayuda</div>
     <div class="Desktop">
         <div class="Redes">
                 <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
@@ -94,17 +93,26 @@
                 {% endif %}       
                 <form class="FormularioAyuda" method="POST">
                     <div class="FormularioAyuda_Input">
-                        <input id="Input_Email"class="FormularioAyuda_Input_Input" type="text" required name="Nombre" placeholder="Nombre de usuario">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Nombre</label></div>
+                        </div>  
+                        <input id="Input_Email"class="FormularioAyuda_Input_Input" type="text" required name="Nombre">
                     </div>
                     <div class="FormularioAyuda_Input">
-                        <textarea id="Input_Ayuda"class="FormularioAyuda_Input_Input1" required name="Ayuda" placeholder="Como podemos ayudarte"></textarea>
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Ayuda">Como podemos ayudarte</label></div>
+                        </div>
+                        <textarea id="Input_Ayuda"class="FormularioAyuda_Input_Input1" required name="Ayuda"></textarea>
                     </div>                    
                     <input class="FormularioAyuda_Boton" type="submit" placeholder="Enviar" value="Enviar">
                 </form>
                 <div class="Formulario2">
                     <a class="Links" href="">Volver al inicio</a>
                 </div>  
-            </div>  
+            </div>
+            <div class="Fotter" data-aos="fade-up">
+                <h3 class="Fotter_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+            </div>   
         </div>     
         <div class="Frame8" id="Ayuda_Place8" data-aos="fade-up">
             <div class="Frame8_Contenedor">
@@ -136,8 +144,8 @@
                     <li class="Lista2_Titulo">Contactanos</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.com</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">administrador@gaialink.com</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red"><a class="gaialink" href="https://www.gaialink.online">www.gaialink.online</a></li>
                 </ul>
                 </div>
             </div>

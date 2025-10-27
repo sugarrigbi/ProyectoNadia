@@ -23,6 +23,9 @@ def Enviar_Form_Ayuda(Nombre, mensaje):
 def Enviar_Form_Calificanos(Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4):
     conexion, cursor = Get_BaseDatos()
 
+    if not (Nombre and Pregunta1 and Pregunta2 and Pregunta3 and Pregunta4):
+        return "Todos los campos son obligatorios", "error"
+
     try:
         cursor.execute("SELECT COUNT(*) AS total FROM tbl_usuario WHERE Nombre = %s", (Nombre,))
         resultado = cursor.fetchone()

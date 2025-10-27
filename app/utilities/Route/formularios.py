@@ -11,10 +11,10 @@ def get_ayuda():
 def get_calificanos():
     if request.method == "POST":
         Nombre = request.form["Nombre"]
-        Pregunta1 = request.form["pregunta1"]
-        Pregunta2 = request.form["pregunta2"]
-        Pregunta3 = request.form["pregunta3"]
-        Pregunta4 = request.form["pregunta4"]
+        Pregunta1 = request.form.get("pregunta1", "")
+        Pregunta2 = request.form.get("pregunta2", "")
+        Pregunta3 = request.form.get("pregunta3", "")
+        Pregunta4 = request.form.get("pregunta4", "")
         mensaje, tipo = Enviar_Form_Calificanos(Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4)
         return render_template("calificanos.html", confirmacion=mensaje, tipo=tipo)
     return render_template("calificanos.html")

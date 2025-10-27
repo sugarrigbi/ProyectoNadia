@@ -17,8 +17,7 @@
             duration: 1000,
             once: true
         });
-    </script>    
-    <div class="slot1">Recuperar<br>Contraseña</div>
+    </script>       
     <div class="Desktop">
         <div class="Redes">
                 <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
@@ -98,7 +97,10 @@
                 {% endif %}
                 <form action="/recuperar" class="FormularioEmail" method="POST">
                     <div class="FormularioEmail_Input">
-                        <input id="Input_Email"class="FormularioEmail_Input_Input" type="text" required name="usuario" placeholder="Nombre de usuario">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Nombre de usuario</label></div>
+                        </div>                        
+                        <input id="Input_Email"class="FormularioEmail_Input_Input" type="text" required name="usuario">
                     </div>
                     <input class="FormularioEmail_Boton" type="submit" placeholder="Enviar" value="Enviar correo de recuperacion">
                 </form>
@@ -140,8 +142,8 @@
                     <li class="Lista2_Titulo">Contactanos</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.online</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">administrador@gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red"><a class="gaialink" href="https://www.gaialink.online">www.gaialink.online</a></li>
                 </ul>
                 </div>
             </div>

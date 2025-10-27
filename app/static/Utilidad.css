@@ -222,8 +222,25 @@
     margin-top: 50px;
     margin-left: 250px;
 }
+.gaialink{
+    color: #ffffff;
+    width: auto;
+    transition: 0.3s all ease;
+    display: inline-block;
+    font-size: 20px;
+    margin: 0;
+    cursor: default;
+    font-family: 'Montserrat', sans-serif;   
+}
+.gaialink:hover {
+    background-color: transparent;
+    color: #cbcbcb;
+    cursor: pointer;
+    text-decoration: underline;
+}
 .Lista2{
     list-style: none;
+    z-index: 100000;
 }
 .Lista2_Titulo{
     cursor: default;
