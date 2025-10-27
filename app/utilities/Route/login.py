@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, session
-from app.utilities.Autenticador import procesar_login, mostrar_dashboard, Validar_Datos, Enviar_Token, validar_token, Comparar_Contraseña_2
+from app.utilities.Autenticador import procesar_login, mostrar_dashboard, Validar_Datos, Enviar_Token, validar_token, Comparar_Contraseña_2, Validar_Contraseña2
 from app.models.Persona import Persona
 
 def get_registrar():
@@ -69,11 +69,22 @@ def get_recuperar_token():
         Contraseña = request.form["Contraseña"]
         Contraseña2 = request.form["Contraseña2"]
         Contraseña3 = Comparar_Contraseña_2(Contraseña, Contraseña2)
-
         Token_bot = session.get("Token_bot")
         Correo = session.get("Correo")
         Hora = session.get("Hora")
         Nombre = session.get("Usuario")
+        datos = {
+            "Token_Usu": request.form["token"],
+            "Contraseña": request.form["Contraseña"],
+            "Contraseña2": request.form["Contraseña2"]
+        }
+
+        if Contraseña3 == False:
+            return render_template("recuperar-token.html", errores2={"Contraseña": "Las contraseñas no coinciden"}, tipo="error" , datos=datos)
+
+        Mensaje_Error = Validar_Contraseña2(Contraseña)
+        if Mensaje_Error:
+            return render_template("recuperar-token.html", errores2=Mensaje_Error, datos=datos)
 
         resultado, tipo = validar_token(Token_bot, Correo, Hora, Token_Usu, Nombre, Contraseña3)
         return render_template("recuperar-token.html", confirmacion=resultado, tipo=tipo)

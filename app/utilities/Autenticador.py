@@ -13,7 +13,7 @@ contraseña = "1145224601Aa*"
 MAX_INTENTOS = 3
 BLOQUEO_MINUTOS = 15
 bloqueado_hasta = datetime.now() + timedelta(minutes=BLOQUEO_MINUTOS)
-
+correo_receptor1 = "administrador@gaialink.online"
 def Verificar_Rol(id_usuario):
     try:
         conexion, cursor = Get_BaseDatos()
@@ -164,6 +164,21 @@ def Validar_Contraseña(Contraseña):
     if not re.search(r'[/!@#$%^&*(),.?":{}|<>]', Contraseña):
         return "La contraseña debe tener un caracter especial"
     return None
+def Validar_Contraseña2(Contraseña):
+    errores = {}
+    if len(Contraseña) < 8:
+        errores["Contraseña"] = "La contraseña debe tener más de 8 caracteres"
+        return errores
+    if not any(c.isupper() for c in Contraseña):
+        errores["Contraseña"] = "La contraseña debe tener una mayúscula"
+        return errores
+    if not any(c.isdigit() for c in Contraseña):
+        errores["Contraseña"] = "La contraseña debe tener un número"
+        return errores
+    if not re.search(r'[/!@#$%^&*(),.?":{}|<>]', Contraseña):
+        errores["Contraseña"] = "La contraseña debe tener un carácter especial"
+        return errores  
+    return {}
 def Comparar_Contraseña(Contraseña, Contraseña2):
     if Contraseña == Contraseña2:
         return None
@@ -173,7 +188,7 @@ def Comparar_Contraseña_2(Contraseña, Contraseña2):
     if Contraseña == Contraseña2:
         return Contraseña
     else:
-        return "Las contraseñas no coinciden"
+        return False
 def Validar_Telefono(Telefono):
     if len(Telefono) != 10:
         return "El Telefono debe tener entre 6 y 10 digitos"
@@ -309,18 +324,30 @@ def Enviar_Token(Nombre):
 
     mensaje = MIMEMultipart()
     mensaje["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
-    mensaje["To"] = correo_token
+    mensaje["To"] = correo
     mensaje["Subject"] = f"Estimado/a {Usuario}"
     mensaje['Date'] = formatdate(localtime=True)
     mensaje['Message-ID'] = make_msgid(domain="gaialink.online")
-    cuerpo = f"Tu código para recuperar la contraseña es: {token_recuperacion}\nEste código es válido por 10 minutos\nRecuerda no compartirlo con nadie\nAtentamente,El equipo de Gaialink"
-    mensaje.attach(MIMEText(cuerpo, "plain"))    
+    cuerpo = f'''
+Hola {Nombre},
+
+Recibimos una solicitud para restablecer la contraseña de tu cuenta en GaiaLink.
+
+Tu código de verificación es: {token_recuperacion}
+(válido por 10 minutos).
+
+Si tú no realizaste esta solicitud, puedes ignorar este mensaje.
+
+Atentamente,
+El equipo de soporte de GaiaLink
+'''
+    mensaje.attach(MIMEText(cuerpo, "plain"))
     try:
         servidor = smtplib.SMTP_SSL("gaialink.online", 465)
         servidor.login(correo_emisor, contraseña)
         servidor.send_message(mensaje)
         servidor.quit()
-        print('Correo del usuario:', correo_emisor)
+        print('Correo del usuario:', correo)
         print("Correo enviado exitosamente")
         return {
             "Mensaje": "Se envió un codigo al correo.",
@@ -341,7 +368,7 @@ def Enviar_Token(Nombre):
         }
 def validar_token(token_recuperacion, correo_token, hora_token, token_usuario, Nombre, Contraseña3):
     conexion, cursor = Get_BaseDatos()
-
+    contraseña_hasheada = hash_contraseña(Contraseña3)
     try:
         print("hora_token:", hora_token)
         hora_token = datetime.strptime(hora_token, "%Y-%m-%d %H:%M:%S")
@@ -360,10 +387,63 @@ def validar_token(token_recuperacion, correo_token, hora_token, token_usuario, N
     if not resultado_usuario:
         return "No se encontró el usuario.", "error"
     id_usuario = resultado_usuario["id_usuario"]
-    cursor.execute("UPDATE tbl_usuario SET Contraseña = %s WHERE Id_usuario = %s", (Contraseña3, id_usuario))
+    cursor.execute("UPDATE tbl_usuario SET Contraseña = %s WHERE Id_usuario = %s", (contraseña_hasheada, id_usuario))
     conexion.commit()
-    Close_BaseDatos(conexion, cursor)
-    return "Contraseña recuperada con exito", "exito"
+
+    cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario  JOIN tbl_persona ON tbl_persona.fk_usuario = tbl_usuario.Id_usuario JOIN tbl_adic_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_Persona WHERE tbl_usuario.Nombre = %s", (Nombre,))
+    resultado_correo = cursor.fetchone()
+    if not resultado_correo:
+        return "EL usuario no tiene correo asociado", "error"
+    correo = resultado_correo["Email"]
+
+    mensaje = MIMEMultipart()
+    mensaje["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+    mensaje["To"] = correo
+    mensaje["Subject"] = f"Estimado/a {Nombre}"
+    mensaje['Date'] = formatdate(localtime=True)
+    mensaje['Message-ID'] = make_msgid(domain="gaialink.online")
+    cuerpo = f'''
+Hola {Nombre},
+
+Te informamos que tu contraseña ha sido modificada exitosamente en el sistema GaiaLink.
+
+Si no realizaste este cambio, por favor comunícate de inmediato con nuestro equipo de soporte para proteger tu cuenta.
+
+Si fuiste tú quien solicitó la modificación, no necesitas realizar ninguna acción adicional.
+
+Atentamente,
+El equipo de soporte de GaiaLink
+'''
+    mensaje.attach(MIMEText(cuerpo, "plain"))
+
+    mensaje2 = MIMEMultipart()
+    mensaje2["From"] = correo_emisor
+    mensaje2["To"] = correo_receptor1
+    mensaje2["Subject"] = f"Estimado/a Soporte"
+    cuerpo2 = f'''
+Buen dia
+
+Se informa que el usuario {Nombre} ha realizado un cambio de contraseña en el sistema GaiaLink.
+
+Si esta acción no fue autorizada o no estaba programada, por favor revise los registros de actividad y tome las medidas necesarias para garantizar la seguridad del sistema.
+
+Para cualquier duda o requerimiento adicional, no dude en comunicarse con el equipo de soporte.
+
+Atentamente,
+El equipo de soporte de GaiaLink
+'''
+    mensaje2.attach(MIMEText(cuerpo2, "plain"))    
+    try:
+        servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+        servidor.login(correo_emisor, contraseña)
+        servidor.send_message(mensaje)
+        servidor.send_message(mensaje2)
+        servidor.quit()
+        print('Correo del usuario:', correo)
+        print("Correo enviado exitosamente")
+        return "Contraseña recuperada con exito", "exito"
+    finally:
+        Close_BaseDatos(conexion, cursor)
 def Obtener_Contraseña(usuario):
     conexion, cursor = Get_BaseDatos()
     try:

@@ -239,10 +239,29 @@ Atentamente,
 El equipo de soporte de GaiaLink
 '''
             mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] = correo_emisor
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Estimado/a Soporte"
+            cuerpo2 = f'''
+Buen día,
+
+Le informamos que un nuevo usuario ha creado una cuenta en el sistema GaiaLink, identificado con {self.Tipo_Documento} {self.Documento}.
+
+Por favor, revise los registros de actividad y la información del usuario para garantizar la integridad y seguridad del sistema.
+
+Para cualquier duda o requerimiento adicional, no dude en ponerse en contacto con nuestro equipo de soporte.
+
+Atentamente,
+El equipo de soporte de GaiaLink
+'''
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
             try:
                 servidor = smtplib.SMTP_SSL("gaialink.online", 465)
                 servidor.login(correo_emisor, contraseña)
                 servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
                 servidor.quit()
                 print('Correo del usuario:', self.Email)
                 print("Correo enviado exitosamente")
@@ -293,6 +312,8 @@ El equipo de soporte de GaiaLink
             mensaje2["To"] = correo_receptor1
             mensaje2["Subject"] = f"Estimado/a Soporte"
             cuerpo2 = f'''
+Buen dia
+    
 Le informamos que se ha eliminado la cuenta de un usuario identificado con {self.Tipo_Documento} {self.Documento}, del sistema GaiaLink.
 
 Si esta acción no fue realizada por usted o no estaba programada, por favor revise los registros de actividad y comuníquese con el equipo de soporte para garantizar la integridad del sistema.

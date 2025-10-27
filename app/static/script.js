@@ -10,7 +10,7 @@ function Enviar_Login() {
 }
 function Enviar_Calificanos() {
     window.location.href = "/calificanos";
-}
+} 
 function Enviar_Registro() {
     window.location.href = "/registro";
 }

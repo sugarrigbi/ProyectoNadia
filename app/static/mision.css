@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body, html {
     scroll-behavior: smooth;
-    width: 99.2vw;
+    width: auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 .Desktop{
-    width: fit-content;
+    width: 100%;
     height: auto;
 }
 .Frame1{
-    width: 1863px;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    background-color: #dbe1fd;
     align-items: center;
     justify-content: center;
     height: 850px;
@@ -33,9 +34,9 @@ body, html {
 .Mision_Contenedor{
     width: auto;
     height: 500px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(14px);
     background-color: #5682F1;
     border-radius: 20px;
     align-items: center;
@@ -45,10 +46,10 @@ body, html {
 .Mision_Contenedor1{
     width: auto;
     height: auto;
-    background-color: #dadada;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(14px);
     border-radius: 20px;
     margin-top: 30px;
     align-items: center;

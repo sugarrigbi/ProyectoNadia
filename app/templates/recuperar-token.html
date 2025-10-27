@@ -18,7 +18,6 @@
             once: true
         });
     </script>    
-    <div class="slot1">Recuperar<br>Contraseña</div>
     <div class="Desktop">
         <div class="Redes">
                 <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
@@ -89,6 +88,9 @@
                 <div class="Formulario_Contenedor">
                     <h3 class="Formulario_Contenedor_Texto">Recuperar Contraseña</h3>
                 </div>
+                {% if errores2 and errores2.get('Contraseña') %}
+                    <div class="confirmacion_error">{{ errores2['Contraseña'] }}</div>
+                {% endif %}         
                 {% if confirmacion %}
                 <div class="confirmacion {{ tipo }}" data-aos="fade-up">
                     <ul>
@@ -96,11 +98,20 @@
                     </ul>
                 </div>
                 {% endif %}                   
-                <form action="/recuperar-token" class="FormularioEmail" method="POST">
+                <form id="FormularioEmail" action="/recuperar-token" class="FormularioEmail" method="POST">
                     <div class="FormularioEmail_Input">
-                        <input id="Input_Token"class="FormularioEmail_Input_Input" type="text" required name="token" placeholder="Codigo de recuperacion">
-                        <input id="Input_Contraseña1"class="FormularioEmail_Input_Input" type="password" required name="Contraseña" placeholder="Contraseña nueva">
-                        <input id="Input_Contraseña2"class="FormularioEmail_Input_Input" type="password" required name="Contraseña2" placeholder="Confirma la Contraseña">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Token">Token de recuperacion</label></div>
+                        </div>                        
+                        <input value="{{ datos.Token_Usu if datos else '' }}" id="Input_Token"class="FormularioEmail_Input_Input" type="text" required name="token">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña1">Contraseña nueva</label></div>
+                        </div>                        
+                        <input value="{{ datos.Contraseña if datos else '' }}" id="Input_Contraseña1"class="FormularioEmail_Input_Input" type="password" required name="Contraseña">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña2">Confirmar contraseña nueva</label></div>
+                        </div>                        
+                        <input value="{{ datos.Contraseña2 if datos else '' }}" id="Input_Contraseña2"class="FormularioEmail_Input_Input" type="password" required name="Contraseña2">
                     </div>
                     <input class="FormularioEmail_Boton" type="submit" placeholder="Enviar" value="Cambiar contraseña">
                 </form>
