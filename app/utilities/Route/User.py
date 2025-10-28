@@ -1,6 +1,7 @@
 from flask import render_template, request, session, redirect,url_for
 from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos, Validar_Datos2
 from app.models.Casos import Caso
+from app.models.Entidades import Entidad
 from datetime import datetime
 
 from app.models.Entidades import Entidad
@@ -26,6 +27,11 @@ def get_miscasos():
     lista_casos = c.Buscar_Casos(nombre)
 
     return render_template("dashboard_usuario.html", lista_casos=lista_casos, frame_activo="FrameVerCasos")
+def get_entidades():
+    e = Entidad(None, None, None, None, None, None, None)
+    lista_entidades = e.Buscar_Entidades()
+
+    return render_template("dashboard_usuario.html", lista_entidades=lista_entidades, frame_activo="FrameBuscarEntidad3")
 def get_entidad():
     if request.method == "POST":
         codigo = request.form.get("codigo")

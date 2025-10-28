@@ -10,7 +10,7 @@ body, html {
 .Desktop{
     width: 85%;
     height: 100%;
-    margin-left: 250px;
+    margin-left: 15%;
 }
 .Barra_Lateral{
     position: fixed;
@@ -37,11 +37,11 @@ body, html {
     cursor: pointer;
     font-weight: 500;
     padding: 15px 30px;
-    transition: 0.3s all ease;
     gap: 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
+        transition: 2s all ease;
 }
 .Barra_Lateral ul li img{
     width: 35px;
@@ -154,7 +154,6 @@ body, html {
 }
 .Frame.visible {
     display: block;
-    margin-left: 23px;
 }
 .Cuadro1 img{
     height: 50px;
@@ -392,7 +391,6 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 7%;
     background-color: #f2f3f9;
     width: 100%;
 }
@@ -773,3 +771,22 @@ body, html {
 #FrameCrearCaso{
     width: auto;
 }
+.Links2{
+    text-decoration: none;
+    cursor: pointer;
+    color: #002A91;
+    width: auto;
+    display: inline-block;
+    font-size: 25px;
+    margin: 0;
+    cursor: default;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+.Links2:hover{
+    background-color: transparent;
+    cursor: pointer;
+    color: #2fb2de;
+    text-decoration: underline;     
+}
+

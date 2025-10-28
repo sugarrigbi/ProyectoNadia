@@ -124,4 +124,3 @@ class Entidad():
 
         finally:
             Close_BaseDatos(conexion, cursor)
- 

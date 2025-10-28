@@ -18,28 +18,28 @@
         });
     </script>
     <div class="Barra_Lateral">
-        <div class="Logo">
+        <div class="Logo" data-aos="fade-right">
             <img class="Imagen_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}">
             <h2>Gaialink</h2>
         </div>
         <ul>
-            <li data-target="Frame1" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}">Inicio</li>
-            <li data-target="Frame3" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}">Casos</li>
-            <li data-target="Frame4" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}">Entidades</li>
-            <li data-target="Frame2" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
-            <li data-target="Frame5" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
+            <li data-target="Frame1" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}">Inicio</li>
+            <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}">Casos</li>
+            <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}">Entidades</li>
+            <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
+            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
         </ul>
         <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" >Cerrar Sesion</button>
     </div>
     <div class="Desktop">
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Bienvenido USUARIO</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <div class="Cuadro1" data-target="Frame3">
                     <img src="{{ url_for('static', filename='img/Casos1.svg') }}">
                     <h2>Casos</h2>
@@ -63,13 +63,13 @@
             </div>
         </div>
         <div id="Frame2" class="Frame {% if frame_activo == 'Frame2' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Mi Perfil</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <a class="Cuadro1" href="/dashboard/user/persona/datos">
                     <img src="{{ url_for('static', filename='img/Usuario/Ver.svg') }}">
                     <h2>Ver datos</h2>
@@ -88,13 +88,13 @@
             </div>                        
         </div>
         <div id="Frame3" class="Frame {% if frame_activo == 'Frame3' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Casos</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <div class="Cuadro1" data-target="FrameCrearCaso">
                     <img src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}">
                     <h2>Crear caso</h2>
@@ -108,33 +108,33 @@
             </div>                        
         </div>
         <div id="Frame4" class="Frame {% if frame_activo == 'Frame4' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Entidades</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <div class="Cuadro1" data-target="FrameBuscarEntidad">
                     <img src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}">
                     <h2>Buscar entidad</h2>
                     <h3>Encuentra instituciones registradas por <br>nombre o categoría.</h3>
                 </div>
-                <div class="Cuadro1" data-target="FrameBuscarEntidad3">
+                <a class="Cuadro1" href="/dashboard/user/entidades">
                     <img src="{{ url_for('static', filename='img/Usuario/Directorio.svg') }}">
                     <h2>Lista de entidades</h2>
                     <h3>Consulta el directorio completo de organizaciones vinculadas al sistema.</h3>
-                </div>            
+                </a>            
             </div>                        
         </div>   
         <div id="Frame5" class="Frame {% if frame_activo == 'Frame5' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Ayuda</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <a class="Cuadro1" href="/ayuda">
                     <img src="{{ url_for('static', filename='img/Usuario/Soporte.svg') }}">
                     <h2>Soporte</h2>
@@ -153,14 +153,14 @@
             </div>                        
         </div>
         <div id="Frame6" class="Frame {% if frame_activo == 'Frame6' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Modificar Datos</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Cuadros">
+            <div data-aos="zoom-in" class="Cuadros">
                 <a class="Cuadro1" href="/dashboard/user/persona/modificar">
                     <img src="{{ url_for('static', filename='img/Usuario/Modificar.svg') }}">
                     <h2>Modificar Datos</h2>
@@ -174,7 +174,7 @@
             </div>                        
         </div> 
         <div id="FrameCrearCaso" class="Frame {% if frame_activo == 'FrameCrearCaso' %}visible{% endif %}">
-            <div class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
                 <div class="Superior">
                     <h2>Crear Caso</h2>
                     <div class="Botones">
@@ -239,14 +239,14 @@
             </div>
         </div> 
         <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Mis casos</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>            
-            <div class="FrameVerCasos2">
+            <div data-aos="zoom-in" class="FrameVerCasos2">
                 {% if lista_casos %}
                     {% for caso in lista_casos %}
                         <div class="FrameVerCasos_Caso">
@@ -277,14 +277,14 @@
             </div>  
         </div>
         <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Buscar Entidad</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">
@@ -310,14 +310,14 @@
             </div>
         </div> 
         <div id="FrameBuscarEntidad2" class="Frame {% if frame_activo == 'FrameBuscarEntidad2' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Buscar Entidad</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>            
-            <div class="Buscar_Entidad4">
+            <div data-aos="zoom-in" class="Buscar_Entidad4">
                 {% if confirmacion %}
                 <div class="Buscar_Entidad">
                     <div class="Buscar_Entidad_Nombre">
@@ -336,14 +336,14 @@
             </div>
         </div>
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Mis Datos</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Buscar_Entidad3">         
+            <div data-aos="zoom-in" class="Buscar_Entidad3">         
                 {% if lista_persona %}
                 <div class="Buscar_Entidad">
                     <div class="Buscar_Entidad_Nombre">
@@ -372,14 +372,14 @@
             </div>
         </div>  
         <div id="FrameEliminarUsuario" class="Frame {% if frame_activo == 'FrameEliminarUsuario' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Eliminar Usuario</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Eliminar.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">
@@ -405,14 +405,14 @@
             </div>
         </div>     
         <div id="FrameModificarDatos" class="Frame {% if frame_activo == 'FrameModificarDatos' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Modificar Datos</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame6"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="Mod_Todo">
+            <div data-aos="zoom-in" class="Mod_Todo">
                 {% if lista_datos %}
                 <div class="Buscar_Entidad2">
                     <div class="Buscar_Entidad_Nombre">
@@ -472,7 +472,7 @@
                             </div>                         
                             <div>
                                 <div class="FormularioRegistrarse_Input4">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha de Nacimiento</label></div>
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Nacimiento</label></div>
                                 </div>
                                 <input class="Formulario_CrearCaso_Input52" type="text" name="Fecha_Nacimiento" value="{{ fecha }}" required>
                             </div>        
@@ -512,36 +512,39 @@
             </div>
         </div>
         <div id="FrameBuscarEntidad3" class="Frame {% if frame_activo == 'FrameBuscarEntidad3' %}visible{% endif %}">
-            <div class="Superior">
+            <div data-aos="fade-down" class="Superior">
                 <h2>Buscar Entidades</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div class="FrameCrearCaso2">
-                <div class="Formulario">
-                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
-                    <div class="Formulario_Contenedor">
-                        <h3 class="Formulario_Contenedor_Texto">Buscar Entidad</h3>
-                    </div>             
-                    {% if confirmacion %}
-                    <div id="confirmacion" class="confirmacion {{ tipo }}">
-                        <ul>
-                            <li>{{ confirmacion }}</li>
-                        </ul>
-                    </div>
-                    {% endif %}   
-                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
-                        <div class="Formulario_BuscarEntidad_Contenedor">
-                            <div class="FormularioRegistrarse_Input4">
-                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de la entidad<span>*</span></label></div>
+            <div data-aos="zoom-in" class="FrameVerCasos2">
+                {% if lista_entidades %}
+                    {% for entidad in lista_entidades %}
+                        <div class="FrameVerCasos_Caso">
+                            <h3>Entidad: {{ entidad.Id_Entidad }}</h3>
+                            <span class="ver-FrameVerCasos_VerCaso" onclick="abrirModal('modal-{{ loop.index }}')">Ver entidad</span>
+                        </div> 
+                        
+                        <div id="modal-{{ loop.index }}" class="modal">
+                            <div class="modal-content">
+                                <span class="cerrar" onclick="cerrarModal('modal-{{ loop.index }}')">&times;</span>
+                                <h4 class="FrameVerCasos_Caso_Texto">Detalles de la entidad</h4>
+                                <p><strong>Nombre:</strong> {{ entidad.Nombre_Entidad }}</p>
+                                <p><strong>Descripcion:</strong> {{ entidad.Descripción }}</p>
+                                <p><strong>Incidente:</strong> {{ entidad.Incidente }}</p>
+                                <p><strong>Direccion:</strong> {{ entidad.Direccion }}</p>
+                                <p><strong>Telefono:</strong> {{ entidad.Num_Contact }}</p>
+                                <p><strong>Web:</strong> <a href="{{ entidad.web_site }}" target="_blank" class="Links2">{{ entidad.web_site }}</a></p>
                             </div>
-                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
-                        </div>
-                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
-                    </form>
-                </div>            
+                        </div>                    
+                    {% endfor %}
+                {% else %}
+                    <div class="FrameVerCasos_Caso">
+                        <h3>No hay entidades registradas.</h3>
+                    </div>
+                {% endif %}         
             </div>
         </div>        
     </div>
