@@ -29,7 +29,7 @@
             <li data-target="Frame2" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
             <li data-target="Frame5" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
         </ul>
-        <button><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" alt="">Cerrar Sesion</button>
+        <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" >Cerrar Sesion</button>
     </div>
     <div class="Desktop">
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
@@ -120,7 +120,7 @@
                     <h2>Buscar entidad</h2>
                     <h3>Encuentra instituciones registradas por <br>nombre o categoría.</h3>
                 </div>
-                <div class="Cuadro1">
+                <div class="Cuadro1" data-target="FrameBuscarEntidad3">
                     <img src="{{ url_for('static', filename='img/Usuario/Directorio.svg') }}">
                     <h2>Lista de entidades</h2>
                     <h3>Consulta el directorio completo de organizaciones vinculadas al sistema.</h3>
@@ -197,8 +197,10 @@
                     <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/crear-caso">
                         <div class="Formulario_CrearCaso_Doble">
                             <div class="Formulario_CrearCaso_Contenedor">
-                                <label for="Input_TipoIncidente">Tipo de incidente<span>*</span></label>
-                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input" name="Tipo_Incidente" required>
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Tipo de Incidente<span>*</span></label></div>
+                                </div>
+                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input7" name="Tipo_Incidente" required>
                                     <option value="">Seleccion</option>
                                     <option value="Despl">Desplazamiento</option>
                                     <option value="Despo">Despojo de predios</option>
@@ -207,23 +209,29 @@
                                 </select>
                             </div>
                             <div class="Formulario_CrearCaso_Contenedor">
-                                <label for="Input_Fecha">Fecha del incidente<span>*</span></label>
-                                <input id="Input_Fecha" class="Formulario_CrearCaso_Input2" type="date" required name="Fecha_Incidente">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha del Incidente<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Fecha" class="Formulario_CrearCaso_Input7" type="date" required name="Fecha_Incidente">
                             </div>
                         </div>
                         <div class="Formulario_CrearCaso_Doble">
                             <div class="Formulario_CrearCaso_Contenedor">
-                                <label for="Input_Direccion">Direccion<span>*</span></label>
-                                <input id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input" type="text" required name="Direccion">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Direccion<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Direccion">
                             </div>
                             <div class="Formulario_CrearCaso_Contenedor">
-                                <label for="Input_Personas">Personas Afectadas<span>*</span></label>
-                                <input id="Input_Personas"class="Formulario_CrearCaso_Input" type="number" required name="Personas_Afectadas">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Personas Afectadas<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Personas"class="Formulario_CrearCaso_Input7" type="number" required name="Personas_Afectadas">
                             </div>
                         </div>
                         <div class="Formulario_CrearCaso_Contenedor2">
                                 <label for="Input_Descripcion">Descripcion del incidente<span>*</span></label>
-                                <textarea id="Input_Descripcion" minlength="15" class="Formulario_CrearCaso_Input3" required name="Descripcion"></textarea>
+                                <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1" required name="Descripcion"></textarea>
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
                     </form>
@@ -291,7 +299,9 @@
                     {% endif %}   
                     <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
                         <div class="Formulario_BuscarEntidad_Contenedor">
-                            <label for="Input_Direccion">Numero de la entidad<span>*</span></label>
+                            <div class="FormularioRegistrarse_Input4">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de la entidad<span>*</span></label></div>
+                            </div>
                             <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
@@ -307,21 +317,23 @@
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>            
-            {% if confirmacion %}
-            <div class="Buscar_Entidad">
-                <div class="Buscar_Entidad_Nombre">
-                    <h3>{{ confirmacion.Nombre }}</h3>
+            <div class="Buscar_Entidad4">
+                {% if confirmacion %}
+                <div class="Buscar_Entidad">
+                    <div class="Buscar_Entidad_Nombre">
+                        <h3>{{ confirmacion.Nombre }}</h3>
+                    </div>
+                    <div class="Buscar_Entidad_Contenedor">
+                        <p><span>Código:</span> {{ confirmacion.Codigo }}</p>
+                        <p><span>Descripción:</span> {{ confirmacion.Descripcion }}</p>
+                        <p><span>Incidente:</span> {{ confirmacion.Incidente }}</p>
+                        <p><span>Dirección:</span> {{ confirmacion.Direccion }}</p>
+                        <p><span>Teléfono:</span> {{ confirmacion.Telefono }}</p>
+                        <p><span>Web:</span> <a href="{{ confirmacion.Web }}" target="_blank">{{ confirmacion.Web }}</a></p>
+                    </div>
                 </div>
-                <div class="Buscar_Entidad_Contenedor">
-                    <p><span>Código:</span> {{ confirmacion.Codigo }}</p>
-                    <p><span>Descripción:</span> {{ confirmacion.Descripcion }}</p>
-                    <p><span>Incidente:</span> {{ confirmacion.Incidente }}</p>
-                    <p><span>Dirección:</span> {{ confirmacion.Direccion }}</p>
-                    <p><span>Teléfono:</span> {{ confirmacion.Telefono }}</p>
-                    <p><span>Web:</span> <a href="{{ confirmacion.Web }}" target="_blank">{{ confirmacion.Web }}</a></p>
-                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div class="Superior">
@@ -330,32 +342,34 @@
                     <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
-            </div>            
-            {% if lista_persona %}
-            <div class="Buscar_Entidad">
-                <div class="Buscar_Entidad_Nombre">
-                    <h3>{{ lista_persona.Nombre }}</h3>
-                </div>
-                <div class="Buscar_Entidad_Contenedor">
-                    <p><span>Codigo: </span>{{ lista_persona.Codigo }}</p>
-                    <p><span>Tipodedocumento: </span>{{ lista_persona.Tipo_Documento }}</p>
-                    <p><span>Documento: </span>{{ lista_persona.Documento }}</p>
-                    <p><span>Primer Nombre:</span>{{ lista_persona.Primer_Nombre }}</p>
-                    <p><span>Segundo Nombre:</span>{{ lista_persona.Segundo_Nombre }}</p>
-                    <p><span>Primer Apellido:</span>{{ lista_persona.Primer_Apellido }}</p>
-                    <p><span>Segundo Apellido:</span>{{ lista_persona.Segundo_Apellido }}</p>
-                    <p><span>Fecha de Nacimiento:</span>{{ lista_persona.Fecha_Nacimiento }}</p>
-                    <p><span>Edad: </span>{{ lista_persona.Edad }}</p>
-                    <p><span>Direccion: </span>{{ lista_persona.Direccion }}</p>
-                    <p><span>Departamento: </span>{{ lista_persona.Departamento }}</p>
-                    <p><span>Ciudad: </span>{{ lista_persona.Ciudad }}</p>
-                    <p><span>Localidad: </span>{{ lista_persona.Localidad }}</p>
-                    <p><span>Barrio: </span>{{ lista_persona.Barrio }}</p>
-                    <p><span>Telefono: </span>{{ lista_persona.Numero_Contacto }}</p>
-                    <p><span>Correo: </span>{{ lista_persona.Email }}</p>
-                </div>
             </div>
-            {% endif %}
+            <div class="Buscar_Entidad3">         
+                {% if lista_persona %}
+                <div class="Buscar_Entidad">
+                    <div class="Buscar_Entidad_Nombre">
+                        <h3>{{ lista_persona.Nombre }}</h3>
+                    </div>
+                    <div class="Buscar_Entidad_Contenedor">
+                        <p><span>Codigo: </span>{{ lista_persona.Codigo }}</p>
+                        <p><span>Tipodedocumento: </span>{{ lista_persona.Tipo_Documento }}</p>
+                        <p><span>Documento: </span>{{ lista_persona.Documento }}</p>
+                        <p><span>Primer Nombre:</span>{{ lista_persona.Primer_Nombre }}</p>
+                        <p><span>Segundo Nombre:</span>{{ lista_persona.Segundo_Nombre }}</p>
+                        <p><span>Primer Apellido:</span>{{ lista_persona.Primer_Apellido }}</p>
+                        <p><span>Segundo Apellido:</span>{{ lista_persona.Segundo_Apellido }}</p>
+                        <p><span>Fecha de Nacimiento:</span>{{ lista_persona.Fecha_Nacimiento }}</p>
+                        <p><span>Edad: </span>{{ lista_persona.Edad }}</p>
+                        <p><span>Direccion: </span>{{ lista_persona.Direccion }}</p>
+                        <p><span>Departamento: </span>{{ lista_persona.Departamento }}</p>
+                        <p><span>Ciudad: </span>{{ lista_persona.Ciudad }}</p>
+                        <p><span>Localidad: </span>{{ lista_persona.Localidad }}</p>
+                        <p><span>Barrio: </span>{{ lista_persona.Barrio }}</p>
+                        <p><span>Telefono: </span>{{ lista_persona.Numero_Contacto }}</p>
+                        <p><span>Correo: </span>{{ lista_persona.Email }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>  
         <div id="FrameEliminarUsuario" class="Frame {% if frame_activo == 'FrameEliminarUsuario' %}visible{% endif %}">
             <div class="Superior">
@@ -380,7 +394,9 @@
                     {% endif %}                     
                     <form id="formEliminarUsuario" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/persona/eliminar">
                         <div class="Formulario_BuscarEntidad_Contenedor">
-                            <label for="Input_Direccion">Contraseña<span>*</span></label>
+                            <div class="FormularioRegistrarse_Input4">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Contraseña<span>*</span></label></div>
+                            </div>
                             <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="password" required name="contraseña">
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Eliminar">                                                                       
@@ -392,7 +408,7 @@
             <div class="Superior">
                 <h2>Modificar Datos</h2>
                 <div class="Botones">
-                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame6"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
@@ -403,29 +419,48 @@
                         <h3>{{ lista_datos.Nombre }}</h3>
                     </div>
                     <form class="Buscar_Entidad_Contenedor2" method="POST" action="/dashboard/user/persona/modificar/enviar">
-                        <div class="Mod_Contenedor">
-                            <div>
-                                <label class="Mod_Label">Primer Nombre</label>
+                        {% if errores3 %}
+                        <div class="confirmacion_error">
+                            <ul>
+                                {% for campo, mensaje in errores3.items() %}
+                                    <li>{{ mensaje }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}                        
+                        <div class="Mod_Contenedor">                          
+                            <div>                                
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Primer Nombre</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Primer_Nombre" value="{{ lista_datos['Primer_Nombre'] }}" placeholder="Primer Nombre" required>
-                            </div>
+                            </div>                            
                             <div>
-                                <label class="Mod_Label">Segundo Nombre</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Segundo Nombre</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Segundo_Nombre" value="{{ lista_datos['Segundo_Nombre'] }}" placeholder="Segundo Nombre">
                             </div>        
                         </div>
-                        <div class="Mod_Contenedor">
-                            <div>
-                                <label class="Mod_Label">Primer Apellido</label>
+                        <div class="Mod_Contenedor">                                          
+                            <div>                              
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Primer Apellido</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Primer_Apellido" value="{{ lista_datos['Primer_Apellido'] }}" placeholder="Primer Apellido" required>
-                            </div>
+                            </div>                                          
                             <div>   
-                                <label class="Mod_Label">Segundo Apellido</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Segundo Apellido</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Segundo_Apellido" value="{{ lista_datos['Segundo_Apellido'] }}" placeholder="Segundo Apellido">
                             </div>
                         </div>
-                        <div class="Mod_Contenedor">
+                        <div class="Mod_Contenedor">                             
                             <div>
-                                <label class="Mod_Label">Tipo de Documento</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Tipo Documento</label></div>
+                                </div>
                                 <select class="Formulario_CrearCaso_Input5" name="Tipo_Documento" required>
                                     <option value="">Selección</option>
                                     <option value="CC" {% if lista_datos and lista_datos['Tipo_Documento'] in ['CC', 'Cedula Ciudadania', 'Cédula Ciudadanía'] %}selected{% endif %}>Cédula de ciudadanía</option>
@@ -434,29 +469,39 @@
                                     <option value="PA" {% if lista_datos and lista_datos['Tipo_Documento'] in ['PA', 'Pasaporte'] %}selected{% endif %}>Pasaporte</option>
                                     <option value="RC" {% if lista_datos and lista_datos['Tipo_Documento'] in ['RC', 'Registro Civil'] %}selected{% endif %}>Registro Civil</option>
                                 </select>
-                            </div>
+                            </div>                         
                             <div>
-                                <label class="Mod_Label">Fecha de Nacimiento</label>
-                                <input class="Formulario_CrearCaso_Input52" type="date" name="Fecha_Nacimiento" value="{{ fecha }}" required>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha de Nacimiento</label></div>
+                                </div>
+                                <input class="Formulario_CrearCaso_Input52" type="text" name="Fecha_Nacimiento" value="{{ fecha }}" required>
                             </div>        
                         </div>
-                        <div class="Mod_Contenedor">
+                        <div class="Mod_Contenedor">                                                    
                             <div>
-                                <label class="Mod_Label">Dirección</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Direccion</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Direccion" value="{{ lista_datos['Direccion'] }}" placeholder="Dirección" required>
-                            </div>
+                            </div>                                                       
                             <div>
-                                <label class="Mod_Label">Número de Contacto</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Telefono</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Numero_Contacto" value="{{ lista_datos['Numero_Contacto'] }}" placeholder="Número de contacto" required>
                             </div>
                         </div>
-                        <div class="Mod_Contenedor">
+                        <div class="Mod_Contenedor">                        
                             <div>
-                                <label class="Mod_Label">Email</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Correo</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="email" name="Email" value="{{ lista_datos['Email'] }}" placeholder="Correo electrónico" required>
-                            </div>
+                            </div>                          
                             <div>
-                                <label class="Mod_Label">Nombre de Usuario</label>
+                                <div class="FormularioRegistrarse_Input4">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Nombre de usuario</label></div>
+                                </div>
                                 <input class="Formulario_CrearCaso_Input5" type="text" name="Usuario" value="{{ lista_datos['Nombre'] }}" placeholder="Usuario" required>
                             </div>
                         </div>
@@ -464,6 +509,39 @@
                     </form>
                 </div>
                 {% endif %}
+            </div>
+        </div>
+        <div id="FrameBuscarEntidad3" class="Frame {% if frame_activo == 'FrameBuscarEntidad3' %}visible{% endif %}">
+            <div class="Superior">
+                <h2>Buscar Entidades</h2>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
+            </div>
+            <div class="FrameCrearCaso2">
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Buscar Entidad</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <div class="FormularioRegistrarse_Input4">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de la entidad<span>*</span></label></div>
+                            </div>
+                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
+                    </form>
+                </div>            
             </div>
         </div>        
     </div>
@@ -493,7 +571,11 @@ cuadros.forEach(cuadro => {
             if (window.location.pathname.includes("/persona/modificar/enviar") && target !== "FrameModificarDatos") {
                 window.location.href = "/dashboard/user?frame=" + target;
                 return;
-            }                             
+            }             
+            if (window.location.pathname.includes("/persona/modificar") && target !== "FrameModificarDatos") {
+                window.location.href = "/dashboard/user?frame=" + target;
+                return;
+            }                                     
 
             frames.forEach(frame => frame.classList.remove('visible'));
             document.getElementById(target).classList.add('visible');

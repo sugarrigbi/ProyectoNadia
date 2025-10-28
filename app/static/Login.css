@@ -1,27 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body, html {
     scroll-behavior: smooth;
-    width: 99.2vw;
+    width: auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 .Desktop{
-    width: fit-content;
-    height: fit-content;
+    width: 100%;
+    height: fit-content; 
 }
 .Frame{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #dbe1fd;
     height: fit-content;
     margin-top: 100px;
 }
 .Botones{
     height: auto;
-    width: 1863px;
+    width: 100%;
     margin-top: 25px;
     gap: 1350px;
     display: flex;
@@ -30,22 +30,22 @@ body, html {
 }
 .Boton_Superior{
     height: auto;
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    display: flex;
+    gap: 10px;
+    margin-right: 25px;
     padding: 10px 20px; 
     color: rgb(255, 255, 255);
     font-family: 'Montserrat', sans-serif;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     font-size: 30px;
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #517ded;
-    border-width: 6px;
-    border-style: solid;
     cursor: pointer;
-    transition: all 0.3s ease;    
+    transition: all 0.3s ease;     
 }
 .Boton_Superior:hover{
     background-color: #2fb2de;
@@ -75,9 +75,9 @@ body, html {
     margin-top: 0px;
     margin-bottom: 5px;
     width: 33%;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(14px);
     display: flex;
     gap: 0px;
     flex-direction: column;
@@ -90,12 +90,13 @@ body, html {
 .Formulario_Contenedor{
     width: auto;
     margin-top: 25px;
+    margin-bottom: 30px;
     height: auto;
     border-radius: 20px;
     background-color: #5883f0;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;   
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(14px); 
     padding: 15px;     
     display: flex;
     align-items: center;
@@ -145,14 +146,18 @@ body, html {
     width: 80%;
     cursor: pointer;
     border: none;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
-    font-size: 16px;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
-    font-family: 'Montserrat', sans-serif;  
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;  
+}
+.Formulario1_Input_Input:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
 }
 .Boton_VerPassword {
     position: absolute;
@@ -173,19 +178,19 @@ body, html {
     color: #002A91;
 }
 .Formulario1_Boton{
-    height: auto;
+    height: auto; 
     padding: 10px 20px; 
     color: rgb(255, 255, 255);
     font-family: 'Montserrat', sans-serif;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     font-size: 30px;
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #7b9cf0;
-    border-width: 6px;
-    border-style: solid;
     cursor: pointer;
-    transition: all 0.3s ease;    
+    transition: all 0.3s ease;  
 }
 .Formulario1_Boton:hover{
     background-color: #2fb2de;
@@ -253,4 +258,24 @@ body, html {
 }
 .slot1{
     top: 477px;
+}
+.FormularioRegistrarse_Input2{
+    width: fit-content;
+    pointer-events: none;
+    font-weight: 500;
+    margin-left: 55px;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;  
+    height: fit-content;
+    border-left: 5px solid #1956ec;
+    background-color: #dcefff;
+    padding: 6px;
+    border-radius: 8px;
+}
+.FormularioRegistrarse_Input4{
+    display: flex;
+    align-items: left;
+}
+.abc{
+    width: 100%;
 }

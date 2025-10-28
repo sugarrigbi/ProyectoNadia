@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body, html {
     scroll-behavior: smooth;
-    width: 99.2vw;
+    width: auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,6 +12,7 @@ body, html {
     align-items: center;
     width: 100%;
     height: 855px;
+    background-color: #dbe1fd;
     margin-top: 100px;
     box-sizing: border-box;
 }
@@ -86,15 +87,16 @@ body, html {
     align-items: center;
     justify-content: center;
     padding: 10px 20px; 
+    margin: 20px;
     color: rgb(255, 255, 255);
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #517ded;
-    border-width: 6px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -109,7 +111,7 @@ body, html {
     position: static;
     align-items: center;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
     justify-content: center;
     display: flex;
 }
@@ -143,9 +145,9 @@ body, html {
 .Cuadro1{
     background-color: #5682F1;
     width: 450px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     position: relative;
     height: 400px;
     border-radius: 30px;
@@ -204,6 +206,7 @@ body, html {
 .Frame3{
     width: 100%;
     height: 800px;
+    background-color: #dbe1fd;
     position: static;
     align-items: center;
     justify-content: center;
@@ -310,9 +313,9 @@ body, html {
 .Cuadro7{
     width: 450px;
     height: 400px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     background-color: #5682F1;
     border-radius: 20px;
     align-items: center;
@@ -322,6 +325,9 @@ body, html {
 .Cuadro8{
     width: 400px;
     height: 100px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     background-color: #1956EC;
     border-radius: 20px;
     margin-top: 25px;
@@ -358,9 +364,9 @@ body, html {
     font-weight: bold;
     background-color: #1956EC;
     border-width: 0px;
-    border-radius: 100px;
-    border-color: #7b9cf0;
-    border-width: 6px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     border-style: solid;
     cursor: pointer;
     transition: all 0.3s ease;    
@@ -382,9 +388,9 @@ body, html {
     background-color: #1956EC;
     border-width: 0px;
     border-radius: 100px;
-    border-color: #0031ac;
-    border-width: 6px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -395,6 +401,7 @@ body, html {
 .Frame5{
     width: 100%;
     height: 800px;
+    background-color: #dbe1fd;
     position: static;
     align-items: center;
     flex-direction: column;
@@ -411,9 +418,9 @@ body, html {
 .Lideres2{
     width: 400px;
     height: 550px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     background-color: #5682F1;
     border-radius: 20px;
     align-items: center;
@@ -534,9 +541,9 @@ body, html {
 .Ayuda_Contenedor{
     width: 600px;
     height: 500px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     background-color: #5682F1;
     border-radius: 20px;
     margin-top: 180px;
@@ -550,10 +557,10 @@ body, html {
     width: auto;
     padding: 15px;
     height: auto;
-    background-color: #dadada;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;
+    background-color: #ffffff;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     border-radius: 20px;
     margin-top: 30px;
     align-items: center;
@@ -595,10 +602,10 @@ body, html {
     font-weight: bold;
     background-color: #1956EC;
     border-width: 0px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     border-radius: 100px;
-    border-color: #0035bb;
-    border-width: 6px;
-    border-style: solid;
     margin-top: 418px;
     cursor: pointer;
     transition: all 0.3s ease;    
@@ -611,6 +618,7 @@ body, html {
     width: 100%;
     height: 800px;
     position: static;
+    background-color: #dbe1fd;
     align-items: center;
     flex-direction: row;
     gap: 90px;
@@ -620,9 +628,9 @@ body, html {
 .Formulario{
     width: 600px;
     height: 600px;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     background-color: #5682F1;
     border-radius: 20px;
     align-items: center;
@@ -684,10 +692,10 @@ body, html {
     height: auto;
     background-color: #1956EC;
     border-radius: 20px;
-    background-color: #dadada;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;    
+    background-color: #ffffff;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     align-items: center;
     margin-bottom: 15px;
     padding: 15px;
@@ -715,9 +723,9 @@ body, html {
     background-color: #1956EC;
     border-width: 0px;
     border-radius: 100px;
-    border-color: #00278b;
-    border-width: 6px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }

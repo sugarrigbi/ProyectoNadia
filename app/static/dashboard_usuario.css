@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body, html {
     scroll-behavior: smooth;
-    width: 100vw;
-    height: 50vw;
+    width: auto;
+    height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 .Desktop{
-    width: auto;
+    width: 85%;
     height: 100%;
     margin-left: 250px;
 }
@@ -17,7 +17,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
+    width: 15%;
     height: 100%;
     background-color: #1956EC;
 }
@@ -75,7 +75,8 @@ body, html {
     border-radius: 15px;
     padding: 5px 30px;
     color: white;
-    margin-top: 190%;
+    margin-top: auto;
+    margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     display: flex;
@@ -138,7 +139,7 @@ body, html {
 .Frame{
     display: none;
     width: 100%;
-    height: 101.5%;
+    height: 100%;
     background-color: #f2f3f9;
 }
 .Frame h2{
@@ -153,6 +154,7 @@ body, html {
 }
 .Frame.visible {
     display: block;
+    margin-left: 23px;
 }
 .Cuadro1 img{
     height: 50px;
@@ -188,9 +190,9 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-color: #7b9cf0;
-    border-width: 5px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -211,13 +213,13 @@ body, html {
     align-items: center;
 }
 .Formulario{
-    width: 33%;
-    border-style: solid;
-    border-color: #003bcf;
-    border-width: 10px;
+    width: 50%;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     display: flex;
-    gap: 15px;
-    padding: 40px;
+    gap: 20px;
+    padding: 30px 0 30px 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -225,8 +227,29 @@ body, html {
     background-color: #ffffff;
     border-radius: 20px;
 }
+.FormularioCalificanos_Input_Input1{
+    display: flex;
+    margin-top: 12px;
+    width: 100%;
+    resize: vertical;
+    height: 40px;
+    cursor: pointer;
+    border: 3px solid #8b8b8b;
+    background: white;
+    outline: none;
+    border-radius: 15px;
+    font-weight: 400;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;  
+    transition: 0.3s all ease;
+} 
+.FormularioCalificanos_Input_Input1:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
+}
 .Formulario_CrearCaso{
     gap: 30px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -250,9 +273,9 @@ body, html {
     padding: 10px;
     border-radius: 20px;
     background-color: #5883f0;
-    border-color: #1956EC;
-    border-style: solid;
-    border-width: 7px;             
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);         
     display: flex;
     align-items: center;
     justify-content: center;    
@@ -262,7 +285,7 @@ body, html {
     cursor: default;
     align-items: center;
     font-weight: bold;
-    color: black;
+    color: white;
     font-size: 45px;
     margin: 0;
     font-family: 'Montserrat', sans-serif;    
@@ -297,16 +320,41 @@ body, html {
 }
 .Formulario_CrearCaso_Input{
     display: flex;
-    width: 90%;
-    box-sizing: border-box;
+    width: 80%;
+    margin-top: 12px;
     cursor: pointer;
-    border: 3px solid #414141;
+    border: none;
+    border: 3px solid #8b8b8b;
     background: white;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
-    font-family: 'Montserrat', sans-serif;  
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease; 
+}
+.Formulario_CrearCaso_Input7{
+    display: flex;
+    width: 60%;
+    margin-top: 12px;
+    cursor: pointer;
+    border: none;
+    border: 3px solid #8b8b8b;
+    background: white;
+    outline: none;
+    border-radius: 15px;
+    font-weight: 400;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease; 
+}
+.Formulario_CrearCaso_Input:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
+}
+.Formulario_CrearCaso_Input7:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Input3{
     display: flex;
@@ -344,8 +392,9 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 7%;
+    background-color: #f2f3f9;
     width: 100%;
-    height: 87%;
 }
 .Formulario_CrearCaso_Boton{
     height: auto;
@@ -357,9 +406,9 @@ body, html {
     font-weight: bold;
     background-color: #1956EC;
     border-radius: 100px;
-    border-color: #7b9cf0;
-    border-width: 6px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -378,9 +427,9 @@ body, html {
     background-color: #1956EC;
     border-radius: 100px;
     margin-top: 30px;
-    border-color: #7b9cf0;
-    border-width: 6px;
-    border-style: solid;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.3s ease;    
 }
@@ -481,8 +530,9 @@ body, html {
 }
 .Formulario_BuscarEntidad_Contenedor{
     display: flex;
-    width: 100%;
+    width: 50%;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 .Formulario_BuscarEntidad_Contenedor label{
@@ -511,9 +561,15 @@ body, html {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 15px;
-    margin-left: 32px;
     width: 60%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.Buscar_Entidad3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 85%;
 }
 .Buscar_Entidad_Nombre{
     margin: 0;
@@ -585,7 +641,7 @@ body, html {
     margin: 0;
     cursor: default;
     text-align: left;
-    margin-top:30px;
+    margin-top:10px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #0038d1;
@@ -600,27 +656,55 @@ body, html {
     height: fit-content;
     box-sizing: border-box;
     cursor: pointer;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
     font-family: 'Montserrat', sans-serif; 
+    transition: all 0.3s ease; 
+}
+.FormularioRegistrarse_Input2{
+    width: fit-content;
+    pointer-events: none;
+    font-weight: 500;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;  
+    height: fit-content;
+    border-left: 5px solid #1956ec;
+    background-color: #dcefff;
+    padding: 6px;
+    border-radius: 8px;
+}
+.Formulario_CrearCaso_Input5:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Input52{
     display: flex;
-    width: 286px;
+    width: 100%;
     height: fit-content;
     box-sizing: border-box;
     cursor: pointer;
-    border: 3px solid #414141;
+    border: 3px solid #8b8b8b;
     background: white;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
     font-family: 'Montserrat', sans-serif; 
+    transition: all 0.3s ease; 
+}
+.Buscar_Entidad4{
+    width: 100%;
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+}
+.Formulario_CrearCaso_Input52:focus{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Doble1{
     display: flex;
@@ -636,9 +720,15 @@ body, html {
     flex-direction: row;
     gap: 40px;
 }
+.Mod_Contenedor2{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .Mod_Contenedor div{
     display: flex;
-    margin: 5px;
     flex-direction: column;
 }
 .Buscar_Entidad2{
@@ -664,4 +754,22 @@ body, html {
 .Formulario_CrearCaso_Boton2:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+#FrameModificarDatos{
+    margin-left: 20px;
+}
+.FormularioRegistrarse_Input4{
+    width: 80%;
+    display: flex;
+    margin: 20px 0 10px 0;
+    justify-content: center;
+}
+.FormularioRegistrarse_Input6{
+    width: 80%;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+}
+#FrameCrearCaso{
+    width: auto;
 }

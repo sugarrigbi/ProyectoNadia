@@ -226,10 +226,22 @@ def Verificar_Usuario(Usuario):
     except Exception as e:
         print(f"Error al verificar el usuario: {e}")
         return False
-
+def Verificar_Usuario2(Usuario):
+    try:
+        conexion, cursor = Get_BaseDatos()
+        cursor.execute("SELECT Id_usuario, Nombre FROM tbl_usuario WHERE Nombre = %s", (Usuario,))
+        resultado = cursor.fetchone()
+        if not resultado:
+            return None
+        usuario_actual_id = session.get("usuario_id")
+        if resultado["Id_usuario"] == usuario_actual_id:
+            return None
+        return "El usuario ya está en uso."
     except Exception as e:
-        print(f"Error al verificar el bloqueo: {e}")
-        return "Error al verificar el estado del usuario."
+        print(f"Error al verificar el usuario: {e}")
+        return False    
+    finally:
+        Close_BaseDatos(conexion, cursor)    
 def Validar_Datos(Datos):
     errores = {}
 
@@ -284,6 +296,47 @@ def Validar_Datos(Datos):
     valor = Datos["Correo"]
     if not re.match(r"[^@]+@[^@]+\.[^@]+", valor):
         errores["Correo"] ="ingrese un correo valido"
+
+    return errores 
+def Validar_Datos2(Datos):
+    errores = {}
+
+    resultado = Datos["Fecha_Nacimiento"]
+    
+    fecha_nac_obj = datetime.strptime(resultado, "%Y-%m-%d").date()
+    hoy = datetime.today().date()
+    edad = hoy.year - fecha_nac_obj.year
+    if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
+        edad -= 1
+
+    if edad < 13:
+        errores["Fecha_Nacimiento"] = "Debes tener al menos 13 años para registrarte."
+
+    resultado = Validar_Telefono(Datos["Numero_Contacto"])
+    if resultado:
+        errores["Numero_Contacto"] = resultado    
+    
+    resultado = Validar_Documento(Datos["Documento"])
+    if resultado:
+        errores["Documento"] = resultado      
+
+    for campo in ["Primer_Nombre", "Segundo_Nombre", "Primer_Apellido", "Segundo_Apellido"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isalpha():
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' solo puede contener letras"
+
+    for campo in ["Documento", "Numero_Contacto"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isdigit():
+            errores[campo] = f"El campo '{campo}' solo puede contener numeros"
+
+    valor = Datos["Email"]
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", valor):
+        errores["Correo"] ="ingrese un correo valido"
+
+    resultado = Verificar_Usuario2(Datos["Usuario"])
+    if resultado:
+        errores["Usuario"] = resultado
 
     return errores 
 def Enviar_Token(Nombre):              

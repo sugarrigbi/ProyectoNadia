@@ -1,7 +1,8 @@
 from flask import render_template, request, session, redirect,url_for
-from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo
+from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos, Validar_Datos2
 from app.models.Casos import Caso
 from datetime import datetime
+
 from app.models.Entidades import Entidad
 from app.models.Persona import Persona
 
@@ -57,11 +58,25 @@ def get_modificardatos1():
     codigo = session["usuario_id"]
     Personas1 = Persona(codigo, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
     lista_datos = Personas1.Buscar_Persona()
-    
+
+    datos = {
+        "Documento": Obtener_DocumentoCodigo(session.get("usuario_id")),
+        "Primer_Nombre": request.form.get("Primer_Nombre", ""),
+        "Segundo_Nombre": request.form.get("Segundo_Nombre", ""),
+        "Primer_Apellido": request.form.get("Primer_Apellido", ""),
+        "Segundo_Apellido": request.form.get("Segundo_Apellido", ""),
+        "Tipo_Documento": request.form.get("Tipo_Documento", ""),
+        "Fecha_Nacimiento": request.form.get("Fecha_Nacimiento", ""),
+        "Direccion": request.form.get("Direccion", ""),
+        "Telefono": request.form.get("Numero_Contacto", ""),
+        "Correo": request.form.get("Email", ""),
+        "Usuario": request.form.get("Usuario", "")
+    } 
+
     fecha_str = lista_datos["Fecha_Nacimiento"]
     if fecha_str:
         fecha_html = datetime.strptime(fecha_str, "%d/%m/%Y").strftime("%Y-%m-%d")
-    else:
+    else: 
         fecha_html = ""
     return render_template("dashboard_usuario.html", fecha=fecha_html,lista_datos=lista_datos, frame_activo="FrameModificarDatos")
 def get_modificardatos2():
@@ -76,9 +91,29 @@ def get_modificardatos2():
         Fecha_Nacimiento = request.form['Fecha_Nacimiento']
         Direccion = request.form['Direccion']
         Numero_Contacto = request.form['Numero_Contacto']
-        Email = request.form['Email']
+        Correo = request.form['Email']
         Usuario = request.form['Usuario']
-        
-        persona = Persona(codigo, Tipo_Documento, documento, Primer_Nombre, Segundo_Nombre, Primer_Apellido, Segundo_Apellido, Fecha_Nacimiento, None, None, Direccion, None, None, None, None, Numero_Contacto, Email, Usuario, None, None, None, None)
+
+        datos = {
+            "Documento": Obtener_DocumentoCodigo(session.get("usuario_id")),
+            "Primer_Nombre": request.form.get("Primer_Nombre", ""),
+            "Segundo_Nombre": request.form.get("Segundo_Nombre", ""),
+            "Primer_Apellido": request.form.get("Primer_Apellido", ""),
+            "Segundo_Apellido": request.form.get("Segundo_Apellido", ""),
+            "Tipo_Documento": request.form.get("Tipo_Documento", ""),
+            "Fecha_Nacimiento": request.form.get("Fecha_Nacimiento", ""),
+            "Direccion": request.form.get("Direccion", ""),
+            "Numero_Contacto": request.form.get("Numero_Contacto", ""),
+            "Email": request.form.get("Email", ""),
+            "Nombre": request.form.get("Usuario", ""),
+            "Usuario": request.form.get("Usuario", "")  
+        } 
+    
+        Mensaje_Error = Validar_Datos2(datos)
+        print (Mensaje_Error)
+        if Mensaje_Error:
+            return render_template("dashboard_usuario.html", errores3=Mensaje_Error, frame_activo="FrameModificarDatos", lista_datos=datos, fecha=datos.get("Fecha_Nacimiento"))
+
+        persona = Persona(codigo, Tipo_Documento, documento, Primer_Nombre, Segundo_Nombre, Primer_Apellido, Segundo_Apellido, Fecha_Nacimiento, None, None, Direccion, None, None, None, None, Numero_Contacto, Correo, Usuario, None, None, None, None)
         resultado, tipo = persona.Modificar_Persona()
         return redirect("/dashboard/user")

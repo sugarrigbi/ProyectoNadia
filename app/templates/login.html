@@ -18,7 +18,6 @@
             once: true
         });
     </script>    
-    <div class="slot1">Inicio Sesion</div>
     <div class="Desktop">
         <nav class="Hotbar">
             <img class="Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
@@ -140,14 +139,24 @@
                 </script>
             {% endif %}
                 <form class="Formulario1" method="POST">
-                    <div class="Formulario1_Input">
-                        <input id="Input_Usuario"class="Formulario1_Input_Input" type="text" required name="usuario" placeholder="Nombre de usuario">
+                    <div class="abc">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Usuario">Nombre de usuario</label></div>
+                        </div>
+                        <div class="Formulario1_Input">
+                            <input id="Input_Usuario"class="Formulario1_Input_Input" type="text" required name="usuario" placeholder="Nombre de usuario">
+                        </div>
                     </div>
-                    <div class="Formulario1_Input">
-                        <input id="Input_Contraseña"class="Formulario1_Input_Input" type="password" required name="contraseña" placeholder="Contraseña">
-                        <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
-                        <h3 class="Formulario1_Texto1"><a class="Links" href="Contraseña-Recuperar">¿Olvidaste tu contraseña?</a></h3>
-                    </div>                     
+                    <div class="abc">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Contraseña</label></div>
+                        </div>                    
+                        <div class="Formulario1_Input">
+                            <input id="Input_Contraseña"class="Formulario1_Input_Input" type="password" required name="contraseña" placeholder="Contraseña">
+                            <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                            <h3 class="Formulario1_Texto1"><a class="Links" href="Contraseña-Recuperar">¿Olvidaste tu contraseña?</a></h3>
+                        </div>
+                    </div>                   
                     <input class="Formulario1_Boton" type="submit" placeholder="Enviar">
                 </form>
                 <div class="Formulario2"> 
@@ -192,8 +201,8 @@
                     <li class="Lista2_Titulo">Contactanos</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">bot@gaialink.online</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red">www.gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">administrador@gaialink.online</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red"><a class="gaialink" href="https://www.gaialink.online">www.gaialink.online</a></li>
                 </ul>
                 </div>
             </div>

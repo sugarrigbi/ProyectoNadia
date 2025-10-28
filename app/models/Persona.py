@@ -400,4 +400,3 @@ El equipo de soporte de GaiaLink
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)            
-            Close_BaseDatos(conexion, cursor)
