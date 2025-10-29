@@ -116,7 +116,7 @@ body, html {
 }
 .FormularioEmail_Input_Input{
     display: flex;
-    width: 80%;
+    width: 100%;
     margin-top: 10px;
     cursor: pointer;
     border: none;
@@ -208,8 +208,25 @@ body, html {
     border-radius: 8px;
 }
 .FormularioRegistrarse_Input4{
-    width: 80%;
+    width: 65%;
     margin-top: 25px;
     display: flex;
     align-items: left;
+}
+.ola{
+    position: relative;
+}
+.ola2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+}
+#verPassword1,
+#verPassword2,
+#verPassword{
+    z-index: 10000000000;
+    left: 84%;
+    margin-top: 8px;
 }

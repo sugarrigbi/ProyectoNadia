@@ -238,15 +238,15 @@
                 </div> 
             </div>
         </div> 
-        <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Mis casos</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>            
+        <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">         
             <div data-aos="zoom-in" class="FrameVerCasos2">
+                <div data-aos="fade-down" id="Superior2" class="Superior">
+                    <h2>Mis casos</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>                
                 {% if lista_casos %}
                     {% for caso in lista_casos %}
                         <div class="FrameVerCasos_Caso">
@@ -265,7 +265,7 @@
                                 <p><strong>Departamento:</strong> {{ caso.Departamento }}</p>
                                 <p><strong>Incidente:</strong> {{ caso.Incidente }}</p>
                                 <p><strong>Estado:</strong> {{ caso.Estado }}</p>
-                                <p><strong>Usuario:</strong> {{ caso.Nombre }}</p>
+                                <p><strong>Nombre:</strong> {{ caso.Nombre }}</p>
                             </div>
                         </div>                    
                     {% endfor %}
@@ -284,7 +284,7 @@
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div data-aos="zoom-in" class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso22">
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">
@@ -313,7 +313,7 @@
             <div data-aos="fade-down" class="Superior">
                 <h2>Buscar Entidad</h2>
                 <div class="Botones">
-                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="FrameBuscarEntidad"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>            
@@ -379,7 +379,7 @@
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div data-aos="zoom-in" class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso22">
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Eliminar.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">
@@ -397,8 +397,8 @@
                             <div class="FormularioRegistrarse_Input4">
                                     <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Contraseña<span>*</span></label></div>
                             </div>
-                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="password" required name="contraseña">
-                            <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                            <button type="button" id="verPassword4" class="Boton_VerPassword"><img id="iconoOjo4" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                            <input id="Input_Direccion4"class="Formulario_CrearCaso_Input" type="password" required name="contraseña">
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Eliminar">                                                                       
                     </form>
@@ -513,14 +513,14 @@
             </div>
         </div>
         <div id="FrameBuscarEntidad3" class="Frame {% if frame_activo == 'FrameBuscarEntidad3' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Buscar Entidades</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>
             <div data-aos="zoom-in" class="FrameVerCasos2">
+                <div data-aos="fade-down" id="Superior2" class="Superior">
+                    <h2>Buscar Entidades</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>                
                 {% if lista_entidades %}
                     {% for entidad in lista_entidades %}
                         <div class="FrameVerCasos_Caso">
@@ -556,7 +556,7 @@
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
-            <div data-aos="zoom-in" class="FrameCrearCaso2">
+            <div data-aos="zoom-in" class="FrameCrearCaso22">
                 <div class="Formulario">
                     <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Candado.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">

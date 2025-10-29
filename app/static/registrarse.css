@@ -361,7 +361,7 @@ select:focus,
     font-family: 'Montserrat', sans-serif;    
     font-size: 30px;
     text-justify: left;
-}
+}   
 .FormularioRegistrarse_Input2{
     width: fit-content;
     pointer-events: none;
@@ -381,4 +381,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
     right: 8px;
     transform: translateX(-12px);
+}
+.ola{
+    position: relative;
+}
+#verPassword1,
+#verPassword{
+    z-index: 10000000000;
 }

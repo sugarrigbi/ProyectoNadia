@@ -73,7 +73,7 @@ def hash_contraseña(contraseña):
     return generate_password_hash(contraseña)
 def hash_verificar(hash, contraseña):
     return check_password_hash(hash, contraseña)
-def procesar_login(usuario, contraseña):
+def procesar_login(usuario, contraseña, datos2):
     conexion, cursor = Get_BaseDatos()
 
     cursor.execute("SELECT Id_usuario, Contraseña, Intentos_fallidos, Bloqueado, fk_estado FROM tbl_usuario WHERE Nombre = %s",(usuario,))
@@ -82,20 +82,20 @@ def procesar_login(usuario, contraseña):
     if not datos:
         flash("Usuario no encontrado")
         Close_BaseDatos(conexion, cursor)
-        return render_template("login.html", usuario_invalido=True)
+        return render_template("login.html", usuario_invalido=True, datos2=datos2)
 
     bloqueado_hasta = datos.get("Bloqueado")
     if bloqueado_hasta and datetime.now() < bloqueado_hasta:
         desbloqueo_timestamp = int(bloqueado_hasta.timestamp())
         Close_BaseDatos(conexion, cursor)
-        return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp)
+        return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp, datos2=datos2)
     elif bloqueado_hasta and datetime.now() >= bloqueado_hasta:
         cursor.execute("UPDATE tbl_usuario SET Bloqueado = NULL, Intentos_fallidos = 0 WHERE Id_usuario = %s",(datos["Id_usuario"],))
         conexion.commit()
 
     if datos["fk_estado"] != "usuario_01":
         Close_BaseDatos(conexion, cursor)
-        return render_template("login.html", usuario_invalido=True)
+        return render_template("login.html", usuario_invalido=True, datos2=datos2)
 
     if not check_password_hash(datos["Contraseña"], contraseña):
         intentos = int(datos.get("Intentos_fallidos") or 0) + 1
@@ -110,7 +110,7 @@ def procesar_login(usuario, contraseña):
             Close_BaseDatos(conexion, cursor)
 
             desbloqueo_timestamp = int(bloqueado_hasta.timestamp())
-            return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp)
+            return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp, datos2=datos2)
         else:
             cursor.execute(
                 "UPDATE tbl_usuario SET Intentos_fallidos = %s WHERE Id_usuario = %s",
@@ -119,7 +119,7 @@ def procesar_login(usuario, contraseña):
             conexion.commit()
             Close_BaseDatos(conexion, cursor)
             intentos_restantes = MAX_INTENTOS - intentos
-            return render_template("login.html", intentos_restantes=intentos_restantes, contraseña_invalida=True)
+            return render_template("login.html", intentos_restantes=intentos_restantes, contraseña_invalida=True, datos2=datos2)
 
     cursor.execute(
         "UPDATE tbl_usuario SET Intentos_fallidos = 0, Bloqueado = NULL WHERE Id_usuario = %s",

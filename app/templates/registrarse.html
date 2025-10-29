@@ -227,15 +227,21 @@
                                 {% if errores and errores.get('Contraseña') %}
                                     <div class="confirmacion_error">{{ errores['Contraseña'] }}</div>
                                 {% endif %}
-                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Contraseña<span>*</span></label></div>
-                                <input value="{{ datos.Contraseña if datos else '' }}" id="Input_Contraseña" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña1">Contraseña<span>*</span></label></div>
+                                <div class="ola">
+                                    <button type="button" id="verPassword1" class="Boton_VerPassword"><img id="iconoOjo1" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                                    <input value="{{ datos.Contraseña if datos else '' }}" id="Input_Contraseña1" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña">
+                                </div>
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Contraseña2') %}
                                     <div class="confirmacion_error">{{ errores['Contraseña2'] }}</div>
                                 {% endif %}
-                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña2">Confirmar Contraseña<span>*</span></label></div>
-                                <input value="{{ datos.Contraseña2 if datos else '' }}" id="Input_Contraseña2" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña2">
+                                <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Confirmar Contraseña<span>*</span></label></div>
+                                <div class="ola">
+                                    <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                                    <input value="{{ datos.Contraseña2 if datos else '' }}" id="Input_Contraseña" class="FormularioRegistrarse_Input_Input" type="password" required name="Contraseña2">
+                                </div>
                             </div>                            
                         </div>
                         <div class="FormularioRegistrarse_Contenedor">

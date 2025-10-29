@@ -144,7 +144,7 @@
                             <div class="FormularioRegistrarse_Input2"><label for="Input_Usuario">Nombre de usuario</label></div>
                         </div>
                         <div class="Formulario1_Input">
-                            <input id="Input_Usuario"class="Formulario1_Input_Input" type="text" required name="usuario" placeholder="Nombre de usuario">
+                            <input value="{{ datos2.usuario if datos2 else '' }}" id="Input_Usuario"class="Formulario1_Input_Input" type="text" required name="usuario">
                         </div>
                     </div>
                     <div class="abc">
@@ -152,7 +152,7 @@
                             <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Contraseña</label></div>
                         </div>                    
                         <div class="Formulario1_Input">
-                            <input id="Input_Contraseña"class="Formulario1_Input_Input" type="password" required name="contraseña" placeholder="Contraseña">
+                            <input value="{{ datos2.contraseña if datos2 else '' }}" id="Input_Contraseña"class="Formulario1_Input_Input" type="password" required name="contraseña">
                             <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
                             <h3 class="Formulario1_Texto1"><a class="Links" href="Contraseña-Recuperar">¿Olvidaste tu contraseña?</a></h3>
                         </div>

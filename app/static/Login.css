@@ -276,6 +276,10 @@ body, html {
     display: flex;
     align-items: left;
 }
-.abc{
+.abc{ 
     width: 100%;
+}
+#verPassword{
+    left: 81%;
+    margin-top: 0;
 }

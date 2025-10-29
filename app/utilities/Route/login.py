@@ -42,8 +42,14 @@ def get_login():
     if request.method == "POST":
         usuario = request.form["usuario"]
         contraseña = request.form["contraseña"]
-        return procesar_login(usuario, contraseña)
-    return render_template("login.html")
+
+        datos2 = {
+            "usuario": request.form["usuario"],
+            "contraseña": request.form["contraseña"]
+        }
+
+        return procesar_login(usuario, contraseña, datos2)
+    return render_template("login.html", datos2={})
 def get_logout():
     session.clear()
     return redirect(url_for("auth.login"))

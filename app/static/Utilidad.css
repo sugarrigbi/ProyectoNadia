@@ -448,3 +448,21 @@
     margin: 0;
     padding-left: 15px;
 }
+.Boton_VerPassword {
+    position: absolute;
+    left: 64%;
+    margin-top: 7px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #414141;
+    transition: 0.10s ease;
+}
+.Imagen_Ver{
+    width: 40px;
+    height: 40px;
+}
+.Boton_VerPassword:hover {
+    color: #002A91;
+}
