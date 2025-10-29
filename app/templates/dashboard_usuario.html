@@ -166,7 +166,7 @@
                     <h2>Modificar Datos</h2>
                     <h3>Actualiza tu información personal y de <br>contacto fácilmente.</h3>
                 </a>
-                <div class="Cuadro1">
+                <div class="Cuadro1" data-target="FrameModContraseña">
                     <img src="{{ url_for('static', filename='img/Candado.svg') }}">
                     <h2>Editar Contraseña</h2>
                     <h3>Cambia tu contraseña de forma segura <br>para proteger tu cuenta.</h3>
@@ -398,6 +398,7 @@
                                     <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Contraseña<span>*</span></label></div>
                             </div>
                             <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="password" required name="contraseña">
+                            <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Eliminar">                                                                       
                     </form>
@@ -546,7 +547,70 @@
                     </div>
                 {% endif %}         
             </div>
-        </div>        
+        </div>
+        <div id="FrameModContraseña" class="Frame {% if frame_activo == 'FrameModContraseña' %}visible{% endif %}">
+            <div data-aos="fade-down" class="Superior">
+                <h2>Modificar Contraseña</h2>
+                <div class="Botones">
+                    <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
+            </div>
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Candado.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Modificar</h3>
+                    </div>     
+                    {% if errores4 %}
+                    <div class="confirmacion_error">
+                        <ul>
+                            {% for campo, mensaje in errores4.items() %}
+                                <li>{{ mensaje }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}                            
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}                     
+                    <form id="formModificarContraseña" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/persona/modificar/contraseña">
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <div class="FormularioRegistrarse_Input5">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Contraseña Actual<span>*</span></label></div>
+                            </div>
+                            <div>
+                                <button type="button" id="verPassword1" class="Boton_VerPassword"><img id="iconoOjo1" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                                <input id="Input_Contraseña1"class="Formulario_CrearCaso_Input" type="password" value="{{ datos.contraseña_actual if datos else '' }}" required name="contraseña_actual">
+                            </div>
+                        </div>
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <div class="FormularioRegistrarse_Input5">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Contraseña Nueva<span>*</span></label></div>
+                            </div>
+                            <div>
+                                <button type="button" id="verPassword2" class="Boton_VerPassword"><img id="iconoOjo2" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                                <input id="Input_Contraseña2"class="Formulario_CrearCaso_Input" type="password" value="{{ datos.nueva_contraseña1 if datos else '' }}" required name="nueva_contraseña1">
+                            </div>
+                        </div>
+                        <div class="Formulario_BuscarEntidad_Contenedor">
+                            <div class="FormularioRegistrarse_Input5">
+                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Confirmar Contraseña<span>*</span></label></div>
+                            </div>
+                            <div>
+                                <button type="button" id="verPassword3" class="Boton_VerPassword"><img id="iconoOjo3" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                                <input id="Input_Contraseña3"class="Formulario_CrearCaso_Input" type="password" value="{{ datos.nueva_contraseña2 if datos else '' }}" required name="nueva_contraseña2">
+                            </div>
+                        </div>                                                
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Modificar Contraseña">                                                                       
+                    </form>
+                </div>            
+            </div>
+        </div>              
     </div>
 <script>
 const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
@@ -554,7 +618,6 @@ const frames = document.querySelectorAll('.Frame, Frame1');
 const form = document.querySelector(".Buscar_Entidad_Contenedor2");
 const submitButton = form ? form.querySelector(".Formulario_CrearCaso_Boton2") : null;
 const fields = form ? form.querySelectorAll("input, select") : [];
-
 cuadros.forEach(cuadro => {
     cuadro.addEventListener('click', () => {
         const target = cuadro.getAttribute('data-target');
@@ -582,6 +645,21 @@ cuadros.forEach(cuadro => {
 
             frames.forEach(frame => frame.classList.remove('visible'));
             document.getElementById(target).classList.add('visible');
+        }
+    });
+});
+
+document.querySelectorAll(".Boton_VerPassword").forEach((boton) => {
+    const input = boton.nextElementSibling;
+    const icono = boton.querySelector("img");
+
+    boton.addEventListener("click", () => {
+        if (input.type === "password") {
+            input.type = "text";
+            icono.src = "{{ url_for('static', filename='img/Ver.svg') }}";
+        } else {
+            input.type = "password";
+            icono.src = "{{ url_for('static', filename='img/NoVer.svg') }}";
         }
     });
 });

@@ -789,4 +789,38 @@ body, html {
     color: #2fb2de;
     text-decoration: underline;     
 }
+.Boton_VerPassword {
+    position: absolute;
+    left: 64%;
+    margin-top: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #414141;
+    transition: 0.10s ease;
+}
+.Imagen_Ver{
+    width: 40px;
+    height: 40px;
+}
+.Boton_VerPassword:hover {
+    color: #002A91;
+}
+#formModificarContraseña{
+    gap: 25px;
+}
+.FormularioRegistrarse_Input5{
+    width: 80%;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+}
+#Input_Contraseña1,
+#Input_Contraseña2,
+#Input_Contraseña3{
+    margin: 0;
+    width: 100%;
+    margin-top: 8px;
+}
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, session
-from app.utilities.Route.User import get_crear_caso, get_miscasos, get_entidad, get_misdatos, get_eliminardatos, get_modificardatos1, get_modificardatos2, get_entidades
+from app.utilities.Route.User import get_crear_caso, get_miscasos, get_entidad, get_misdatos, get_eliminardatos, get_modificardatos1, get_modificardatos2, get_entidades, get_modificarcontraseña
 user_bp = Blueprint("user", __name__)
 
 @user_bp.route("/crear-caso", methods=["GET", "POST"])
@@ -26,3 +26,6 @@ def modificar_datos1():
 @user_bp.route('/dashboard/user/persona/modificar/enviar',methods=["POST"])
 def modificar_datos2():
     return get_modificardatos2()
+@user_bp.route('/dashboard/user/persona/modificar/contraseña',methods=["POST"])
+def modificar_contraseña():
+    return get_modificarcontraseña()

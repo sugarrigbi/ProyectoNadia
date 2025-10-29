@@ -4,8 +4,9 @@ from app.utilities.Formularios import Enviar_Form_Ayuda, Enviar_Form_Calificanos
 def get_ayuda():
     if request.method == "POST":
         Nombre = request.form["Nombre"]
+        Correo = request.form["Correo"]
         Mensaje = request.form["Ayuda"]
-        mensaje, tipo = Enviar_Form_Ayuda(Nombre, Mensaje)
+        mensaje, tipo = Enviar_Form_Ayuda(Nombre, Mensaje, Correo)
         return render_template("ayuda.html", confirmacion=mensaje, tipo=tipo)
     return render_template("ayuda.html")
 def get_calificanos():

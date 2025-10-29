@@ -189,6 +189,13 @@ def Comparar_Contraseña_2(Contraseña, Contraseña2):
         return Contraseña
     else:
         return False
+def Comparar_Contraseña_3(Usuario, Contraseña_Actual):
+    contraseña_usuario = Obtener_Contraseña(Usuario)
+    verificacion = check_password_hash(contraseña_usuario, Contraseña_Actual)
+    if verificacion == False:
+        return "La Contraseña actual es incorrecta"
+    else:
+        return None
 def Validar_Telefono(Telefono):
     if len(Telefono) != 10:
         return "El Telefono debe tener entre 6 y 10 digitos"
@@ -524,3 +531,18 @@ def Obtener_DocumentoCodigo(codigo):
         return None
     finally:
         Close_BaseDatos(conexion, cursor)
+def Comparar_Contraseñas4(Usuario, Contraseña_Actual, Contraseña_Nueva1, Contraseña_Nueva2):
+    errores = {}
+
+    resultado = Validar_Contraseña(Contraseña_Nueva1)
+    if resultado:
+        errores["Contraseña_Error1"] = resultado 
+
+    resultado = Comparar_Contraseña(Contraseña_Nueva1, Contraseña_Nueva2)
+    if resultado:
+        errores["Contraseña_Error2"] = resultado 
+
+    resultado = Comparar_Contraseña_3(Usuario, Contraseña_Actual)
+    if resultado:
+        errores["Contraseña_Error3"] = resultado 
+    return errores

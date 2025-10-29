@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect,url_for
-from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos, Validar_Datos2
+from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos2, Comparar_Contraseñas4
 from app.models.Casos import Caso
 from app.models.Entidades import Entidad
 from datetime import datetime
@@ -116,10 +116,30 @@ def get_modificardatos2():
         } 
     
         Mensaje_Error = Validar_Datos2(datos)
-        print (Mensaje_Error)
         if Mensaje_Error:
             return render_template("dashboard_usuario.html", errores3=Mensaje_Error, frame_activo="FrameModificarDatos", lista_datos=datos, fecha=datos.get("Fecha_Nacimiento"))
 
         persona = Persona(codigo, Tipo_Documento, documento, Primer_Nombre, Segundo_Nombre, Primer_Apellido, Segundo_Apellido, Fecha_Nacimiento, None, None, Direccion, None, None, None, None, Numero_Contacto, Correo, Usuario, None, None, None, None)
         resultado, tipo = persona.Modificar_Persona()
         return redirect("/dashboard/user")
+def get_modificarcontraseña():
+    if request.method == 'POST':
+        codigo = session["usuario_id"]
+        documento = Obtener_DocumentoCodigo(codigo)            
+        contraseña_actual = request.form['contraseña_actual']
+        nueva_contraseña1 = request.form['nueva_contraseña1']
+        nueva_contraseña2 = request.form['nueva_contraseña2']
+
+        datos = {
+            "contraseña_actual": request.form.get("contraseña_actual", ""),
+            "nueva_contraseña1": request.form.get("nueva_contraseña1", ""),
+            "nueva_contraseña2": request.form.get("nueva_contraseña2", "")
+        }
+
+        Mensaje_Error = Comparar_Contraseñas4(codigo, contraseña_actual, nueva_contraseña1, nueva_contraseña2)
+        if Mensaje_Error:
+            return render_template("dashboard_usuario.html", errores4=Mensaje_Error, frame_activo="FrameModContraseña", datos=datos)
+        
+        persona = Persona(codigo, None, documento, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, nueva_contraseña1, None, None, None)        
+        resultado, tipo = persona.Modificar_Contraseña()
+        return render_template("dashboard_usuario.html", confirmacion=resultado, tipo=tipo,frame_activo="FrameModContraseña")

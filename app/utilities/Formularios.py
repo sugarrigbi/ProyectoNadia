@@ -3,18 +3,13 @@ from datetime import datetime, timedelta
 from flask import flash, redirect, url_for, session, render_template
 import mysql.connector
 
-def Enviar_Form_Ayuda(Nombre, mensaje):
+def Enviar_Form_Ayuda(Nombre, mensaje, correo):
     conexion, cursor = Get_BaseDatos()
 
-    try:
-        cursor.execute("SELECT COUNT(*) AS total FROM tbl_usuario WHERE Nombre = %s", (Nombre,))
-        resultado = cursor.fetchone()
-        if resultado["total"] == 0:
-            return "El nombre ingresado no está registrado como usuario.", "error"
-                
+    try:        
         if not conexion.in_transaction:
             conexion.start_transaction()
-        cursor.execute("INSERT INTO tbl_ayuda (Nombre, Mensaje) VALUES (%s, %s)",(Nombre, mensaje))
+        cursor.execute("INSERT INTO tbl_ayuda (Nombre, Mensaje, Correo) VALUES (%s, %s, %s)",(Nombre, mensaje, correo))
         conexion.commit()
         return "Se creo el ticket de ayuda con exito", "exito"
     except mysql.connector.Error as err:
@@ -27,11 +22,6 @@ def Enviar_Form_Calificanos(Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4):
         return "Todos los campos son obligatorios", "error"
 
     try:
-        cursor.execute("SELECT COUNT(*) AS total FROM tbl_usuario WHERE Nombre = %s", (Nombre,))
-        resultado = cursor.fetchone()
-        if resultado["total"] == 0:
-            return "El nombre ingresado no está registrado como usuario.", "error"
-
         if not conexion.in_transaction:
             conexion.start_transaction()
         cursor.execute("INSERT INTO tbl_calificanos (Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4) VALUES (%s, %s, %s, %s, %s)",(Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4))
