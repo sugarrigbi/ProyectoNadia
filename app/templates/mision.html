@@ -24,42 +24,50 @@
             <h1 class="Texto_Logo">Gaialink</h1>
             <div class="Selector">
                 <div class="Frame_Flecha">
-                    <h3 class="Texto_Selector">Inicio</h3>
+                    <h3 class="Texto_Selector" data-lang="Inicio">Inicio</h3>
                     <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
                     <div class="Menu_Desplegable">
-                        <a href="/#Index_Place1">Página principal</a>
-                        <a href="/#Index_Place2">¿Que es?</a>
-                    </div>
+                        <a href="/#Index_Place1" data-lang="Pagina">Página principal</a>
+                        <a href="/#Index_Place2" data-lang="Que_Es">¿Que es?</a>
+                    </div> 
                 </div>
                 <div class="Frame_Flecha">            
-                    <h3 class="Texto_Selector">Nosotros</h3>
+                    <h3 class="Texto_Selector" data-lang="Nosotros">Nosotros</h3>
                     <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
                     <div class="Menu_Desplegable">
-                        <a href="mision#Mision_Place1">Mision</a> 
-                        <a href="mision#Mision_Place2">Vision</a>
-                        <a href="/#Index_Place5">Lideres</a>
+                        <a href="mision#Mision_Place1" data-lang="Mision">Mision</a> 
+                        <a href="mision#Mision_Place2" data-lang="Vision">Vision</a>
+                        <a href="/#Index_Place5" data-lang="Lideres">Lideres</a>
                     </div>                    
                 </div>
                 <div class="Frame_Flecha">
-                    <h3 class="Texto_Selector">Contacto</h3>
+                    <h3 class="Texto_Selector" data-lang="Contacto">Contacto</h3>
                     <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
                     <div class="Menu_Desplegable">
-                        <a href="/#Index_Place6">Ayuda</a>
-                        <a href="/#Index_Place7">Contactanos</a>
+                        <a href="/#Index_Place6" data-lang="Ayuda">Ayuda</a>
+                        <a href="/#Index_Place7" data-lang="Contactanos">Contactanos</a>
                     </div>                    
                 </div>      
                 <div class="Frame_Flecha">
-                    <h3 class="Texto_Selector">Servicios</h3>
+                    <h3 class="Texto_Selector" data-lang="Servicios">Servicios</h3>
                     <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
                     <div class="Menu_Desplegable">
-                        <a href="soporte#Soporte_Place1">Creacion de tickets</a>
-                        <a href="soporte#Soporte_Place2">Soporte</a>
+                        <a href="soporte#Soporte_Place1"data-lang="Creacion">Creacion de tickets</a>
+                        <a href="soporte#Soporte_Place2"data-lang="Soporte">Soporte</a>
                     </div>                    
                 </div>
             </div>
             <div class="Botones_Hotbar">
-                <button class="Boton_Idioma" onclick="Enviar_Registro()">Registrate</button>
-                <button class="Boton_Ingresar" onclick="Enviar_Login()">Ingresar</button>
+                <div class="Frame_Flecha2">
+                    <h3 class="Texto_Selector2"><span data-lang="BotonIdioma">Español</span> <img id="logoIdioma" class="Imagen_Idioma" src="{{ url_for('static', filename='img/Español.svg') }}"></h3>
+                    <div class="Menu_Desplegable2">
+                        <button onclick="CambiarIdioma('es')">Español<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Español.svg') }}"></button>
+                        <button onclick="CambiarIdioma('en')">English<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Ingles.svg') }}"></button>
+                        <button onclick="CambiarIdioma('fr')">Français<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Frances.svg') }}"></button>
+                    </div> 
+                </div>         
+                <button class="Boton_Idioma" onclick="Enviar_Registro()" data-lang="Registrate">Registrate</button>
+                <button class="Boton_Ingresar" onclick="Enviar_Login()" data-lang="Ingresar">Ingresar</button>
             </div>
         </nav>
         <div class="Redes">
@@ -90,37 +98,37 @@
             </div>
             <img class="Imagen" src="{{ url_for('static', filename='img/Vision.svg') }}" alt="Mision" data-aos="fade-right">            
         </div>
-        <div class="Frame8" id="Mision_Place8" data-aos="fade-up">
+        <div class="Frame8" data-aos="fade-up">
             <div class="Frame8_Contenedor">
                 <div class="Lista1_Contenedor">
                 <ul class="Lista1">
-                    <li class="Lista1_Titulo">Inicio</li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place1">Pagina Principal</a></li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place2">¿Que es?</a></li>
+                    <li class="Lista1_Titulo" data-lang="Inicio">Inicio</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place1" data-lang="Pagina">Pagina Principal</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place2" data-lang="Que_Es">¿Que es?</a></li>
                 </ul>
                 <ul class="Lista1">
-                    <li class="Lista1_Titulo">Nosotros</li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1">Mision</a></li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2">Vision</a></li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place5">Lideres</a></li>
+                    <li class="Lista1_Titulo"data-lang="Nosotros">Nosotros</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1" data-lang="Mision">Mision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2" data-lang="Vision">Vision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place5" data-lang="Lideres">Lideres</a></li>
                 </ul>
                 <ul class="Lista1">
-                    <li class="Lista1_Titulo">Contacto</li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda">Ayuda</a></li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place7">Contactanos</a></li>
+                    <li class="Lista1_Titulo" data-lang="Contacto">Contacto</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda" data-lang="Ayuda">Ayuda</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place7" data-lang="Contactanos">Contactanos</a></li>
                 </ul>
                 <ul class="Lista1">
-                    <li class="Lista1_Titulo">Servicios</li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1">Creacion de tickets</a></li>
-                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2">Soporte</a></li>
+                    <li class="Lista1_Titulo" data-lang="Servicios">Servicios</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1" data-lang="Creacion">Creacion de tickets</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2" data-lang="Soporte">Soporte</a></li>
                 </ul>
                 </div>
                 <div class="Lista2_Contenedor">
                 <ul class="Lista2">
-                    <li class="Lista2_Titulo">Contactanos</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono">314 4048151</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj">Lun a Vie 8:00 am – 6:00 pm</li>
-                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo">administrador@gaialink.online</li>
+                    <li class="Lista2_Titulo" data-lang="Contactanos">Contactanos</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono"><span>314 4048151</span></li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj"><span data-lang="Fecha">Lun a Vie 8:00 am – 6:00 pm</span></li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo"><span>administrador@gaialink.com</span></li>
                     <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red"><a class="gaialink" href="https://www.gaialink.online">www.gaialink.online</a></li>
                 </ul>
                 </div>
@@ -131,7 +139,7 @@
                         <img class="Logo2_Contenedor_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
                         <h2 class="Logo2_Contenedor_Texto">Gaialink</h2>
                     </div>
-                    <div class="Logo2_Contenedor_Redes"> 
+                    <div class="Logo2_Contenedor_Redes">
                         <a href="https://www.instagram.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Instagram2.svg') }}" alt="Instagram1"></a>
                         <a href="https://www.facebook.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Facebook2.svg') }}" alt="Facebook1"></a>
                         <a href="https://www.x.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Twitter2.svg') }}" alt="Twitter1"></a>
@@ -141,16 +149,17 @@
                 </div>
                 <div class="Logo2_Contenedor2">
                     <div class="Logo2_Linea"></div>
-                    <h3 class="Logo2_Contenedor2_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+                    <h3 class="Logo2_Contenedor2_Texto" data-lang="Footer">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
                     <div class="Logo2_Contenedor3">
-                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2">Politica de Privacidad</a>
-                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2">Terminos y Condiciones</a>
+                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2" data-lang="Privacidad">Politica de Privacidad</a>
+                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2" data-lang="Terminos">Terminos y Condiciones</a>
                     </div>
                 </div>
             </div>
-        </div>           
+        </div>          
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='traduccion.utilidades.js') }}"></script>
 </body>
 </html>
 
