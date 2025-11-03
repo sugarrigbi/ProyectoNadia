@@ -471,8 +471,8 @@ El equipo de soporte de GaiaLink
 class Persona_Admin:
     def __init__(self, Codigo, Codigo_Pers, Tipo_Documento, Documento, Primer_Nombre,
                 Segundo_Nombre, Primer_Apellido, Segundo_Apellido,
-                Fecha_Nacimiento, Codigo__Pers_Adic, Edad, Direccion, Departamento,
-                Ciudad,Localidad, Barrio, Numero_Contacto, Email, Usuario, Contraseña, Rol, Estado, Terminos, Bloqueo):
+                Fecha_Nacimiento, Codigo_Pers_Adic, Edad, Direccion, Departamento,
+                Ciudad,Localidad, Barrio, Numero_Contacto, Email, Usuario, Contraseña, Rol, Estado, Terminos, Bloqueo, Intentos):
         self.Codigo = Codigo
         self.Codigo_Pers = Codigo_Pers
         self.Tipo_Documento = Tipo_Documento
@@ -482,7 +482,7 @@ class Persona_Admin:
         self.Primer_Apellido = Primer_Apellido
         self.Segundo_Apellido = Segundo_Apellido
         self.Fecha_Nacimiento = Fecha_Nacimiento
-        self.Codigo__Pers_Adic = Codigo__Pers_Adic
+        self.Codigo_Pers_Adic = Codigo_Pers_Adic
         self.Edad = Edad
         self.Direccion = Direccion
         self.Departamento = Departamento
@@ -497,6 +497,7 @@ class Persona_Admin:
         self.Estado = Estado
         self.Terminos = Terminos
         self.Bloqueo = Bloqueo
+        self.Intentos = Intentos
     def Buscar_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
         try:
@@ -627,6 +628,7 @@ class Persona_Admin:
         id_adic_persona = generar_id("tbl_adic_persona", "PAD")
 
         try:
+            print("Creando persona con documento:", self.Documento)
             if not conexion.in_transaction:
                 conexion.start_transaction()
 
@@ -717,22 +719,19 @@ El equipo de soporte de GaiaLink
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor) 
-    def Eliminar_Persona(self):
+    def Eliminar_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
         Estado = "Usuario_00"
-
         cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_adic_persona JOIN tbl_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_persona JOIN tbl_tipo_documento ON tbl_persona.fk_Tipo_documento = tbl_tipo_documento.Id_Documento JOIN tbl_usuario ON tbl_persona.fk_usuario = tbl_usuario.Id_usuario WHERE tbl_usuario.Id_usuario = %s", (self.Codigo,))
         resultado_Correo = cursor.fetchone()
         if not resultado_Correo:
             return "Correo no encontrado", "error"
         self.Email = resultado_Correo["Email"]
-
         cursor.execute("SELECT Nombre FROM tbl_usuario WHERE Id_usuario = %s", (self.Codigo,))
         Resultado3 = cursor.fetchone()
         if not Resultado3:
             return "persona no encontrada", "error"
         self.Usuario = Resultado3["Nombre"]
-
         try:
             cursor.execute("UPDATE tbl_usuario SET fk_estado = %s WHERE Id_usuario = %s",(Estado, self.Codigo))
             conexion.commit()
@@ -785,5 +784,67 @@ El equipo de soporte de GaiaLink
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
-p = Persona_Admin("001USU", None, "CC", "0987654321", "PRUEBA", "PRUEBA", "PRUEBA", "PRUEBA","2000-08-13", None, None, "Dg 49 sur #sapo", "Bogota", "Bogota", "", "", "3144048151", "kevinanzgarz26@gmail.com","UsuarioDePrueba", "1145224601", "Usu", "usuario_01", "1", None)  
-datos = p.Crear_Persona_Admin() 
+    def Modificar_Persona_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+
+        fecha_nacimiento = self.Fecha_Nacimiento
+        fecha_nac_obj = datetime.strptime(fecha_nacimiento, "%Y-%m-%d").date()
+        hoy = datetime.today().date()
+        edad = hoy.year - fecha_nac_obj.year
+        if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
+            edad -= 1
+
+        try:
+            cursor.execute("UPDATE tbl_adic_persona SET Edad = %s, Dirección = %s, Num_Contact = %s, Email = %s, Terminos_Condiciones = %s WHERE fk_persona = %s",(edad, self.Direccion, self.Numero_Contacto, self.Email, self.Terminos, self.Documento))
+            cursor.execute("UPDATE tbl_persona SET Pri_Nom = %s, Seg_Nom = %s, Pri_Ape = %s, Seg_Ape = %s, fk_Tipo_documento = %s, Fecha_nacimiento = %s WHERE Id_Persona = %s",(self.Primer_Nombre, self.Segundo_Nombre, self.Primer_Apellido, self.Segundo_Apellido, self.Tipo_Documento, fecha_nacimiento, self.Documento))
+            cursor.execute("UPDATE tbl_usuario SET Nombre = %s, Bloqueado = %s, Intentos_fallidos = %s, fk_rol = %s, fk_estado = %s WHERE Id_usuario = %s",(self.Usuario, self.Bloqueo, self.Intentos, self.Rol, self.Estado, self.Codigo))
+            conexion.commit()
+            return "Datos modificados con exito", "exito"
+        except Exception as e:
+            conexion.rollback()
+            print(e)
+            return f"no se pudo modificar el usuario: {e}", "error"
+        finally:
+            mensaje = MIMEMultipart()
+            mensaje["From"] = correo_emisor
+            mensaje["To"] = self.Email
+            mensaje["Subject"] = f"Estimado/a {self.Usuario}"
+            cuerpo = '''
+Queremos informarte que los datos de tu cuenta han sido modificados exitosamente por un administrador del sistema GaiaLink.
+
+Si no fuiste tú quien solicitó esta acción, por favor comunícate de inmediato con nuestro equipo de soporte para garantizar la seguridad de tu cuenta.
+
+Si necesitas asistencia adicional, no dudes en escribirnos.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+'''
+            mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] = correo_emisor
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Estimado/a Soporte"
+            cuerpo2 = f'''
+Le informamos que ha modificado la cuenta de un usuario identificado con {self.Tipo_Documento} {self.Documento}, del sistema GaiaLink.
+
+Si esta acción no fue realizada por usted o no estaba programada, por favor revise los registros de actividad y comuníquese con el equipo de soporte para garantizar la integridad del sistema.
+
+Para cualquier duda o requerimiento adicional, no dude en ponerse en contacto con nosotros.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+'''
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
+
+            try:
+                servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+                servidor.login(correo_emisor, contraseña)
+                servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
+                servidor.quit()
+                print('Correo del usuario:', self.Email)
+                print("Correo enviado exitosamente")
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+            Close_BaseDatos(conexion, cursor)             
