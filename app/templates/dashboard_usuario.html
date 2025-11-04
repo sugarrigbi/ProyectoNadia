@@ -33,10 +33,9 @@
     </div>
     <div class="Desktop">
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Bienvenido USUARIO</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            <div data-aos="fade-down" class="Superior3">
+                <h2>Bienvenido {{ username }}</h2>
+                <div class="Botones2">
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
@@ -115,11 +114,6 @@
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <div class="Cuadro1" data-target="FrameBuscarEntidad">
-                    <img src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}">
-                    <h2>Buscar entidad</h2>
-                    <h3>Encuentra instituciones registradas por <br>nombre o categoría.</h3>
-                </div>
                 <a class="Cuadro1" href="/dashboard/user/entidades">
                     <img src="{{ url_for('static', filename='img/Usuario/Directorio.svg') }}">
                     <h2>Lista de entidades</h2>
@@ -243,6 +237,7 @@
                 <div data-aos="fade-down" id="Superior2" class="Superior">
                     <h2>Mis casos</h2>
                     <div class="Botones">
+                        <input type="text" id="buscador" class="Formulario_CrearCaso_Input4" placeholder="Buscar caso..." onkeyup="filtrarCasos()">
                         <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
@@ -275,65 +270,6 @@
                     </div>
                 {% endif %}
             </div>  
-        </div>
-        <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Buscar Entidad</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>
-            <div data-aos="zoom-in" class="FrameCrearCaso22">
-                <div class="Formulario">
-                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
-                    <div class="Formulario_Contenedor">
-                        <h3 class="Formulario_Contenedor_Texto">Buscar Entidad</h3>
-                    </div>             
-                    {% if confirmacion %}
-                    <div id="confirmacion" class="confirmacion {{ tipo }}">
-                        <ul>
-                            <li>{{ confirmacion }}</li>
-                        </ul>
-                    </div>
-                    {% endif %}   
-                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
-                        <div class="Formulario_BuscarEntidad_Contenedor">
-                            <div class="FormularioRegistrarse_Input4">
-                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de la entidad<span>*</span></label></div>
-                            </div>
-                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
-                        </div>
-                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
-                    </form>
-                </div>            
-            </div>
-        </div> 
-        <div id="FrameBuscarEntidad2" class="Frame {% if frame_activo == 'FrameBuscarEntidad2' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Buscar Entidad</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="FrameBuscarEntidad"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>            
-            <div data-aos="zoom-in" class="Buscar_Entidad4">
-                {% if confirmacion %}
-                <div class="Buscar_Entidad">
-                    <div class="Buscar_Entidad_Nombre">
-                        <h3>{{ confirmacion.Nombre }}</h3>
-                    </div>
-                    <div class="Buscar_Entidad_Contenedor">
-                        <p><span>Código:</span> {{ confirmacion.Codigo }}</p>
-                        <p><span>Descripción:</span> {{ confirmacion.Descripcion }}</p>
-                        <p><span>Incidente:</span> {{ confirmacion.Incidente }}</p>
-                        <p><span>Dirección:</span> {{ confirmacion.Direccion }}</p>
-                        <p><span>Teléfono:</span> {{ confirmacion.Telefono }}</p>
-                        <p><span>Web:</span> <a href="{{ confirmacion.Web }}" target="_blank">{{ confirmacion.Web }}</a></p>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
         </div>
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
@@ -517,6 +453,7 @@
                 <div data-aos="fade-down" id="Superior2" class="Superior">
                     <h2>Buscar Entidades</h2>
                     <div class="Botones">
+                        <input type="text" id="buscador2" class="Formulario_CrearCaso_Input4" placeholder="Buscar entidad..." onkeyup="filtrarEntidades()">
                         <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>

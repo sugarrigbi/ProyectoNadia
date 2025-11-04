@@ -19,7 +19,7 @@ body, html {
     align-items: center;
     width: 15%;
     height: 100%;
-    background-color: #1956EC;
+    background-color: #5614e2;
 }
 .Barra_Lateral ul{
     list-style: none;
@@ -41,14 +41,22 @@ body, html {
     display: flex;
     flex-direction: row;
     align-items: center;
-        transition: 2s all ease;
+    transition: 3s all ease;
 }
 .Barra_Lateral ul li img{
     width: 35px;
     height: 35px;
 }
+.Superior3{
+    display: flex;
+    width: 100%;
+    height: 8%;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
 .Selector1:hover{
-    background-color: #198dec;
+    background-color: #7146cc;
 }
 .Logo h2{
     font-family: 'Montserrat', sans-serif;
@@ -65,18 +73,17 @@ body, html {
 }
 .Logo{
     display: flex;
-    margin-bottom: 10px;
-    margin-right: 30px;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
     flex-direction: row;
 }
 .Barra_Lateral button{
     background-color: #de1a1a;
-    border-radius: 15px;
-    padding: 5px 30px;
+    border-radius: 50px;
+    padding: 5px 20px;
     color: white;
-    margin-top: auto;
-    margin-bottom: 20px;
+    margin: auto 20px 20px 20px;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     display: flex;
@@ -86,14 +93,13 @@ body, html {
     height: fit-content;
     cursor: pointer;
     transition: all 0.3s ease; 
-    border-style: solid;
-    border-width: 5px;
-    border-color: #810a0a;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);    
 }
 .Barra_Lateral button:hover{
     transform: scale(1.02);
     background-color: #ff4a4a;
-
 }
 .Barra_Lateral button img{
     width: 25px;
@@ -102,12 +108,13 @@ body, html {
 }
 .Cuadros{
     display: flex;
-    height: 20%;
+    justify-content: space-around;
+    height: auto;
     width: auto;
+    flex-wrap: wrap;
     flex-direction: row;
     margin-top: 20px;
-    margin-left: 35px;
-    gap: 35px;
+    padding: 10px;
 }
 .Cuadros1{
     display: flex;
@@ -120,15 +127,16 @@ body, html {
 }
 .Cuadro1{
     background-color: rgb(255, 255, 255);
-    width: 21.5%;
-    border-bottom: 6px solid #1956ec;
+    width: auto;
+    border-bottom: 6px solid #5e16f8;
     text-decoration: none;
-    height: auto;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-    padding-left: 20px;
+    padding: 20px 30px 20px 30px;
+    margin: 10px 0 10px 0;
     cursor: pointer;
     border-radius: 10px;
     box-shadow: 0px 10px 10px 1px #e6e8eb;
@@ -136,7 +144,7 @@ body, html {
 }
 .Cuadro1:hover{
     transform: translateY(-12px);
-    border-color: #4ed3ff;
+    border-color: #d1b0ff;
 }
 .Frame{
     display: none;
@@ -184,7 +192,7 @@ body, html {
     font-weight: 400;
 }
 .Boton{
-    background-color: #1956EC;
+    background-color: #5614e2;
     width: fit-content;
     height: fit-content;
     border-radius: 100px;
@@ -198,7 +206,7 @@ body, html {
     transition: all 0.3s ease;    
 }
 .Boton:hover{
-    background-color: #2fb2de;
+    background-color: #ad62ee;
     transform: scale(1.100);
 }
 .Boton img{
@@ -209,14 +217,8 @@ body, html {
 .Superior{
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-}
-.Superior3{
-    display: flex;
-    width: 100%;
-    height: 82px;
+    flex-wrap: wrap;
+    height: 8%;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
@@ -244,7 +246,7 @@ body, html {
     margin-top: 12px;
     width: 100%;
     resize: vertical;
-    height: 40px;
+    height: 70px;
     cursor: pointer;
     border: 3px solid #8b8b8b;
     background: white;
@@ -275,7 +277,6 @@ body, html {
 .Formulario_CrearCaso_Contenedor2{
     display: flex;
     width: 80%;
-    align-items: center;
     flex-direction: column;
 }
 .Formulario_Contenedor{
@@ -284,7 +285,7 @@ body, html {
     height: auto;
     padding: 10px;
     border-radius: 20px;
-    background-color: #5883f0;
+    background-color: #a158f0;
     backdrop-filter: blur(14px);
     border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 0 20px rgba(0,0,0,0.3);         
@@ -298,7 +299,7 @@ body, html {
     align-items: center;
     font-weight: bold;
     color: white;
-    font-size: 45px;
+    font-size: 35px;
     margin: 0;
     font-family: 'Montserrat', sans-serif;    
 }
@@ -315,7 +316,7 @@ body, html {
     margin-bottom: 10px;
     color: rgb(0, 0, 0);
     justify-content: left;
-    font-size: 25px;
+    font-size: 20px;
     width: fit-content;
     font-family: 'Montserrat', sans-serif;
 }
@@ -381,7 +382,7 @@ body, html {
     box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Input7:focus{
-    transform: scale(1.02);
+    transform: scale(1.01);
     box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Input3{
@@ -440,7 +441,7 @@ body, html {
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    background-color: #1956EC;
+    background-color: #5614e2;
     border-radius: 100px;
     backdrop-filter: blur(14px);
     border: 1px solid rgba(255,255,255,0.2);
@@ -449,7 +450,7 @@ body, html {
     transition: all 0.3s ease;    
 }
 .Formulario_CrearCaso_Boton:hover{
-    background-color: #2fb2de;
+    background-color: #b035f7;
     transform: scale(1.02);
 }
 .Formulario_CrearCaso_Boton2{
@@ -460,7 +461,7 @@ body, html {
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    background-color: #1956EC;
+    background-color: #5614e2;
     border-radius: 100px;
     margin-top: 30px;
     backdrop-filter: blur(14px);
@@ -470,7 +471,7 @@ body, html {
     transition: all 0.3s ease;    
 }
 .Formulario_CrearCaso_Boton2:hover{
-    background-color: #2fb2de;
+    background-color: #b035f7;
     transform: scale(1.02);
 }
 .FrameVerCasos_Caso{
@@ -478,7 +479,7 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-left: 25px;
-    width: 13%;
+    width: auto;
     height: fit-content;
     padding: 30px;
     margin-bottom: 15px;
@@ -492,7 +493,7 @@ body, html {
     font-size: 25px;
 }
 .ver-FrameVerCasos_VerCaso {
-    color: #002A91;
+    color: #5a00ae;
     text-decoration: none;
     cursor: pointer;
     font-weight: bold;
@@ -502,7 +503,7 @@ body, html {
 .ver-FrameVerCasos_VerCaso:hover {
     background-color: transparent;
     cursor: pointer;
-    color: #2fb2de;
+    color: #c194ff;
     text-decoration: underline;
 }
 .modal {
@@ -529,10 +530,11 @@ body, html {
     animation: aparecer 0.3s ease;
 }
 .modal-content p {
-    padding-left: 80px;
+    padding-left: 8%;
+    overflow-wrap: break-word;
 }
 .modal-content strong {
-    color: rgb(0, 56, 209);
+    color: rgb(118, 0, 209);
 }
 @keyframes aparecer {
     from { opacity: 0; transform: scale(0.9); }
@@ -655,7 +657,7 @@ body, html {
 .Buscar_Entidad_Contenedor p a{
     text-decoration: none;
     cursor: pointer;
-    color: #002A91;
+    color: #5c0091;
     width: auto;
     display: inline-block;
     font-size: 25px;
@@ -667,7 +669,7 @@ body, html {
 .Buscar_Entidad_Contenedor p a:hover{
     background-color: transparent;
     cursor: pointer;
-    color: #2fb2de;
+    color: #b035f7;
     text-decoration: underline;     
 }
 .Buscar_Entidad_Nombre h3{
@@ -680,7 +682,7 @@ body, html {
     margin-top:10px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #0038d1;
+    color: #7600d1;
     justify-content: left;
     font-size: 22px;
     width: fit-content;
@@ -708,10 +710,12 @@ body, html {
     font-size: 20px;
     font-family: 'Montserrat', sans-serif;  
     height: fit-content;
-    border-left: 5px solid #1956ec;
-    background-color: #dcefff;
-    padding: 6px;
-    border-radius: 8px;
+    border-left: 5px solid #5819ec;
+    padding-left: 7px;
+    border-radius: 5px;
+}
+#formCrearCaso_admin{
+    gap: 10px;
 }
 .Formulario_CrearCaso_Input5:focus{
     transform: scale(1.02);
@@ -798,10 +802,10 @@ body, html {
     justify-content: center;
 }
 .FormularioRegistrarse_Input6{
-    width: 80%;
+    width: 60%;
     display: flex;
     margin: 0;
-    justify-content: center;
+    justify-content: left;
 }
 #FrameCrearCaso{
     width: auto;
@@ -856,4 +860,213 @@ body, html {
 #verPassword4{
     margin-top: 65px;
     z-index: 100000;
+}
+
+@media (max-width: 1200px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 26px;
+    }
+    .Barra_Texto{
+        display: none;
+    } 
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+    .Frame h2{
+        font-size: 32px;
+    }
+    .Boton img{
+        width: 28px;
+        height: 28px;
+        padding: 14px;
+    }     
+    .Formulario_CrearCaso_Input4{
+        font-size: 20px;
+    }   
+    .modal-content{
+        width: 80%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 20px;
+    }
+    .Formulario{
+        width: 80%;
+    }
+    .Formulario_CrearCaso{
+        gap: 20px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 32px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 8px;
+    }     
+}
+
+@media (max-width: 900px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 22px;
+    }
+    .Barra_Texto{
+        display: none;
+    }
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+    .Frame h2{
+        font-size: 30px;
+        padding-left: 15px;        
+    } 
+    .Boton img{
+        width: 26px;
+        height: 26px;
+        padding: 12px;
+    }
+    .Botones{
+        width: 60%;
+    }    
+    .Formulario_CrearCaso_Input4{
+        font-size: 18px;
+    }        
+    .FrameVerCasos_Caso_Texto{
+        font-size: 25px;
+    }          
+    .modal-content p{
+        font-size: 20px;
+    }
+    .modal-content{
+        width: 90%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 18px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 18px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 18px;
+    }
+    .Formulario{
+        width: 80%;
+    }
+    .Formulario_CrearCaso{
+        gap: 15px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 28px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 5px;
+    }    
+}
+
+@media (max-width: 600px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 18px;
+    }
+    .Barra_Texto{
+        display: none;
+    }
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 15%;
+        padding-right: 10%;
+    }
+    .Frame h2{
+        font-size: 27px;
+        padding-top: 10px;
+        padding-left: 15px;
+    }
+    .Boton img{
+        width: 23px;
+        height: 23px;
+        padding: 10px;
+    }
+    .Botones{
+        width: 100%;
+    }
+    .Formulario_CrearCaso_Input4{
+        font-size: 16px;
+        width: 40%;
+    }            
+    .FrameVerCasos_Caso_Texto{
+        font-size: 23px;
+    }          
+    .modal-content p{
+        font-size: 18px;
+    }
+    .modal-content{
+        width: 100%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 20px;
+        margin-top: 5px;
+    }
+    .Formulario{
+        width: 90%;
+    }
+    .Formulario_CrearCaso{
+        gap: 10px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 15px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 25px;
+    }
+    .Formulario_CrearCaso_Doble{
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .Formulario_CrearCaso_Contenedor{
+        width: 100%;
+        align-items: start;
+        margin-left: 10%;
+    }
+    .FormularioRegistrarse_Input6{
+        width: 80%;
+    }
 }

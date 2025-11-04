@@ -141,11 +141,11 @@ Sistema de notificaciones de GaiaLink
             return "El usuario no existe", "error"
         id_usuario = id_usuario["Id_usuario"]
         
-        cursor.execute("SELECT Id_Caso_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Id_Caso_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s ORDER BY Id_Caso_Incidente", (id_usuario,))
         casos = cursor.fetchall()
         if not casos:
             Close_BaseDatos(conexion, cursor)
-            return []
+            return "No existen casos", "error"
         
         for i in casos:
             id_caso = i["Id_Caso_Incidente"]
@@ -154,19 +154,19 @@ Sistema de notificaciones de GaiaLink
             if radicado:
                 Numeros.append(radicado)
 
-        cursor.execute("SELECT Fecha FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Fecha FROM prueba.tbl_caso WHERE Fk_Usuario = %s ORDER BY Id_Caso_Incidente", (id_usuario,))
         Fecha = cursor.fetchall()
 
-        cursor.execute("SELECT Descripción FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Descripción FROM prueba.tbl_caso WHERE Fk_Usuario = %s ORDER BY Id_Caso_Incidente", (id_usuario,))
         Descripción = cursor.fetchall()
 
-        cursor.execute("SELECT Personas_Afectadas FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Personas_Afectadas FROM prueba.tbl_caso WHERE Fk_Usuario = %s ORDER BY Id_Caso_Incidente", (id_usuario,))
         Personas_Afectadas = cursor.fetchall()
 
         cursor.execute("SELECT Nombre FROM prueba.tbl_usuario WHERE Id_usuario = %s", (id_usuario,))
         Nombre = cursor.fetchall()
 
-        cursor.execute("SELECT Fk_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Fk_Incidente FROM prueba.tbl_caso WHERE Fk_Usuario = %s ORDER BY Id_Caso_Incidente", (id_usuario,))
         Fk_Incidente = cursor.fetchall()
         for i in Fk_Incidente:
             convertir = i["Fk_Incidente"]
@@ -183,7 +183,7 @@ Sistema de notificaciones de GaiaLink
         cursor.execute(query, (id_usuario,))
         Departamento = cursor.fetchall()  
 
-        cursor.execute("SELECT Fk_Estado FROM prueba.tbl_caso WHERE Fk_Usuario = %s", (id_usuario,))
+        cursor.execute("SELECT Fk_Estado FROM prueba.tbl_caso WHERE Fk_Usuario = %s  ORDER BY Id_Caso_Incidente", (id_usuario,))
         Fk_Estado = cursor.fetchall()     
         for i in Fk_Estado:
             convertir = i["Fk_Estado"]
@@ -210,4 +210,342 @@ Sistema de notificaciones de GaiaLink
                 print(f"⚠️ Error procesando caso {i}: {e}")
                 continue                    
         Close_BaseDatos(conexion, cursor)
+        print(lista_fusionada[1]["Radicado"])
+        print(lista_fusionada[1]["Fecha"])
+        print(lista_fusionada[1]["Descripción"])
+        print(lista_fusionada[1]["Personas_Afectadas"])
+        print(lista_fusionada[1]["Nombre"])
+        print(lista_fusionada[1]["Incidente"])
+        print(lista_fusionada[1]["Departamento"])
+        print(lista_fusionada[1]["Estado"])
         return lista_fusionada
+class Caso_Admin:
+    def __init__(self, Codigo, Fecha, Descripcion, Personas_Afectadas, Usuario, incidente, departamento, tipo_caso, estado, Radicado):
+        self.Codigo = Codigo
+        self.Fecha = Fecha
+        self.Descripcion = Descripcion
+        self.Personas_Afectadas = Personas_Afectadas
+        self.Usuario = Usuario
+        self.incidente = incidente
+        self.departamento = departamento
+        self.tipo_caso = tipo_caso
+        self.estado = estado
+        self.Radicado = Radicado
+    def Buscar_Casos_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        Numeros = []
+        Usuarios = []
+        Estados = []
+        Departamentos = []
+        Incidentes = []
+        lista_fusionada = []
+
+        cursor.execute("SELECT Id_Caso_Incidente FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        casos = cursor.fetchall()
+        if not casos:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Fecha FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        fechas = cursor.fetchall()
+        if not fechas:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Descripción FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        descripciones = cursor.fetchall()
+        if not descripciones:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Personas_Afectadas FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        personas = cursor.fetchall()
+        if not personas:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Fk_Usuario FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        usuarios = cursor.fetchall()
+        for i in usuarios:
+            cursor.execute("SELECT Nombre FROM prueba.tbl_usuario WHERE Id_usuario = %s", (i["Fk_Usuario"],))
+            nombre = cursor.fetchone()
+            if nombre:
+                Usuarios.append(nombre) 
+        
+        cursor.execute("SELECT Fk_Incidente FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        Fk_Incidente = cursor.fetchall()
+        for i in Fk_Incidente:
+            convertir = i["Fk_Incidente"]
+            Incidente = Incidente_Valores.get(convertir)
+            if Incidente:
+                Incidentes.append(Incidente)
+
+        cursor.execute("SELECT Fk_Dep FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        departamento = cursor.fetchall()
+        for i in departamento:
+            cursor.execute("SELECT Nom_departamento FROM prueba.tbl_departamento WHERE Id_dep = %s", (i["Fk_Dep"],))
+            departamento_name = cursor.fetchone()
+            if departamento_name:
+                Departamentos.append(departamento_name)
+
+        cursor.execute("SELECT Fk_Estado FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        estado = cursor.fetchall()
+        for i in estado:
+            cursor.execute("SELECT Estado FROM prueba.tbl_estado WHERE Id_estado = %s", (i["Fk_Estado"],))
+            estado_name = cursor.fetchone()
+            if estado_name:
+                Estados.append(estado_name)
+
+        cursor.execute("SELECT Radicado FROM prueba.tbl_num_caso ORDER BY Fk_Caso")
+        radicados = cursor.fetchall()
+        if not radicados:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        for i in range(len(casos)):
+            try:
+                if (i < len(fechas) and i < len(descripciones) and i < len(personas) and i < len(Usuarios) and i < len(Incidentes) and i < len(Departamentos) and i < len(Estados) and i < len(radicados)):                
+                    caso = {
+                        "Codigo": casos[i]["Id_Caso_Incidente"],
+                        "Fecha": fechas[i]["Fecha"],
+                        "Descripcion": descripciones[i]["Descripción"],
+                        "Persona": personas[i]["Personas_Afectadas"],
+                        "Nombre": Usuarios[i]["Nombre"],
+                        "Incidente": Incidentes[i],
+                        "Departamento": Departamentos[i]["Nom_departamento"],
+                        "Estado": Estados[i]["Estado"],
+                        "Radicado": radicados[i]["Radicado"]
+                    }
+                if all(caso.values()):
+                    lista_fusionada.append(caso)
+            except Exception as e:
+                print(f"⚠️ Error procesando caso {i}: {e}")
+                continue                    
+        Close_BaseDatos(conexion, cursor)
+        return lista_fusionada     
+    def Crear_Caso_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        id_usuario = self.Usuario
+        fecha_antes = self.Fecha
+        fecha = datetime.strptime(fecha_antes, "%Y-%m-%d").date()
+        id_departamento = "001DEP"
+        id_caso = "Caso"
+
+        cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (id_usuario,))
+        Correo = cursor.fetchone()      
+        if not Correo:
+            return "No se encontro el Correo", "error"      
+
+        def generar_id(tabla, prefijo, longitud):
+            cursor.execute(f"SELECT COUNT(*) FROM {tabla}")
+            resultado = cursor.fetchone()
+            count = resultado.get('COUNT(*)', 0) if resultado else 0
+            return str(count + 1).zfill(longitud) + prefijo      
+        
+        cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
+        Nombre_Usuario = cursor.fetchone()
+        if not Nombre_Usuario:
+            return "El usuario no se encontro", "error"        
+
+        Id_Caso_Incidente = generar_id("tbl_caso", "CAD", longitud=3)
+        radicado = generar_id("tbl_num_caso", "R", longitud=6)
+        id_entidad = generar_id("tbl_num_caso", "NUC", longitud=3)    
+        try:
+            if not conexion.in_transaction:
+                conexion.start_transaction()
+            cursor.execute("INSERT INTO tbl_caso (Id_Caso_Incidente, Fecha, Descripción, Personas_Afectadas, Fk_Usuario, Fk_Incidente, Fk_Dep, Fk_Tipo_Caso, Fk_Estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", (Id_Caso_Incidente, fecha, self.Descripcion, self.Personas_Afectadas, id_usuario, self.incidente, id_departamento, id_caso, self.estado))
+            cursor.execute("INSERT INTO tbl_num_caso (Id_num_caso, Radicado, Fk_Caso) VALUES (%s, %s, %s)", (id_entidad, radicado, Id_Caso_Incidente)) 
+            conexion.commit()
+            return "Caso creado con exito", "exito"
+        except Exception as e:
+            conexion.rollback()
+            return f"Ocurrio un error al almacenar los datos: {e}", "error"             
+        finally:
+            mensaje = MIMEMultipart()
+            mensaje["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje["To"] = Correo["Email"]
+            mensaje["Subject"] = f"Confirmación de Generación de Caso: {radicado}"
+            mensaje['Date'] = formatdate(localtime=True)
+            mensaje['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo = f"""
+Estimado/a {Nombre_Usuario},
+
+Te confirmamos que tu solicitud ha sido recibida correctamente.
+Un ticket ha sido generado por un admin asociado a tu cuenta con el ID: {radicado}.
+
+Nuestro equipo está trabajando en tu solicitud y te contactará en breve para resolver tu problema.
+
+Si necesitas más detalles sobre el estado de tu ticket, puedes seguirlo a través de nuestro sistema o contactar a soporte.
+Gracias por confiar en nosotros.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+"""
+            mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Caso creado: {radicado}"
+            mensaje2['Date'] = formatdate(localtime=True)
+            mensaje2['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo2 = f"""
+Estimado miembro del equipo de soporte,
+
+ha generado un nuevo caso con el ID: {radicado}, registrado por un admin, asociado al usuario {Nombre_Usuario} identificado con el codigo {id_usuario}.
+
+Por favor, revisa los detalles en la plataforma y procede con la atención correspondiente.
+
+Atentamente,  
+Sistema de notificaciones de GaiaLink
+"""
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
+            try:
+                servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+                servidor.login(correo_emisor, contraseña)
+                servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
+                servidor.quit()
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+            Close_BaseDatos(conexion, cursor) 
+    def Modificar_Caso_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        id_usuario = self.Usuario
+
+        cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
+        Nombre_Usuario = cursor.fetchone()
+        if not Nombre_Usuario:
+            return "El usuario no se encontro", "error"     
+
+        cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (id_usuario,))
+        Correo = cursor.fetchone()      
+        if not Correo:
+            return "No se encontro el Correo", "error"
+
+        try:
+            cursor.execute("UPDATE tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente SET Fecha = %s, Descripción = %s, Personas_Afectadas = %s, Fk_Usuario = %s, Fk_Incidente = %s, Fk_Dep = %s, Fk_Estado = %s WHERE Radicado = %s",(self.Fecha, self.Descripcion, self.Personas_Afectadas, self.Usuario, self.incidente, self.departamento, self.estado, self.Radicado))
+            conexion.commit()
+            return "Caso modificado con exito", "exito"            
+        except Exception as e:
+            conexion.rollback()
+            print(e)
+            return f"no se pudo modificar el caso: {e}", "error"
+        finally:
+            mensaje = MIMEMultipart()
+            mensaje["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje["To"] = Correo["Email"]
+            mensaje["Subject"] = f"Confirmación de Modificacion de Caso: {self.Radicado}"
+            mensaje['Date'] = formatdate(localtime=True)
+            mensaje['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo = f"""
+Estimado/a {Nombre_Usuario},
+
+se a realizado una actualizacion en el estado de tu caso {self.Radicado} .
+
+Nuestro equipo está trabajando en tu solicitud y te contactará en breve para resolver tu problema.
+
+Si necesitas más detalles sobre el estado de tu ticket, puedes seguirlo a través de nuestro sistema o contactar a soporte.
+Gracias por confiar en nosotros.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+"""
+            mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Caso modificado: {self.Radicado}"
+            mensaje2['Date'] = formatdate(localtime=True)
+            mensaje2['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo2 = f"""
+Estimado miembro del equipo de soporte,
+
+te informamos que la modificacion del caso {self.Radicado} ha sido exitosa.
+
+Por favor, revisa los detalles en la plataforma y procede con la atención correspondiente.
+
+Atentamente,  
+Sistema de notificaciones de GaiaLink
+"""
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
+            try:
+                servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+                servidor.login(correo_emisor, contraseña)
+                servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
+                servidor.quit()
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+            Close_BaseDatos(conexion, cursor)
+    def Eliminar_Caso_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        id_usuario = self.Usuario
+        Estado = "Caso_03"
+
+        cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
+        Nombre_Usuario = cursor.fetchone()
+        if not Nombre_Usuario:
+            return "El usuario no se encontro", "error"     
+
+        cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (id_usuario,))
+        Correo = cursor.fetchone()      
+        if not Correo:
+            return "No se encontro el Correo", "error"
+
+        try:
+            cursor.execute("UPDATE tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente SET Fk_Estado = %s WHERE Radicado = %s",(Estado, self.Radicado))
+            conexion.commit()
+            return "Caso eliminado con exito", "exito"            
+        except Exception as e:
+            conexion.rollback()
+            print(e)
+            return f"no se pudo eliminar el caso: {e}", "error"
+        finally:
+            mensaje = MIMEMultipart()
+            mensaje["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje["To"] = Correo["Email"]
+            mensaje["Subject"] = f"Confirmación de Modificacion de Caso: {self.Radicado}"
+            mensaje['Date'] = formatdate(localtime=True)
+            mensaje['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo = f"""
+Estimado/a {Nombre_Usuario},
+
+se a realizado la eliminacion de tu caso {self.Radicado} .
+
+Si no fuiste tú quien solicitó esta acción, por favor comunícate de inmediato con nuestro equipo de soporte para garantizar la seguridad de tu cuenta..
+
+Si necesitas asistencia adicional, no dudes en escribirnos.
+
+Atentamente,  
+El equipo de soporte de GaiaLink
+"""
+            mensaje.attach(MIMEText(cuerpo, "plain"))
+
+            mensaje2 = MIMEMultipart()
+            mensaje2["From"] =   formataddr(("Soporte GaiaLink", correo_emisor))
+            mensaje2["To"] = correo_receptor1
+            mensaje2["Subject"] = f"Caso modificado: {self.Radicado}"
+            mensaje2['Date'] = formatdate(localtime=True)
+            mensaje2['Message-ID'] = make_msgid(domain="gaialink.online")
+            cuerpo2 = f"""
+Estimado miembro del equipo de soporte,
+
+Le informamos que se ha eliminado el caso  identificado con {self.Radicado} , del sistema GaiaLink.
+
+Por favor, revisa los detalles en la plataforma y procede con la atención correspondiente.
+
+Atentamente,  
+Sistema de notificaciones de GaiaLink
+"""
+            mensaje2.attach(MIMEText(cuerpo2, "plain"))
+            try:
+                servidor = smtplib.SMTP_SSL("gaialink.online", 465)
+                servidor.login(correo_emisor, contraseña)
+                servidor.send_message(mensaje)
+                servidor.send_message(mensaje2)
+                servidor.quit()
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+            Close_BaseDatos(conexion, cursor)               

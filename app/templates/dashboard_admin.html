@@ -3,7 +3,7 @@
 <head> 
     <title>dashboard</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_usuario.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_admin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
@@ -23,68 +23,72 @@
             <h2>Gaialink</h2>
         </div>
         <ul>
-            <li data-target="Frame1" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}">Inicio</li>
-            <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}">Casos</li>
-            <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}">Entidades</li>
-            <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
-            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
+            <li data-target="Frame1" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}"><span class="Barra_Texto">Inicio</span></li>
+            <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}"><span class="Barra_Texto">Casos</span></li>
+            <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}"><span class="Barra_Texto">Entidades</span></li>
+            <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}"><span class="Barra_Texto">Usuarios</span></li>            
+            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}"><span class="Barra_Texto">Ayuda</span></li>
         </ul>
-        <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" >Cerrar Sesion</button>
+        <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" ><span class="Barra_Texto">Cerrar Sesion</span></button>
     </div>
     <div class="Desktop">
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Bienvenido USUARIO</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+            <div data-aos="fade-down" class="Superior3">
+                <h2>Bienvenido {{ username }}</h2>
+                <div class="Botones2">
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
                 <div class="Cuadro1" data-target="Frame3">
-                    <img src="{{ url_for('static', filename='img/Casos1.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Casos2.svg') }}">
                     <h2>Casos</h2>
                     <h3>Reporta nuevos incidentes y consulta el <br>estado de los casos que has registrado.</h3>
                 </div>
                 <div class="Cuadro1" data-target="Frame4">
-                    <img src="{{ url_for('static', filename='img/Entidades1.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Entidades2.svg') }}">
                     <h2>Entidades</h2>
-                    <h3>Conoce las instituciones disponibles y su <br>participación en la gestión de emergencias.</h3>
+                    <h3>Conoce las instituciones y su participación<br> en la gestión de emergencias.</h3>
                 </div>            
                 <div class="Cuadro1" data-target="Frame2">
-                    <img src="{{ url_for('static', filename='img/Usuario1.svg') }}">
-                    <h2>Cuenta</h2>
-                    <h3>Gestiona tu información personal, cambia <br>tu contraseña y ajusta tus datos de perfil.</h3>
+                    <img src="{{ url_for('static', filename='img/Usuario2.svg') }}">
+                    <h2>Usuarios</h2>
+                    <h3>Administra la información de los usuarios,<br> gestiona sus permisos desde este panel.</h3>
                 </div>
                 <div class="Cuadro1" data-target="Frame5">
-                    <img src="{{ url_for('static', filename='img/Ayuda2.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Ayuda3.svg') }}">
                     <h2>Ayuda</h2>
-                    <h3>Aquí puedes ver información de soporte, contacto o calificarnos.</h3>
+                    <h3>Aquí puedes ver información de soporte,<br> contacto o calificarnos.</h3>
                 </div>                        
             </div>
         </div>
         <div id="Frame2" class="Frame {% if frame_activo == 'Frame2' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
-                <h2>Mi Perfil</h2>
+                <h2>Usuarios</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <a class="Cuadro1" href="/dashboard/user/persona/datos">
-                    <img src="{{ url_for('static', filename='img/Usuario/Ver.svg') }}">
-                    <h2>Ver datos</h2>
-                    <h3>Consulta tu información registrada de <br>manera rápida y segura.</h3>
-                </a>
-                <div class="Cuadro1" data-target="Frame6">
-                    <img src="{{ url_for('static', filename='img/Usuario/Modificar.svg') }}">
-                    <h2>Modificar datos</h2>
-                    <h3>Actualiza o corrige la información de tu <br>cuenta fácilmente.</h3>
-                </div>       
-                <div class="Cuadro1" data-target="FrameEliminarUsuario">
-                    <img src="{{ url_for('static', filename='img/Usuario/Eliminar.svg') }}">
-                    <h2>Eliminar cuenta</h2>
-                    <h3>Desactiva o elimina permanentemente <br>tu cuenta de manera segura.</h3>
-                </div>                          
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Buscar12.svg') }}">
+                    <h2>Buscar usuario</h2>
+                    <h3>Consulta los usuarios registrados y <br>revisa sus perfiles y estado de cuenta.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}">
+                    <h2>Crear usuario</h2>
+                    <h3>Agrega un nuevo usuario y <br>asigna sus permisos y datos de perfil.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}">
+                    <h2>Modificar usuario</h2>
+                    <h3>Actualiza la información de un usuario y <br>garantiza que sus datos estén correctos.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Eliminar2.svg') }}">
+                    <h2>Eliminar usuario</h2>
+                    <h3>Elimina un usuario del sistema y <br>mantén la base de datos organizada.</h3>
+                </div>                                                                          
             </div>                        
         </div>
         <div id="Frame3" class="Frame {% if frame_activo == 'Frame3' %}visible{% endif %}">
@@ -95,16 +99,26 @@
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <div class="Cuadro1" data-target="FrameCrearCaso">
-                    <img src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}">
+                <a href="/dashboard/admin/casos" class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Buscar12.svg') }}">
+                    <h2>Buscar caso</h2>
+                    <h3>Consulta los casos registrados y <br>revisa su estado y detalles completos.</h3>
+                </a>                     
+                <a class="Cuadro1" href="/dashboard/admin/crear-caso">
+                    <img src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}">
                     <h2>Crear caso</h2>
-                    <h3>Reporta un nuevo incidente y <br>genera un caso para su seguimiento.</h3>
+                    <h3>Genera un nuevo caso y <br>asigna responsables para su seguimiento.</h3>
+                </a>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}">
+                    <h2>Modificar caso</h2>
+                    <h3>Actualiza la información de un caso y <br>garantiza que los datos estén correctos.</h3>
                 </div>
-                <a href="/dashboard/user/casos" class="Cuadro1">
-                    <img src="{{ url_for('static', filename='img/Usuario/Buscar.svg') }}">
-                    <h2>Mis casos</h2>
-                    <h3>Consulta el estado y los detalles <br>de los casos que has registrado.</h3>
-                </a>            
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Eliminar2.svg') }}">
+                    <h2>Eliminar caso</h2>
+                    <h3>Elimina un caso del sistema y <br>mantén la base de datos organizada.</h3>
+                </div>                                       
             </div>                        
         </div>
         <div id="Frame4" class="Frame {% if frame_activo == 'Frame4' %}visible{% endif %}">
@@ -115,16 +129,26 @@
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <div class="Cuadro1" data-target="FrameBuscarEntidad">
-                    <img src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}">
-                    <h2>Buscar entidad</h2>
-                    <h3>Encuentra instituciones registradas por <br>nombre o categoría.</h3>
-                </div>
                 <a class="Cuadro1" href="/dashboard/user/entidades">
-                    <img src="{{ url_for('static', filename='img/Usuario/Directorio.svg') }}">
-                    <h2>Lista de entidades</h2>
-                    <h3>Consulta el directorio completo de organizaciones vinculadas al sistema.</h3>
-                </a>            
+                    <img src="{{ url_for('static', filename='img/Usuario/Buscar12.svg') }}">
+                    <h2>Buscar entidad</h2>
+                    <h3>Consulta las entidades existentes y <br>verifica sus detalles y estado.</h3>
+                </a>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}">
+                    <h2>Crear entidad</h2>
+                    <h3>Registra una nueva entidad y <br>agrega toda la información relevante.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}">
+                    <h2>Modificar entidad</h2>
+                    <h3>Actualiza los datos de una entidad y <br>mantén su información correcta y vigente.</h3>
+                </div>
+                <div class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Eliminar2.svg') }}">
+                    <h2>Eliminar entidad</h2>
+                    <h3>Remueve una entidad del sistema y <br>mantén la base de datos organizada.</h3>
+                </div>                                                           
             </div>                        
         </div>   
         <div id="Frame5" class="Frame {% if frame_activo == 'Frame5' %}visible{% endif %}">
@@ -136,20 +160,25 @@
             </div>
             <div data-aos="zoom-in" class="Cuadros">
                 <a class="Cuadro1" href="/ayuda">
-                    <img src="{{ url_for('static', filename='img/Usuario/Soporte.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Usuario/Soporte2.svg') }}">
                     <h2>Soporte</h2>
-                    <h3>Comunícate con el equipo de soporte para resolver dudas o reportar problemas.</h3>
+                    <h3>Comunícate con el soporte para <br>resolver dudas o reportar problemas.</h3>
                 </a>
                 <a class="Cuadro1" href="/calificanos">
-                    <img src="{{ url_for('static', filename='img/Usuario/Calificanos.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Usuario/Calificanos2.svg') }}">
                     <h2>Calificanos</h2>
-                    <h3>Déjanos tu opinión y ayuda a mejorar la experiencia de Gaialink.</h3>
+                    <h3>Déjanos tu opinión y ayuda a <br>mejorar la experiencia de Gaialink.</h3>
                 </a>   
                 <a class="Cuadro1" href="/terminos#Terminos_Place1">
-                    <img src="{{ url_for('static', filename='img/Usuario/Terminos.svg') }}">
+                    <img src="{{ url_for('static', filename='img/Usuario/Terminos2.svg') }}">
                     <h2>Terminos</h2>
-                    <h3>Consulta las políticas de uso y protección de datos de la plataforma.</h3>
-                </a>                            
+                    <h3>Consulta las políticas de uso y <br>protección de datos de la plataforma.</h3>
+                </a>
+                <a class="Cuadro1">
+                    <img src="{{ url_for('static', filename='img/Usuario/Directorio2.svg') }}">
+                    <h2>Documentacion</h2>
+                    <h3>Consulta la documentacion<br>completa de la plataforma.</h3>
+                </a>                                  
             </div>                        
         </div>
         <div id="Frame6" class="Frame {% if frame_activo == 'Frame6' %}visible{% endif %}">
@@ -183,7 +212,7 @@
                     </div>
                 </div>
                 <div class="Formulario">
-                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear.svg') }}" alt="Candado">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}" alt="Candado">
                     <div class="Formulario_Contenedor">
                         <h3 class="Formulario_Contenedor_Texto">Crear Caso</h3>
                     </div>             
@@ -229,8 +258,34 @@
                                 <input id="Input_Personas"class="Formulario_CrearCaso_Input7" type="number" required name="Personas_Afectadas">
                             </div>
                         </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Usuario Relacionado<span>*</span></label></div>
+                                </div>
+                                <datalist id="Lista_Usuarios">
+                                    {% for nombre in nombres %}
+                                        <option value="{{ nombre.Id_usuario }}">{{ nombre.Nombre }}</option>
+                                    {% endfor %}
+                                </datalist>
+                                <input list="Lista_Usuarios" id="Input_Usuario" class="Formulario_CrearCaso_Input7" required name="Usuario_Relacionado">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Estado<span>*</span></label></div>
+                                </div>
+                                <datalist id="Lista_Estados">
+                                    {% for estado in estados %}
+                                        <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
+                                    {% endfor %}
+                                </datalist>                               
+                                <input list="Lista_Estados" id="Input_Estado" class="Formulario_CrearCaso_Input7" required name="Estado">
+                            </div>
+                        </div>                        
                         <div class="Formulario_CrearCaso_Contenedor2">
-                                <label for="Input_Descripcion">Descripcion del incidente<span>*</span></label>
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Descripcion del incidente<span>*</span></label></div>
+                                </div>                            
                                 <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1" required name="Descripcion"></textarea>
                         </div>
                         <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
@@ -243,6 +298,7 @@
                 <div data-aos="fade-down" id="Superior2" class="Superior">
                     <h2>Mis casos</h2>
                     <div class="Botones">
+                        <input type="text" id="buscador" class="Formulario_CrearCaso_Input4" placeholder="Buscar caso..." onkeyup="filtrarCasos()">
                         <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
@@ -260,7 +316,7 @@
                                 <h4 class="FrameVerCasos_Caso_Texto">Detalles del caso</h4>
                                 <p><strong>Radicado:</strong> {{ caso.Radicado }}</p>
                                 <p><strong>Fecha:</strong> {{ caso.Fecha }}</p>
-                                <p><strong>Descripción:</strong> {{ caso.Descripción }}</p>
+                                <p><strong>Descripción:</strong> {{ caso.Descripcion }}</p>
                                 <p><strong>Personas afectadas:</strong> {{ caso.Personas_Afectadas }}</p>
                                 <p><strong>Departamento:</strong> {{ caso.Departamento }}</p>
                                 <p><strong>Incidente:</strong> {{ caso.Incidente }}</p>
@@ -275,65 +331,6 @@
                     </div>
                 {% endif %}
             </div>  
-        </div>
-        <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Buscar Entidad</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>
-            <div data-aos="zoom-in" class="FrameCrearCaso22">
-                <div class="Formulario">
-                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Buscar2.svg') }}" alt="Candado">
-                    <div class="Formulario_Contenedor">
-                        <h3 class="Formulario_Contenedor_Texto">Buscar Entidad</h3>
-                    </div>             
-                    {% if confirmacion %}
-                    <div id="confirmacion" class="confirmacion {{ tipo }}">
-                        <ul>
-                            <li>{{ confirmacion }}</li>
-                        </ul>
-                    </div>
-                    {% endif %}   
-                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/user/entidad/buscar">
-                        <div class="Formulario_BuscarEntidad_Contenedor">
-                            <div class="FormularioRegistrarse_Input4">
-                                    <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de la entidad<span>*</span></label></div>
-                            </div>
-                            <input id="Input_Direccion"class="Formulario_CrearCaso_Input" type="text" required name="codigo">
-                        </div>
-                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Buscar">                                                                       
-                    </form>
-                </div>            
-            </div>
-        </div> 
-        <div id="FrameBuscarEntidad2" class="Frame {% if frame_activo == 'FrameBuscarEntidad2' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2>Buscar Entidad</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="FrameBuscarEntidad"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>            
-            <div data-aos="zoom-in" class="Buscar_Entidad4">
-                {% if confirmacion %}
-                <div class="Buscar_Entidad">
-                    <div class="Buscar_Entidad_Nombre">
-                        <h3>{{ confirmacion.Nombre }}</h3>
-                    </div>
-                    <div class="Buscar_Entidad_Contenedor">
-                        <p><span>Código:</span> {{ confirmacion.Codigo }}</p>
-                        <p><span>Descripción:</span> {{ confirmacion.Descripcion }}</p>
-                        <p><span>Incidente:</span> {{ confirmacion.Incidente }}</p>
-                        <p><span>Dirección:</span> {{ confirmacion.Direccion }}</p>
-                        <p><span>Teléfono:</span> {{ confirmacion.Telefono }}</p>
-                        <p><span>Web:</span> <a href="{{ confirmacion.Web }}" target="_blank">{{ confirmacion.Web }}</a></p>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
         </div>
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
@@ -517,6 +514,7 @@
                 <div data-aos="fade-down" id="Superior2" class="Superior">
                     <h2>Buscar Entidades</h2>
                     <div class="Botones">
+                        <input type="text" id="buscador2" class="Formulario_CrearCaso_Input4" placeholder="Buscar entidad..." onkeyup="filtrarEntidades()">
                         <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
@@ -612,6 +610,6 @@
             </div>
         </div>              
     </div>
-    <script src="{{ url_for('static', filename='dashboard_usuario.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard_admin.js') }}"></script>
 </body> 
 </html>

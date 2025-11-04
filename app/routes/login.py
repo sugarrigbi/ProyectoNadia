@@ -19,6 +19,8 @@ def recuperar():
 def recuperar_token():
     return get_recuperar_token()
 @auth_bp.route("/dashboard/admin")
-@auth_bp.route("/dashboard/user") 
-def dashboard():
+def admin():
+    return get_dashboard()
+@auth_bp.route("/dashboard/user")
+def user():
     return get_dashboard()

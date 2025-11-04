@@ -133,8 +133,8 @@ def procesar_login(usuario, contraseña, datos2):
     session["rol"] = "admin" if Verificar_Rol(datos["Id_usuario"]) else "usuario"
 
     if session["rol"] == "admin":
-        return redirect(url_for("auth.dashboard"))
-    return redirect(url_for("auth.dashboard"))
+        return redirect(url_for("auth.admin"))
+    return redirect(url_for("auth.user"))
 def mostrar_dashboard():
     usuario_id = session.get("usuario_id")
     rol = (session.get("rol") or "").lower()
@@ -146,10 +146,12 @@ def mostrar_dashboard():
     frame_activo = request.args.get("frame", "Frame1")
 
     if rol == "admin":
-        return render_template("dashboard_admin.html", username=username)
+        if request.path != "/dashboard/admin":
+            return redirect(url_for("auth.admin", frame=frame_activo))
+        return render_template("dashboard_admin.html", username=username, frame_activo=frame_activo)
     elif rol == "usuario":
         if request.path != "/dashboard/user":
-            return redirect(url_for("dashboard.user", frame=frame_activo))
+            return redirect(url_for("auth.user", frame=frame_activo))
         return render_template("dashboard_usuario.html", username=username, frame_activo=frame_activo)
     else:
         flash("Rol no permitido")
@@ -546,3 +548,17 @@ def Comparar_Contraseñas4(Usuario, Contraseña_Actual, Contraseña_Nueva1, Cont
     if resultado:
         errores["Contraseña_Error3"] = resultado 
     return errores
+def Obtener_Usuarios():
+    conexion, cursor = Get_BaseDatos()
+    cursor.execute("SELECT Nombre, Id_usuario FROM tbl_usuario")
+    resultados = cursor.fetchall()
+    Close_BaseDatos(conexion, cursor)
+
+    return resultados
+def Obtener_Estados():
+    conexion, cursor = Get_BaseDatos()
+    cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'Caso_%'")
+    resultados = cursor.fetchall()
+    Close_BaseDatos(conexion, cursor)
+
+    return resultados

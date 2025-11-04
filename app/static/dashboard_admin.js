@@ -10,25 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = cuadro.getAttribute('data-target');
             if (target) {
                 if (window.location.pathname.includes("/casos") && target !== "FrameVerCasos") {
-                    window.location.href = "/dashboard/user?frame=" + target;
+                    window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
                 if (window.location.pathname.includes("/entidad/buscar") && target !== "FrameBuscarEntidad2") {
-                    window.location.href = "/dashboard/user?frame=" + target;
+                    window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
                 if (window.location.pathname.includes("/persona/datos") && target !== "FrameVerDatos") {
-                    window.location.href = "/dashboard/user?frame=" + target;
+                    window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
                 if (window.location.pathname.includes("/persona/modificar/enviar") && target !== "FrameModificarDatos") {
-                    window.location.href = "/dashboard/user?frame=" + target;
+                    window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
                 if (window.location.pathname.includes("/persona/modificar") && target !== "FrameModificarDatos") {
-                    window.location.href = "/dashboard/user?frame=" + target;
+                    window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
+                if (window.location.pathname.includes("/crear-caso") && target !== "FrameCrearCaso") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }                
 
                 frames.forEach(frame => frame.classList.remove('visible'));
                 document.getElementById(target)?.classList.add('visible');

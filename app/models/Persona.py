@@ -499,7 +499,6 @@ class Persona_Admin:
         self.Bloqueo = Bloqueo
         self.Intentos = Intentos
     def Buscar_Persona_Admin(self):
-        conexion, cursor = Get_BaseDatos()
         try:
             conexion, cursor = Get_BaseDatos()
             if conexion is None:
@@ -628,7 +627,6 @@ class Persona_Admin:
         id_adic_persona = generar_id("tbl_adic_persona", "PAD")
 
         try:
-            print("Creando persona con documento:", self.Documento)
             if not conexion.in_transaction:
                 conexion.start_transaction()
 
