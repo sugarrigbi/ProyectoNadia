@@ -99,22 +99,22 @@
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <a href="/dashboard/admin/casos" class="Cuadro1">
+                <a href="/dashboard/admin/casos/buscar" class="Cuadro1">
                     <img src="{{ url_for('static', filename='img/Usuario/Buscar12.svg') }}">
                     <h2>Buscar caso</h2>
                     <h3>Consulta los casos registrados y <br>revisa su estado y detalles completos.</h3>
                 </a>                     
-                <a class="Cuadro1" href="/dashboard/admin/crear-caso">
+                <a href="/dashboard/admin/casos/crear" class="Cuadro1">
                     <img src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}">
                     <h2>Crear caso</h2>
                     <h3>Genera un nuevo caso y <br>asigna responsables para su seguimiento.</h3>
                 </a>
-                <div class="Cuadro1">
+                <div data-target="FrameModificarCasoBuscar" class="Cuadro1">
                     <img src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}">
                     <h2>Modificar caso</h2>
                     <h3>Actualiza la información de un caso y <br>garantiza que los datos estén correctos.</h3>
                 </div>
-                <div class="Cuadro1">
+                <div data-target="FrameEliminarCaso" class="Cuadro1">
                     <img src="{{ url_for('static', filename='img/Usuario/Eliminar2.svg') }}">
                     <h2>Eliminar caso</h2>
                     <h3>Elimina un caso del sistema y <br>mantén la base de datos organizada.</h3>
@@ -202,101 +202,10 @@
                 </div>            
             </div>                        
         </div> 
-        <div id="FrameCrearCaso" class="Frame {% if frame_activo == 'FrameCrearCaso' %}visible{% endif %}">
-            <div data-aos="zoom-in" class="FrameCrearCaso2">
-                <div class="Superior">
-                    <h2>Crear Caso</h2>
-                    <div class="Botones">
-                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                    </div>
-                </div>
-                <div class="Formulario">
-                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}" alt="Candado">
-                    <div class="Formulario_Contenedor">
-                        <h3 class="Formulario_Contenedor_Texto">Crear Caso</h3>
-                    </div>             
-                    {% if confirmacion %}
-                    <div id="confirmacion" class="confirmacion {{ tipo }}">
-                        <ul>
-                            <li>{{ confirmacion }}</li>
-                        </ul>
-                    </div>
-                    {% endif %}   
-                    <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/crear-caso">
-                        <div class="Formulario_CrearCaso_Doble">
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Tipo de Incidente<span>*</span></label></div>
-                                </div>
-                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input7" name="Tipo_Incidente" required>
-                                    <option value="">Seleccion</option>
-                                    <option value="Despl">Desplazamiento</option>
-                                    <option value="Despo">Despojo de predios</option>
-                                    <option value="Expro">Expropiacion</option>
-                                    <option value="Hurt">Hurto</option>
-                                </select>
-                            </div>
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha del Incidente<span>*</span></label></div>
-                                </div>
-                                <input id="Input_Fecha" class="Formulario_CrearCaso_Input7" type="date" required name="Fecha_Incidente">
-                            </div>
-                        </div>
-                        <div class="Formulario_CrearCaso_Doble">
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Direccion<span>*</span></label></div>
-                                </div>
-                                <input id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Direccion">
-                            </div>
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Personas Afectadas<span>*</span></label></div>
-                                </div>
-                                <input id="Input_Personas"class="Formulario_CrearCaso_Input7" type="number" required name="Personas_Afectadas">
-                            </div>
-                        </div>
-                        <div class="Formulario_CrearCaso_Doble">
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Usuario Relacionado<span>*</span></label></div>
-                                </div>
-                                <datalist id="Lista_Usuarios">
-                                    {% for nombre in nombres %}
-                                        <option value="{{ nombre.Id_usuario }}">{{ nombre.Nombre }}</option>
-                                    {% endfor %}
-                                </datalist>
-                                <input list="Lista_Usuarios" id="Input_Usuario" class="Formulario_CrearCaso_Input7" required name="Usuario_Relacionado">
-                            </div>
-                            <div class="Formulario_CrearCaso_Contenedor">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Estado<span>*</span></label></div>
-                                </div>
-                                <datalist id="Lista_Estados">
-                                    {% for estado in estados %}
-                                        <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
-                                    {% endfor %}
-                                </datalist>                               
-                                <input list="Lista_Estados" id="Input_Estado" class="Formulario_CrearCaso_Input7" required name="Estado">
-                            </div>
-                        </div>                        
-                        <div class="Formulario_CrearCaso_Contenedor2">
-                                <div class="FormularioRegistrarse_Input6">
-                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Descripcion del incidente<span>*</span></label></div>
-                                </div>                            
-                                <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1" required name="Descripcion"></textarea>
-                        </div>
-                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
-                    </form>
-                </div> 
-            </div>
-        </div> 
         <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">         
             <div data-aos="zoom-in" class="FrameVerCasos2">
                 <div data-aos="fade-down" id="Superior2" class="Superior">
-                    <h2>Mis casos</h2>
+                    <h2>Buscar Casos</h2>
                     <div class="Botones">
                         <input type="text" id="buscador" class="Formulario_CrearCaso_Input4" placeholder="Buscar caso..." onkeyup="filtrarCasos()">
                         <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
@@ -331,7 +240,261 @@
                     </div>
                 {% endif %}
             </div>  
+        </div>        
+        <div id="FrameCrearCaso" class="Frame {% if frame_activo == 'FrameCrearCaso' %}visible{% endif %}">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Crear Casos</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Crear Caso</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formCrearCaso" class="Formulario_CrearCaso campo-limpiar" method="POST" action="/dashboard/admin/casos/crear">
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Tipo de Incidente<span>*</span></label></div>
+                                </div>
+                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input7" name="Tipo_Incidente" required>
+                                    <option value="">Seleccion</option>
+                                    <option value="Despl" {% if datos and datos.Tipo_Incidente == 'Despl' %}selected{% endif %}>Desplazamiento</option>
+                                    <option value="Despo" {% if datos and datos.Tipo_Incidente == 'Despo' %}selected{% endif %}>Despojo de predios</option>
+                                    <option value="Expro" {% if datos and datos.Tipo_Incidente == 'Expro' %}selected{% endif %}>Expropiacion</option>
+                                    <option value="Hurt" {% if datos and datos.Tipo_Incidente == 'Hurt' %}selected{% endif %}>Hurto</option>
+                                </select>
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha del Incidente<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Fecha" class="Formulario_CrearCaso_Input7" type="date" required name="Fecha_Incidente" value="{{ datos.Fecha_Incidente if datos else '' }}">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Direccion<span>*</span></label></div>
+                                </div>
+                                <input value="{{ datos.Direccion if datos else '' }}" id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Direccion">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Personas Afectadas<span>*</span></label></div>
+                                </div>
+                                <input value="{{ datos.Personas_Afectadas if datos else '' }}" id="Input_Personas"class="Formulario_CrearCaso_Input7" type="number" required name="Personas_Afectadas">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Usuario Relacionado<span>*</span></label></div>
+                                </div>  
+                                <datalist id="Lista_Usuarios">
+                                    {% for nombre in nombres %}
+                                        <option value="{{ nombre.Id_usuario }}">{{ nombre.Nombre }}</option>
+                                    {% endfor %}
+                                </datalist>
+                                <input value="{{ datos.Usuario_Relacionado if datos else '' }}" list="Lista_Usuarios" id="Input_Usuario" class="Formulario_CrearCaso_Input7" required name="Usuario_Relacionado">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Estado<span>*</span></label></div>
+                                </div>
+                                <datalist id="Lista_Estados">
+                                    {% for estado in estados %}
+                                        <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
+                                    {% endfor %}
+                                </datalist>                               
+                                <input value="{{ datos.Estado if datos else '' }}" list="Lista_Estados" id="Input_Estado" class="Formulario_CrearCaso_Input7" required name="Estado">
+                            </div>
+                        </div>                        
+                        <div class="Formulario_CrearCaso_Contenedor2">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Descripcion del incidente<span>*</span></label></div>
+                                </div>                            
+                                <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1" required name="Descripcion">{{ datos.Descripcion if datos else '' }}</textarea>
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
+                    </form>
+                </div> 
+            </div>
         </div>
+        <div id="FrameModificarCasoBuscar" class="Frame {% if frame_activo == 'FrameModificarCasoBuscar' %}visible{% endif %}">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Modificar Casos</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>
+                <div class="FormularioBuscar">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Modificar Caso</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formBuscarModificarCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/admin/casos/modificar">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input61">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de radicado<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Radicado" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Radicado">
+                            </div>
+                            <input class="Formulario_CrearCaso_Boton" type="submit" value="Modificar Caso">                                                                        
+                    </form>
+                </div>
+            </div>            
+        </div>
+        <div id="FrameModificarCaso" class="Frame {% if frame_activo == 'FrameModificarCaso' %}visible{% endif %}">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Modificar Casos</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>
+                <div class="Formulario">
+                    {% if datos %}                
+                        <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}" alt="Candado">
+                        <div class="Formulario_Contenedor">
+                            <h3 class="Formulario_Contenedor_Texto">Modificar Caso</h3>
+                        </div>                     
+                        <div class="Buscar_Entidad_Nombre">
+                            <h3>{{ datos.Radicado }}</h3>
+                        </div>
+                        <form id="formCrearCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/admin/casos/modificar/enviar">
+                            {% if confirmacion %}
+                            <div id="confirmacion" class="confirmacion {{ tipo }}">
+                                <ul>
+                                    <li>{{ confirmacion }}</li>
+                                </ul>
+                            </div>
+                            {% endif %}                               
+                            <div class="Formulario_CrearCaso_Doble">
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Fecha<span>*</span></label></div>
+                                    </div>
+                                    <input id="Input_Fecha" class="Formulario_CrearCaso_Input7 campo-modificar" type="date" required name="Fecha" value="{{ datos.Fecha }}">
+                                </div>
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Personas Afectadas<span>*</span></label></div>
+                                    </div>
+                                    <input id="Input_Personas" class="Formulario_CrearCaso_Input7 campo-modificar" type="number" required name="Personas_Afectadas" value="{{ datos.Persona }}">
+                                </div>
+                            </div>
+                            <div class="Formulario_CrearCaso_Doble">
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <datalist id="Lista_Usuarios">
+                                        {% for nombre in nombres %}
+                                            <option value="{{ nombre.Id_usuario }}">{{ nombre.Nombre }}</option>
+                                        {% endfor %}
+                                    </datalist>                                    
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Usuario Relacionado<span>*</span></label></div>
+                                    </div>
+                                    <input list="Lista_Usuarios" id="Input_Usuario_Relacionado" minlength="3" class="Formulario_CrearCaso_Input7 campo-modificar" type="text" required name="Usuario" value="{{ datos.Id_usuario }}">
+                                </div>
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Tipo de Incidente<span>*</span></label></div>
+                                    </div>
+                                    <select  id="Input_TipoIncidente" class="Formulario_CrearCaso_Input7 campo-modificar" name="Tipo_Incidente" required>
+                                        <option value="" {% if datos and datos['Incidente'] in ['', 'Seleccion'] %}selected{% endif %}>Seleccion</option>
+                                        <option value="Despl" {% if datos and datos['Incidente'] in ['Despl', 'Desplazamiento'] %}selected{% endif %}>Desplazamiento</option>
+                                        <option value="Despo" {% if datos and datos['Incidente'] in ['Despo', 'Despojo de predios'] %}selected{% endif %}>Despojo de predios</option>
+                                        <option value="Expro" {% if datos and datos['Incidente'] in ['Expro', 'Expropiacion'] %}selected{% endif %}>Expropiacion</option>
+                                        <option value="Hurt" {% if datos and datos['Incidente'] in ['Hurt', 'Hurto'] %}selected{% endif %}>Hurto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="Formulario_CrearCaso_Doble">
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Departamento<span>*</span></label></div>
+                                    </div>
+                                    <input id="Input_Departamento" class="Formulario_CrearCaso_Input7 campo-modificar" required name="Departamento" value="{{ datos.Departamento }}">
+                                </div>
+                                <div class="Formulario_CrearCaso_Contenedor">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Estado<span>*</span></label></div>
+                                    </div>
+                                    <datalist id="Lista_Estados">
+                                        {% for estado in estados %}
+                                            <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
+                                        {% endfor %}
+                                    </datalist>                               
+                                    <input list="Lista_Estados" id="Input_Estado" class="Formulario_CrearCaso_Input7 campo-modificar" required type="text" name="Estado" value="{{ datos.Estado }}">
+                                </div>
+                            </div>                        
+                            <div class="Formulario_CrearCaso_Contenedor2">
+                                    <div class="FormularioRegistrarse_Input6">
+                                            <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Descripcion del caso<span>*</span></label></div>
+                                    </div>                            
+                                    <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1 campo-modificar" required name="Descripcion">{{ datos.Descripcion }}</textarea>
+                            </div>
+                            <input id="btnModificar" class="Formulario_CrearCaso_Boton" type="submit" value="Modificar Caso" disabled>                                                                       
+                        </form>                        
+                    {% endif %}
+                </div> 
+            </div>            
+        </div>
+        <div id="FrameEliminarCaso" class="Frame {% if frame_activo == 'FrameEliminarCaso' %}visible{% endif %}">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Eliminar Casos</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>
+                <div class="FormularioBuscar">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Eliminar2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Eliminar Caso</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formBuscarModificarCaso" class="Formulario_CrearCaso campo-limpiar" method="POST" action="/dashboard/admin/casos/eliminar">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input61">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de radicado<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Radicado" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Radicado">
+                            </div>
+                            <input class="Formulario_CrearCaso_Boton" type="submit" value="Eliminar Caso">                                                                        
+                    </form>
+                </div>
+            </div>            
+        </div>
+
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
                 <h2>Mis Datos</h2>
@@ -608,7 +771,7 @@
                     </form>
                 </div>            
             </div>
-        </div>              
+        </div>                     
     </div>
     <script src="{{ url_for('static', filename='dashboard_admin.js') }}"></script>
 </body> 

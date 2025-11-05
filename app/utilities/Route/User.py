@@ -65,20 +65,6 @@ def get_modificardatos1():
     Personas1 = Persona(codigo, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
     lista_datos = Personas1.Buscar_Persona()
 
-    datos = {
-        "Documento": Obtener_DocumentoCodigo(session.get("usuario_id")),
-        "Primer_Nombre": request.form.get("Primer_Nombre", ""),
-        "Segundo_Nombre": request.form.get("Segundo_Nombre", ""),
-        "Primer_Apellido": request.form.get("Primer_Apellido", ""),
-        "Segundo_Apellido": request.form.get("Segundo_Apellido", ""),
-        "Tipo_Documento": request.form.get("Tipo_Documento", ""),
-        "Fecha_Nacimiento": request.form.get("Fecha_Nacimiento", ""),
-        "Direccion": request.form.get("Direccion", ""),
-        "Telefono": request.form.get("Numero_Contacto", ""),
-        "Correo": request.form.get("Email", ""),
-        "Usuario": request.form.get("Usuario", "")
-    } 
-
     fecha_str = lista_datos["Fecha_Nacimiento"]
     if fecha_str:
         fecha_html = datetime.strptime(fecha_str, "%d/%m/%Y").strftime("%Y-%m-%d")

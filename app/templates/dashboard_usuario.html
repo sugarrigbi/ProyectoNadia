@@ -23,13 +23,13 @@
             <h2>Gaialink</h2>
         </div>
         <ul>
-            <li data-target="Frame1" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}">Inicio</li>
-            <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}">Casos</li>
-            <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}">Entidades</li>
-            <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}">Mi Perfil</li>            
-            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}">Ayuda</li>
+            <li data-target="Frame1" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casa" src="{{ url_for('static', filename='img/Home.svg') }}"><span class="Barra_Texto">Inicio</span></li>
+            <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}"><span class="Barra_Texto">Casos</span></li>
+            <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}"><span class="Barra_Texto">Entidades</span></li>
+            <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}"><span class="Barra_Texto">Usuarios</span></li>            
+            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}"><span class="Barra_Texto">Ayuda</span></li>
         </ul>
-        <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" >Cerrar Sesion</button>
+        <button onclick="window.location.href='/'"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" ><span class="Barra_Texto">Cerrar Sesion</span></button>
     </div>
     <div class="Desktop">
         <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">

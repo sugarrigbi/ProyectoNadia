@@ -127,7 +127,7 @@ Sistema de notificaciones de GaiaLink
                 servidor.quit()
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
-            Close_BaseDatos(conexion, cursor) 
+            Close_BaseDatos(conexion, cursor)        
     def Buscar_Casos(self, Nombre):
         conexion, cursor = Get_BaseDatos()
         Numeros = []
@@ -231,6 +231,82 @@ class Caso_Admin:
         self.tipo_caso = tipo_caso
         self.estado = estado
         self.Radicado = Radicado
+    def Buscar_Caso_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        Numeros = []
+        Usuarios = []
+        Estados = []
+        Departamentos = []
+        Incidentes = []
+        lista_fusionada = []
+
+        cursor.execute("SELECT Id_Caso_Incidente FROM prueba.tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        casos = cursor.fetchall()
+        if not casos:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Fecha FROM prueba.tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        fechas = cursor.fetchall()
+        if not fechas:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Descripción FROM prueba.tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        descripciones = cursor.fetchall()
+        if not descripciones:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        cursor.execute("SELECT Personas_Afectadas FROM prueba.tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        personas = cursor.fetchall()
+        if not personas:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Id_usuario FROM prueba.tbl_usuario JOIN tbl_caso ON tbl_caso.Fk_Usuario = Id_usuario JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        usuarios = cursor.fetchall()
+        if usuarios:
+            Usuarios.append(usuarios) 
+        
+        cursor.execute("SELECT Incidente FROM prueba.tbl_incidente JOIN tbl_caso ON tbl_caso.Fk_Incidente = Id_incidente JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        Fk_Incidente = cursor.fetchall()
+        if Fk_Incidente:
+            Incidentes.append(Fk_Incidente)
+
+        cursor.execute("SELECT Nom_departamento FROM prueba.tbl_departamento JOIN tbl_caso ON tbl_caso.Fk_Dep = Id_dep JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        departamento_name = cursor.fetchone()
+        if departamento_name:
+            Departamentos.append(departamento_name)
+
+        cursor.execute("SELECT Id_estado FROM prueba.tbl_estado JOIN tbl_caso ON tbl_caso.Fk_Estado = Id_estado JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        estado_name = cursor.fetchone()
+        if estado_name:
+            Estados.append(estado_name)
+
+        radicados = self.Radicado
+        if not radicados:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
+        try:                
+            caso = {
+                "Codigo": casos[0]["Id_Caso_Incidente"],
+                "Fecha": fechas[0]["Fecha"].strftime("%Y-%m-%d"),
+                "Descripcion": descripciones[0]["Descripción"],
+                "Persona": personas[0]["Personas_Afectadas"],
+                "Id_usuario": Usuarios[0][0]["Id_usuario"],
+                "Incidente": Incidentes[0][0]["Incidente"],
+                "Departamento": Departamentos[0]["Nom_departamento"],
+                "Estado": Estados[0]["Id_estado"],
+                "Radicado": radicados
+            }
+            if all(caso.values()):
+                lista_fusionada.append(caso)
+        except Exception as e:
+            return f"⚠️ Error procesando caso: {e}"
+        Close_BaseDatos(conexion, cursor)
+        return lista_fusionada
     def Buscar_Casos_Admin(self):
         conexion, cursor = Get_BaseDatos()
         Numeros = []
@@ -322,7 +398,7 @@ class Caso_Admin:
                 print(f"⚠️ Error procesando caso {i}: {e}")
                 continue                    
         Close_BaseDatos(conexion, cursor)
-        return lista_fusionada     
+        return lista_fusionada       
     def Crear_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
         id_usuario = self.Usuario
@@ -331,10 +407,16 @@ class Caso_Admin:
         id_departamento = "001DEP"
         id_caso = "Caso"
 
+        hoy = datetime.today()
+        Fecha2 = datetime.strptime(self.Fecha, "%Y-%m-%d")
+
+        if Fecha2 > hoy:
+            return "El caso no puede ocurrir en el futuro", "error"
+
         cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (id_usuario,))
         Correo = cursor.fetchone()      
         if not Correo:
-            return "No se encontro el Correo", "error"      
+            return "No se encontro el Usuario", "error"      
 
         def generar_id(tabla, prefijo, longitud):
             cursor.execute(f"SELECT COUNT(*) FROM {tabla}")
@@ -412,6 +494,16 @@ Sistema de notificaciones de GaiaLink
     def Modificar_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
         id_usuario = self.Usuario
+        self.departamento = "001DEP"
+        hoy = datetime.today()
+        Fecha2 = datetime.strptime(self.Fecha, "%Y-%m-%d")
+        if Fecha2 > hoy:
+            return "El caso no puede ocurrir en el futuro", "error"
+        
+        cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        Estado3 = cursor.fetchone()
+        if Estado3 == "Caso_03":
+            return "El caso no existe", "error"
 
         cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
         Nombre_Usuario = cursor.fetchone()
@@ -484,6 +576,11 @@ Sistema de notificaciones de GaiaLink
         id_usuario = self.Usuario
         Estado = "Caso_03"
 
+        cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        Estado3 = cursor.fetchone()
+        if Estado3 == "Caso_03":
+            return "El caso no existe", "error"
+
         cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
         Nombre_Usuario = cursor.fetchone()
         if not Nombre_Usuario:
@@ -548,4 +645,4 @@ Sistema de notificaciones de GaiaLink
                 servidor.quit()
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
-            Close_BaseDatos(conexion, cursor)               
+            Close_BaseDatos(conexion, cursor)            

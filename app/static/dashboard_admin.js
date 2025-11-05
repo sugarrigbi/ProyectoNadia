@@ -1,15 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
     const frames = document.querySelectorAll('.Frame, .Frame1');
-    const form = document.querySelector(".Buscar_Entidad_Contenedor2");
-    const submitButton = form ? form.querySelector(".Formulario_CrearCaso_Boton2") : null;
-    const fields = form ? form.querySelectorAll("input, select") : [];
+    const campos = Array.from(document.querySelectorAll(".campo-modificar"));
+    const btnModificar = document.getElementById("btnModificar");
+
+    const valoresOriginales = {};
+    campos.forEach(c => {
+        valoresOriginales[c.name] = c.value;
+    });
+
+    function hayCambios() {
+        for (const campo of campos) {
+            const original = valoresOriginales[campo.name] ?? "";
+            const actual = campo.value;
+            if (original !== actual) return true;
+        }
+        return false;
+    }
+    function validarYActualizarBoton() {
+        btnModificar.disabled = !hayCambios();
+    }    
+
+    campos.forEach(c => {
+        c.addEventListener("input", validarYActualizarBoton);
+        c.addEventListener("change", validarYActualizarBoton);
+    });
 
     cuadros.forEach(cuadro => {
         cuadro.addEventListener('click', () => {
             const target = cuadro.getAttribute('data-target');
             if (target) {
-                if (window.location.pathname.includes("/casos") && target !== "FrameVerCasos") {
+                if (window.location.pathname.includes("/dashboard/admin/casos/buscar") && target !== "FrameVerCasos") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
@@ -29,10 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
-                if (window.location.pathname.includes("/crear-caso") && target !== "FrameCrearCaso") {
+                if (window.location.pathname.includes("/dashboard/admin/casos/crear") && target !== "FrameCrearCaso") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
-                }                
+                }     
+                if (window.location.pathname.includes("/dashboard/admin/casos/modificar") && target !== "FrameModificarCasoBuscar") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }                                
 
                 frames.forEach(frame => frame.classList.remove('visible'));
                 document.getElementById(target)?.classList.add('visible');
@@ -77,41 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if (form && submitButton) {
-        const originalValues = {};
-        fields.forEach(field => {
-            originalValues[field.name] = field.value;
-        });
-
-        submitButton.disabled = true;
-        submitButton.style.opacity = "0.6";
-        submitButton.style.cursor = "not-allowed";
-
-        function verificarCambios() {
-            let cambioDetectado = false;
-
-            fields.forEach(field => {
-                if (field.value !== originalValues[field.name]) {
-                    cambioDetectado = true;
-                }
-            });
-
-            if (cambioDetectado) {
-                submitButton.disabled = false;
-                submitButton.style.opacity = "1";
-                submitButton.style.cursor = "pointer";
-            } else {
-                submitButton.disabled = true;
-                submitButton.style.opacity = "0.6";
-                submitButton.style.cursor = "not-allowed";
-            }
-        }
-
-        fields.forEach(field => {
-            field.addEventListener("input", verificarCambios);
-            field.addEventListener("change", verificarCambios);
-        });
-    }
     window.filtrarCasos = function() {
         let input = document.getElementById("buscador").value.toLowerCase();
         let casos = document.querySelectorAll(".FrameVerCasos_Caso h3");
@@ -137,5 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 entidad.parentElement.style.display = "none";
             }
         });
-    }    
+    } 
+
+    validarYActualizarBoton();
 });

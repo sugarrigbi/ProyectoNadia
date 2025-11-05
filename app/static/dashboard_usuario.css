@@ -857,3 +857,209 @@ body, html {
     margin-top: 65px;
     z-index: 100000;
 }
+@media (max-width: 1200px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 26px;
+    }
+    .Barra_Texto{
+        display: none;
+    } 
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+    .Frame h2{
+        font-size: 32px;
+    }
+    .Boton img{
+        width: 28px;
+        height: 28px;
+        padding: 14px;
+    }     
+    .Formulario_CrearCaso_Input4{
+        font-size: 20px;
+    }   
+    .modal-content{
+        width: 80%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 20px;
+    }
+    .Formulario{
+        width: 80%;
+    }
+    .Formulario_CrearCaso{
+        gap: 20px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 32px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 8px;
+    }     
+}
+@media (max-width: 900px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 22px;
+    }
+    .Barra_Texto{
+        display: none;
+    }
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+    .Frame h2{
+        font-size: 30px;
+        padding-left: 15px;        
+    } 
+    .Boton img{
+        width: 26px;
+        height: 26px;
+        padding: 12px;
+    }
+    .Botones{
+        width: 60%;
+    }    
+    .Formulario_CrearCaso_Input4{
+        font-size: 18px;
+    }        
+    .FrameVerCasos_Caso_Texto{
+        font-size: 25px;
+    }          
+    .modal-content p{
+        font-size: 20px;
+    }
+    .modal-content{
+        width: 90%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 18px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 18px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 18px;
+    }
+    .Formulario{
+        width: 80%;
+    }
+    .Formulario_CrearCaso{
+        gap: 15px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 28px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 5px;
+    }    
+}
+@media (max-width: 600px) {
+    .Cuadro1{
+        flex: 1 1 250px;
+        max-width: 300px;
+    }
+    .Cuadro1 h2 {
+        font-size: 18px;
+    }
+    .Barra_Texto{
+        display: none;
+    }
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 15%;
+        padding-right: 10%;
+    }
+    .Frame h2{
+        font-size: 27px;
+        padding-top: 10px;
+        padding-left: 15px;
+    }
+    .Boton img{
+        width: 23px;
+        height: 23px;
+        padding: 10px;
+    }
+    .Botones{
+        width: 100%;
+    }
+    .Formulario_CrearCaso_Input4{
+        font-size: 16px;
+        width: 40%;
+    }            
+    .FrameVerCasos_Caso_Texto{
+        font-size: 23px;
+    }          
+    .modal-content p{
+        font-size: 18px;
+    }
+    .modal-content{
+        width: 100%;
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 20px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 20px;
+        margin-top: 5px;
+    }
+    .Formulario{
+        width: 90%;
+    }
+    .Formulario_CrearCaso{
+        gap: 10px;
+    }
+    .Formulario_Contenedor{
+        margin-top: 15px;
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 25px;
+    }
+    .Formulario_CrearCaso_Doble{
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .Formulario_CrearCaso_Contenedor{
+        width: 100%;
+        align-items: start;
+        margin-left: 10%;
+    }
+    .FormularioRegistrarse_Input6{
+        width: 80%;
+    }
+}

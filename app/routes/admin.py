@@ -1,13 +1,25 @@
 from flask import Blueprint, session
-from app.utilities.Route.Admin import get_miscasos_admin, get_crear_caso_admin
+from app.utilities.Route.Admin import get_buscar_casos_admin, get_crear_casos_admin, get_modificar_buscar_casos_admin, get_modificar_enviar_casos_admin, get_eliminar_casos_admin
 admin_bp = Blueprint("admin", __name__)
 
-@admin_bp.route("/dashboard/admin/casos", methods=["GET"])
-def miscasos_admin(): 
-    return get_miscasos_admin()
-@admin_bp.route("/dashboard/admin/crear-caso", methods=["GET", "POST"])
-def Crear_caso():
-    return get_crear_caso_admin()
+@admin_bp.route("/dashboard/admin/casos/buscar", methods=["GET"])
+def Buscar_Caso_Admin(): 
+    return get_buscar_casos_admin()
+@admin_bp.route("/dashboard/admin/casos/crear", methods=["GET", "POST"])
+def Crear_Caso_Admin():
+    return get_crear_casos_admin()
+@admin_bp.route('/dashboard/admin/casos/modificar', methods=["POST"])
+def Modificar_Caso_Buscar_Admin():
+    return get_modificar_buscar_casos_admin()
+@admin_bp.route('/dashboard/admin/casos/modificar/enviar',methods=["GET", "POST"])
+def Modificar_Caso_Enviar_Admin():
+    return get_modificar_enviar_casos_admin()
+@admin_bp.route('/dashboard/admin/casos/eliminar',methods=["POST"])
+def Eliminar_Caso_Admin():
+    return get_eliminar_casos_admin()
+
+
+
 @admin_bp.route("/dashboard/admin/entidades", methods=["GET"])
 def entidades(): 
     return get_entidades_admin()
