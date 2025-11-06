@@ -4,6 +4,7 @@ from flask import flash, redirect, url_for, session, render_template
 from app.utilities.Base_Datos import Get_BaseDatos, Close_BaseDatos, Get_Errores
 import smtplib
 from email.mime.text import MIMEText
+from urllib.parse import urlparse
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate, make_msgid, formataddr
 
@@ -58,6 +59,11 @@ class Entidad():
             if Incidente:
                 Incidentes.append(Incidente)   
 
+        cursor.execute("SELECT Fk_Estado FROM prueba.tbl_entidad ORDER BY Id_entidad")
+        Estados = cursor.fetchall()
+        if not Estados:
+            return "No existen entidades", "error" 
+
         cursor.execute("SELECT Direccion FROM prueba.tbl_adic_entidad ORDER BY fk_entidad")
         Direccion = cursor.fetchall()
         if not Direccion:
@@ -81,9 +87,11 @@ class Entidad():
                 "Incidente": Incidentes[i],
                 "Direccion": Direccion[i]["Direccion"],
                 "Num_Contact": Num_Contact[i]["Num_Contact"],
-                "web_site": web_site[i]["web_site"]
+                "web_site": web_site[i]["web_site"],
+                "Estado": Estados[i]["Fk_Estado"]
             }
-            lista_fusionada.append(Entidad)
+            if all(Entidad.values()) and Entidad["Estado"] != "Entidad_00":
+                lista_fusionada.append(Entidad)            
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada
 class Entidad_Admin():
@@ -175,6 +183,17 @@ class Entidad_Admin():
         try:
             if not conexion.in_transaction:
                 conexion.start_transaction()
+
+            def es_url(url: str) -> bool:
+                try:
+                    resultado = urlparse(url)
+                    return resultado.scheme in ("http", "https") and bool(resultado.netloc)
+                except:
+                    return False
+
+            if es_url(self.Web) == False:
+                return "Error, la web no es valida", "error"
+
             cursor.execute("INSERT INTO tbl_entidad (Id_entidad, Nombre_Entidad, Fk_Incidente, Fk_Estado) VALUES (%s, %s, %s, %s)",(id_Entidad, self.Nombre, self.IncidenteRelacionado, id_activo))           
             cursor.execute("INSERT INTO tbl_adic_entidad (Id_Adic_Entidad, Direccion, Num_Contact, web_site, fk_entidad, Descripción) VALUES (%s, %s, %s, %s, %s, %s)",(id_Adic_Entidad, self.Direccion, self.Telefono, self.Web, id_Entidad, self.Descripcion))
             conexion.commit()

@@ -134,11 +134,11 @@
                     <h2>Buscar entidad</h2>
                     <h3>Consulta las entidades existentes y <br>verifica sus detalles y estado.</h3>
                 </a>
-                <div class="Cuadro1">
+                <a class="Cuadro1" href="/dashboard/admin/entidades/crear">
                     <img src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}">
                     <h2>Crear entidad</h2>
                     <h3>Registra una nueva entidad y <br>agrega toda la información relevante.</h3>
-                </div>
+                </a>
                 <div class="Cuadro1">
                     <img src="{{ url_for('static', filename='img/Usuario/Modificar2.svg') }}">
                     <h2>Modificar entidad</h2>
@@ -202,7 +202,7 @@
                 </div>            
             </div>                        
         </div> 
-        <div id="FrameVerCasos" class="Frame {% if frame_activo == 'FrameVerCasos' %}visible{% endif %}">         
+        <div id="FrameBuscarCasos" class="Frame {% if frame_activo == 'FrameBuscarCasos' %}visible{% endif %}">         
             <div data-aos="zoom-in" class="FrameVerCasos2">
                 <div data-aos="fade-down" id="Superior2" class="Superior">
                     <h2>Buscar Casos</h2>
@@ -227,7 +227,7 @@
                                 <p><strong>Fecha:</strong> {{ caso.Fecha }}</p>
                                 <p><strong>Descripción:</strong> {{ caso.Descripcion }}</p>
                                 <p><strong>Personas afectadas:</strong> {{ caso.Personas_Afectadas }}</p>
-                                <p><strong>Departamento:</strong> {{ caso.Departamento }}</p>
+                                <p><strong>Direccion:</strong> {{ caso.Departamento }}</p>
                                 <p><strong>Incidente:</strong> {{ caso.Incidente }}</p>
                                 <p><strong>Estado:</strong> {{ caso.Estado }}</p>
                                 <p><strong>Nombre:</strong> {{ caso.Nombre }}</p>
@@ -531,6 +531,92 @@
                 {% endif %}
             </div>  
         </div> 
+        <div id="FrameCrearEntidad" class="Frame {% if frame_activo == 'FrameCrearEntidad' %}visible{% endif %}">
+            <div data-aos="zoom-in" class="FrameCrearCaso2">
+                <div class="Superior">
+                    <h2>Crear Entidades</h2>
+                    <div class="Botones">
+                        <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>
+                <div class="Formulario">
+                    <img class="Imagen_CrearCaso" src="{{ url_for('static', filename='img/Usuario/Crear2.svg') }}" alt="Candado">
+                    <div class="Formulario_Contenedor">
+                        <h3 class="Formulario_Contenedor_Texto">Crear Entidad</h3>
+                    </div>             
+                    {% if confirmacion %}
+                    <div id="confirmacion" class="confirmacion {{ tipo }}">
+                        <ul>
+                            <li>{{ confirmacion }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}   
+                    <form id="formCrearCaso" class="Formulario_CrearCaso campo-limpiar" method="POST" action="/dashboard/admin/entidades/crear">
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Nombre<span>*</span></label></div>
+                                </div>
+                                <input id="Input_Nombre" class="Formulario_CrearCaso_Input7" type="text" required name="Nombre_Entidad" value="{{ datos.Nombre_Entidad if datos else '' }}">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Incidente Relacionado<span>*</span></label></div>
+                                </div>
+                                <select  id="Input_Incidente"class="Formulario_CrearCaso_Input7" name="Incidente_Entidad" required>
+                                    <option value="">Seleccion</option>
+                                    <option value="Despl" {% if datos and datos.Incidente_Entidad == 'Despl' %}selected{% endif %}>Desplazamiento</option>
+                                    <option value="Despo" {% if datos and datos.Incidente_Entidad == 'Despo' %}selected{% endif %}>Despojo de predios</option>
+                                    <option value="Expro" {% if datos and datos.Incidente_Entidad == 'Expro' %}selected{% endif %}>Expropiacion</option>
+                                    <option value="Hurt" {% if datos and datos.Incidente_Entidad == 'Hurt' %}selected{% endif %}>Hurto</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Direccion<span>*</span></label></div>
+                                </div>
+                                <input value="{{ datos.Direccion_Entidad if datos else '' }}" id="Input_Direccion" minlength="6" class="Formulario_CrearCaso_Input7" type="text" required name="Direccion_Entidad">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Telefono<span>*</span></label></div>
+                                </div>
+                                <input value="{{ datos.Telefono_Entidad if datos else '' }}" id="Input_Telefono"class="Formulario_CrearCaso_Input7" minlength="10" type="number" required name="Telefono_Entidad">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Pagina Web<span>*</span></label></div>
+                                </div>  
+                                <input value="{{ datos.Web_Entidad if datos else '' }}" id="Input_Web" class="Formulario_CrearCaso_Input7" required name="Web_Entidad">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Estado<span>*</span></label></div>
+                                </div>
+                                <datalist id="Lista_Estados">
+                                    {% for estado in estados %}
+                                        <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
+                                    {% endfor %}
+                                </datalist>                               
+                                <input value="{{ datos.Estado_Entidad if datos else '' }}" list="Lista_Estados" id="Input_Estado" class="Formulario_CrearCaso_Input7" required name="Estado_Entidad">
+                            </div>
+                        </div>                        
+                        <div class="Formulario_CrearCaso_Contenedor2">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Descripcion de la entidad<span>*</span></label></div>
+                                </div>                            
+                                <textarea id="Input_Descripcion" minlength="15" class="FormularioCalificanos_Input_Input1" required name="Descripcion_Entidad">{{ datos.Descripcion_Entidad if datos else '' }}</textarea>
+                        </div>
+                        <input class="Formulario_CrearCaso_Boton" type="submit" value="Enviar Caso">                                                                       
+                    </form>
+                </div> 
+            </div>
+        </div>  
 
 
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">

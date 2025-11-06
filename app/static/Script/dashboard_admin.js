@@ -30,10 +30,34 @@ document.addEventListener("DOMContentLoaded", () => {
         cuadro.addEventListener('click', () => {
             const target = cuadro.getAttribute('data-target');
             if (target) {
-                if (window.location.pathname.includes("/dashboard/admin/casos/buscar") && target !== "FrameVerCasos") {
+                if (window.location.pathname.includes("/dashboard/admin/casos/buscar") && target !== "FrameBuscarCasos") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
+                if (window.location.pathname.includes("/dashboard/admin/casos/crear") && target !== "FrameCrearCaso") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }  
+                if (window.location.pathname.includes("/dashboard/admin/casos/modificar") && target !== "FrameModificarCasoBuscar") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }    
+                
+                if (window.location.pathname.includes("/dashboard/admin/entidades/buscar") && target !== "FrameBuscarEntidades") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }
+                if (window.location.pathname.includes("/dashboard/admin/entidades/crear") && target !== "FrameCrearEntidades") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }  
+                if (window.location.pathname.includes("/dashboard/admin/entidades/modificar") && target !== "FrameModificarEntidadesBuscar") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }                  
+
+
+
                 if (window.location.pathname.includes("/entidad/buscar") && target !== "FrameBuscarEntidad2") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
@@ -49,15 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (window.location.pathname.includes("/persona/modificar") && target !== "FrameModificarDatos") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
-                }
-                if (window.location.pathname.includes("/dashboard/admin/casos/crear") && target !== "FrameCrearCaso") {
-                    window.location.href = "/dashboard/admin?frame=" + target;
-                    return;
-                }     
-                if (window.location.pathname.includes("/dashboard/admin/casos/modificar") && target !== "FrameModificarCasoBuscar") {
-                    window.location.href = "/dashboard/admin?frame=" + target;
-                    return;
-                }                                
+                }                              
 
                 frames.forEach(frame => frame.classList.remove('visible'));
                 document.getElementById(target)?.classList.add('visible');

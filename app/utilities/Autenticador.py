@@ -567,13 +567,20 @@ def Obtener_Estados():
     Close_BaseDatos(conexion, cursor)
 
     return resultados
+def Obtener_Estados2():
+    conexion, cursor = Get_BaseDatos()
+    cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'Entidad_%'")
+    resultados = cursor.fetchall()
+    print(resultados)
+    Close_BaseDatos(conexion, cursor)
+
+    return resultados
 def Obtener_Estado_Caso(Radicado):
     conexion, cursor = Get_BaseDatos()
 
     cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (Radicado,))
     Estado3 = cursor.fetchone()
-    print(Estado3)
     if Estado3["Fk_Estado"] == "Caso_03":
         return "El caso no existe", "error"
     else:
-        return None
+        return None, None

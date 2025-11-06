@@ -220,12 +220,13 @@ Sistema de notificaciones de GaiaLink
         print(lista_fusionada[1]["Estado"])
         return lista_fusionada
 class Caso_Admin:
-    def __init__(self, Codigo, Fecha, Descripcion, Personas_Afectadas, Usuario, incidente, departamento, tipo_caso, estado, Radicado):
+    def __init__(self, Codigo, Fecha, Descripcion, Personas_Afectadas, Direccion, Usuario, incidente, departamento, tipo_caso, estado, Radicado):
         self.Codigo = Codigo
         self.Fecha = Fecha
         self.Descripcion = Descripcion
         self.Personas_Afectadas = Personas_Afectadas
         self.Usuario = Usuario
+        self.Direccion = Direccion
         self.incidente = incidente
         self.departamento = departamento
         self.tipo_caso = tipo_caso
@@ -274,10 +275,11 @@ class Caso_Admin:
         if Fk_Incidente:
             Incidentes.append(Fk_Incidente)
 
-        cursor.execute("SELECT Nom_departamento FROM prueba.tbl_departamento JOIN tbl_caso ON tbl_caso.Fk_Dep = Id_dep JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
-        departamento_name = cursor.fetchone()
-        if departamento_name:
-            Departamentos.append(departamento_name)
+        cursor.execute("SELECT Direccion FROM prueba.tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
+        departamento = cursor.fetchall()
+        if not departamento:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
 
         cursor.execute("SELECT Id_estado FROM prueba.tbl_estado JOIN tbl_caso ON tbl_caso.Fk_Estado = Id_estado JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
         estado_name = cursor.fetchone()
@@ -297,7 +299,7 @@ class Caso_Admin:
                 "Persona": personas[0]["Personas_Afectadas"],
                 "Id_usuario": Usuarios[0][0]["Id_usuario"],
                 "Incidente": Incidentes[0][0]["Incidente"],
-                "Departamento": Departamentos[0]["Nom_departamento"],
+                "Departamento": departamento[0]["Direccion"],
                 "Estado": Estados[0]["Id_estado"],
                 "Radicado": radicados
             }
@@ -356,13 +358,11 @@ class Caso_Admin:
             if Incidente:
                 Incidentes.append(Incidente)
 
-        cursor.execute("SELECT Fk_Dep FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        cursor.execute("SELECT Direccion FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
         departamento = cursor.fetchall()
-        for i in departamento:
-            cursor.execute("SELECT Nom_departamento FROM prueba.tbl_departamento WHERE Id_dep = %s", (i["Fk_Dep"],))
-            departamento_name = cursor.fetchone()
-            if departamento_name:
-                Departamentos.append(departamento_name)
+        if not departamento:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
 
         cursor.execute("SELECT Fk_Estado FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
         estado = cursor.fetchall()
@@ -380,7 +380,7 @@ class Caso_Admin:
 
         for i in range(len(casos)):
             try:
-                if (i < len(fechas) and i < len(descripciones) and i < len(personas) and i < len(Usuarios) and i < len(Incidentes) and i < len(Departamentos) and i < len(Estados) and i < len(radicados)):                
+                if (i < len(fechas) and i < len(descripciones) and i < len(personas) and i < len(Usuarios) and i < len(Incidentes) and i < len(departamento) and i < len(Estados) and i < len(radicados)):                
                     caso = {
                         "Codigo": casos[i]["Id_Caso_Incidente"],
                         "Fecha": fechas[i]["Fecha"],
@@ -388,10 +388,11 @@ class Caso_Admin:
                         "Persona": personas[i]["Personas_Afectadas"],
                         "Nombre": Usuarios[i]["Nombre"],
                         "Incidente": Incidentes[i],
-                        "Departamento": Departamentos[i]["Nom_departamento"],
+                        "Departamento": departamento[i]["Direccion"],
                         "Estado": Estados[i]["Estado"],
                         "Radicado": radicados[i]["Radicado"]
                     }
+                    print(caso["Departamento"])
                 if all(caso.values()) and caso["Estado"] != "Caso Eliminado":
                     lista_fusionada.append(caso)
             except Exception as e:
@@ -427,7 +428,7 @@ class Caso_Admin:
         cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
         Nombre_Usuario = cursor.fetchone()
         if not Nombre_Usuario:
-            return "El usuario no se encontro", "error"        
+            return "El usuario no se encontro", "error"     
 
         Id_Caso_Incidente = generar_id("tbl_caso", "CAD", longitud=3)
         radicado = generar_id("tbl_num_caso", "R", longitud=6)
@@ -435,7 +436,7 @@ class Caso_Admin:
         try:
             if not conexion.in_transaction:
                 conexion.start_transaction()
-            cursor.execute("INSERT INTO tbl_caso (Id_Caso_Incidente, Fecha, Descripción, Personas_Afectadas, Fk_Usuario, Fk_Incidente, Fk_Dep, Fk_Tipo_Caso, Fk_Estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", (Id_Caso_Incidente, fecha, self.Descripcion, self.Personas_Afectadas, id_usuario, self.incidente, id_departamento, id_caso, self.estado))
+            cursor.execute("INSERT INTO tbl_caso (Id_Caso_Incidente, Fecha, Descripción, Personas_Afectadas, Direccion, Fk_Usuario, Fk_Incidente, Fk_Dep, Fk_Tipo_Caso, Fk_Estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (Id_Caso_Incidente, fecha, self.Descripcion, self.Personas_Afectadas, self.Direccion, id_usuario, self.incidente, id_departamento, id_caso, self.estado))
             cursor.execute("INSERT INTO tbl_num_caso (Id_num_caso, Radicado, Fk_Caso) VALUES (%s, %s, %s)", (id_entidad, radicado, Id_Caso_Incidente)) 
             conexion.commit()
             return "Caso creado con exito", "exito"
