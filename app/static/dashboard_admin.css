@@ -290,6 +290,12 @@ body, html {
     align-items: center;
     flex-direction: column;
 }
+.Formulario_CrearCaso_Contenedor3{
+    display: flex;
+    width: 50%;
+    align-items: center;
+    flex-direction: column;
+}
 .Formulario_CrearCaso_Contenedor2{
     display: flex;
     width: 80%;
@@ -900,6 +906,9 @@ body, html {
     .Cuadro1 h2 {
         font-size: 26px;
     }
+    .FrameVerCasos_Caso{
+        width: 20%;
+    }        
     .Barra_Texto{
         display: none;
     } 
@@ -947,14 +956,25 @@ body, html {
     }
     .Formulario_Contenedor{
         margin-top: 8px;
+    }
+    .Formulario_CrearCaso_Contenedor3{
+        width: 60%;
+    }
+    .FormularioBuscar{
+        width: 60%;
     }     
 }
-
 @media (max-width: 900px) {
     .Cuadro1{
         flex: 1 1 250px;
         max-width: 300px;
     }
+    .FrameVerCasos_Caso{
+        width: 31%;
+    }       
+    .FormularioBuscar{
+        width: 60%;
+    } 
     .Cuadro1 h2 {
         font-size: 22px;
     }
@@ -1015,13 +1035,24 @@ body, html {
     }
     .Formulario_Contenedor{
         margin-top: 5px;
-    }    
+    }
+    .Formulario_CrearCaso_Contenedor3{
+        width: 90%;
+    }
 }
-
 @media (max-width: 600px) {
     .Cuadro1{
         flex: 1 1 250px;
         max-width: 300px;
+    }
+    .FrameVerCasos_Caso{
+        width: 68%;
+    }    
+    .FormularioBuscar{
+        width: 85%;
+    }
+    .Formulario_CrearCaso_Boton{
+        transform: scale(0.8);
     }
     .Cuadro1 h2 {
         font-size: 18px;
@@ -1095,6 +1126,10 @@ body, html {
         width: 100%;
         align-items: start;
         margin-left: 10%;
+    }
+    .Formulario_CrearCaso_Contenedor3{
+        margin: 0;
+        width: 80%;
     }
     .FormularioRegistrarse_Input6{
         width: 80%;

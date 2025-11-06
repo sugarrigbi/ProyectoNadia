@@ -163,7 +163,7 @@ def Validar_Contraseña(Contraseña):
         return "La contraseña debe tener una mayuscula"
     if not any(c.isdigit() for c in Contraseña):
         return "la contraseña debe tener un numero"
-    if not re.search(r'[/!@#$%^&*(),.?":{}|<>]', Contraseña):
+    if not re.search(r'[/!@#$%^&*(),.?":{}|<>+-_`¡]', Contraseña):
         return "La contraseña debe tener un caracter especial"
     return None
 def Validar_Contraseña2(Contraseña):
@@ -264,6 +264,9 @@ def Validar_Datos(Datos):
     if edad < 13:
         errores["Fecha_Nacimiento"] = "Debes tener al menos 13 años para registrarte."
 
+    if edad > 110:
+        errores["Fecha_Nacimiento"] = "Edad demasiado alta."
+
     resultado = Validar_Contraseña(Datos["Contraseña"])
     if resultado:
         errores["Contraseña"] = resultado    
@@ -296,6 +299,8 @@ def Validar_Datos(Datos):
         valor = Datos[campo].replace(" ", "")
         if valor and not valor.isalpha():
             errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' solo puede contener letras"
+        if len(valor) > 20:
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' debe ser menor a 20 caracteres"
 
     for campo in ["Documento", "Telefono"]:
         valor = Datos[campo].replace(" ", "")
@@ -562,3 +567,13 @@ def Obtener_Estados():
     Close_BaseDatos(conexion, cursor)
 
     return resultados
+def Obtener_Estado_Caso(Radicado):
+    conexion, cursor = Get_BaseDatos()
+
+    cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (Radicado,))
+    Estado3 = cursor.fetchone()
+    print(Estado3)
+    if Estado3["Fk_Estado"] == "Caso_03":
+        return "El caso no existe", "error"
+    else:
+        return None

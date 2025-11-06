@@ -125,7 +125,7 @@
                                     <div class="confirmacion_error">{{ errores['Primer_Apellido'] }}</div>
                                 {% endif %}
                                 <div class="FormularioRegistrarse_Input2"><label for="Input_PrimerApellido">Primer apellido<span>*</span></label></div>
-                                <input value="{{ datos.Segundo_Apellido if datos else '' }}" minlength="2" id="Input_PrimerApellido"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Apellido">
+                                <input value="{{ datos.Primer_Apellido if datos else '' }}" minlength="2" id="Input_PrimerApellido"class="FormularioRegistrarse_Input_Input" type="text" required name="Primer_Apellido">
                             </div>
                             <div class="FormularioRegistrarse_Input">
                                 {% if errores and errores.get('Segundo_Apellido') %}

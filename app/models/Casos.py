@@ -392,7 +392,7 @@ class Caso_Admin:
                         "Estado": Estados[i]["Estado"],
                         "Radicado": radicados[i]["Radicado"]
                     }
-                if all(caso.values()):
+                if all(caso.values()) and caso["Estado"] != "Caso Eliminado":
                     lista_fusionada.append(caso)
             except Exception as e:
                 print(f"⚠️ Error procesando caso {i}: {e}")
@@ -499,11 +499,6 @@ Sistema de notificaciones de GaiaLink
         Fecha2 = datetime.strptime(self.Fecha, "%Y-%m-%d")
         if Fecha2 > hoy:
             return "El caso no puede ocurrir en el futuro", "error"
-        
-        cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (self.Radicado,))
-        Estado3 = cursor.fetchone()
-        if Estado3 == "Caso_03":
-            return "El caso no existe", "error"
 
         cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
         Nombre_Usuario = cursor.fetchone()

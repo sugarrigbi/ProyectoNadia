@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div data-aos="zoom-in" class="Cuadros">
-                <a class="Cuadro1" href="/dashboard/user/entidades">
+                <a class="Cuadro1" href="/dashboard/admin/entidades/buscar">
                     <img src="{{ url_for('static', filename='img/Usuario/Buscar12.svg') }}">
                     <h2>Buscar entidad</h2>
                     <h3>Consulta las entidades existentes y <br>verifica sus detalles y estado.</h3>
@@ -354,7 +354,7 @@
                     </div>
                     {% endif %}   
                     <form id="formBuscarModificarCaso" class="Formulario_CrearCaso" method="POST" action="/dashboard/admin/casos/modificar">
-                            <div class="Formulario_CrearCaso_Contenedor">
+                            <div class="Formulario_CrearCaso_Contenedor3">
                                 <div class="FormularioRegistrarse_Input61">
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de radicado<span>*</span></label></div>
                                 </div>
@@ -483,7 +483,7 @@
                     </div>
                     {% endif %}   
                     <form id="formBuscarModificarCaso" class="Formulario_CrearCaso campo-limpiar" method="POST" action="/dashboard/admin/casos/eliminar">
-                            <div class="Formulario_CrearCaso_Contenedor">
+                            <div class="Formulario_CrearCaso_Contenedor3">
                                 <div class="FormularioRegistrarse_Input61">
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Numero de radicado<span>*</span></label></div>
                                 </div>
@@ -494,6 +494,44 @@
                 </div>
             </div>            
         </div>
+        <div id="FrameBuscarEntidad" class="Frame {% if frame_activo == 'FrameBuscarEntidad' %}visible{% endif %}">         
+            <div data-aos="zoom-in" class="FrameVerCasos2">
+                <div data-aos="fade-down" id="Superior2" class="Superior">
+                    <h2>Buscar Entidades</h2>
+                    <div class="Botones">
+                        <input type="text" id="buscador2" class="Formulario_CrearCaso_Input4" placeholder="Buscar entidad..." onkeyup="filtrarEntidades()">
+                        <div class="Boton" data-target="Frame4"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>                
+                {% if lista_entidades %}
+                    {% for entidad in lista_entidades %}
+                        <div class="FrameVerCasos_Caso">
+                            <h3>Entidad: {{ entidad.Id_Entidad }}</h3>
+                            <span class="ver-FrameVerCasos_VerCaso" onclick="abrirModal('modal-{{ loop.index }}')">Ver entidad</span>
+                        </div> 
+                        
+                        <div id="modal-{{ loop.index }}" class="modal">
+                            <div class="modal-content">
+                                <span class="cerrar" onclick="cerrarModal('modal-{{ loop.index }}')">&times;</span>
+                                <h4 class="FrameVerCasos_Caso_Texto">Detalles de la entidad</h4>
+                                <p><strong>Nombre:</strong> {{ entidad.Nombre_Entidad }}</p>
+                                <p><strong>Descripcion:</strong> {{ entidad.Descripción }}</p>
+                                <p><strong>Incidente:</strong> {{ entidad.Incidente }}</p>
+                                <p><strong>Direccion:</strong> {{ entidad.Direccion }}</p>
+                                <p><strong>Telefono:</strong> {{ entidad.Num_Contact }}</p>
+                                <p><strong>Web:</strong> <a href="{{ entidad.web_site }}" target="_blank" class="Links2">{{ entidad.web_site }}</a></p>
+                            </div>
+                        </div>                    
+                    {% endfor %}
+                {% else %}
+                    <div class="FrameVerCasos_Caso">
+                        <h3>No hay entidades registradas.</h3>
+                    </div>
+                {% endif %}
+            </div>  
+        </div> 
+
 
         <div id="FrameVerDatos" class="Frame {% if frame_activo == 'FrameVerDatos' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
@@ -773,6 +811,6 @@
             </div>
         </div>                     
     </div>
-    <script src="{{ url_for('static', filename='dashboard_admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='Script/dashboard_admin.js') }}"></script>
 </body> 
 </html>

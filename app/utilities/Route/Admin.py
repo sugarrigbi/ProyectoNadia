@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect,url_for
-from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos2, Comparar_Contraseñas4, Obtener_Usuarios, Obtener_Estados
+from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos2, Comparar_Contraseñas4, Obtener_Usuarios, Obtener_Estados, Obtener_Estado_Caso
 from app.models.Casos import Caso_Admin
 from app.models.Entidades import Entidad
 from datetime import datetime
@@ -42,6 +42,10 @@ def get_modificar_buscar_casos_admin():
         nombres = Obtener_Usuarios()
         estados = Obtener_Estados()
 
+        Estado, tipo = Obtener_Estado_Caso(codigo)
+        if Estado:
+            return render_template("dashboard_admin.html", confirmacion=Estado, tipo=tipo, frame_activo="FrameModificarCasoBuscar")
+
         return render_template("dashboard_admin.html", estados=estados, datos=lista_datos[0], nombres=nombres,frame_activo="FrameModificarCaso")
 def get_modificar_enviar_casos_admin():
     if request.method == "POST":
@@ -70,5 +74,15 @@ def get_eliminar_casos_admin():
     Radicado = request.form["Radicado"]
     Usuario = session["usuario_id"]
     Caso = Caso_Admin(None, None, None, None, Usuario, None, None, None, None, Radicado)
+
+    Estado, tipo = Obtener_Estado_Caso(Radicado)
+    if Estado:
+        return render_template("dashboard_admin.html", confirmacion=Estado, tipo=tipo, frame_activo="FrameEliminarCaso")
+
     resultado, tipo = Caso.Eliminar_Caso_Admin()
-    return render_template("dashboard_admin.html", frame_activo="FrameEliminarCaso", confirmacion=resultado, tipo=tipo)             
+    return render_template("dashboard_admin.html", frame_activo="FrameEliminarCaso", confirmacion=resultado, tipo=tipo)
+def get_buscar_entidades_admin():
+    e = Entidad(None, None, None, None, None, None, None)
+    lista_entidades = e.Buscar_Entidades()
+
+    return render_template("dashboard_admin.html", lista_entidades=lista_entidades, frame_activo="FrameBuscarEntidad")        
