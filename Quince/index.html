@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Momo+Trust+Display&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/15.css">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <title>Mis quince años</title>
+</head>
+<body>
+    <div id="Frame1" class="Frame {% if frame_activo == 'Frame1' %}visible{% endif %}">
+        <div class="flores_esquina_cont" data-aos="fade-up-left">
+            <img class="flores_esquina" src="/img/flores_esquina.png">
+        </div>
+        <div class="Cuadro1" data-aos="zoom-in">
+            <div data-aos="flip-left" class="crown-cont">
+                <img class="crown" src="/img/crown.png">
+            </div>
+            <h1 data-aos="fade-down">Mis 15 años</h1>
+            <h2 data-aos="fade-up">Laura Garzón</h2>
+            <div class="sobre-cont" >
+                <img class="decorado DebeOcultar" src="/img/decorado.png" data-aos="flip-down">
+                <img id="Sobre" class="sobre" src="/img/sobre.png" data-aos="flip-down">
+                <img class="solapa" src="img/solapa.png" data-aos="flip-down">
+                <div class="Boton_Sello DebeOcultar" data-target="Frame2">
+                    <img class="sello" src="/img/sello.png" data-aos="flip-down">
+                </div>
+                <img class="luz"src="img/light.png">
+            </div>
+            <img id="Simbolo" src="/img/flecha.png" data-aos="flip-down">
+            <h1 id="Simbolo2" data-aos="flip-down">Toca el sobre!</h1>
+            <img class="luz2"src="img/light.png">
+            <img class="luz3"src="img/light.png">
+        </div>
+        <div class="flores_esquina_cont2" data-aos="fade-down-right">
+            <img class="flores_esquina2" src="/img/flores_esquina.png">
+        </div>
+        <div class="mariposa1">
+            <img class="mariposa" src="/img/mariposa.png">
+        </div>
+        <div class="mariposa3">
+            <img class="mariposa" src="/img/mariposa.png">
+        </div>
+        <div class="mariposa4">
+            <img class="mariposa" src="/img/mariposa.png">
+        </div>
+        <div class="mariposa5">
+            <img class="mariposa" src="/img/mariposa.png">
+        </div>
+    </div>
+    <div id="Frame2" class="Frame2 {% if frame_activo == 'Frame2' %}visible{% endif %}"> 
+        <seccion id="seccion1">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion2">
+            <div class="floresesquina11" data-aos="fade-down-right">
+                <img src="img/flores2.png" class="floresesquina1">
+            </div>
+            <h3 id="faltan" data-aos="zoom-in">Faltan</h3>
+            <div class="floresesquina21" data-aos="fade-down-left">
+                <img src="img/flores2.png" class="floresesquina2">
+            </div>
+            <div class="contador">
+                <h1 id="dias" data-aos="fade-right">Cargando...</h1>
+                <h1 class="puntos" data-aos="fade-right">:</h1>
+                <h1 id="horas" data-aos="fade-right">Cargando...</h1>
+                <h1 class="puntos" data-aos="zoom-in">:</h1>
+                <h1 id="minutos" data-aos="fade-left">Cargando...</h1>
+                <h1 class="puntos" data-aos="fade-left">:</h1>
+                <h1 id="segundos" data-aos="fade-left">Cargando...</h1>
+            </div>
+
+            <div class="contador">
+                <h2 id="dias2" data-aos="fade-up">Dias</h2>
+                <h2 class="puntos" data-aos="fade-down">:</h2>
+                <h2 id="horas2" data-aos="fade-up">Horas</h2>
+                <h2 class="puntos" data-aos="fade-down">:</h2>
+                <h2 id="minutos2" data-aos="fade-up">Minutos</h2>
+                <h2 class="puntos" data-aos="fade-down">:</h2>
+                <h2 id="segundos2" data-aos="fade-up">Segundos</h2>
+            </div>
+
+        </seccion>
+        <seccion id="seccion3">
+            <h1 data-aos="zoom-in">Mis Padres</h1>
+            <h2 data-aos="fade-right">Diana Garzon</h2>
+            <h3 data-aos="zoom-in">y</h3>
+            <div class="flores1a" data-aos="fade-down-right">
+                <img src="img/flores.png" class="flores1" >
+            </div>
+            <div class="flores2a" data-aos="fade-down-left">
+                <img src="img/flores.png" class="flores2" >
+            </div>
+            <h2 data-aos="fade-left">Kevin Anzola</h2>
+            <h4 data-aos="fade-up">Tienen el honor de invitarlos a festejar los 15 años de su hija</h4>
+            <div class="Laura" data-aos="fade-up">
+                <div class="Laura2"><h5>Laura<br><span>Garzon</span></h5></div>
+            </div>
+        </seccion>
+        <seccion id="seccion4">
+            <h1>Mi Cumpleaños</h1>
+            <div class="arco2">
+                <img class="arco" src="img/febrero.png">
+            </div>
+            <div class="fecha">
+                <div class="Dia">
+                    <h2>Sabado</h2>
+                </div>
+                <h3>14</h3>
+                <div class="Dia">
+                    <h2>8:00 PM</h2>
+                </div>
+            </div>
+            <div class="arco12">
+                <img class="arco1" src="img/2025.png">
+            </div>
+        </seccion>
+        <seccion id="seccion5">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion6">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion7">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion8">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion9">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion10">
+            <h1></h1>
+        </seccion>
+        <seccion id="seccion11">
+            <h1></h1>
+        </seccion>
+    </div>
+    <script src="15.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>
