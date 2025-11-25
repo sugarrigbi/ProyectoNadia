@@ -37,7 +37,6 @@ class Entidad():
         Id_entidad = cursor.fetchall()
         if not Id_entidad:
             return "No existen entidades", "error" 
-        print(Id_entidad)
         cursor.execute("SELECT Nombre_Entidad FROM prueba.tbl_entidad ORDER BY Id_entidad")
         Nombre_Entidad = cursor.fetchall()
         if not Nombre_Entidad:
@@ -113,7 +112,6 @@ class Entidad_Admin():
         Id_entidad = cursor.fetchall()
         if not Id_entidad:
             return "No existen entidades", "error" 
-        print(Id_entidad)
         cursor.execute("SELECT Nombre_Entidad FROM prueba.tbl_entidad ORDER BY Id_entidad")
         Nombre_Entidad = cursor.fetchall()
         if not Nombre_Entidad:
@@ -168,7 +166,56 @@ class Entidad_Admin():
             }
             lista_fusionada.append(Entidad)
         Close_BaseDatos(conexion, cursor)
-        return lista_fusionada        
+        return lista_fusionada
+    def Buscar_Entidad_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+
+        cursor.execute("SELECT Nombre_Entidad FROM prueba.tbl_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Nombre_Entidad = cursor.fetchone()
+        if not Nombre_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT Incidente FROM prueba.tbl_incidente JOIN tbl_entidad ON tbl_incidente.Id_incidente = tbl_entidad.Fk_Incidente WHERE Id_entidad = %s",(self.Codigo,))
+        Incidente_Entidad = cursor.fetchone()
+        if not Incidente_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT Fk_Estado FROM prueba.tbl_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Estado_Entidad = cursor.fetchone()
+        if not Estado_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT Direccion FROM prueba.tbl_adic_entidad JOIN tbl_entidad ON tbl_adic_entidad.fk_entidad = tbl_entidad.Id_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Direccion_Entidad = cursor.fetchone()
+        if not Direccion_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT Num_Contact FROM prueba.tbl_adic_entidad JOIN tbl_entidad ON tbl_adic_entidad.fk_entidad = tbl_entidad.Id_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Telefono_Entidad = cursor.fetchone()
+        if not Telefono_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT web_site FROM prueba.tbl_adic_entidad JOIN tbl_entidad ON tbl_adic_entidad.fk_entidad = tbl_entidad.Id_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Web_Entidad = cursor.fetchone()
+        if not Web_Entidad:
+            return "La entidad no existe", "error"
+        
+        cursor.execute("SELECT Descripción FROM prueba.tbl_adic_entidad JOIN tbl_entidad ON tbl_adic_entidad.fk_entidad = tbl_entidad.Id_entidad WHERE Id_entidad = %s",(self.Codigo,))
+        Descripción_Entidad = cursor.fetchone()
+        if not Descripción_Entidad:
+            return "La entidad no existe", "error"
+        Entidad = {
+            "Codigo_Entidad": self.Codigo,
+            "Nombre_Entidad": Nombre_Entidad["Nombre_Entidad"],
+            "Incidente_Entidad": Incidente_Entidad["Incidente"],
+            "Estado_Entidad": Estado_Entidad["Fk_Estado"],
+            "Direccion_Entidad": Direccion_Entidad["Direccion"],
+            "Telefono_Entidad": Telefono_Entidad["Num_Contact"],
+            "Web_Entidad": Web_Entidad["web_site"],
+            "Descripción_Entidad": Descripción_Entidad["Descripción"]
+        }
+        Close_BaseDatos(conexion, cursor)
+        return Entidad
     def Crear_Entidad_Admin(self):
         conexion, cursor = Get_BaseDatos()
 
@@ -193,6 +240,10 @@ class Entidad_Admin():
 
             if es_url(self.Web) == False:
                 return "Error, la web no es valida", "error"
+            
+            if len(self.Telefono) < 10:
+                return "Error, el telefono no es valido", "error"
+                
 
             cursor.execute("INSERT INTO tbl_entidad (Id_entidad, Nombre_Entidad, Fk_Incidente, Fk_Estado) VALUES (%s, %s, %s, %s)",(id_Entidad, self.Nombre, self.IncidenteRelacionado, id_activo))           
             cursor.execute("INSERT INTO tbl_adic_entidad (Id_Adic_Entidad, Direccion, Num_Contact, web_site, fk_entidad, Descripción) VALUES (%s, %s, %s, %s, %s, %s)",(id_Adic_Entidad, self.Direccion, self.Telefono, self.Web, id_Entidad, self.Descripcion))
@@ -226,7 +277,6 @@ El equipo de soporte de GaiaLink
                 servidor.login(correo_emisor, contraseña)
                 servidor.send_message(mensaje)
                 servidor.quit()
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
@@ -235,6 +285,20 @@ El equipo de soporte de GaiaLink
         try:
             if not conexion.in_transaction:
                 conexion.start_transaction()
+
+            def es_url(url: str) -> bool:
+                try:
+                    resultado = urlparse(url)
+                    return resultado.scheme in ("http", "https") and bool(resultado.netloc)
+                except:
+                    return False
+
+            if es_url(self.Web) == False:
+                return "Error, la web no es valida", "error"    
+            
+            if len(self.Telefono) < 10:
+                return "Error, el telefono no es valido", "error" 
+
             cursor.execute("UPDATE tbl_entidad SET Nombre_Entidad = %s, Fk_Incidente = %s, Fk_Estado = %s WHERE Id_entidad = %s",(self.Nombre, self.IncidenteRelacionado, self.Estado, self.Codigo))           
             cursor.execute("UPDATE tbl_adic_entidad SET Direccion = %s, Num_Contact = %s, web_site = %s, Descripción = %s WHERE fk_entidad = %s",(self.Direccion, self.Telefono, self.Web, self.Descripcion, self.Codigo))
             conexion.commit()
@@ -267,7 +331,6 @@ El equipo de soporte de GaiaLink
                 servidor.login(correo_emisor, contraseña)
                 servidor.send_message(mensaje)
                 servidor.quit()
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
@@ -307,7 +370,6 @@ El equipo de soporte de GaiaLink
                 servidor.login(correo_emisor, contraseña)
                 servidor.send_message(mensaje)
                 servidor.quit()
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)        

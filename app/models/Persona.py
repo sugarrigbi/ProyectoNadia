@@ -263,8 +263,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)      
@@ -331,8 +329,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
@@ -395,8 +391,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor) 
@@ -463,8 +457,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)                        
@@ -712,8 +704,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor) 
@@ -777,8 +767,6 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
@@ -841,8 +829,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.send_message(mensaje2)
                 servidor.quit()
-                print('Correo del usuario:', self.Email)
-                print("Correo enviado exitosamente")
+
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)             

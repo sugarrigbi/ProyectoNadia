@@ -414,8 +414,6 @@ El equipo de soporte de GaiaLink
         servidor.login(correo_emisor, contraseña)
         servidor.send_message(mensaje)
         servidor.quit()
-        print('Correo del usuario:', correo)
-        print("Correo enviado exitosamente")
         return {
             "Mensaje": "Se envió un codigo al correo.",
             "Variable": "exito",
@@ -437,7 +435,6 @@ def validar_token(token_recuperacion, correo_token, hora_token, token_usuario, N
     conexion, cursor = Get_BaseDatos()
     contraseña_hasheada = hash_contraseña(Contraseña3)
     try:
-        print("hora_token:", hora_token)
         hora_token = datetime.strptime(hora_token, "%Y-%m-%d %H:%M:%S")
     except Exception:
         return "Formato de hora inválido.", "error"
@@ -506,8 +503,6 @@ El equipo de soporte de GaiaLink
         servidor.send_message(mensaje)
         servidor.send_message(mensaje2)
         servidor.quit()
-        print('Correo del usuario:', correo)
-        print("Correo enviado exitosamente")
         return "Contraseña recuperada con exito", "exito"
     finally:
         Close_BaseDatos(conexion, cursor)
@@ -571,7 +566,6 @@ def Obtener_Estados2():
     conexion, cursor = Get_BaseDatos()
     cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'Entidad_%'")
     resultados = cursor.fetchall()
-    print(resultados)
     Close_BaseDatos(conexion, cursor)
 
     return resultados
@@ -582,5 +576,14 @@ def Obtener_Estado_Caso(Radicado):
     Estado3 = cursor.fetchone()
     if Estado3["Fk_Estado"] == "Caso_03":
         return "El caso no existe", "error"
+    else:
+        return None, None
+def Obtener_Estado_Entidad(Codigo):
+    conexion, cursor = Get_BaseDatos()
+
+    cursor.execute("SELECT Fk_Estado FROM tbl_entidad WHERE Id_entidad = %s", (Codigo,))
+    Estado3 = cursor.fetchone()
+    if Estado3["Fk_Estado"] == "Entidad_00":
+        return "La entidad no existe", "error"
     else:
         return None, None

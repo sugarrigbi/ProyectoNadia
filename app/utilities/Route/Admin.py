@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect,url_for
-from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos2, Comparar_Contraseñas4, Obtener_Usuarios, Obtener_Estados, Obtener_Estado_Caso, Obtener_Estados2
+from app.utilities.Autenticador import hash_verificar, Obtener_Contraseña, Obtener_DocumentoCodigo, Validar_Datos2, Comparar_Contraseñas4, Obtener_Usuarios, Obtener_Estados, Obtener_Estado_Caso, Obtener_Estados2, Obtener_Estado_Entidad
 from app.models.Casos import Caso_Admin
 from app.models.Entidades import Entidad_Admin
 from datetime import datetime
@@ -47,8 +47,6 @@ def get_modificar_buscar_casos_admin():
         estados = Obtener_Estados()
 
         Estado, tipo = Obtener_Estado_Caso(codigo)
-        ola = Obtener_Estado_Caso(codigo)
-        print(ola)
         if Estado:
             return render_template("dashboard_admin.html", confirmacion=Estado, tipo=tipo, frame_activo="FrameModificarCasoBuscar")
 
@@ -107,6 +105,10 @@ def get_crear_entidades_admin():
             "Web_Entidad": request.form["Web_Entidad"],
             "Estado_Entidad": request.form["Estado_Entidad"]
         }
+
+        if datos["Estado_Entidad"] not in [estado["Id_estado"] for estado in Estados]:
+            return render_template("dashboard_admin.html", estados=Estados, confirmacion="Error, el estado no existe", datos=datos, tipo="error", frame_activo="FrameCrearEntidad")
+
         e = Entidad_Admin(None, datos["Nombre_Entidad"], datos["Descripcion_Entidad"], datos["Incidente_Entidad"], datos["Direccion_Entidad"], datos["Telefono_Entidad"], datos["Web_Entidad"], datos["Estado_Entidad"])
         resultado, tipo = e.Crear_Entidad_Admin()
         if tipo == "error":
@@ -115,3 +117,48 @@ def get_crear_entidades_admin():
             return render_template("dashboard_admin.html",confirmacion=resultado, tipo=tipo, frame_activo="FrameCrearEntidad")
     if request.method == "GET":
         return render_template("dashboard_admin.html", estados=Estados, frame_activo="FrameCrearEntidad")
+def get_modificar_buscar_entidades_admin():
+    if request.method == "POST":
+        codigo = request.form["Codigo_Entidad"]
+        session['Entidad_Modificar'] = codigo
+        Entidad = Entidad_Admin(codigo, None, None, None, None, None, None, None)
+        lista_datos = Entidad.Buscar_Entidad_Admin()
+        estados = Obtener_Estados2()
+        Estado, tipo = Obtener_Estado_Entidad(codigo)
+        if Estado:
+            return render_template("dashboard_admin.html", confirmacion=Estado, tipo=tipo, frame_activo="FrameModificarEntidadBuscar")
+
+        return render_template("dashboard_admin.html", estados=estados, datos=lista_datos, frame_activo="FrameModificarEntidad")
+def get_modificar_enviar_entidades_admin():
+    estados = Obtener_Estados2()
+    if request.method == "POST":
+        codigo = session['Entidad_Modificar']
+        datos = {
+            "Nombre_Entidad": request.form.get("Nombre_Entidad", ""),
+            "Incidente_Entidad": request.form.get("Incidente_Entidad", ""),
+            "Estado_Entidad": request.form.get("Estado_Entidad", ""),
+            "Direccion_Entidad": request.form.get("Direccion_Entidad", ""),
+            "Telefono_Entidad": request.form.get("Telefono_Entidad", ""),
+            "Web_Entidad": request.form.get("Web_Entidad", ""),
+            "Descripción_Entidad": request.form.get("Descripción_Entidad", "")
+        }   
+        if datos["Estado_Entidad"] not in [estado["Id_estado"] for estado in estados]:
+            return render_template("dashboard_admin.html", estados=estados,confirmacion="Error, el estado no existe", datos=datos, tipo="error", frame_activo="FrameModificarEntidad")
+        
+        e = Entidad_Admin(codigo, datos["Nombre_Entidad"], datos["Descripción_Entidad"], datos["Incidente_Entidad"], datos["Direccion_Entidad"], datos["Telefono_Entidad"], datos["Web_Entidad"], datos["Estado_Entidad"])
+        resultado, tipo = e.Modificar_Entidad_Admin()
+        return render_template("dashboard_admin.html", estados=estados, confirmacion=resultado, tipo=tipo, datos=datos, frame_activo="FrameModificarEntidad") 
+    if request.method == "GET":
+        Codigo = session['Entidad_Modificar']
+        return render_template("dashboard_admin.html", Codigo=Codigo, estados=estados, frame_activo="FrameModificarEntidad")  
+def get_eliminar_entidades_admin():
+    Codigo = request.form["Entidad_Eliminar"]
+    
+    e = Entidad_Admin(Codigo, None, None, None, None, None, None, None)
+
+    Estado, tipo = Obtener_Estado_Entidad(Codigo)
+    if Estado:
+        return render_template("dashboard_admin.html", confirmacion=Estado, tipo=tipo, frame_activo="FrameEliminarEntidad")
+
+    resultado, tipo = e.Eliminar_Entidad_Admin()
+    return render_template("dashboard_admin.html", frame_activo="FrameEliminarEntidad", confirmacion=resultado, tipo=tipo)

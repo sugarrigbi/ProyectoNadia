@@ -541,17 +541,19 @@ body, html {
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
     position: fixed;
+    inset: 0;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     align-items: center;
     justify-content: center;
     background-color: rgba(0,0,0,0.5);
 }
 .modal-content {
     background-color: #fff;
+    position: relative;
     padding: 20px;
     border-radius: 10px;
     width: 50%;
@@ -1012,6 +1014,9 @@ body, html {
     .modal-content p{
         font-size: 20px;
     }
+    .modal-content p a{
+        font-size: 20px;
+    }
     .modal-content{
         width: 90%;
     }
@@ -1091,6 +1096,9 @@ body, html {
         font-size: 23px;
     }          
     .modal-content p{
+        font-size: 18px;
+    }
+    .modal-content p a{
         font-size: 18px;
     }
     .modal-content{

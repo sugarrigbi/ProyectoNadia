@@ -4,6 +4,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const campos = Array.from(document.querySelectorAll(".campo-modificar"));
     const btnModificar = document.getElementById("btnModificar");
 
+    const campos2 = Array.from(document.querySelectorAll(".campo-modificar2"));
+    const btnModificar2 = document.getElementById("btnModificar2");
+
+    const ValoresOriginales2 = {};
+    campos2.forEach(e => {
+        ValoresOriginales2[e.name] = e.value;
+    });
+    function HayCambios2() {
+        for (const campo2 of campos2){
+            const original2 = ValoresOriginales2[campo2.name] ?? "";
+            const actual2 = campo2.value;
+            if (original2 !== actual2) return true;
+        }
+        return false;
+    };
+    function ValidarYActualizarBoton2() {
+        btnModificar2.disabled = !HayCambios2();
+    };
+    campos2.forEach(e => {
+        e.addEventListener("input", ValidarYActualizarBoton2)
+        e.addEventListener("change", ValidarYActualizarBoton2);
+    });
+
+
     const valoresOriginales = {};
     campos.forEach(c => {
         valoresOriginales[c.name] = c.value;
@@ -146,4 +170,5 @@ document.addEventListener("DOMContentLoaded", () => {
     } 
 
     validarYActualizarBoton();
+    ValidarYActualizarBoton2();
 });
