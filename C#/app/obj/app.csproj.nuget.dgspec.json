@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\C#\\app\\app.csproj": {}
+    "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\Proyecto\\ProyectoNadia\\C#\\app\\app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\C#\\app\\app.csproj": {
+    "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\Proyecto\\ProyectoNadia\\C#\\app\\app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\C#\\app\\app.csproj",
+        "projectUniqueName": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\Proyecto\\ProyectoNadia\\C#\\app\\app.csproj",
         "projectName": "app",
-        "projectPath": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\C#\\app\\app.csproj",
+        "projectPath": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\Proyecto\\ProyectoNadia\\C#\\app\\app.csproj",
         "packagesPath": "C:\\Users\\Auxiliar IT\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\C#\\app\\obj\\",
+        "outputPath": "C:\\Users\\Auxiliar IT\\OneDrive - Grupo Express\\Escritorio\\Proyecto\\ProyectoNadia\\C#\\app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Auxiliar IT\\AppData\\Roaming\\NuGet\\NuGet.Config"
