@@ -490,6 +490,160 @@ class Persona_Admin:
         self.Terminos = Terminos
         self.Bloqueo = Bloqueo
         self.Intentos = Intentos
+    def Buscar_Personas_Admin(self):
+        conexion, cursor = Get_BaseDatos()
+        Usuarios = []
+        lista_fusionada = []
+        cursor.execute("SELECT Id_usuario FROM prueba.tbl_usuario ORDER BY id_usuario")
+        identificaciones = cursor.fetchall()
+        if not identificaciones:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Nombre FROM prueba.tbl_usuario ORDER BY id_usuario")
+        nombres = cursor.fetchall()
+        if not nombres:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT Creacion FROM prueba.tbl_usuario ORDER BY id_usuario")
+        Creaciones = cursor.fetchall()
+        if not Creaciones:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Bloqueado FROM prueba.tbl_usuario ORDER BY id_usuario")
+        Bloqueados = cursor.fetchall()
+        Bloqueados = [{"Bloqueado": "No" if row["Bloqueado"] is None else row["Bloqueado"]} for row in Bloqueados]
+        if not Bloqueados:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT Intentos_fallidos FROM prueba.tbl_usuario ORDER BY id_usuario")
+        Fallidos = cursor.fetchall()
+        if not Fallidos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT fk_rol FROM prueba.tbl_usuario ORDER BY id_usuario")
+        Roles = cursor.fetchall()
+        Roles = [{"fk_rol": ("Administrador" if row["fk_rol"] == "admin" else "Usuario" if row["fk_rol"] == "Usu" else "Rol no encontrado")} for row in Roles]
+        if not Roles:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT fk_estado FROM prueba.tbl_usuario ORDER BY id_usuario")
+        Estados = cursor.fetchall()
+        Estados = [{"fk_estado": ("Usuario Activo" if row["fk_estado"] == "usuario_01" else "Usuario inactivo" if row["fk_estado"] == "Usuario_00" else "Estado no encontrado")} for row in Estados]
+        if not Estados:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Id_Adic_Persona FROM prueba.tbl_adic_persona ORDER BY Id_Adic_Persona")
+        identificaciones_adic = cursor.fetchall()
+        if not identificaciones_adic:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Edad FROM prueba.tbl_adic_persona ORDER BY Id_Adic_Persona")
+        Edades = cursor.fetchall()
+        if not Edades:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Dirección FROM prueba.tbl_adic_persona ORDER BY Id_Adic_Persona")
+        Direcciones = cursor.fetchall()
+        if not Direcciones:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Num_Contact FROM prueba.tbl_adic_persona ORDER BY Id_Adic_Persona")
+        Telefonos = cursor.fetchall()
+        if not Telefonos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Email FROM prueba.tbl_adic_persona ORDER BY Id_Adic_Persona")
+        Correos = cursor.fetchall()
+        if not Correos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT Id_Persona FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        ids = cursor.fetchall()
+        if not ids:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Pri_Nom FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        Primer_Nombres = cursor.fetchall()
+        if not Primer_Nombres:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Seg_Nom FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        Segundo_Nombres = cursor.fetchall()
+        if not Segundo_Nombres:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+        
+        cursor.execute("SELECT Pri_Ape FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        Primer_Apellidos = cursor.fetchall()
+        if not Primer_Apellidos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Seg_Ape FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        Segundo_Apellidos = cursor.fetchall()
+        if not Segundo_Apellidos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT fk_Tipo_documento FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        tipos = cursor.fetchall()
+        tipos = [{"fk_Tipo_documento": ("Cedula de Ciudadania" if row["fk_Tipo_documento"] == "CC" else "Cedula Extranjeria" if row["fk_Tipo_documento"] == "CE" else "Pasaporte" if row["fk_Tipo_documento"] == "PA" else "Registro Civil" if row["fk_Tipo_documento"] == "RC" else "Tarjeta de identidad" if row["fk_Tipo_documento"] == "TI" else "Tipo Documento no encontrado")} for row in tipos]
+        if not tipos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        cursor.execute("SELECT Fecha_nacimiento FROM prueba.tbl_persona ORDER BY fk_Usuario")
+        nacimientos = cursor.fetchall()
+        if not nacimientos:
+            Close_BaseDatos(conexion, cursor)
+            return "no existen usuarios", "error"
+
+        for i in range(len(identificaciones)):
+            try:
+                if (i < len(identificaciones) and i < len(nombres) and i < len(Creaciones) and i < len(Bloqueados) and i < len(Fallidos) and i < len(Roles) and i < len(Estados) and i < len(identificaciones_adic) and i < len(Edades) and i < len(Direcciones) and i < len(Telefonos) and i < len(Correos) and i < len(ids) and i < len(Primer_Nombres) and i < len(Segundo_Nombres) and i < len(Primer_Apellidos) and i < len(Segundo_Apellidos) and i < len(tipos) and i < len(nacimientos)):                
+                    persona = {
+                        "identificacion": identificaciones[i]["Id_usuario"],
+                        "nombre": nombres[i]["Nombre"],
+                        "Creacion": Creaciones[i]["Creacion"].date(),
+                        "Bloqueado": Bloqueados[i]["Bloqueado"],
+                        "Fallidos": Fallidos[i]["Intentos_fallidos"],
+                        "Rol": Roles[i]["fk_rol"],
+                        "Estado": Estados[i]["fk_estado"],
+                        "identificacion_adic": identificaciones_adic[i]["Id_Adic_Persona"],
+                        "Edad": Edades[i]["Edad"],
+                        "Direccion": Direcciones[i]["Dirección"],
+                        "Telefono": Telefonos[i]["Num_Contact"],
+                        "Correo": Correos[i]["Email"],
+                        "id": ids[i]["Id_Persona"],
+                        "Primer_Nombre": Primer_Nombres[i]["Pri_Nom"],
+                        "Segundo_Nombre": Segundo_Nombres[i]["Seg_Nom"],
+                        "Primer_Apellido": Primer_Apellidos[i]["Pri_Ape"],
+                        "Segundo_Apellido": Segundo_Apellidos[i]["Seg_Ape"],
+                        "tipo": tipos[i]["fk_Tipo_documento"],
+                        "nacimiento": nacimientos[i]["Fecha_nacimiento"]
+                    }
+                    print(persona["Estado"])
+                if persona["Estado"] != "Usuario inactivo":
+                    lista_fusionada.append(persona)
+            except Exception as e:
+                print(f"⚠️ Error procesando persona {i}: {e}")
+                continue                    
+        Close_BaseDatos(conexion, cursor)
+        return lista_fusionada
     def Buscar_Persona_Admin(self):
         try:
             conexion, cursor = Get_BaseDatos()
@@ -553,6 +707,7 @@ class Persona_Admin:
                 JOIN tbl_departamento ON tbl_ciudad.Fk_Dep = tbl_departamento.Id_dep WHERE tbl_usuario.Id_usuario = %s
                 """, (Id_Usuario,))
             Resultado = cursor.fetchone()
+            print(Resultado)
             if not Resultado:
                 return None  
 
@@ -595,22 +750,50 @@ class Persona_Admin:
             Close_BaseDatos(conexion, cursor) 
     def Crear_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
+        Terminos = "1"
         contraseña_hasheada = hash_contraseña(self.Contraseña)
-        
         fecha_nacimiento = self.Fecha_Nacimiento
         fecha_nac_obj = datetime.strptime(fecha_nacimiento, "%Y-%m-%d").date()
         hoy = datetime.today().date()
         edad = hoy.year - fecha_nac_obj.year
         if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
             edad -= 1
+        tiempo = None
+        hoy2 = datetime.today()
+        if self.Bloqueo == "24H":
+            tiempo = timedelta(hours=24)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "12H":
+            tiempo = timedelta(hours=12)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "6H":
+            tiempo = timedelta(hours=6)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "2H":
+            tiempo = timedelta(hours=2)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "1H":
+            tiempo = timedelta(hours=1)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "NO":
+            R = "NO"
+            self.Bloqueo = R
+        elif self.Bloqueo == "SI":
+            R = "SI"
+            self.Bloqueo = R
 
         def generar_id(tabla, prefijo):
             cursor.execute(f"SELECT COUNT(*) FROM {tabla}")
             resultado = cursor.fetchone()
             count = resultado.get('COUNT(*)', 0) if resultado else 0
             return str(count + 1).zfill(3) + prefijo      
-        id_rol = "Usu"
-        id_activo = "usuario_01"
+        id_rol = self.Rol
+        id_activo = self.Estado
         id_usuario = generar_id("tbl_usuario", "USU")
         id_barrio = generar_id("tbl_barrio", "BAR")
         id_ciudad = generar_id("tbl_ciudad", "CIU")
@@ -634,19 +817,21 @@ class Persona_Admin:
             if not ciu:
                 cursor.execute("INSERT INTO tbl_ciudad (Id_ciudad, Nom_ciudad, Fk_Dep) VALUES (%s, %s, %s)",(id_ciudad, self.Ciudad, id_departamento))
 
-            cursor.execute("SELECT Id_local FROM tbl_localidad WHERE Localidad = %s", (self.Localidad,))
-            loc = cursor.fetchone()
-            id_localidad = loc["Id_local"] if loc else generar_id("tbl_localidad", "LOC")
-            if not loc:
-                cursor.execute("INSERT INTO tbl_localidad (Id_local, Localidad, fk_ciudad) VALUES (%s, %s, %s)",
-                            (id_localidad, self.Localidad, id_ciudad))   
+            id_localidad = None
+            if self.Localidad:
+                cursor.execute("SELECT Id_local FROM tbl_localidad WHERE Localidad = %s", (self.Localidad,))
+                loc = cursor.fetchone()
+                id_localidad = loc["Id_local"] if loc else generar_id("tbl_localidad", "LOC")
+                if not loc:
+                    cursor.execute("INSERT INTO tbl_localidad (Id_local, Localidad, fk_ciudad) VALUES (%s, %s, %s)",(id_localidad, self.Localidad, id_ciudad))
 
-            cursor.execute("SELECT Id_barrio FROM tbl_barrio WHERE Barrio = %s AND fk_local = %s", (self.Barrio, id_localidad))
-            bar = cursor.fetchone()
-            id_barrio = bar["Id_barrio"] if bar else generar_id("tbl_barrio", "BAR")
-            if not bar:
-                cursor.execute("INSERT INTO tbl_barrio (Id_barrio, Barrio, fk_local) VALUES (%s, %s, %s)",
-                            (id_barrio, self.Barrio, id_localidad))  
+            id_barrio = None
+            if self.Barrio and id_localidad:
+                cursor.execute("SELECT Id_barrio FROM tbl_barrio WHERE Barrio = %s AND fk_local = %s", (self.Barrio, id_localidad))
+                bar = cursor.fetchone()
+                id_barrio = bar["Id_barrio"] if bar else generar_id("tbl_barrio", "BAR")
+                if not bar:
+                    cursor.execute("INSERT INTO tbl_barrio (Id_barrio, Barrio, fk_local) VALUES (%s, %s, %s)",(id_barrio, self.Barrio, id_localidad))
 
             id_usuario = generar_id("tbl_usuario", "USU")
             cursor.execute("INSERT INTO tbl_usuario (Id_usuario, Nombre, Contraseña, Creacion, Bloqueado,fk_rol, fk_estado, Intentos_fallidos) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
@@ -656,7 +841,7 @@ class Persona_Admin:
                         (self.Documento, self.Primer_Nombre, self.Segundo_Nombre, self.Primer_Apellido ,self.Segundo_Apellido ,self.Tipo_Documento, self.Fecha_Nacimiento, id_usuario))
 
             cursor.execute("INSERT INTO tbl_adic_persona (Id_Adic_Persona, Edad, Dirección, Num_Contact, Email, fk_persona, fk_dir, Terminos_Condiciones) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
-                        (id_adic_persona, edad, self.Direccion, self.Numero_Contacto, self.Email, self.Documento, id_barrio, self.Terminos))   
+                        (id_adic_persona, edad, self.Direccion, self.Numero_Contacto, self.Email, self.Documento, id_barrio, Terminos))   
             
             conexion.commit()
             return "Exito, usuario creado correctamente.", "exito"
@@ -712,6 +897,7 @@ El equipo de soporte de GaiaLink
         Estado = "Usuario_00"
         cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_adic_persona JOIN tbl_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_persona JOIN tbl_tipo_documento ON tbl_persona.fk_Tipo_documento = tbl_tipo_documento.Id_Documento JOIN tbl_usuario ON tbl_persona.fk_usuario = tbl_usuario.Id_usuario WHERE tbl_usuario.Id_usuario = %s", (self.Codigo,))
         resultado_Correo = cursor.fetchone()
+        print(resultado_Correo)
         if not resultado_Correo:
             return "Correo no encontrado", "error"
         self.Email = resultado_Correo["Email"]
@@ -723,6 +909,7 @@ El equipo de soporte de GaiaLink
         try:
             cursor.execute("UPDATE tbl_usuario SET fk_estado = %s WHERE Id_usuario = %s",(Estado, self.Codigo))
             conexion.commit()
+            return "Usuario eliminado con exito", "exito"
         except:
             conexion.rollback()
             return "no se pudo eliminar el usuario", "error"
@@ -773,17 +960,48 @@ El equipo de soporte de GaiaLink
     def Modificar_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
 
+        tiempo = None
+        hoy2 = datetime.today()
+        if self.Bloqueo == "24H":
+            tiempo = timedelta(hours=24)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "12H":
+            tiempo = timedelta(hours=12)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "6H":
+            tiempo = timedelta(hours=6)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "2H":
+            tiempo = timedelta(hours=2)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "1H":
+            tiempo = timedelta(hours=1)
+            R = hoy2 + tiempo
+            self.Bloqueo = R
+        elif self.Bloqueo == "NO":
+            R = "NO"
+            self.Bloqueo = R
+        elif self.Bloqueo == "SI":
+            R = "SI"
+            self.Bloqueo = R
+
+        self.Terminos = 1
+        self.Intentos = 0
+        contraseña_hasheada = hash_contraseña(self.Contraseña)
         fecha_nacimiento = self.Fecha_Nacimiento
         fecha_nac_obj = datetime.strptime(fecha_nacimiento, "%Y-%m-%d").date()
         hoy = datetime.today().date()
         edad = hoy.year - fecha_nac_obj.year
         if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
             edad -= 1
-
         try:
             cursor.execute("UPDATE tbl_adic_persona SET Edad = %s, Dirección = %s, Num_Contact = %s, Email = %s, Terminos_Condiciones = %s WHERE fk_persona = %s",(edad, self.Direccion, self.Numero_Contacto, self.Email, self.Terminos, self.Documento))
-            cursor.execute("UPDATE tbl_persona SET Pri_Nom = %s, Seg_Nom = %s, Pri_Ape = %s, Seg_Ape = %s, fk_Tipo_documento = %s, Fecha_nacimiento = %s WHERE Id_Persona = %s",(self.Primer_Nombre, self.Segundo_Nombre, self.Primer_Apellido, self.Segundo_Apellido, self.Tipo_Documento, fecha_nacimiento, self.Documento))
-            cursor.execute("UPDATE tbl_usuario SET Nombre = %s, Bloqueado = %s, Intentos_fallidos = %s, fk_rol = %s, fk_estado = %s WHERE Id_usuario = %s",(self.Usuario, self.Bloqueo, self.Intentos, self.Rol, self.Estado, self.Codigo))
+            cursor.execute("UPDATE tbl_persona SET Id_Persona = %s, Pri_Nom = %s, Seg_Nom = %s, Pri_Ape = %s, Seg_Ape = %s, fk_Tipo_documento = %s, Fecha_nacimiento = %s WHERE Id_Persona = %s",(self.Documento ,self.Primer_Nombre, self.Segundo_Nombre, self.Primer_Apellido, self.Segundo_Apellido, self.Tipo_Documento, fecha_nacimiento, self.Documento))
+            cursor.execute("UPDATE tbl_usuario SET Nombre = %s, Contraseña = %s, Bloqueado = %s, Intentos_fallidos = %s, fk_rol = %s, fk_estado = %s WHERE Id_usuario = %s",(self.Usuario, contraseña_hasheada, self.Bloqueo, self.Intentos, self.Rol, self.Estado, self.Codigo))
             conexion.commit()
             return "Datos modificados con exito", "exito"
         except Exception as e:
@@ -832,4 +1050,4 @@ El equipo de soporte de GaiaLink
 
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
-            Close_BaseDatos(conexion, cursor)             
+            Close_BaseDatos(conexion, cursor)

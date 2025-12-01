@@ -103,7 +103,13 @@
                     </ul>
                 </div>
             {% endif %}
-
+            {% if intento_invalido %}
+                <div class="confirmacion_error" data-aos="fade-up">
+                    <ul>
+                        <li>El usuario no tiene estado de bloqueo.</li>
+                    </ul>
+                </div>
+            {% endif %}
             {% if contraseña_invalida %}
             <div class="confirmacion_error" data-aos="fade-up">
                 <ul>
@@ -111,6 +117,16 @@
                     {% if intentos_restantes %}
                         <li>Te quedan {{ intentos_restantes }} intento{{ 's' if intentos_restantes != 1 else '' }} antes de que tu cuenta se bloquee.</li>
                     {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if permanente %}
+            <div class="confirmacion_error" data-aos="fade-up">
+                <ul>
+                    <li>
+                        Tu cuenta está bloqueada Permanentemente.
+                    </li>
                 </ul>
             </div>
             {% endif %}
@@ -132,14 +148,32 @@
                 function actualizarTemporizador() {
                     let ahora = Date.now();
                     let segundosTotales = Math.floor((desbloqueo - ahora) / 1000);
+
                     if (segundosTotales <= 0) {
                         span.textContent = "0:00";
                         clearInterval(timer);
                         return;
                     }
-                    let min = Math.floor(segundosTotales / 60);
-                    let seg = segundosTotales % 60;
-                    span.textContent = min + ":" + (seg < 10 ? '0' + seg : seg);
+
+                    let horas = Math.floor(segundosTotales / 3600);
+                    let minutos = Math.floor((segundosTotales % 3600) / 60);
+                    let segundos = segundosTotales % 60;
+
+                    let texto = "";
+
+                    if (horas > 0) {
+                        texto = horas + ":" +
+                                (minutos < 10 ? "0" + minutos : minutos) + ":" +
+                                (segundos < 10 ? "0" + segundos : segundos);
+
+                    } else if (minutos > 0) {
+                        texto = minutos + ":" +
+                                (segundos < 10 ? "0" + segundos : segundos);
+
+                    } else {
+                        texto = segundos + "s";
+                    }
+                    span.textContent = texto;
                 }
 
                 actualizarTemporizador();

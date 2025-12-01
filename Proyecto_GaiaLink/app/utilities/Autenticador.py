@@ -83,15 +83,36 @@ def procesar_login(usuario, contraseña, datos2):
         flash("Usuario no encontrado")
         Close_BaseDatos(conexion, cursor)
         return render_template("login.html", usuario_invalido=True, datos2=datos2)
-
-    bloqueado_hasta = datos.get("Bloqueado")
-    if bloqueado_hasta and datetime.now() < bloqueado_hasta:
-        desbloqueo_timestamp = int(bloqueado_hasta.timestamp())
+    bloqueado_hasta_str = datos.get("Bloqueado")
+    print(bloqueado_hasta_str)
+    if not bloqueado_hasta_str:
+        bloqueado_hasta = None
+    elif bloqueado_hasta_str == "NO":
+        bloqueado_hasta = bloqueado_hasta_str
+        estado_bloqueado = False
+    elif bloqueado_hasta_str == "SI":
+        bloqueado_hasta = bloqueado_hasta_str
         Close_BaseDatos(conexion, cursor)
-        return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp, datos2=datos2)
-    elif bloqueado_hasta and datetime.now() >= bloqueado_hasta:
-        cursor.execute("UPDATE tbl_usuario SET Bloqueado = NULL, Intentos_fallidos = 0 WHERE Id_usuario = %s",(datos["Id_usuario"],))
-        conexion.commit()
+        return render_template("login.html", permanente=True, datos2=datos2)
+    elif bloqueado_hasta_str == "":
+        Close_BaseDatos(conexion, cursor)
+        return render_template("login.html", intento_invalido=True, datos2=datos2)
+    else:
+        if isinstance(bloqueado_hasta_str, str):
+            try:
+                bloqueado_hasta = datetime.strptime(bloqueado_hasta_str, "%Y-%m-%d %H:%M:%S.%f")
+            except ValueError:
+                bloqueado_hasta = None
+
+        if bloqueado_hasta:
+            if datetime.now() < bloqueado_hasta:
+                desbloqueo_timestamp = int(bloqueado_hasta.timestamp())
+                Close_BaseDatos(conexion, cursor)
+                return render_template("login.html",estado_bloqueado=True,desbloqueo_timestamp=desbloqueo_timestamp,datos2=datos2)
+            else:
+                cursor.execute("UPDATE tbl_usuario SET Bloqueado = %s, Intentos_fallidos = 0 WHERE Id_usuario = %s",("NO",datos["Id_usuario"]))
+                conexion.commit()
+                estado_bloqueado = False
 
     if datos["fk_estado"] != "usuario_01":
         Close_BaseDatos(conexion, cursor)
@@ -102,29 +123,20 @@ def procesar_login(usuario, contraseña, datos2):
 
         if intentos >= MAX_INTENTOS:
             bloqueado_hasta = datetime.now() + timedelta(minutes=BLOQUEO_MINUTOS)
-            cursor.execute(
-                "UPDATE tbl_usuario SET Intentos_fallidos = %s, Bloqueado = %s WHERE Id_usuario = %s",
-                (intentos, bloqueado_hasta, datos["Id_usuario"])
-            )
+            cursor.execute("UPDATE tbl_usuario SET Intentos_fallidos = %s, Bloqueado = %s WHERE Id_usuario = %s",(0, bloqueado_hasta, datos["Id_usuario"]))
             conexion.commit()
             Close_BaseDatos(conexion, cursor)
 
             desbloqueo_timestamp = int(bloqueado_hasta.timestamp())
-            return render_template("login.html", estado_bloqueado=True, desbloqueo_timestamp=desbloqueo_timestamp, datos2=datos2)
+            return render_template("login.html",estado_bloqueado=True,desbloqueo_timestamp=desbloqueo_timestamp,datos2=datos2)
         else:
-            cursor.execute(
-                "UPDATE tbl_usuario SET Intentos_fallidos = %s WHERE Id_usuario = %s",
-                (intentos, datos["Id_usuario"])
-            )
+            cursor.execute("UPDATE tbl_usuario SET Intentos_fallidos = %s WHERE Id_usuario = %s",(intentos, datos["Id_usuario"]))
             conexion.commit()
             Close_BaseDatos(conexion, cursor)
             intentos_restantes = MAX_INTENTOS - intentos
-            return render_template("login.html", intentos_restantes=intentos_restantes, contraseña_invalida=True, datos2=datos2)
+            return render_template("login.html",intentos_restantes=intentos_restantes,contraseña_invalida=True,datos2=datos2)
 
-    cursor.execute(
-        "UPDATE tbl_usuario SET Intentos_fallidos = 0, Bloqueado = NULL WHERE Id_usuario = %s",
-        (datos["Id_usuario"],)
-    )
+    cursor.execute("UPDATE tbl_usuario SET Intentos_fallidos = 0, Bloqueado = %s WHERE Id_usuario = %s",("NO", datos["Id_usuario"]))
     conexion.commit()
     Close_BaseDatos(conexion, cursor)
 
@@ -311,7 +323,149 @@ def Validar_Datos(Datos):
     if not re.match(r"[^@]+@[^@]+\.[^@]+", valor):
         errores["Correo"] ="ingrese un correo valido"
 
-    return errores 
+    return errores
+def Validar_Datos3(Datos):
+    errores = {}
+
+    resultado = Datos["Fecha_Nacimiento"]
+    fecha_nac_obj = datetime.strptime(resultado, "%Y-%m-%d").date()
+    hoy = datetime.today().date()
+    edad = hoy.year - fecha_nac_obj.year
+    if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
+        edad -= 1
+
+    if edad < 13:
+        errores["Fecha_Nacimiento"] = "Debes tener al menos 13 años para registrarte."
+
+    if edad > 110:
+        errores["Fecha_Nacimiento"] = "Edad demasiado alta."
+
+    resultado = Validar_Contraseña(Datos["Contraseña"])
+    if resultado:
+        errores["Contraseña"] = resultado    
+
+    resultado = Comparar_Contraseña(Datos["Contraseña"], Datos["Contraseña2"])
+    if resultado:
+        errores["Contraseña2"] = resultado   
+
+    resultado = Validar_Telefono(Datos["Telefono"])
+    if resultado:
+        errores["Telefono"] = resultado    
+    
+    resultado = Validar_Documento(Datos["Documento"])
+    if resultado:
+        errores["Documento"] = resultado    
+
+    resultado = Verificar_Documento(Datos["Documento"])
+    if resultado:
+        errores["Documento"] = resultado   
+
+    resultado = Verificar_Correo(Datos["Correo"])
+    if resultado:
+        errores["Correo"] = resultado   
+
+    resultado = Verificar_Usuario(Datos["Nombre_Usuario"])
+    if resultado:
+        errores["Nombre_Usuario"] = resultado    
+
+    for campo in ["Primer_Nombre", "Segundo_Nombre", "Primer_Apellido", "Segundo_Apellido", "Departamento", "Ciudad", "Localidad", "Barrio"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isalpha():
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' solo puede contener letras"
+        if len(valor) > 20:
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' debe ser menor a 20 caracteres"
+
+    for campo in ["Documento", "Telefono"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isdigit():
+            errores[campo] = f"El campo '{campo}' solo puede contener numeros"
+
+    valor = Datos["Correo"]
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", valor):
+        errores["Correo"] ="ingrese un correo valido"
+
+    return errores
+def Obtener_Datos_Id(Id):
+    conexion, cursor = Get_BaseDatos()
+
+    cursor.execute("SELECT Nombre, Id_Persona, Email FROM tbl_adic_persona JOIN tbl_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_Persona JOIN tbl_usuario ON tbl_persona.fk_Usuario = tbl_usuario.Id_usuario WHERE Id_usuario = %s",(Id,))
+    resultados = cursor.fetchone()
+
+    return resultados
+def Validar_Datos4(Datos):
+    errores = {}
+
+    Id = Datos["Id"]
+    resultados = Obtener_Datos_Id(Id)
+
+    Usuario_Actual = resultados["Nombre"]
+    Correo_Actual = resultados["Email"]
+    Documento_Actual = resultados["Id_Persona"]
+
+    resultado = Datos["Fecha_Nacimiento"]
+    fecha_nac_obj = datetime.strptime(resultado, "%Y-%m-%d").date()
+    hoy = datetime.today().date()
+    edad = hoy.year - fecha_nac_obj.year
+    if (hoy.month, hoy.day) < (fecha_nac_obj.month, fecha_nac_obj.day):
+        edad -= 1
+
+    if edad < 13:
+        errores["Fecha_Nacimiento"] = "Debes tener al menos 13 años para registrarte."
+
+    if edad > 110:
+        errores["Fecha_Nacimiento"] = "Edad demasiado alta."
+
+    if not Datos["Contraseña"]:
+        pass  
+    else:
+        resultado = Validar_Contraseña(Datos["Contraseña"])
+        if resultado:
+            errores["Contraseña"] = resultado  
+
+    if not Datos["Contraseña"] and not Datos["Contraseña2"]:
+        pass
+    else:
+        resultado = Comparar_Contraseña(Datos["Contraseña"], Datos["Contraseña2"])
+        if resultado:
+            errores["Contraseña2"] = resultado   
+
+    resultado = Validar_Telefono(Datos["Numero_Contacto"])
+    if resultado:
+        errores["Numero_Contacto"] = resultado    
+    
+    resultado = Validar_Documento(Datos["Codigo_Persona"])
+    if resultado:
+        errores["Codigo_Persona"] = resultado    
+
+    resultado = Verificar_Documento(Datos["Codigo_Persona"])
+    if resultado and Datos["Codigo_Persona"] != str(Documento_Actual):
+        errores["Codigo_Persona"] = resultado   
+
+    resultado = Verificar_Correo(Datos["Email"])
+    if resultado and Datos["Email"] != str(Correo_Actual):
+        errores["Email"] = resultado   
+
+    resultado = Verificar_Usuario(Datos["Nombre"])
+    if resultado and Datos["Nombre"] != str(Usuario_Actual):
+        errores["Nombre"] = resultado    
+
+    for campo in ["Primer_Nombre", "Segundo_Nombre", "Primer_Apellido", "Segundo_Apellido", "Departamento", "Ciudad", "Localidad", "Barrio"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isalpha():
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' solo puede contener letras"
+        if len(valor) > 20:
+            errores[campo] = f"El campo '{campo.replace('_', ' ').capitalize()}' debe ser menor a 20 caracteres"
+
+    for campo in ["Codigo_Persona", "Numero_Contacto"]:
+        valor = Datos[campo].replace(" ", "")
+        if valor and not valor.isdigit():
+            errores[campo] = f"El campo '{campo}' solo puede contener numeros"
+
+    valor = Datos["Email"]
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", valor):
+        errores["Email"] ="ingrese un correo valido"
+
+    return errores
 def Validar_Datos2(Datos):
     errores = {}
 
@@ -569,13 +723,34 @@ def Obtener_Estados2():
     Close_BaseDatos(conexion, cursor)
 
     return resultados
+def Obtener_Estados3():
+    conexion, cursor = Get_BaseDatos()
+    cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'usuario_%'")
+    resultados = cursor.fetchall()
+    Close_BaseDatos(conexion, cursor)
+    return resultados
 def Obtener_Estado_Caso(Radicado):
     conexion, cursor = Get_BaseDatos()
 
     cursor.execute("SELECT Fk_Estado FROM tbl_caso JOIN tbl_num_caso ON tbl_num_caso.Fk_Caso = tbl_caso.Id_Caso_Incidente WHERE Radicado = %s", (Radicado,))
     Estado3 = cursor.fetchone()
+    if Estado3 is None:
+        Close_BaseDatos(conexion, cursor)
+        return "El caso no existe", "error"
     if Estado3["Fk_Estado"] == "Caso_03":
         return "El caso no existe", "error"
+    else:
+        return None, None
+def Obtener_Estado_Usuario(Codigo):
+    conexion, cursor = Get_BaseDatos()
+
+    cursor.execute("SELECT fk_estado FROM prueba.tbl_usuario WHERE Id_usuario = %s", (Codigo,))
+    Estado = cursor.fetchone()
+    if Estado is None:
+        Close_BaseDatos(conexion, cursor)
+        return "El usuario no existe", "error"
+    if Estado["fk_estado"] == "Usuario_00":
+        return "El usuario no existe", "error"
     else:
         return None, None
 def Obtener_Estado_Entidad(Codigo):
@@ -583,6 +758,9 @@ def Obtener_Estado_Entidad(Codigo):
 
     cursor.execute("SELECT Fk_Estado FROM tbl_entidad WHERE Id_entidad = %s", (Codigo,))
     Estado3 = cursor.fetchone()
+    if Estado3 is None:
+        Close_BaseDatos(conexion, cursor)
+        return "La entidad no existe", "error"
     if Estado3["Fk_Estado"] == "Entidad_00":
         return "La entidad no existe", "error"
     else:

@@ -32,3 +32,18 @@ def Modificar_Entidad_Enviar_Admin():
 @admin_bp.route('/dashboard/admin/entidades/eliminar',methods=["GET", "POST"])
 def Eliminar_Entidad_Admin():
     return Admin.get_eliminar_entidades_admin()
+@admin_bp.route('/dashboard/admin/usuarios/buscar',methods=["GET"])
+def Buscar_Usuario_Admin():
+    return Admin.get_buscar_usuarios_admin()
+@admin_bp.route('/dashboard/admin/usuarios/crear',methods=["GET", "POST"])
+def Crear_Usuario_Admin():
+    return Admin.get_crear_usuarios_admin()
+@admin_bp.route('/dashboard/admin/usuarios/modificar', methods=["POST"])
+def Modificar_Usuario_Admin():
+    return Admin.get_modificar_buscar_usuarios_admin()
+@admin_bp.route('/dashboard/admin/usuarios/modificar/enviar',methods=["GET", "POST"])
+def Modificar_Usuario_Enviar_Admin():
+    return Admin.get_modificar_enviar_usuarios_admin()
+@admin_bp.route('/dashboard/admin/usuarios/eliminar',methods=["GET", "POST"])
+def Eliminar_Usuario_Admin():
+    return Admin.get_eliminar_usuarios_admin()

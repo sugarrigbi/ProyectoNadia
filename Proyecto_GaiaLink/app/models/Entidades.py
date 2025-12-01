@@ -342,7 +342,7 @@ El equipo de soporte de GaiaLink
                 conexion.start_transaction()
             cursor.execute("UPDATE tbl_entidad SET Fk_Estado = %s WHERE Id_entidad = %s",(Estado_Eliminado, self.Codigo))
             conexion.commit()
-            return "Exito, entidad eliminada correctamente.", "exito"
+            return "Entidad eliminada con exito", "exito"
         except Exception as e:
             print(e)
             return f"Ocurrió un error al eliminar los datos: {e}", "error"

@@ -2,15 +2,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const cuadros = document.querySelectorAll('.Selector1, .Cuadro1[data-target], .Boton[data-target]');
     const frames = document.querySelectorAll('.Frame, .Frame1');
     const campos = Array.from(document.querySelectorAll(".campo-modificar"));
-    const btnModificar = document.getElementById("btnModificar");
-
     const campos2 = Array.from(document.querySelectorAll(".campo-modificar2"));
+    const campos3 = Array.from(document.querySelectorAll(".campo-modificar3"));
+    const oscuro = document.getElementById("btnModoOscuro");
+    const btnModificar = document.getElementById("btnModificar");
     const btnModificar2 = document.getElementById("btnModificar2");
-
+    const btnModificar3 = document.getElementById("btnModificar3");    
+    const ValoresOriginales = {};
     const ValoresOriginales2 = {};
+    const ValoresOriginales3 = {};
+    oscuro.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+    campos.forEach(c => {
+        ValoresOriginales[c.name] = c.value;
+    });
+    campos.forEach(c => {
+        c.addEventListener("input", ValidarYActualizarBoton);
+        c.addEventListener("change", ValidarYActualizarBoton);
+    });   
     campos2.forEach(e => {
         ValoresOriginales2[e.name] = e.value;
     });
+    campos2.forEach(e => {
+        e.addEventListener("input", ValidarYActualizarBoton2)
+        e.addEventListener("change", ValidarYActualizarBoton2);
+    }); 
+    campos3.forEach(c => {
+        ValoresOriginales3[c.name] = c.value;
+    });
+    campos3.forEach(c => {
+        c.addEventListener("input", ValidarYActualizarBoton3);
+        c.addEventListener("change", ValidarYActualizarBoton3);
+    });       
+    function HayCambios() {
+        for (const campo of campos) {
+            const original = ValoresOriginales[campo.name] ?? "";
+            const actual = campo.value;
+            if (original !== actual) return true;
+        }
+        return false;
+    }    
     function HayCambios2() {
         for (const campo2 of campos2){
             const original2 = ValoresOriginales2[campo2.name] ?? "";
@@ -19,37 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return false;
     };
-    function ValidarYActualizarBoton2() {
-        btnModificar2.disabled = !HayCambios2();
-    };
-    campos2.forEach(e => {
-        e.addEventListener("input", ValidarYActualizarBoton2)
-        e.addEventListener("change", ValidarYActualizarBoton2);
-    });
-
-
-    const valoresOriginales = {};
-    campos.forEach(c => {
-        valoresOriginales[c.name] = c.value;
-    });
-
-    function hayCambios() {
-        for (const campo of campos) {
-            const original = valoresOriginales[campo.name] ?? "";
-            const actual = campo.value;
-            if (original !== actual) return true;
+    function HayCambios3() {
+        for (const campo3 of campos3) {
+            const original3 = ValoresOriginales3[campo3.name] ?? "";
+            const actual3 = campo3.value;
+            if (original3 !== actual3) return true;
         }
         return false;
-    }
-    function validarYActualizarBoton() {
-        btnModificar.disabled = !hayCambios();
-    }    
-
-    campos.forEach(c => {
-        c.addEventListener("input", validarYActualizarBoton);
-        c.addEventListener("change", validarYActualizarBoton);
-    });
-
+    } 
+    function ValidarYActualizarBoton() {
+        btnModificar.disabled = !HayCambios();
+    };
+    function ValidarYActualizarBoton2() {
+        btnModificar2.disabled = !HayCambios2();
+    };  
+    function ValidarYActualizarBoton3() {
+        btnModificar3.disabled = !HayCambios3();
+    };  
     cuadros.forEach(cuadro => {
         cuadro.addEventListener('click', () => {
             const target = cuadro.getAttribute('data-target');
@@ -65,8 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (window.location.pathname.includes("/dashboard/admin/casos/modificar") && target !== "FrameModificarCasoBuscar") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
-                }    
-                
+                }
+                if (window.location.pathname.includes("/dashboard/admin/casos/eliminar") && target !== "FrameEliminarCaso") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }                    
                 if (window.location.pathname.includes("/dashboard/admin/entidades/buscar") && target !== "FrameBuscarEntidades") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
@@ -78,33 +99,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (window.location.pathname.includes("/dashboard/admin/entidades/modificar") && target !== "FrameModificarEntidadesBuscar") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
-                }                  
-
-
-
-                if (window.location.pathname.includes("/entidad/buscar") && target !== "FrameBuscarEntidad2") {
+                }
+                if (window.location.pathname.includes("/dashboard/admin/entidades/eliminar") && target !== "FrameEliminarEntidad") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }       
+                if (window.location.pathname.includes("/dashboard/admin/usuarios/buscar") && target !== "FrameBuscarPersona") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }        
+                if (window.location.pathname.includes("/dashboard/admin/usuarios/crear") && target !== "FrameCrearPersona") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }                            
+                if (window.location.pathname.includes("/dashboard/admin/usuarios/modificar") && target !== "FrameModificarPersonaBuscar") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
-                if (window.location.pathname.includes("/persona/datos") && target !== "FrameVerDatos") {
+                if (window.location.pathname.includes("/dashboard/admin/usuarios/eliminar") && target !== "FrameEliminarPersona") {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
-                if (window.location.pathname.includes("/persona/modificar/enviar") && target !== "FrameModificarDatos") {
-                    window.location.href = "/dashboard/admin?frame=" + target;
-                    return;
-                }
-                if (window.location.pathname.includes("/persona/modificar") && target !== "FrameModificarDatos") {
-                    window.location.href = "/dashboard/admin?frame=" + target;
-                    return;
-                }                              
-
                 frames.forEach(frame => frame.classList.remove('visible'));
                 document.getElementById(target)?.classList.add('visible');
             }
         });
     });
-
     document.querySelectorAll(".Boton_VerPassword").forEach((boton) => {
         const input = boton.nextElementSibling;
         const icono = boton.querySelector("img");
@@ -119,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
     document.getElementById("formEliminarUsuario")?.addEventListener("submit", function(e) {
         e.preventDefault();
 
@@ -127,24 +146,20 @@ document.addEventListener("DOMContentLoaded", () => {
             this.submit();
         }
     });
-
     window.abrirModal = function(id) {
         document.getElementById(id).style.display = "flex";
     }
-
     window.cerrarModal = function(id) {
         document.getElementById(id).style.display = "none";
     }
-
     window.onclick = function(event) {
         if (event.target.classList.contains("modal")) {
             event.target.style.display = "none";
         }
     }
-
     window.filtrarCasos = function() {
         let input = document.getElementById("buscador").value.toLowerCase();
-        let casos = document.querySelectorAll(".FrameVerCasos_Caso h3");
+        let casos = document.querySelectorAll(".FrameVerCasos_Caso h4");
 
         casos.forEach((caso) => {
             let texto = caso.textContent.toLowerCase();
@@ -157,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }    
     window.filtrarEntidades = function() {
         let input = document.getElementById("buscador2").value.toLowerCase();
-        let entidades = document.querySelectorAll(".FrameVerCasos_Caso h3");
+        let entidades = document.querySelectorAll(".FrameVerCasos_Caso h4");
 
         entidades.forEach((entidad) => {
             let texto = entidad.textContent.toLowerCase();
@@ -168,7 +183,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     } 
+    window.filtrarPersonas = function() {
+        let input = document.getElementById("buscador3").value.toLowerCase();
+        let personas = document.querySelectorAll(".FrameVerCasos_Caso");
 
-    validarYActualizarBoton();
+        personas.forEach((persona, i) => {
+            const h3 = persona.querySelector("h3");
+            const h4 = persona.querySelector("h4");
+            if (!h3 || !h4) {
+                return;
+            }
+
+            const id = h3.textContent.toLowerCase().trim();;
+            const nombre = h4.textContent.toLowerCase().trim();;
+            const match = (id.includes(input) || nombre.includes(input));
+            persona.style.display = match ? "" : "none";
+        });
+    }
+    ValidarYActualizarBoton();
     ValidarYActualizarBoton2();
+    ValidarYActualizarBoton3();
 });
