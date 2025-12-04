@@ -7,6 +7,27 @@ body, html {
     padding: 0;
     box-sizing: border-box;
 }
+.BotonIdiomaUnico {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background: #f4f4f8;
+    transition: 0.2s ease;
+}
+
+.BotonIdiomaUnico:hover {
+    background: #e2e2ee;
+}
+
+.BotonIdiomaUnico img {
+    width: 26px;
+    height: 26px;
+}
+
 .Desktop{
     width: 85%;
     height: 100%;
@@ -51,6 +72,7 @@ body, html {
     display: flex;
     width: 100%;
     height: 8%;
+    gap :10px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
@@ -153,13 +175,6 @@ body, html {
     background-color: #f2f3f9;
     overflow-y: auto;
 }
-.dark-mode .Frame{
-    background-color: #383838;
-}
-.dark-mode {
-    background: #121212;
-    color: #ffffff;
-}
 .Frame h2{
     margin: 0;
     cursor: default;
@@ -227,6 +242,7 @@ body, html {
     width: 100%;
     flex-wrap: wrap;
     height: 8%;
+    gap :10px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
@@ -272,18 +288,22 @@ body, html {
     resize: vertical;
     height: 70px;
     cursor: pointer;
-    border: 3px solid #8b8b8b;
+    border: 2px solid #c9c9c9; 
     background: white;
+    color: #333;
+    padding: 4px 0px;
     outline: none;
     border-radius: 15px;
     font-weight: 400;
     font-size: 25px;
+    text-indent: 14px;
     font-family: 'Montserrat', sans-serif;  
     transition: 0.3s all ease;
 } 
 .FormularioCalificanos_Input_Input1:focus{
-    transform: scale(1.02);
-    box-shadow: 0 0 10px #595959;
+    border-color: #c58aff; 
+    box-shadow: 0 0 10px rgba(197, 138, 255, 0.35);
+    transform: scale(1.01);
 }
 .Formulario_CrearCaso{
     gap: 30px;
@@ -376,44 +396,48 @@ body, html {
     font-family: 'Montserrat', sans-serif;
     transition: all 0.3s ease; 
 }
-.Formulario_CrearCaso_Input4{
+.Formulario_CrearCaso_Input4 {
     display: flex;
-    height: fit-content;
     width: 80%;
     margin-top: 12px;
-    cursor: pointer;
-    border: none;
-    border: 3px solid #8b8b8b;
+    text-indent: 14px;
+    padding: 10px 14px;
     background: white;
+    color: #333;
+    border: 2px solid #c9c9c9; 
+    border-radius: 12px; 
     outline: none;
-    border-radius: 15px;
-    font-weight: 400;
-    font-size: 25px;
+    font-size: 22px;
     font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease; 
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+.Formulario_CrearCaso_Input4:focus {
+    border-color: #c58aff; 
+    box-shadow: 0 0 10px rgba(197, 138, 255, 0.35);
+    transform: scale(1.01);
 }
 .Formulario_CrearCaso_Input7{
     display: flex;
     width: 60%;
+    text-indent: 14px;
     margin-top: 12px;
     cursor: pointer;
     border: none;
-    border: 3px solid #8b8b8b;
+    border: 2px solid #c9c9c9; 
     background: white;
+    color: #333;
+    padding: 4px 0px;
     outline: none;
-    border-radius: 15px;
+    border-radius: 12px;
     font-weight: 400;
     font-size: 25px;
     font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease; 
-}
-.Formulario_CrearCaso_Input:focus{
-    transform: scale(1.02);
-    box-shadow: 0 0 10px #595959;
+    transition: all 0.5s ease;
 }
 .Formulario_CrearCaso_Input7:focus{
+    border-color: #c58aff; 
+    box-shadow: 0 0 10px rgba(197, 138, 255, 0.35);
     transform: scale(1.01);
-    box-shadow: 0 0 10px #595959;
 }
 .Formulario_CrearCaso_Input3{
     display: flex;
@@ -522,7 +546,13 @@ body, html {
     height: fit-content;
     padding: 30px;
     margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0px 12px 25px 2px rgba(54, 54, 54, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.FrameVerCasos_Caso:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 25px 2px rgba(0, 0, 0, 0.33);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .FrameVerCasos_Caso h3{
     font-family: 'Montserrat', sans-serif;
@@ -765,6 +795,9 @@ body, html {
     padding-left: 7px;
     border-radius: 5px;
 }
+.FormularioRegistrarse_Input2 span{
+    color: Red;
+}
 #formCrearCaso_admin{
     gap: 10px;
 }
@@ -918,7 +951,88 @@ body, html {
     margin-top: 65px;
     z-index: 100000;
 }
-
+.dark-mode {
+    .Frame,
+    .FrameCrearCaso2 {
+        background-color: #12121A;
+    }
+    .Frame h2 {
+        color: #E6E6E6;
+    }
+    .Cuadro1{
+        background-color: #282835;
+        color: #E6E6E6;
+        box-shadow: 0px 12px 25px 2px rgba(106, 0, 255, 0.25);
+    }
+    .Cuadro1:hover{
+        border-color: rgb(177, 144, 253);
+    }
+    .Cuadro1 h3{
+        color: #B5B5C5;
+    }
+    .FrameVerCasos_Caso{
+        background-color: #282835;
+        box-shadow: 0px 12px 25px 2px rgba(106, 0, 255, 0.25);
+        color: #E6E6E6;
+        border: 1px solid #2A2A35;
+    }
+    .Formulario,
+    .modal-content,
+    .FormularioBuscar{
+        background-color: #282835;
+        color: #E6E6E6;
+        border: 1px solid #2A2A35;
+    }
+    .modal-content{
+        box-shadow: 0px 12px 25px 2px rgba(106, 0, 255, 0.25);
+    }
+    .Buscar_Entidad_Nombre h3{
+        color: #E6E6E6;
+    }
+    .Formulario_Contenedor{
+        background-color: #5614e2;
+    }
+    .FrameVerCasos_Caso:hover {
+        transform: translateY(-8px);
+        box-shadow: 0px 12px 25px 2px rgba(106, 0, 255, 0.45);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .FrameVerCasos_Caso h3{
+        color: #E6E6E6;
+    }
+    .FrameVerCasos_Caso h4{
+        color: #B5B5C5;
+    }
+    .ver-FrameVerCasos_VerCaso{
+        color: #ae84c2;
+    }
+    .ver-FrameVerCasos_VerCaso:hover{
+        color: #961bcf;
+    }
+    .Formulario_CrearCaso_Input4{
+        background-color: #1f1f28;
+        border: 1px solid #2A2A35;
+        color: #E6E6E6;
+        padding: 10px 14px;
+        border-radius: 10px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .Formulario_CrearCaso_Input7,
+    .FormularioCalificanos_Input_Input1{
+        background-color: #1f1f28;
+        border: 1px solid #2A2A35;
+        color: #E6E6E6;
+        border-radius: 10px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .Formulario_CrearCaso_Contenedor label,
+    .Formulario_CrearCaso_Contenedor2 label {
+        color: #E6E6E6;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: brightness(0) saturate(100%) invert(22%) sepia(83%) saturate(3123%) hue-rotate(251deg) brightness(92%) contrast(89%);
+    }
+}
 @media (max-width: 1200px) {
     .Cuadro1{
         flex: 1 1 250px;

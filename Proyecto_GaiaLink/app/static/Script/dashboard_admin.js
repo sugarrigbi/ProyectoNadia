@@ -5,15 +5,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const campos2 = Array.from(document.querySelectorAll(".campo-modificar2"));
     const campos3 = Array.from(document.querySelectorAll(".campo-modificar3"));
     const oscuro = document.getElementById("btnModoOscuro");
+    const modoGuardado = localStorage.getItem("modoOscuro");
     const btnModificar = document.getElementById("btnModificar");
     const btnModificar2 = document.getElementById("btnModificar2");
     const btnModificar3 = document.getElementById("btnModificar3");    
     const ValoresOriginales = {};
     const ValoresOriginales2 = {};
     const ValoresOriginales3 = {};
-    oscuro.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-    });
     campos.forEach(c => {
         ValoresOriginales[c.name] = c.value;
     });
@@ -199,6 +197,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const match = (id.includes(input) || nombre.includes(input));
             persona.style.display = match ? "" : "none";
         });
+    }
+    oscuro.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const modoOscuroActivo = document.body.classList.contains("dark-mode");
+        localStorage.setItem("modoOscuro", modoOscuroActivo ? "oscuro" : "claro");
+    });
+    if (modoGuardado === "oscuro") {
+        document.body.classList.add("dark-mode");
     }
     ValidarYActualizarBoton();
     ValidarYActualizarBoton2();
