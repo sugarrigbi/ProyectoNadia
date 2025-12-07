@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `prueba` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `prueba`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: prueba
@@ -40,7 +42,7 @@ CREATE TABLE `tbl_adic_entidad` (
 
 LOCK TABLES `tbl_adic_entidad` WRITE;
 /*!40000 ALTER TABLE `tbl_adic_entidad` DISABLE KEYS */;
-INSERT INTO `tbl_adic_entidad` VALUES ('001ENA',' Avenida Carrera 30 #48-51','(601) 653 1888','http://www.igac.gov.co','001ENT','a'),('002ENA','Carrera 13 N° 52-95','01-8000-911-170','http://www.minjusticia.gov.co','002ENT','b'),('003ENA','Carrera 7 No. 32 – 42','01-8000-119-450','http://www.minagricultura.gov.co','003ENT','c'),('004ENA','Carrera 10 No. 27-51','(601) 341 2073','http://www.urt.gov.co','004ENT','d');
+INSERT INTO `tbl_adic_entidad` VALUES ('001ENA',' Avenida Carrera 30 #48-51','(601) 653 1888','http://www.igac.gov.co','001ENT','a'),('002ENA','Carrera 13 N° 52-95','01-8000-911-170','http://www.minjusticia.gov.co','002ENT','b'),('003ENA','Carrera 7 No. 32 – 42','01-8000-119-450','http://www.minagricultura.gov.co','003ENT','c'),('004ENA','Carrera 10 No. 27-51','(601) 341 2073','http://www.urt.gov.co','004ENT','d'),('005ENA','Entidad_Prueba','31440','Entidad_Prueba','005ENT','Entidad_PruebaEntidad_PruebaEntidad_Prueba');
 /*!40000 ALTER TABLE `tbl_adic_entidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +60,7 @@ CREATE TABLE `tbl_adic_persona` (
   `Num_Contact` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fk_persona` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `fk_dir` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `fk_dir` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Terminos_Condiciones` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`Id_Adic_Persona`),
   KEY `fk_persona` (`fk_persona`),
@@ -72,7 +74,7 @@ CREATE TABLE `tbl_adic_persona` (
 
 LOCK TABLES `tbl_adic_persona` WRITE;
 /*!40000 ALTER TABLE `tbl_adic_persona` DISABLE KEYS */;
-INSERT INTO `tbl_adic_persona` VALUES ('000PAD',0,'Admin','Admin','administrador@gaialink.online','00000000','','1');
+INSERT INTO `tbl_adic_persona` VALUES ('000PAD',0,'Admin','Admin','administrador@gaialink.online','00000000','','1'),('002PAD',18,'Exitoso','1111111111','sugarrigbi3@gmail.com','1145224601','001BAR','1'),('003PAD',25,'Bogotá','3144048151','kmanzolag@sanmateo.edu.co','123456789','002BAR','1'),('004PAD',18,'PruebaAdmin','3144048151','sugarrigbi2@gmail.com','987654321',NULL,'1'),('005PAD',23,'Prueba2','3144048151','pepito@gmail.com','192837465','003BAR','1'),('006PAD',25,'Prueba','3109876543','pedro@gmail.com','1324354657',NULL,'1'),('007PAD',20,'EXITOSA','1928373645','pepapin@gmail.com','123987465',NULL,'1');
 /*!40000 ALTER TABLE `tbl_adic_persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +125,7 @@ CREATE TABLE `tbl_barrio` (
 
 LOCK TABLES `tbl_barrio` WRITE;
 /*!40000 ALTER TABLE `tbl_barrio` DISABLE KEYS */;
+INSERT INTO `tbl_barrio` VALUES ('001BAR','Santa Lucia','001LOC'),('002BAR','asdasdad','002LOC'),('003BAR','Prueba','003LOC');
 /*!40000 ALTER TABLE `tbl_barrio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,6 +168,7 @@ CREATE TABLE `tbl_caso` (
   `Fecha` date NOT NULL,
   `Descripción` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Personas_Afectadas` int NOT NULL,
+  `Direccion` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
   `Fk_Usuario` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Fk_Incidente` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Fk_Dep` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -190,6 +194,7 @@ CREATE TABLE `tbl_caso` (
 
 LOCK TABLES `tbl_caso` WRITE;
 /*!40000 ALTER TABLE `tbl_caso` DISABLE KEYS */;
+INSERT INTO `tbl_caso` VALUES ('001CAD','2025-11-06','aaaaaaaaaaaaaaa',2,'Dg 49 sur','000USU','Despl','001DEP','Caso','Caso_03'),('002CAD','2025-11-17','asdddddddddddddddddddddddddddddddd',23,'asdasdas','002USU','Despl','001DEP','Caso','Caso_04'),('003CAD','2025-12-01','asdasdaasdasdaasdasdaasdasda',3,'Prueba_Admin','007USU','Despl','001DEP','Caso','Caso_01');
 /*!40000 ALTER TABLE `tbl_caso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,6 +221,7 @@ CREATE TABLE `tbl_ciudad` (
 
 LOCK TABLES `tbl_ciudad` WRITE;
 /*!40000 ALTER TABLE `tbl_ciudad` DISABLE KEYS */;
+INSERT INTO `tbl_ciudad` VALUES ('001CIU','Bogota','001DEP'),('002CIU','PruebaAdmin','003DEP'),('003CIU','Prueba','004DEP'),('004CIU','EXITOSA','005DEP');
 /*!40000 ALTER TABLE `tbl_ciudad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,6 +272,7 @@ CREATE TABLE `tbl_departamento` (
 
 LOCK TABLES `tbl_departamento` WRITE;
 /*!40000 ALTER TABLE `tbl_departamento` DISABLE KEYS */;
+INSERT INTO `tbl_departamento` VALUES ('001DEP','Cundinamarca'),('002DEP','asdasdasd'),('003DEP','PruebaAdmin'),('004DEP','Prueba'),('005DEP','EXITOSA');
 /*!40000 ALTER TABLE `tbl_departamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +302,7 @@ CREATE TABLE `tbl_entidad` (
 
 LOCK TABLES `tbl_entidad` WRITE;
 /*!40000 ALTER TABLE `tbl_entidad` DISABLE KEYS */;
-INSERT INTO `tbl_entidad` VALUES ('001ENT','Instituto Geográfico Agustín Codazzi','Despl','Entidad_01'),('002ENT','Ministerio de Justicia y del Derecho','Despo','Entidad_01'),('003ENT','Ministerio de Agricultura y Desarrollo Rural','Expro','Entidad_01'),('004ENT','Unidad de Restitución de Tierras (URT)','Hurt','Entidad_01');
+INSERT INTO `tbl_entidad` VALUES ('001ENT','Instituto Geográfico Agustín Codazzi','Despl','Entidad_01'),('002ENT','Ministerio de Justicia y del Derecho','Despo','Entidad_01'),('003ENT','Ministerio de Agricultura y Desarrollo Rural','Expro','Entidad_01'),('004ENT','Unidad de Restitución de Tierras (URT)','Hurt','Entidad_01'),('005ENT','Entidad_Prueba','Despl','Entidad_01');
 /*!40000 ALTER TABLE `tbl_entidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,6 +380,7 @@ CREATE TABLE `tbl_localidad` (
 
 LOCK TABLES `tbl_localidad` WRITE;
 /*!40000 ALTER TABLE `tbl_localidad` DISABLE KEYS */;
+INSERT INTO `tbl_localidad` VALUES ('001LOC','Rafael Uribe Uribe','001CIU'),('002LOC','Bogota','001CIU'),('003LOC','Prueba','003CIU');
 /*!40000 ALTER TABLE `tbl_localidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,6 +407,7 @@ CREATE TABLE `tbl_num_caso` (
 
 LOCK TABLES `tbl_num_caso` WRITE;
 /*!40000 ALTER TABLE `tbl_num_caso` DISABLE KEYS */;
+INSERT INTO `tbl_num_caso` VALUES ('001NUC','000001R','001CAD'),('002NUC','000002R','002CAD'),('003NUC','000003R','003CAD');
 /*!40000 ALTER TABLE `tbl_num_caso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,10 +420,10 @@ DROP TABLE IF EXISTS `tbl_persona`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_persona` (
   `Id_Persona` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Pri_Nom` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Seg_Nom` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Pri_Ape` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Seg_Ape` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Pri_Nom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Seg_Nom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Pri_Ape` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Seg_Ape` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fk_Tipo_documento` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Fecha_nacimiento` date NOT NULL,
   `fk_Usuario` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -432,7 +441,7 @@ CREATE TABLE `tbl_persona` (
 
 LOCK TABLES `tbl_persona` WRITE;
 /*!40000 ALTER TABLE `tbl_persona` DISABLE KEYS */;
-INSERT INTO `tbl_persona` VALUES ('00000000','Admin','Admin','Admin','Admin','CC','2000-01-01','000USU');
+INSERT INTO `tbl_persona` VALUES ('00000000','Admin','Admin','Admin','Admin','CC','2000-01-01','000USU'),('1145224601','Exitoso','Exitoso','Exitoso','Exitoso','CC','2007-08-25','002USU'),('123456789','Kevin','Kevin','Garzon','Anzola','PA','2000-11-12','003USU'),('123987465','EXITOSA','EXITOSA','EXITOSA','EXITOSA','RC','2005-06-27','007USU'),('1324354657','Prueba','Prueba','Prueba','Prueba','CC','2000-08-26','006USU'),('192837465','Prueba','Prueba','Prueba','Prueba','CE','2002-01-07','005USU'),('987654321','PruebaAdmin','PruebaAdmin','PruebaAdmin','PruebaAdmin','RC','2007-06-12','004USU');
 /*!40000 ALTER TABLE `tbl_persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,8 +552,8 @@ CREATE TABLE `tbl_usuario` (
   `Id_usuario` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Contraseña` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Creacion` datetime DEFAULT NULL,
-  `Bloqueado` datetime DEFAULT NULL,
+  `Creacion` datetime NOT NULL,
+  `Bloqueado` varchar(225) COLLATE utf8mb4_general_ci NOT NULL,
   `Intentos_fallidos` int NOT NULL,
   `fk_rol` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `fk_estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -562,7 +571,7 @@ CREATE TABLE `tbl_usuario` (
 
 LOCK TABLES `tbl_usuario` WRITE;
 /*!40000 ALTER TABLE `tbl_usuario` DISABLE KEYS */;
-INSERT INTO `tbl_usuario` VALUES ('000USU','Admin','scrypt:32768:8:1$IsYCFyCsYm9HZ9nF$e7cd69ca132be8a5dacd23b895e74f96cd516e558658c8bb5216b22e1ff957c4bfed885f038dc3c501c0420d2f2a5416707c04ebe827c91b9d0663a706f67b15','2025-11-03 00:00:00',NULL,0,'admin','usuario_01');
+INSERT INTO `tbl_usuario` VALUES ('000USU','Admin','scrypt:32768:8:1$IsYCFyCsYm9HZ9nF$e7cd69ca132be8a5dacd23b895e74f96cd516e558658c8bb5216b22e1ff957c4bfed885f038dc3c501c0420d2f2a5416707c04ebe827c91b9d0663a706f67b15','2025-11-03 00:00:00','NO',0,'admin','usuario_01'),('002USU','PRUEBA','scrypt:32768:8:1$zndSorxFO96cXY2u$132283451b0052e04e571263287f020f21389e63ba3e205f39569e3fc6b7d68cb9f22b0db55d40a97dfe8c2d74a56c91f32d03d7f5eda089e8db6f6cb4bee13c','2025-11-06 00:00:00','NO',0,'admin','usuario_01'),('003USU','Pruebas','scrypt:32768:8:1$WOvy2PPLYF29Sfd4$74ebd8ff3a50f1b69629d6987f151f1e4d534765bb830a28879529c710ed8b004e05e89d954cd5195b671a9ebe973eeb70914331c9c1e6583f070377aa7bb688','2025-11-25 12:31:18','NO',0,'Usu','usuario_01'),('004USU','Prueba_Admin','scrypt:32768:8:1$l327hhywfQVKG5QW$9bbef3fd2e1812af8fea88fa4a3dc5f2365f72ff28322e25e061a2b4eb71ce90436d17bf323891af52a990a57abdee3a87e8523683b0094b0d747e03253cce4d','2025-11-25 00:00:00','SI',0,'admin','usuario_01'),('005USU','Prueba2','scrypt:32768:8:1$rIXZk4lVYf7jpiHg$43156cbf4fd065082e8a2b1366d2a74963af3c83838ba9b5f022fd2f77288abb6d40955edf94eaf8abcedf26893e965237649f7c4d6e965c99a7234072f44efb','2025-11-27 00:00:00','2025-11-28',1,'admin','usuario_01'),('006USU','Prueba3','scrypt:32768:8:1$zJnpAjbvLsbCE3s5$4f3686bfb8573bcca1ad42e0be3b0f7c50fdaea8992f2ed8b6b2c2addc118cfefb5aa460df969605f2769ceb56650078109c21790742f1f4863d9ff618b6cc08','2025-11-27 00:00:00','2025-11-28 14:43:41.735070',0,'admin','usuario_01'),('007USU','EXITOSA1','scrypt:32768:8:1$b1P7MzVdlVddHr7W$f492a0b9c662801e46e4c1e6f7c4b88d09127867cbde839b12ab13f79731ea99c18d724169886a298b85fb2adc1287ff99d43c03f4063f55646cde9c65645989','2025-11-27 00:00:00','SI',0,'Usu','usuario_01');
 /*!40000 ALTER TABLE `tbl_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -575,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-05 16:15:01
+-- Dump completed on 2025-12-07 18:08:11
