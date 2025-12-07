@@ -63,7 +63,7 @@
         </div>
         <div id="Frame2" class="Frame {% if frame_activo == 'Frame2' %}visible{% endif %}">
             <div data-aos="fade-down" class="Superior">
-                <h2 data-lang="Usuarios.Bienvenido2">Inicio > Usuarios</h2>
+                <h2 data-lang="Usuarios.Bienvenida">Inicio > Usuarios</h2>
                 <div class="Botones">
                     <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                 </div>
@@ -207,7 +207,7 @@
                 <div  id="Superior2" class="Superior">
                     <h2 data-lang="Casos_Buscar.Bienvenida">Inicio > Casos > Buscar Casos</h2>
                     <div class="Botones">
-                        <input type="text" id="buscador" class="Formulario_CrearCaso_Input4" onkeyup="filtrarCasos()">
+                        <input type="text" id="buscador" class="Formulario_CrearCaso_Input4" onkeyup="filtrarCasos()" data-lang="Casos_Buscar.Buscador">
                         <div class="Boton" data-target="Frame3"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
@@ -778,9 +778,9 @@
         <div id="FrameBuscarPersona" class="Frame {% if frame_activo == 'FrameBuscarPersona' %}visible{% endif %}">         
             <div class="FrameVerCasos2">
                 <div id="Superior2" class="Superior">
-                    <h2>Inicio > Usuarios > Buscar Personas</h2>
+                    <h2 data-lang="Usuarios_Buscar.Bienvenida">Inicio > Usuarios > Buscar Personas</h2>
                     <div class="Botones">
-                        <input type="text" id="buscador3" class="Formulario_CrearCaso_Input4" placeholder="Buscar usuario..." oninput="filtrarPersonas()">
+                        <input type="text" id="buscador3" class="Formulario_CrearCaso_Input4" data-lang="Usuarios_Buscar.Encabezado" oninput="filtrarPersonas()">
                         <div class="Boton" data-target="Frame2"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
                         <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
@@ -790,37 +790,37 @@
                         <div class="FrameVerCasos_Caso">
                             <h3>{{ persona.identificacion }}</h3>
                             <h4>{{ persona.nombre }}</h4>
-                            <span class="ver-FrameVerCasos_VerCaso" onclick="abrirModal('modal-{{ loop.index }}')">Ver usuario</span>
+                            <span class="ver-FrameVerCasos_VerCaso" onclick="abrirModal('modal-{{ loop.index }}')" data-lang="Usuarios_Buscar.VerUsuario">Ver usuario</span>
                         </div> 
                         
                         <div id="modal-{{ loop.index }}" class="modal">
                             <div class="modal-content">
                                 <span class="cerrar" onclick="cerrarModal('modal-{{ loop.index }}')">&times;</span>
-                                <h4 class="FrameVerCasos_Caso_Texto">Información General</h4>
-                                <p><strong>Identificación:</strong> {{ persona.identificacion }}</p>
-                                <p><strong>Usuario:</strong> {{ persona.nombre }}</p>
-                                <p><strong>Fecha de creación:</strong> {{ persona.Creacion }}</p>
-                                <p><strong>Bloqueado:</strong> {{ persona.Bloqueado }}</p>
-                                <p><strong>Intentos fallidos:</strong> {{ persona.Fallidos }}</p>
-                                <p><strong>Rol:</strong> {{ persona.Rol }}</p>
-                                <p><strong>Estado:</strong> {{ persona.Estado }}</p>
-                                <h4 class="FrameVerCasos_Caso_Texto">Datos Personales</h4>
-                                <p><strong>Documento:</strong> {{ persona.id }}</p>
-                                <p><strong>Tipo de documento:</strong> {{ persona.tipo }}</p>
-                                <p><strong>Identificación Adicional:</strong> {{ persona.identificacion_adic }}</p>
-                                <p><strong>Edad:</strong> {{ persona.Edad }}</p>
-                                <p><strong>Fecha de nacimiento:</strong> {{ persona.nacimiento }}</p>
-                                <p><strong>Nombre completo:</strong> {{ persona.Primer_Nombre }} {{ persona.Segundo_Nombre }} {{ persona.Primer_Apellido }} {{ persona.Segundo_Apellido }}</p>                     
-                                <h4 class="FrameVerCasos_Caso_Texto">Contacto</h4>    
-                                <p><strong>Dirección:</strong> {{ persona.Direccion }}</p>
-                                <p><strong>Teléfono:</strong> {{ persona.Telefono }}</p>
-                                <p><strong>Correo:</strong> <a href="mailto:{{ persona.Correo }}" class="Links2">{{ persona.Correo }}</a></p>                                       
+                                <h4 class="FrameVerCasos_Caso_Texto" data-lang="Usuarios_Buscar.InformacionGeneral">Información General</h4>
+                                <p><strong data-lang="Usuarios_Buscar.Identificacion">Identificación:</strong> {{ persona.identificacion }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Usuario">Usuario:</strong> {{ persona.nombre }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.FechaCreacion">Fecha de creación:</strong> {{ persona.Creacion }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Bloqueado">Bloqueado:</strong> {{ persona.Bloqueado }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.IntentosFallidos">Intentos fallidos:</strong> {{ persona.Fallidos }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Rol">Rol:</strong> {{ persona.Rol }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Estado">Estado:</strong> {{ persona.Estado }}</p>
+                                <h4 class="FrameVerCasos_Caso_Texto" data-lang="Usuarios_Buscar.DatosPersonales">Datos Personales</h4>
+                                <p><strong data-lang="Usuarios_Buscar.TipoDocumento">Tipo de documento:</strong> {{ persona.tipo }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Documento">Documento:</strong> {{ persona.id }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.IdentificacionAdicional">Identificación Adicional:</strong> {{ persona.identificacion_adic }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Edad">Edad:</strong> {{ persona.Edad }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.FechaNacimiento">Fecha de nacimiento:</strong> {{ persona.nacimiento }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.NombreCompleto">Nombre completo:</strong> {{ persona.Primer_Nombre }} {{ persona.Segundo_Nombre }} {{ persona.Primer_Apellido }} {{ persona.Segundo_Apellido }}</p>                     
+                                <h4 class="FrameVerCasos_Caso_Texto" data-lang="Usuarios_Buscar.Contacto">Contacto</h4>    
+                                <p><strong data-lang="Usuarios_Buscar.Direccion">Dirección:</strong> {{ persona.Direccion }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Telefono">Teléfono:</strong> {{ persona.Telefono }}</p>
+                                <p><strong data-lang="Usuarios_Buscar.Correo">Correo:</strong> <a href="mailto:{{ persona.Correo }}" class="Links2">{{ persona.Correo }}</a></p>                                       
                             </div>
                         </div>                    
                     {% endfor %}
                 {% else %}
                     <div class="FrameVerCasos_Caso">
-                        <h3>No hay usuarios registrados.</h3>
+                        <h3 data-lang="Usuarios_Buscar.NoHayUsuarios">No hay usuarios registrados.</h3>
                     </div>
                 {% endif %}
             </div>  

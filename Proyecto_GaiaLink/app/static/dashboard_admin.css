@@ -798,6 +798,23 @@ body, html {
 .FormularioRegistrarse_Input2 span{
     color: Red;
 }
+::-webkit-scrollbar {
+    width: 12px;
+}
+/* Color del fondo del scroll */
+::-webkit-scrollbar-track {
+    background: #15151b;   /* color del track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(118, 0, 209);   /* color del scroll */
+    border-radius: 10px;
+}
+
+/* Color cuando pasas el mouse */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(82, 0, 145);
+}
 #formCrearCaso_admin{
     gap: 10px;
 }
@@ -1004,10 +1021,10 @@ body, html {
         color: #B5B5C5;
     }
     .ver-FrameVerCasos_VerCaso{
-        color: #ae84c2;
+        color: #b322f7;
     }
     .ver-FrameVerCasos_VerCaso:hover{
-        color: #961bcf;
+        color: #71169b;
     }
     .Formulario_CrearCaso_Input4{
         background-color: #1f1f28;
@@ -1031,6 +1048,12 @@ body, html {
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
         filter: brightness(0) saturate(100%) invert(22%) sepia(83%) saturate(3123%) hue-rotate(251deg) brightness(92%) contrast(89%);
+    }
+    .Links2{
+        color: #1349d1;
+    }
+    .Links2:hover{
+        color: #0233ad;
     }
 }
 @media (max-width: 1200px) {
