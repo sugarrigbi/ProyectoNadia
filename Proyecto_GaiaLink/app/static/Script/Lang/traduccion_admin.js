@@ -41,7 +41,7 @@ function CambiarIdioma(idioma){
                 Modificar2: "Actualiza los datos de una entidad y <br>mantén su información correcta y vigente.",
                 Eliminar: "Eliminar entidades",
                 Eliminar2: "Remueve una entidad del sistema y <br>mantén la base de datos organizada.",                                    
-            },            
+            },     
             Usuarios: {
                 Bienvenida: "Inicio > Usuarios",
                 Buscar: "Buscar usuario",
@@ -53,6 +53,16 @@ function CambiarIdioma(idioma){
                 Eliminar: "Eliminar usuario",
                 Eliminar2: "Elimina un usuario del sistema y <br>mantén la base de datos organizada.",                                    
             },
+            Ayuda: {
+                Bienvenida: "Inicio > Ayuda",
+                Configuracion: "Configuracion",
+                Configuracion2: "Ajusta las preferencias del sistema<br> y personaliza la experiencia de uso.",                                   
+            },
+            Ayuda_Configuracion: {
+                Bienvenida: "Inicio > Ayuda > Configuracion",
+                Tema: "Tema:",
+                Idioma: "Idioma:",
+            },                                
             Casos_Buscar: {
                 Bienvenida: "Inicio > Casos > Buscar Casos",
                 Buscador: "Buscar Caso...",
@@ -100,6 +110,25 @@ function CambiarIdioma(idioma){
                 Numero: "Numero de radicado",
                 Eliminar: "Eliminar",
             },
+            Entidades_Modificar: {
+                Ruta_Buscar: "Inicio > Entidades > Modificar Entidades",
+                Titulo_Buscar: "Modificar Entidad",
+                Numero_Entidad: "Numero de entidad",
+                Buscar: "Buscar",
+                Nombre_Entidad: "Nombre de la entidad",
+                Tipo_Incidente: "Tipo de Incidente",
+                Estado: "Estado",
+                Direccion: "Direccion",
+                Telefono: "Telefono",
+                Pagina_Web: "Pagina web",
+                Descripcion: "Descripcion de la entidad",
+                Modificar: "Modificar",
+                Opc_Seleccion: "Seleccion",
+                Opc_Despl: "Desplazamiento",
+                Opc_Despo: "Despojo de predios",
+                Opc_Expro: "Expropiacion",
+                Opc_Hurt: "Hurto"
+            },            
             Entidades_Buscar: {
                 Bienvenida: "Inicio > Entidades > Buscar Entidades",
                 Buscador: "Buscar entidad...",
@@ -126,6 +155,11 @@ function CambiarIdioma(idioma){
                 Descripcion: "Descripción de la entidad",
                 Seleccion: "Selección",
                 Crear: "Crear",
+                Opc_Seleccion: "Seleccion",
+                Opc_Despl: "Desplazamiento",
+                Opc_Despo: "Despojo de predios",
+                Opc_Expro: "Expropiacion",
+                Opc_Hurt: "Hurto"                
             },
             Entidades_Eliminar: {
                 Bienvenida: "Inicio > Entidades > Eliminar Entidades",
@@ -301,6 +335,16 @@ function CambiarIdioma(idioma){
                 Eliminar: "Delete User",
                 Eliminar2: "Remove a user from the system and <br>keep the database organized.",
             },
+            Ayuda: {
+                Bienvenida: "Home > Help",
+                Configuracion: "Settings",
+                Configuracion2: "Adjust system preferences<br> and personalize the user experience.",
+            },
+            Ayuda_Configuracion: {
+                Bienvenida: "Home > Help > Settings",
+                Tema: "Theme:",
+                Idioma: "Language:",
+            },
             Casos_Buscar: {
                 Bienvenida: "Home > Cases > Search Cases",
                 Buscador: "Search Case...",
@@ -374,15 +418,17 @@ function CambiarIdioma(idioma){
                 Descripcion: "Entity Description",
                 Seleccion: "Select",
                 Crear: "Create",
+                Opc_Seleccion: "Select",
+                Opc_Despl: "Displacement",
+                Opc_Despo: "Land Dispossession",
+                Opc_Expro: "Expropriation",
+                Opc_Hurt: "Theft"                
             },
             Entidades_Modificar: {
                 Ruta_Buscar: "Home > Entities > Modify Entities",
-                Ruta_Modificar: "Home > Entities > Modify Entities",
                 Titulo_Buscar: "Modify Entity",
-                Titulo_Modificar: "Modify Entity",
                 Numero_Entidad: "Entity Number",
                 Buscar: "Search",
-                Mostrar_Codigo: "Entity Code",
                 Nombre_Entidad: "Entity Name",
                 Tipo_Incidente: "Incident Type",
                 Estado: "Status",
@@ -570,7 +616,17 @@ function CambiarIdioma(idioma){
                 Modificar2: "Mettre à jour les informations d’un dossier et<br>assurer que les données sont correctes.",
                 Eliminar: "Supprimer un <br>dossier",
                 Eliminar2: "Supprimer un dossier du système et<br>maintenir la base de données organisée."                                 
-            },            
+            },  
+            Ayuda: {
+                Bienvenida: "Accueil > Aide",
+                Configuracion: "Configuration",
+                Configuracion2: "Ajustez les préférences du système<br> et personnalisez l’expérience d’utilisation.",
+            },  
+            Ayuda_Configuracion: {
+                Bienvenida: "Accueil > Aide > Configuration",
+                Tema: "Thème :",
+                Idioma: "Langue :",
+            },                                
             Casos_Buscar: {
                 Bienvenida: "Accueil > Dossiers > Rechercher un dossier",
                 Buscador: "Rechercher un dossier...",
@@ -644,30 +700,28 @@ function CambiarIdioma(idioma){
                 Descripcion: "Description de l’entité",
                 Seleccion: "Sélection",
                 Crear: "Créer",
+                Opc_Seleccion: "Sélectionner",
+                Opc_Despl: "Déplacement",
+                Opc_Despo: "Expropriation de terrains",
+                Opc_Expro: "Expropriation",
+                Opc_Hurt: "Vol"                
             },
             Entidades_Modificar: {
                 Ruta_Buscar: "Accueil > Entités > Modifier les Entités",
-                Ruta_Modificar: "Accueil > Entités > Modifier les Entités",
-
-                Titulo_Buscar: "Modifier l’Entité",
-                Titulo_Modificar: "Modifier l’Entité",
-
-                Numero_Entidad: "Numéro de l’entité",
+                Titulo_Buscar: "Modifier l'Entité",
+                Numero_Entidad: "Numéro d'entité",
                 Buscar: "Rechercher",
-
-                Mostrar_Codigo: "Code de l’entité",
-                Nombre_Entidad: "Nom de l’entité",
-                Tipo_Incidente: "Type d’incident",
-                Estado: "Statut",
+                Nombre_Entidad: "Nom de l'entité",
+                Tipo_Incidente: "Type d'incident",
+                Estado: "État",
                 Direccion: "Adresse",
                 Telefono: "Téléphone",
-                Pagina_Web: "Site Web",
-                Descripcion: "Description de l’entité",
+                Pagina_Web: "Site web",
+                Descripcion: "Description de l'entité",
                 Modificar: "Modifier",
-
                 Opc_Seleccion: "Sélectionner",
                 Opc_Despl: "Déplacement",
-                Opc_Despo: "Spoliation de terrains",
+                Opc_Despo: "Expropriation de terrains",
                 Opc_Expro: "Expropriation",
                 Opc_Hurt: "Vol"
             },

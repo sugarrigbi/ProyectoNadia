@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const campos2 = Array.from(document.querySelectorAll(".campo-modificar2"));
     const campos3 = Array.from(document.querySelectorAll(".campo-modificar3"));
     const oscuro = document.getElementById("btnModoOscuro");
+    const idioma = document.getElementById("btnIdiomaUnico");
     const modoGuardado = localStorage.getItem("modoOscuro");
+    const idiomaGuardado = localStorage.getItem("idioma");
     const btnModificar = document.getElementById("btnModificar");
     const btnModificar2 = document.getElementById("btnModificar2");
     const btnModificar3 = document.getElementById("btnModificar3");    
@@ -58,13 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
     } 
     function ValidarYActualizarBoton() {
-        btnModificar.disabled = !HayCambios();
+        if (btnModificar) btnModificar.disabled = !HayCambios();
     };
     function ValidarYActualizarBoton2() {
-        btnModificar2.disabled = !HayCambios2();
+        if (btnModificar2) btnModificar2.disabled = !HayCambios2();
     };  
     function ValidarYActualizarBoton3() {
-        btnModificar3.disabled = !HayCambios3();
+        if (btnModificar3) btnModificar3.disabled = !HayCambios3();
     };  
     cuadros.forEach(cuadro => {
         cuadro.addEventListener('click', () => {
@@ -198,13 +200,57 @@ document.addEventListener("DOMContentLoaded", () => {
             persona.style.display = match ? "" : "none";
         });
     }
+    function ActualizarTextoTema() {
+        const idioma = localStorage.getItem("idioma");
+        const oscuroActivo = document.body.classList.contains("dark-mode");
+        let texto = "";
+        if (idioma === "es") texto = oscuroActivo ? "Oscuro" : "Claro";
+        if (idioma === "en") texto = oscuroActivo ? "Dark" : "Light";
+        if (idioma === "fr") texto = oscuroActivo ? "Sombre" : "Clair";
+        document.getElementById("SunMoon2").textContent = texto;
+    }
+    idioma.addEventListener("click", () => {
+        let idiomaActual = localStorage.getItem("idioma");
+        if (idiomaActual === "es") idiomaActual = "en";
+        else if (idiomaActual === "en") idiomaActual = "fr";
+        else idiomaActual = "es";
+        localStorage.setItem("idioma", idiomaActual);
+        ActualizarTextoTema();
+    });
     oscuro.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
+        const idiomaGuardado = localStorage.getItem("idioma");
         const modoOscuroActivo = document.body.classList.contains("dark-mode");
         localStorage.setItem("modoOscuro", modoOscuroActivo ? "oscuro" : "claro");
+        document.getElementById("SunMoon").src =
+            modoOscuroActivo ? "/static/img/Moon.svg" : "/static/img/Sun.svg";
+        if (idiomaGuardado === "es") {
+            document.getElementById("SunMoon2").textContent = modoOscuroActivo ? "Oscuro" : "Claro";
+        } else if (idiomaGuardado === "en") {
+            document.getElementById("SunMoon2").textContent = modoOscuroActivo ? "Dark" : "Light";
+        } else if (idiomaGuardado === "fr") {
+            document.getElementById("SunMoon2").textContent = modoOscuroActivo ? "Sombre" : "Clair";
+        }
     });
     if (modoGuardado === "oscuro") {
         document.body.classList.add("dark-mode");
+        document.getElementById("SunMoon").src = "/static/img/Moon.svg";
+        if (idiomaGuardado === "es") {
+            document.getElementById("SunMoon2").textContent = "Oscuro";
+        } else if (idiomaGuardado === "en") {
+            document.getElementById("SunMoon2").textContent = "Dark";
+        } else if (idiomaGuardado === "fr") {
+            document.getElementById("SunMoon2").textContent = "Sombre";
+        }
+    } else if (modoGuardado === "claro") {
+        document.getElementById("SunMoon").src = "/static/img/Sun.svg";
+        if (idiomaGuardado === "es") {
+            document.getElementById("SunMoon2").textContent = "Claro";
+        } else if (idiomaGuardado === "en") {
+            document.getElementById("SunMoon2").textContent = "Light";
+        } else if (idiomaGuardado === "fr") {
+            document.getElementById("SunMoon2").textContent = "Clair";
+        }
     }
     ValidarYActualizarBoton();
     ValidarYActualizarBoton2();
