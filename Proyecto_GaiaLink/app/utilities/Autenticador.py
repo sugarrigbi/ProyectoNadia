@@ -157,10 +157,15 @@ def mostrar_dashboard():
 
     frame_activo = request.args.get("frame", "Frame1")
 
+    conexion, cursor = Get_BaseDatos()
+    cursor.execute("SELECT `2FA` FROM prueba.tbl_usuario WHERE Id_usuario = %s", (usuario_id,))
+    autenticador = cursor.fetchone()
+    Close_BaseDatos(conexion, cursor)
+    estado_2fa = "Activado" if autenticador and autenticador["2FA"] == 1 else "Desactivado"
     if rol == "admin":
         if request.path != "/dashboard/admin":
             return redirect(url_for("auth.admin", frame=frame_activo))
-        return render_template("dashboard_admin.html", username=username, frame_activo=frame_activo)
+        return render_template("dashboard_admin.html", username=username, frame_activo=frame_activo, estado_2fa=estado_2fa)
     elif rol == "usuario":
         if request.path != "/dashboard/user":
             return redirect(url_for("auth.user", frame=frame_activo))

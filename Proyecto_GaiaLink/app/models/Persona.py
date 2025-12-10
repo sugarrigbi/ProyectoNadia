@@ -1,4 +1,5 @@
 import mysql.connector
+import pyotp
 from werkzeug.security import check_password_hash
 from datetime import datetime, timedelta
 from flask import flash, redirect, url_for, session, render_template
@@ -1051,3 +1052,28 @@ El equipo de soporte de GaiaLink
             except Exception as e:
                 print(f"Error al enviar el correo: {e}")
             Close_BaseDatos(conexion, cursor)
+    def Actualizar_2FA(self):
+        conexion, cursor = Get_BaseDatos()
+        variable = 0
+        mensaje = ""
+        codigo_secreto = ""
+        try:
+            cursor.execute("SELECT `2FA` FROM prueba.tbl_usuario WHERE Id_usuario = %s", (self.Codigo,))
+            autenticador = cursor.fetchone()
+            if autenticador["2FA"] == 0:
+                variable = 1
+                mensaje = "Activado"  
+                codigo_secreto = pyotp.random_base32()
+            elif autenticador["2FA"] == 1:
+                variable = 0
+                mensaje = "Desactivado"
+                codigo_secreto = ""
+            cursor.execute("UPDATE tbl_usuario SET `2FA` = %s, Secret_Key = %s WHERE Id_usuario = %s", (variable, codigo_secreto, self.Codigo,))
+            conexion.commit()
+            Close_BaseDatos(conexion, cursor)
+            return mensaje, "exito"
+        except Exception as e:
+            conexion.rollback()
+            print(e)
+            return "Autenticador no actualizado", "error"
+        

@@ -47,3 +47,6 @@ def Modificar_Usuario_Enviar_Admin():
 @admin_bp.route('/dashboard/admin/usuarios/eliminar',methods=["GET", "POST"])
 def Eliminar_Usuario_Admin():
     return Admin.get_eliminar_usuarios_admin()
+@admin_bp.route("/actualizar_2FA", methods=['POST'])
+def Actualizar_2FA():
+    return Admin.get_actualizar_2fa()

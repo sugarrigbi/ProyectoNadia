@@ -7,6 +7,96 @@ body, html {
     padding: 0;
     box-sizing: border-box;
 }
+#AbrirModalQR{
+    background-color: #5614e2;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 15px;
+    padding: 2px 5px 2px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;    
+}
+#AbrirModalQR:hover{
+    background-color: #ad62ee;
+    transform: scale(1.020);
+}
+.mi-modal-doble{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.mi-modal-titulo{
+    cursor: default;
+    width: fit-content;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: black;
+    font-weight: 500;
+}
+.cerrar2 {
+    color: #d40000;
+    float: right;
+    margin-right: 17px;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+.cerrar2:hover {
+    color: #4c0000;
+    font-size: 55px;
+}
+.mi-modal {
+    position: fixed;
+    z-index: 1000;
+    width: 100%; 
+    top: 0%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+.mi-modal p{
+    cursor: default;
+    width: fit-content;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    margin: 20px 0 0 0;
+    color: black;
+    font-weight: 500;
+}
+.mi-modal img{
+    width: 300px;
+    height: 300px;
+}
+.mi-modal-contenido {
+    background-color: #fff;
+    position: relative;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 450px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.3);
+    animation: aparecer 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: center;
+}
 .Checkbox {
     appearance: none; 
     width: 28px;
@@ -167,11 +257,10 @@ body, html {
     align-items: center;
     justify-content: space-around;
     height: auto;
-    width: auto;
+    gap: 20px;
+    width: 90%;
     flex-wrap: wrap;
     flex-direction: column;
-    margin-top: 20px;
-    padding: 10px;
 }
 .Cuadros1{
     display: flex;
@@ -212,11 +301,14 @@ body, html {
     justify-content: space-between;
     gap: 12px;
     padding: 20px 30px 20px 30px;
-    margin: 10px 0 10px 0;
     cursor: pointer;
     border-radius: 10px;
     box-shadow: 0px 10px 10px 1px #e6e8eb;
     transition: 0.3s all ease;
+}
+.Cuadro2_Boton:hover{
+    transform: translateY(-6px);
+    border-color: #d1b0ff;
 }
 .config{
     display: flex;
@@ -1040,7 +1132,7 @@ body, html {
     margin-top: 65px;
     z-index: 100000;
 }
-.dark-mode {
+.dark-mode {    
     .Frame,
     .FrameCrearCaso2 {
         background-color: #12121A;
@@ -1358,14 +1450,16 @@ body, html {
     #BotonesModificar33,    
     #BotonesEliminar3,
     #BotonesEliminar2,
-    #BotonesEliminar1{
+    #BotonesEliminar1,
+    #BotonesConfiguracion1{
         width: 40%;
         margin-left: 15px;
     }
     .Superior h2{
         padding-left: 15px;
     }
-    #Superior2 h2{
+    #Superior2 h2,
+    #Superior4 h2{
         padding-left: 30px;
     }
     .Formulario_CrearCaso_Input4{
@@ -1443,6 +1537,7 @@ body, html {
     }
     .Cuadro2_Boton{
         padding: 20px 10px 20px 10px;
+        width: 99%;
         justify-content: space-around;
     }
     .Superior{

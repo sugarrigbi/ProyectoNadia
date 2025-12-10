@@ -5,15 +5,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const campos2 = Array.from(document.querySelectorAll(".campo-modificar2"));
     const campos3 = Array.from(document.querySelectorAll(".campo-modificar3"));
     const oscuro = document.getElementById("btnModoOscuro");
+    const logout = document.getElementById("btn-logout");
     const idioma = document.getElementById("btnIdiomaUnico");
+    const autenticador = document.getElementById("btn2FA");
+    const autenticador2 = document.getElementById("AbrirModalQR");
     const modoGuardado = localStorage.getItem("modoOscuro");
     const idiomaGuardado = localStorage.getItem("idioma");
     const btnModificar = document.getElementById("btnModificar");
     const btnModificar2 = document.getElementById("btnModificar2");
-    const btnModificar3 = document.getElementById("btnModificar3");    
+    const btnModificar3 = document.getElementById("btnModificar3");
+    const modal = document.getElementById("modal2FAContainer");
+    const close = document.getElementById("cerrarModal2FA");
+    const estado = document.getElementById("confirmacion23").innerText;
+    const link = document.getElementById("AbrirModalQR");
     const ValoresOriginales = {};
     const ValoresOriginales2 = {};
-    const ValoresOriginales3 = {};
+    const ValoresOriginales3 = {};      
     campos.forEach(c => {
         ValoresOriginales[c.name] = c.value;
     });
@@ -58,7 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (original3 !== actual3) return true;
         }
         return false;
-    } 
+    }
+    function Cerrar_Sesion() {
+        if(confirm("¿Deseas cerrar sesión?")) {
+            window.location.href = "/logout";
+        }
+    }
     function ValidarYActualizarBoton() {
         if (btnModificar) btnModificar.disabled = !HayCambios();
     };
@@ -217,6 +229,34 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("idioma", idiomaActual);
         ActualizarTextoTema();
     });
+    autenticador2.addEventListener("click", async (event) => {
+        event.stopPropagation();
+        const response = await fetch("/2fa/generar");
+        const data = await response.json();
+        document.getElementById("imagenQR2FA").src = data.qr;
+        document.getElementById("codigoManual2FA").textContent = data.secret;
+        modal.style.display = "flex";
+    });
+    close.addEventListener("click", () => modal.style.display = "none");
+        window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    });      
+    autenticador.addEventListener("click", () => {
+        fetch("/actualizar_2FA", { method: "POST" })
+            .then(r => r.text())
+            .then(texto => {
+                document.getElementById("confirmacion23").innerText = texto;
+                if (texto === "Activado") {
+                    link.style.display = "block";
+                } else {
+                    link.style.display = "none";
+                }
+            })
+            .catch(e => alert("Error: " + e));
+    });
+    logout.addEventListener("click", () => {
+        Cerrar_Sesion()
+    });
     oscuro.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
         const idiomaGuardado = localStorage.getItem("idioma");
@@ -252,6 +292,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("SunMoon2").textContent = "Clair";
         }
     }
+    if (estado === "Activado") {
+        link.style.display = "block";
+    } else {
+        link.style.display = "none";
+    }    
     ValidarYActualizarBoton();
     ValidarYActualizarBoton2();
     ValidarYActualizarBoton3();

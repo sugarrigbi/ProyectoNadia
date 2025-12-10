@@ -1,5 +1,5 @@
 from flask import Blueprint
-from app.utilities.Route.login import get_registrar, get_login, get_logout, get_recuperar, get_recuperar_token, get_dashboard
+from app.utilities.Route.login import get_registrar, get_login, get_logout, get_recuperar, get_recuperar_token, get_dashboard, get_QR
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -20,7 +20,10 @@ def recuperar_token():
     return get_recuperar_token()
 @auth_bp.route("/dashboard/admin")
 def admin():
-    return get_dashboard()
+    return get_dashboard()  
 @auth_bp.route("/dashboard/user")
 def user():
     return get_dashboard()
+@auth_bp.route("/2fa/generar")
+def generar_2fa():
+    return get_QR()

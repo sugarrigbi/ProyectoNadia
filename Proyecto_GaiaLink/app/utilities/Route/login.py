@@ -1,7 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash, session
+from flask import render_template, request, redirect, url_for, flash, session, jsonify
 from app.utilities.Autenticador import procesar_login, mostrar_dashboard, Validar_Datos, Enviar_Token, validar_token, Comparar_Contraseña_2, Validar_Contraseña2
 from app.models.Persona import Persona
-
+from app.utilities.Base_Datos import Get_BaseDatos, Close_BaseDatos
+import pyotp, qrcode
+from io import BytesIO
+import base64
 def get_registrar():
     if request.method == "POST":
         datos = {
@@ -39,16 +42,23 @@ def get_registrar():
         return render_template("registrarse.html", confirmacion=resultado, tipo=tipo)    
     return render_template("registrarse.html")
 def get_login():
+    if "usuario_id" in session:
+        rol = (session.get("rol") or "").lower()
+        if rol == "admin":
+            return redirect(url_for("auth.admin"))
+        else:
+            return redirect(url_for("auth.user"))
     if request.method == "POST":
         usuario = request.form["usuario"]
         contraseña = request.form["contraseña"]
-
         datos2 = {
-            "usuario": request.form["usuario"],
-            "contraseña": request.form["contraseña"]
+            "usuario": usuario,
+            "contraseña": contraseña
         }
-
-        return procesar_login(usuario, contraseña, datos2)
+        respuesta = procesar_login(usuario, contraseña, datos2)
+        if "usuario" in session:
+            session.permanent = True
+        return respuesta
     return render_template("login.html", datos2={})
 def get_logout():
     session.clear()
@@ -97,3 +107,36 @@ def get_recuperar_token():
     return render_template("recuperar-token.html")
 def get_dashboard():
     return mostrar_dashboard()
+def get_QR():
+    try:
+        usuario_id = session["usuario_id"]
+        conexion, cursor = Get_BaseDatos()
+        cursor.execute("SELECT `2FA`, Secret_Key, Nombre FROM tbl_usuario WHERE Id_usuario = %s", (usuario_id,))
+        usuario = cursor.fetchone()
+        print(usuario)
+        Close_BaseDatos(conexion, cursor)
+
+        if not usuario:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        if not usuario["Secret_Key"]:
+            return jsonify({"error": "El usuario no tiene 2FA activado"}), 400
+
+        secret = usuario["Secret_Key"]
+        totp = pyotp.TOTP(secret)
+        uri = totp.provisioning_uri(name=usuario["Nombre"], issuer_name="GaiaLink")
+
+        # Generar la imagen QR en base64
+        img = qrcode.make(uri)
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        qr_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
+
+        return jsonify({
+            "qr": f"data:image/png;base64,{qr_b64}",
+            "secret": secret
+        })
+
+    except Exception as e:
+        print("Error al generar QR 2FA:", e)
+        return jsonify({"error": str(e)}), 500

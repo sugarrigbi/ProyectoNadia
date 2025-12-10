@@ -270,3 +270,10 @@ def get_modificar_enviar_usuarios_admin():
     if request.method == "GET":
         Codigo = session['Usuario_Modificar']
         return render_template("dashboard_admin.html", Codigo=Codigo, estados=estados, frame_activo="FrameModificarPersona")  
+def get_actualizar_2fa():
+    if request.method == "POST":
+        codigo = session["usuario_id"]
+        p = Persona_Admin(codigo, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
+        resultado, tipo = p.Actualizar_2FA()
+        return resultado 
+
