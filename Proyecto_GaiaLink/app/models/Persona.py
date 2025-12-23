@@ -1,9 +1,8 @@
 import mysql.connector
 import pyotp
-from werkzeug.security import check_password_hash
 from datetime import datetime, timedelta
-from flask import flash, redirect, url_for, session, render_template
-from app.utilities.Autenticador import Verificar_Rol, verificar_estado_usuario, hash_contraseña
+from flask import request
+from app.utilities.Autenticador import hash_contraseña
 from app.utilities.Base_Datos import Get_BaseDatos, Close_BaseDatos, Get_Errores
 import smtplib
 from email.mime.text import MIMEText
@@ -265,7 +264,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)      
     def Eliminar_Persona(self):
         conexion, cursor = Get_BaseDatos()
@@ -331,7 +330,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Modificar_Persona(self):
         conexion, cursor = Get_BaseDatos()
@@ -351,7 +350,6 @@ El equipo de soporte de GaiaLink
             return "Datos modificados con exito", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"no se pudo modificar el usuario: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -393,7 +391,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor) 
     def Modificar_Contraseña(self):
         conexion, cursor = Get_BaseDatos()
@@ -417,7 +415,6 @@ El equipo de soporte de GaiaLink
             return "Contraseña modificada con exito", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"no se pudo modificar la contraseña: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -459,7 +456,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)                        
 class Persona_Admin:
     def __init__(self, Codigo, Codigo_Pers, Tipo_Documento, Documento, Primer_Nombre,
@@ -637,11 +634,9 @@ class Persona_Admin:
                         "tipo": tipos[i]["fk_Tipo_documento"],
                         "nacimiento": nacimientos[i]["Fecha_nacimiento"]
                     }
-                    print(persona["Estado"])
                 if persona["Estado"] != "Usuario inactivo":
                     lista_fusionada.append(persona)
             except Exception as e:
-                print(f"⚠️ Error procesando persona {i}: {e}")
                 continue                    
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada
@@ -649,8 +644,8 @@ class Persona_Admin:
         try:
             conexion, cursor = Get_BaseDatos()
             if conexion is None:
-                return {"error": "No se pudo conectar a la base de datos"}
-
+                return "error, no se puede ingresar a la db"
+            
             cursor.execute("SELECT Id_Persona FROM tbl_persona JOIN tbl_usuario ON tbl_persona.fk_Usuario = tbl_usuario.Id_usuario WHERE tbl_persona.fk_Usuario = %s", (self.Codigo,))
             Resultado2 = cursor.fetchone()
             if not Resultado2:
@@ -660,86 +655,88 @@ class Persona_Admin:
             Buscar_Codigo = self.Documento        
             cursor.execute("SELECT fk_usuario FROM tbl_persona WHERE Id_Persona = %s", (Buscar_Codigo,))
             Resultado_Usuario = cursor.fetchone()
-        
             if not Resultado_Usuario:
                 return
             Id_Usuario = Resultado_Usuario["fk_usuario"]
-
             cursor.execute("SELECT fk_estado FROM tbl_usuario WHERE Id_usuario = %s", (Id_Usuario,))
             Resultado_Estado = cursor.fetchone()
             if not Resultado_Estado:
                 return None
-        
             Estado_Actual = Resultado_Estado["fk_estado"]
             if Estado_Actual == "Usuario_00":
                 return
 
             cursor.execute("""
-                SELECT 
-					tbl_usuario.Id_usuario,
-                    tbl_usuario.Nombre,
-                    tbl_usuario.Contraseña,
-                    tbl_usuario.Creacion,
-                    tbl_usuario.Bloqueado,
-                    tbl_usuario.Intentos_fallidos,
-                    tbl_usuario.fk_rol,
-                    tbl_usuario.fk_estado,              
-                    tbl_persona.Id_Persona,
-                    tbl_persona.fk_Tipo_documento,
-                    tbl_persona.Pri_Nom, 
-                    tbl_persona.Seg_Nom, 
-                    tbl_persona.Pri_Ape, 
-                    tbl_persona.Seg_Ape, 
-                    tbl_persona.Fecha_nacimiento,
-                    tbl_adic_persona.Id_Adic_Persona, 
-                    tbl_adic_persona.Edad, 
-                    tbl_adic_persona.Dirección,
-                    tbl_adic_persona.Num_Contact,
-                    tbl_adic_persona.Email,
-                    tbl_adic_persona.Terminos_Condiciones,
-                    tbl_ciudad.Nom_ciudad, 
-                    tbl_localidad.Localidad, 
-                    tbl_barrio.Barrio, 
-                    tbl_departamento.Nom_departamento
-                FROM tbl_adic_persona JOIN tbl_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_persona 
-                JOIN tbl_tipo_documento ON tbl_persona.fk_Tipo_documento = tbl_tipo_documento.Id_Documento 
-                JOIN tbl_usuario ON tbl_persona.fk_usuario = tbl_usuario.Id_usuario JOIN tbl_barrio ON tbl_adic_persona.fk_dir = tbl_barrio.Id_barrio 
-                JOIN tbl_localidad ON tbl_barrio.fk_local = tbl_localidad.Id_local JOIN tbl_ciudad ON tbl_localidad.fk_ciudad = tbl_ciudad.Id_ciudad 
-                JOIN tbl_departamento ON tbl_ciudad.Fk_Dep = tbl_departamento.Id_dep WHERE tbl_usuario.Id_usuario = %s
+                        SELECT
+                            tbl_usuario.Id_usuario,
+                            tbl_usuario.Nombre,
+                            tbl_usuario.Creacion,
+                            tbl_usuario.Bloqueado,
+                            tbl_usuario.Intentos_fallidos,
+                            tbl_rol.id_rol,
+                            tbl_rol.Rol,
+                            tbl_tipo_documento.Tipo_documento,
+                            tbl_estado.Id_estado,
+                            tbl_estado.Estado,
+                            tbl_persona.Id_Persona,
+                            tbl_persona.Pri_Nom,
+                            tbl_persona.Seg_Nom,
+                            tbl_persona.Pri_Ape,
+                            tbl_persona.Seg_Ape,
+                            tbl_persona.Fecha_nacimiento,
+                            tbl_adic_persona.Id_Adic_Persona,
+                            tbl_adic_persona.Edad,
+                            tbl_adic_persona.Dirección,
+                            tbl_adic_persona.Num_Contact,
+                            tbl_adic_persona.Email,
+                            tbl_adic_persona.Terminos_Condiciones,
+                            tbl_adic_persona.fk_dir,
+                            tbl_barrio.Barrio,
+                            tbl_localidad.Localidad,
+                            tbl_ciudad.Nom_ciudad,
+                            tbl_departamento.Nom_departamento
+                        FROM tbl_usuario
+                        JOIN tbl_rol ON tbl_usuario.fk_rol = tbl_rol.id_rol
+                        JOIN tbl_estado ON tbl_usuario.fk_estado = tbl_estado.Id_estado
+                        JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario
+                        JOIN tbl_adic_persona ON tbl_persona.Id_Persona = tbl_adic_persona.fk_persona
+                        JOIN tbl_tipo_documento on tbl_persona.fk_Tipo_documento = tbl_tipo_documento.Id_Documento
+                        JOIN tbl_barrio ON tbl_adic_persona.fk_dir = tbl_barrio.Id_barrio
+                        JOIN tbl_localidad ON tbl_barrio.fk_local = tbl_localidad.Id_local
+                        JOIN tbl_ciudad ON tbl_localidad.fk_ciudad = tbl_ciudad.Id_ciudad
+                        JOIN tbl_departamento ON tbl_ciudad.Fk_Dep = tbl_departamento.Id_dep
+                        WHERE tbl_usuario.Id_usuario = %s;
                 """, (Id_Usuario,))
             Resultado = cursor.fetchone()
-            print(Resultado)
             if not Resultado:
                 return None  
 
             persona_data = {
                 "Codigo": Resultado["Id_usuario"],
                 "Nombre": Resultado["Nombre"],
-                "Contraseña": Resultado["Contraseña"],
-                "Fecha_Creacion": Resultado["Creacion"],
+                "Fecha_Creacion": Resultado["Creacion"].strftime("%d/%m/%Y"),
                 "Bloqueado": Resultado["Bloqueado"],
                 "Intentos_Fallidos": Resultado["Intentos_fallidos"],
-                "Rol": Resultado["fk_rol"],
-                "Estado": Resultado["fk_estado"],
+                "Rol": Resultado["Rol"],
+                "Estado": Resultado["Estado"],
                 "Codigo_Persona": Resultado["Id_Persona"],
-                "Tipo_Documento": Tipo_Documento_Valores.get(Resultado["fk_Tipo_documento"]),
                 "Primer_Nombre": Resultado["Pri_Nom"],
                 "Segundo_Nombre": Resultado["Seg_Nom"],
                 "Primer_Apellido": Resultado["Pri_Ape"],
                 "Segundo_Apellido": Resultado["Seg_Ape"],
-                "Fecha_Nacimiento": Resultado["Fecha_nacimiento"].strftime("%d/%m/%Y") if Resultado["Fecha_nacimiento"] else "",
+                "Fecha_Nacimiento": Resultado["Fecha_nacimiento"].strftime("%d/%m/%Y"),
+                "Tipo_Documento": Resultado["Tipo_documento"],
                 "Codigo_Adic": Resultado["Id_Adic_Persona"],
                 "Edad": Resultado["Edad"],
                 "Direccion": Resultado["Dirección"],
                 "Numero_Contacto": Resultado["Num_Contact"],
                 "Email": Resultado["Email"],
                 "Terminos_Condiciones": Resultado["Terminos_Condiciones"],
+                "Departamento": Resultado["Nom_departamento"],
                 "Ciudad": Resultado["Nom_ciudad"],
                 "Localidad": Resultado["Localidad"],
-                "Barrio": Resultado["Barrio"],
-                "Departamento": Resultado["Nom_departamento"]
+                "Barrio": Resultado["Barrio"]
             }
-
             conexion.commit()
             return persona_data
 
@@ -848,7 +845,6 @@ class Persona_Admin:
             return "Exito, usuario creado correctamente.", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"Ocurrió un error al guardar los datos: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -891,14 +887,13 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor) 
     def Eliminar_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
         Estado = "Usuario_00"
         cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_adic_persona JOIN tbl_persona ON tbl_adic_persona.fk_persona = tbl_persona.Id_persona JOIN tbl_tipo_documento ON tbl_persona.fk_Tipo_documento = tbl_tipo_documento.Id_Documento JOIN tbl_usuario ON tbl_persona.fk_usuario = tbl_usuario.Id_usuario WHERE tbl_usuario.Id_usuario = %s", (self.Codigo,))
         resultado_Correo = cursor.fetchone()
-        print(resultado_Correo)
         if not resultado_Correo:
             return "Correo no encontrado", "error"
         self.Email = resultado_Correo["Email"]
@@ -956,7 +951,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Modificar_Persona_Admin(self):
         conexion, cursor = Get_BaseDatos()
@@ -1007,7 +1002,7 @@ El equipo de soporte de GaiaLink
             return "Datos modificados con exito", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
+            e = ""
             return f"no se pudo modificar el usuario: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -1050,7 +1045,7 @@ El equipo de soporte de GaiaLink
                 servidor.quit()
 
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Actualizar_2FA(self):
         conexion, cursor = Get_BaseDatos()
@@ -1062,7 +1057,7 @@ El equipo de soporte de GaiaLink
             autenticador = cursor.fetchone()
             if autenticador["2FA"] == 0:
                 variable = 1
-                mensaje = "Activado"  
+                mensaje = "Activado"
                 codigo_secreto = pyotp.random_base32()
             elif autenticador["2FA"] == 1:
                 variable = 0
@@ -1074,6 +1069,6 @@ El equipo de soporte de GaiaLink
             return mensaje, "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
+            e = ""
             return "Autenticador no actualizado", "error"
         

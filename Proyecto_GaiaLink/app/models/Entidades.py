@@ -251,7 +251,6 @@ class Entidad_Admin():
             return "Exito, entidad creada correctamente.", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"Ocurrió un error al guardar los datos: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -278,7 +277,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Modificar_Entidad_Admin(self):
         conexion, cursor = Get_BaseDatos()
@@ -305,7 +304,7 @@ El equipo de soporte de GaiaLink
             return "Exito, entidad modificada correctamente.", "exito"
         except Exception as e:
             conexion.rollback()
-            print(e)
+            e = ""
             return f"Ocurrió un error al modificar los datos: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -332,7 +331,7 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Eliminar_Entidad_Admin(self):
         conexion, cursor = Get_BaseDatos()
@@ -344,7 +343,7 @@ El equipo de soporte de GaiaLink
             conexion.commit()
             return "Entidad eliminada con exito", "exito"
         except Exception as e:
-            print(e)
+            e = ""
             return f"Ocurrió un error al eliminar los datos: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -371,5 +370,5 @@ El equipo de soporte de GaiaLink
                 servidor.send_message(mensaje)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)        

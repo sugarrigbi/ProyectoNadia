@@ -20,7 +20,6 @@ def Close_BaseDatos(conexion, cursor):
         conexion.close()
 
 def Get_Errores(conexion, error):
-    print("DB error:", error)
     try:
         conexion.rollback()
     except:

@@ -1,12 +1,11 @@
-from flask import render_template, request, session, redirect,url_for
+from flask import render_template, request, session, jsonify, redirect, url_for
 from app.utilities import Autenticador
 from app.models.Casos import Caso_Admin
 from app.models.Entidades import Entidad_Admin
 from app.models.Persona import Persona_Admin
+from app.utilities.dispositivos import Buscar_Dispositivos, Eliminar_Dispositivos, obtener_token_actual
 from datetime import datetime
-
 from app.models.Entidades import Entidad
-from app.models.Persona import Persona
 
 def get_buscar_casos_admin():
     c = Caso_Admin(None, None, None, None, None, None, None, None, None, None, None)
@@ -270,10 +269,36 @@ def get_modificar_enviar_usuarios_admin():
     if request.method == "GET":
         Codigo = session['Usuario_Modificar']
         return render_template("dashboard_admin.html", Codigo=Codigo, estados=estados, frame_activo="FrameModificarPersona")  
+def get_buscar_dispositivos():
+    codigo = session.get("usuario_id")
+    if not codigo:
+        return redirect(url_for("auth.login"))
+    lista_dispositivos = Buscar_Dispositivos(codigo)
+    
+    return render_template("dashboard_admin.html", lista_dispositivos=lista_dispositivos, frame_activo="FrameBuscarDispositivos")    
+def get_eliminar_dispositivos(id):
+    if request.method == "POST":
+        token_actual = session.get("token_session")
+        token_db = obtener_token_actual(id)
+        if token_db and token_db["Token"] == token_actual:
+            session.clear()        
+            print("sesion clear")
+            return redirect(url_for("auth.login"))
+
+        resultado = Eliminar_Dispositivos(id)
+        if resultado:
+            return jsonify({"status": "ok"})
+        else:
+            return jsonify({"status": "error"}), 500
 def get_actualizar_2fa():
     if request.method == "POST":
         codigo = session["usuario_id"]
         p = Persona_Admin(codigo, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
         resultado, tipo = p.Actualizar_2FA()
         return resultado 
-
+def get_cuenta_datos():
+    if request.method == "GET":
+        Codigo = session["usuario_id"]
+        p = Persona_Admin(Codigo, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
+        resultado = p.Buscar_Persona_Admin()
+        return render_template("dashboard_admin.html", lista_persona=resultado, frame_activo="FrameCuentaDatos")

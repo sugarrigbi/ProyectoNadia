@@ -61,7 +61,6 @@ class Caso:
 
         cursor.execute("SELECT id_usuario FROM tbl_usuario WHERE Nombre = %s", (usuario,))
         resultado_usuario = cursor.fetchone()
-        print("Usuario en sesión:", usuario)
         if not resultado_usuario:
             return "El usuario no se encontro", "error"
         
@@ -126,7 +125,7 @@ Sistema de notificaciones de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)        
     def Buscar_Casos(self, Nombre):
         conexion, cursor = Get_BaseDatos()
@@ -207,17 +206,9 @@ Sistema de notificaciones de GaiaLink
                 if all(caso.values()) and caso["Radicado"]:
                     lista_fusionada.append(caso)                    
             except Exception as e:
-                print(f"⚠️ Error procesando caso {i}: {e}")
+                e = ""
                 continue                    
         Close_BaseDatos(conexion, cursor)
-        print(lista_fusionada[1]["Radicado"])
-        print(lista_fusionada[1]["Fecha"])
-        print(lista_fusionada[1]["Descripción"])
-        print(lista_fusionada[1]["Personas_Afectadas"])
-        print(lista_fusionada[1]["Nombre"])
-        print(lista_fusionada[1]["Incidente"])
-        print(lista_fusionada[1]["Departamento"])
-        print(lista_fusionada[1]["Estado"])
         return lista_fusionada
 class Caso_Admin:
     def __init__(self, Codigo, Fecha, Descripcion, Personas_Afectadas, Direccion, Usuario, incidente, departamento, tipo_caso, estado, Radicado):
@@ -388,15 +379,14 @@ class Caso_Admin:
                         "Persona": personas[i]["Personas_Afectadas"],
                         "Nombre": Usuarios[i]["Nombre"],
                         "Incidente": Incidentes[i],
-                        "Departamento": departamento[i]["Direccion"],
+                        "Direccion": departamento[i]["Direccion"],
                         "Estado": Estados[i]["Estado"],
                         "Radicado": radicados[i]["Radicado"]
                     }
-                    print(caso["Departamento"])
                 if all(caso.values()) and caso["Estado"] != "Caso Eliminado":
                     lista_fusionada.append(caso)
             except Exception as e:
-                print(f"⚠️ Error procesando caso {i}: {e}")
+                e = ""
                 continue                    
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada       
@@ -490,7 +480,7 @@ Sistema de notificaciones de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor) 
     def Modificar_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
@@ -517,7 +507,6 @@ Sistema de notificaciones de GaiaLink
             return "Caso modificado con exito", "exito"            
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"no se pudo modificar el caso: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -565,7 +554,7 @@ Sistema de notificaciones de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)
     def Eliminar_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
@@ -593,7 +582,6 @@ Sistema de notificaciones de GaiaLink
             return "Caso eliminado con exito", "exito"            
         except Exception as e:
             conexion.rollback()
-            print(e)
             return f"no se pudo eliminar el caso: {e}", "error"
         finally:
             mensaje = MIMEMultipart()
@@ -640,5 +628,5 @@ Sistema de notificaciones de GaiaLink
                 servidor.send_message(mensaje2)
                 servidor.quit()
             except Exception as e:
-                print(f"Error al enviar el correo: {e}")
+                e = ""
             Close_BaseDatos(conexion, cursor)            

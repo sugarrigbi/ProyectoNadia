@@ -141,6 +141,26 @@ body, html {
     display: flex;
     justify-content: center; 
 }
+.otp-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+.autenticadorinput {
+    width: 55px;
+    height: 60px;
+    font-size: 32px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.2s;
+    font-family: 'Montserrat', sans-serif;
+}
+.autenticadorinput:focus {
+    border-color: #0066ff;
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
+}
 .Formulario1_Input_Input{
     display: flex;
     width: 80%;

@@ -16,7 +16,7 @@
             duration: 1000,
             once: true
         });
-    </script>
+    </script>      
     <div class="Barra_Lateral">
         <div class="Logo" data-aos="fade-right">
             <img class="Imagen_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}">
@@ -27,7 +27,7 @@
             <li data-target="Frame3" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Casos" src="{{ url_for('static', filename='img/Casos.svg') }}"><span data-lang="Hotbar.Casos" class="Barra_Texto">Casos</span></li>
             <li data-target="Frame4" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Entidades" src="{{ url_for('static', filename='img/Entidades.svg') }}"><span data-lang="Hotbar.Entidades" class="Barra_Texto">Entidades</span></li>
             <li data-target="Frame2" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Usuario" src="{{ url_for('static', filename='img/Usuario.svg') }}"><span data-lang="Hotbar.Usuarios" class="Barra_Texto">Usuarios</span></li>            
-            <li data-target="Frame5" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Ayuda" src="{{ url_for('static', filename='img/help.svg') }}"><span data-lang="Hotbar.Ayuda" class="Barra_Texto">Ayuda</span></li>
+            <li data-target="FrameConfiguracion" data-aos="fade-right" class="Selector1"><img class="Imagen_Logo2" alt="Configuracion" src="{{ url_for('static', filename='img/ConfigBlanco.svg') }}"><span data-lang="Hotbar.Ayuda" class="Barra_Texto">Ayuda</span></li>
         </ul>
         <button id="btn-logout"><img alt="Salir" src="{{ url_for('static', filename='img/logout.svg') }}" ><span class="Barra_Texto" data-lang="Hotbar.Cerrar">Cerrar Sesion</span></button>
     </div>
@@ -54,10 +54,10 @@
                     <h2 data-lang="Inicio.Usuarios">Usuarios</h2>
                     <h3 data-lang="Inicio.Usuarios2">Administra la información de los usuarios,<br> gestiona sus permisos desde este panel.</h3>
                 </div>
-                <div class="Cuadro1" data-target="Frame5">
-                    <img src="{{ url_for('static', filename='img/Ayuda3.svg') }}">
-                    <h2 data-lang="Inicio.Ayuda">Ayuda</h2>
-                    <h3 data-lang="Inicio.Ayuda2">Aquí puedes ver información de soporte,<br> contacto o calificarnos.</h3>
+                <div class="Cuadro1" data-target="FrameConfiguracion">
+                    <img src="{{ url_for('static', filename='img/Gear.svg') }}">
+                    <h2 data-lang="Inicio.Ayuda">Configuracion</h2>
+                    <h3 data-lang="Inicio.Ayuda2">Ajusta las preferencias del sistema<br> y personaliza la experiencia de uso.</h3>
                 </div>                        
             </div>
         </div>
@@ -151,43 +151,12 @@
                 </div>                                                           
             </div>                        
         </div>   
-        <div id="Frame5" class="Frame {% if frame_activo == 'Frame5' %}visible{% endif %}">
-            <div data-aos="fade-down" class="Superior">
-                <h2 data-lang="Ayuda.Bienvenida">Inicio > Ayuda</h2>
-                <div class="Botones">
-                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
-                </div>
-            </div>
-            <div data-aos="zoom-in" class="Cuadros">
-                <a data-target="FrameConfiguracion" class="Cuadro1">
-                    <img src="{{ url_for('static', filename='img/Gear.svg') }}">
-                    <h2 data-lang="Ayuda.Configuracion">Configuracion</h2>
-                    <h3 data-lang="Ayuda.Configuracion2">Ajusta las preferencias del sistema<br> y personaliza la experiencia de uso.</h3>
-                </a>
-                <a class="Cuadro1">
-                    <img src="{{ url_for('static', filename='img/Usuario/Directorio2.svg') }}">
-                    <h2>Documentacion</h2>
-                    <h3>PROXIMAMENTE<br>PROXIMAMENTE</h3>
-                </a>
-                <a class="Cuadro1">
-                    <img src="{{ url_for('static', filename='img/Usuario/Directorio2.svg') }}">
-                    <h2>Proximos Cambios</h2>
-                    <h3>PROXIMAMENTE<br>PROXIMAMENTE</h3>
-                </a>
-                <a class="Cuadro1">
-                    <img src="{{ url_for('static', filename='img/Usuario/Directorio2.svg') }}">
-                    <h2>Funciones Futuras</h2>
-                    <h3>PROXIMAMENTE<br>PROXIMAMENTE</h3>
-                </a>
-            </div>                        
-        </div>
         <div id="FrameConfiguracion" class="Frame {% if frame_activo == 'FrameConfiguracion' %}visible{% endif %}">
             <div data-aos="zoom-in" class="FrameCrearCaso2">
                 <div class="Superior">
                     <h2 data-lang="Ayuda_Configuracion.Bienvenida">Inicio > Ayuda > Configuracion</h2>
                     <div class="Botones" id="BotonesCrear1">
-                        <div class="Boton" data-target="Frame5"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
-                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"> <img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
                     </div>
                 </div>
                 <div data-aos="zoom-in" class="Cuadros2">          
@@ -211,42 +180,117 @@
                     <button id="btn2FA" class="Cuadro2_Boton">
                         <div class="config">
                             <img src="{{ url_for('static', filename='img/2FA.svg') }}">
-                            <h2>Autenticación doble:</h2>
+                            <h2 data-lang="Ayuda_Configuracion.Autenticacion">Autenticación doble:</h2>
                         </div>
                         <div class="config">
                             <a id="AbrirModalQR">abrir QR</a>
-                            <h2 id="confirmacion23">{{ estado_2fa }}</h2>
+                            <h2 id="confirmacion23" data-value="{{ estado_2fa }}"></h2>
                         </div>                        
                     </button>                      
-                    <button class="Cuadro2_Boton">
+                    <button id="btnDev" class="Cuadro2_Boton">
                         <div class="config">
                             <img src="{{ url_for('static', filename='img/Dispositivo.svg') }}">
-                            <h2 >Dispositivos conectados:</h2>
+                            <h2 data-lang="Ayuda_Configuracion.Dispositivos" >Dispositivos :</h2>
                         </div>
-                        <h2>PROXIMAMENTE</h2>
+                        <h2>{{ total_dispositivos }}</h2>
                     </button>   
+                    <button id="btnDatos" class="Cuadro2_Boton">
+                        <div class="config">
+                            <img src="{{ url_for('static', filename='img/Cuenta3.svg') }}">
+                            <h2 data-lang="Ayuda_Configuracion.Datos">Mis Datos:</h2>
+                        </div>
+                        <h2 data-lang="Ayuda_Configuracion.ver">Ver</h2>
+                    </button>    
                     <button class="Cuadro2_Boton">
                         <div class="config">
-                            <img src="{{ url_for('static', filename='img/Cuenta.svg') }}">
-                            <h2 >Mis Datos:</h2>
+                            <img src="{{ url_for('static', filename='img/Nube2.svg') }}">
+                            <h2 data-lang="Ayuda_Configuracion.Contactanos">Contactanos:</h2>
                         </div>
-                        <h2>PROXIMAMENTE</h2>
+                        <h2 data-lang="Ayuda_Configuracion.PROXIMAMENTE">PROXIMAMENTE</h2>
                     </button>                                                                                                      
-                </div> 
-                <div id="modal2FAContainer" class="mi-modal" style="display:none;">
-                    <div class="mi-modal-contenido">
-                        <div class="mi-modal-doble">
-                            <h2 class="mi-modal-titulo">Configura tu autenticación</h2>                            
-                            <span class="cerrar2" id="cerrarModal2FA">&times;</span>
-                        </div>
-                        <p>Escanea este QR con tu app de autenticación</p>
-                        <img id="imagenQR2FA" src="" alt="QR Code">
-                        <p2>O ingresa este código manualmente:</p2>
-                        <span id="codigoManual2FA"></span>
+                </div>                        
+            </div>
+            <div id="modal2FAContainer" class="mi-modal">
+                <div class="mi-modal-contenido">
+                    <div class="mi-modal-doble">
+                        <h5 class="mi-modal-titulo">Configura tu autenticación</h5>                            
+                        <span class="cerrar2" id="cerrarModal2FA">&times;</span>
                     </div>
-                </div>                                 
+                    <p>Escanea este QR con tu app de autenticación:</p>
+                    <img id="imagenQR2FA" src="" alt="QR Code">
+                    <h3 class="mi-modal-titulo2">O ingresa este código manualmente:</h3>
+                    <span id="codigoManual2FA" class="mi-modal-titulo3"></span>
+                </div>
             </div>                      
-        </div>        
+        </div>
+        <div id="FrameBuscarDispositivos" class="Frame {% if frame_activo == 'FrameBuscarDispositivos' %}visible{% endif %}">         
+            <div class="FrameVerCasos3">
+                <div id="Superior2" class="Superior">
+                    <h2 data-lang="Configuracion_Dispositivos.Bienvenida">Inicio > Ayuda > Configuracion > Dispositivos</h2>
+                    <div class="Botones" id="BotonesDispositivo1">
+                        <div class="Boton" data-target="FrameConfiguracion"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                        <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                    </div>
+                </div>                
+                {% if lista_dispositivos %}
+                    {% for dispositivo in lista_dispositivos %}
+                        <div class="FrameVerCasos_Caso2">
+                            <img src="" class="imagen_dispositivo">
+                            <h3>{{ dispositivo.Navegador }}</h3>
+                            <div class="datos_dispositivos">
+                                <h4><strong data-lang="Configuracion_Dispositivos.IP">IP: </strong>{{ dispositivo.IP }} </h4>
+                                <h4><strong data-lang="Configuracion_Dispositivos.Sistema">Sistema: </strong>{{ dispositivo.Sistema }}</h4>
+                                <h4 class="dispo" style="display: None;"><strong data-lang="Configuracion_Dispositivos.Dispositivo">Dispositivo: </strong>{{ dispositivo.Dispositivo }}</h4>
+                                <h4><strong data-lang="Configuracion_Dispositivos.Ultimo_Uso"Dispositivo>Ultimo uso: </strong>{{ dispositivo.Ultimo_uso }}</h4>
+                            </div>
+                            <button class="ver-FrameVerCasos_VerCaso2 EliminarDispositivo" data-eliminar="{{ dispositivo.Id_dispositivo }}" data-lang="Configuracion_Dispositivos.Eliminar">Eliminar Dispositivo</button>
+                        </div>                  
+                    {% endfor %}
+                {% else %}
+                    <div class="FrameVerCasos_Caso3">
+                        <h3>No hay dispositivos asociados al usuario.</h3>
+                    </div>
+                {% endif %}
+                
+            </div>  
+        </div>
+        <div id="FrameCuentaDatos" class="Frame {% if frame_activo == 'FrameCuentaDatos' %}visible{% endif %}">
+            <div data-aos="fade-down" class="Superior">
+                <h2>Mis Datos</h2>
+                <div class="Botones">
+                    <div class="Boton" data-target="FrameConfiguracion"><img src="{{ url_for('static', filename='img/Volver.svg') }}"></div>
+                    <div class="Boton" data-target="Frame1"><img src="{{ url_for('static', filename='img/Home.svg') }}"></div>
+                </div>
+            </div>
+            <div data-aos="zoom-in" class="Buscar_Entidad32">         
+                {% if lista_persona %}
+                    <div class="MisDatos">
+                        <h4 data-lang="Usuarios_Buscar.InformacionGeneral">Información General</h4>
+                        <p><strong >Codigo:</strong> {{ lista_persona.Codigo }}</p>
+                        <p><strong >Usuario:</strong> {{ lista_persona.Nombre }}</p>
+                        <p><strong >Rol:</strong> {{ lista_persona.Rol }}</p>
+                        <p><strong >Estado:</strong> {{ lista_persona.Estado }}</p>
+                        <p><strong >Creacion:</strong> {{ lista_persona.Fecha_Creacion }}</p>
+                        <p><strong >Bloqueado:</strong> {{ lista_persona.Bloqueado }}</p>
+                        <h4>Datos Personales</h4>
+                        <p><strong >Identificacion:</strong> {{ lista_persona.Codigo_Persona }}</p>
+                        <p><strong >Tipo de identificacion:</strong> {{ lista_persona.Tipo_Documento }}</p>
+                        <p><strong >Nombres:</strong> {{ lista_persona.Primer_Nombre }} {{ lista_persona.Segundo_Nombre }} {{ lista_persona.Primer_Apellido }} {{ lista_persona.Segundo_Apellido }}</p>
+                        <p><strong >Fecha Nacimiento:</strong> {{ lista_persona.Fecha_Nacimiento }}</p>
+                        <p><strong >Edad:</strong> {{ lista_persona.Edad }}</p>
+                        <p><strong >Codigo adicional:</strong> {{ lista_persona.Codigo_Adic }}</p>
+                        <h4>Contacto</h4>
+                        <p><strong >Telefono:</strong> {{ lista_persona.Numero_Contacto }}</p>
+                        <p><strong >Correo:</strong> <a href="mailto:{{ lista_persona.Correo }}" class="Links2">{{ lista_persona.Email }}</a></p>
+                        <p><strong >Direccion:</strong> {{ lista_persona.Direccion }}</p>
+                        <p><strong >Departamento:</strong> {{ lista_persona.Departamento }}</p>
+                        <p><strong >Ciudad:</strong> {{ lista_persona.Ciudad }}</p>
+                        <p><strong >Localidad:</strong> {{ lista_persona.Localidad }}</p>
+                        <p><strong >Barrio:</strong> {{ lista_persona.Barrio }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>                            
         <div id="FrameBuscarCasos" class="Frame {% if frame_activo == 'FrameBuscarCasos' %}visible{% endif %}">         
             <div class="FrameVerCasos2">
                 <div id="Superior2" class="Superior">

@@ -10,38 +10,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const autenticador = document.getElementById("btn2FA");
     const autenticador2 = document.getElementById("AbrirModalQR");
     const modoGuardado = localStorage.getItem("modoOscuro");
+    const DevEliminar = document.querySelectorAll(".EliminarDispositivo");
+    const DevBuscar = document.getElementById("btnDev");
+    const VerDatos = document.getElementById("btnDatos");
+    const VerPassword = document.querySelectorAll(".Boton_VerPassword");
     const idiomaGuardado = localStorage.getItem("idioma");
+    const EliminarUsuario = document.getElementById("formEliminarUsuario");
+    const ImagenDev = document.querySelectorAll(".imagen_dispositivo");
+    const Dev = document.querySelectorAll(".dispo");
     const btnModificar = document.getElementById("btnModificar");
     const btnModificar2 = document.getElementById("btnModificar2");
     const btnModificar3 = document.getElementById("btnModificar3");
     const modal = document.getElementById("modal2FAContainer");
     const close = document.getElementById("cerrarModal2FA");
-    const estado = document.getElementById("confirmacion23").innerText;
     const link = document.getElementById("AbrirModalQR");
+    const estado2 = document.getElementById("confirmacion23");
+    let estado2FA = estado2.dataset.value;
     const ValoresOriginales = {};
     const ValoresOriginales2 = {};
-    const ValoresOriginales3 = {};      
-    campos.forEach(c => {
-        ValoresOriginales[c.name] = c.value;
-    });
-    campos.forEach(c => {
-        c.addEventListener("input", ValidarYActualizarBoton);
-        c.addEventListener("change", ValidarYActualizarBoton);
-    });   
-    campos2.forEach(e => {
-        ValoresOriginales2[e.name] = e.value;
-    });
-    campos2.forEach(e => {
-        e.addEventListener("input", ValidarYActualizarBoton2)
-        e.addEventListener("change", ValidarYActualizarBoton2);
-    }); 
-    campos3.forEach(c => {
-        ValoresOriginales3[c.name] = c.value;
-    });
-    campos3.forEach(c => {
-        c.addEventListener("input", ValidarYActualizarBoton3);
-        c.addEventListener("change", ValidarYActualizarBoton3);
-    });       
+    const ValoresOriginales3 = {};           
     function HayCambios() {
         for (const campo of campos) {
             const original = ValoresOriginales[campo.name] ?? "";
@@ -79,7 +66,76 @@ document.addEventListener("DOMContentLoaded", () => {
     };  
     function ValidarYActualizarBoton3() {
         if (btnModificar3) btnModificar3.disabled = !HayCambios3();
-    };  
+    };
+    function ActualizarTextoTema() {
+        link.style.display = (estado2FA === "Activado") ? "block" : "none";
+        const idioma = localStorage.getItem("idioma");
+        const oscuroActivo = document.body.classList.contains("dark-mode");
+        let texto = "";
+        let texto2 = "";
+        let texto3 = "";
+        if (idioma === "es") {
+            texto = oscuroActivo ? "Oscuro" : "Claro"
+            texto2 = (estado2FA === "Activado") ? "Activado" : "Desactivado";
+            texto3 = "Abrir QR";
+        };
+        if (idioma === "en") {
+            texto = oscuroActivo ? "Dark" : "Light"
+            texto2 = (estado2FA === "Activado") ? "Enabled" : "Disabled";
+            texto3 = "Open QR";
+        };
+        if (idioma === "fr") {
+            texto = oscuroActivo ? "Sombre" : "Clair"
+            texto2 = (estado2FA === "Activado") ? "Activé" : "Désactivé";
+            texto3 = "Ouvrir QR";
+        };
+        document.getElementById("SunMoon2").textContent = texto;
+        estado2.innerText = texto2;
+        link.innerText = texto3;
+    }    
+    function VerModoGuardado() {
+        if (modoGuardado === "oscuro") {
+            document.body.classList.add("dark-mode");
+            document.getElementById("SunMoon").src = "/static/img/Moon.svg";
+            if (idiomaGuardado === "es") {
+                document.getElementById("SunMoon2").textContent = "Oscuro";
+            } else if (idiomaGuardado === "en") {
+                document.getElementById("SunMoon2").textContent = "Dark";
+            } else if (idiomaGuardado === "fr") {
+                document.getElementById("SunMoon2").textContent = "Sombre";
+            }
+        } else if (modoGuardado === "claro") {
+            document.getElementById("SunMoon").src = "/static/img/Sun.svg";
+            if (idiomaGuardado === "es") {
+                document.getElementById("SunMoon2").textContent = "Claro";
+            } else if (idiomaGuardado === "en") {
+                document.getElementById("SunMoon2").textContent = "Light";
+            } else if (idiomaGuardado === "fr") {
+                document.getElementById("SunMoon2").textContent = "Clair";
+            }
+        }
+    }    
+    campos.forEach(c => {
+        ValoresOriginales[c.name] = c.value;
+    });
+    campos.forEach(c => {
+        c.addEventListener("input", ValidarYActualizarBoton);
+        c.addEventListener("change", ValidarYActualizarBoton);
+    });   
+    campos2.forEach(e => {
+        ValoresOriginales2[e.name] = e.value;
+    });
+    campos2.forEach(e => {
+        e.addEventListener("input", ValidarYActualizarBoton2)
+        e.addEventListener("change", ValidarYActualizarBoton2);
+    }); 
+    campos3.forEach(c => {
+        ValoresOriginales3[c.name] = c.value;
+    });
+    campos3.forEach(c => {
+        c.addEventListener("input", ValidarYActualizarBoton3);
+        c.addEventListener("change", ValidarYActualizarBoton3);
+    });   
     cuadros.forEach(cuadro => {
         cuadro.addEventListener('click', () => {
             const target = cuadro.getAttribute('data-target');
@@ -132,26 +188,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "/dashboard/admin?frame=" + target;
                     return;
                 }
+                if (window.location.pathname.includes("/dashboard/admin/cuenta/dispositivos") && target !== "FrameBuscarDispositivos") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }
+                if (window.location.pathname.includes("/dashboard/admin/cuenta/datos") && target !== "FrameCuentaDatos") {
+                    window.location.href = "/dashboard/admin?frame=" + target;
+                    return;
+                }              
                 frames.forEach(frame => frame.classList.remove('visible'));
                 document.getElementById(target)?.classList.add('visible');
             }
         });
     });
-    document.querySelectorAll(".Boton_VerPassword").forEach((boton) => {
+    VerPassword.forEach((boton) => {
         const input = boton.nextElementSibling;
         const icono = boton.querySelector("img");
 
         boton.addEventListener("click", () => {
             if (input.type === "password") {
                 input.type = "text";
-                icono.src = "/static/img/Ver.svg";
             } else {
                 input.type = "password";
                 icono.src = "/static/img/NoVer.svg";
             }
         });
     });
-    document.getElementById("formEliminarUsuario")?.addEventListener("submit", function(e) {
+    EliminarUsuario?.addEventListener("submit", function(e) {
         e.preventDefault();
 
         if (confirm("¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.")) {
@@ -212,15 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
             persona.style.display = match ? "" : "none";
         });
     }
-    function ActualizarTextoTema() {
-        const idioma = localStorage.getItem("idioma");
-        const oscuroActivo = document.body.classList.contains("dark-mode");
-        let texto = "";
-        if (idioma === "es") texto = oscuroActivo ? "Oscuro" : "Claro";
-        if (idioma === "en") texto = oscuroActivo ? "Dark" : "Light";
-        if (idioma === "fr") texto = oscuroActivo ? "Sombre" : "Clair";
-        document.getElementById("SunMoon2").textContent = texto;
-    }
     idioma.addEventListener("click", () => {
         let idiomaActual = localStorage.getItem("idioma");
         if (idiomaActual === "es") idiomaActual = "en";
@@ -237,22 +291,23 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("codigoManual2FA").textContent = data.secret;
         modal.style.display = "flex";
     });
-    close.addEventListener("click", () => modal.style.display = "none");
-        window.addEventListener("click", (e) => {
-        if (e.target === modal) modal.style.display = "none";
-    });      
+    DevBuscar.addEventListener("click", () => {
+        window.location.href = "/dashboard/admin/cuenta/dispositivos";
+    });
+    VerDatos.addEventListener("click", () => {
+        window.location.href = "/dashboard/admin/cuenta/datos";
+    });
+    close.addEventListener("click", () => modal.style.display = "none" );
+        window.addEventListener("click", (e) => {if (e.target === modal) modal.style.display = "none";
+    });
     autenticador.addEventListener("click", () => {
         fetch("/actualizar_2FA", { method: "POST" })
             .then(r => r.text())
             .then(texto => {
-                document.getElementById("confirmacion23").innerText = texto;
-                if (texto === "Activado") {
-                    link.style.display = "block";
-                } else {
-                    link.style.display = "none";
-                }
+                estado2FA = texto;
+                estado2.dataset.value = texto;
+                ActualizarTextoTema();
             })
-            .catch(e => alert("Error: " + e));
     });
     logout.addEventListener("click", () => {
         Cerrar_Sesion()
@@ -272,31 +327,35 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("SunMoon2").textContent = modoOscuroActivo ? "Sombre" : "Clair";
         }
     });
-    if (modoGuardado === "oscuro") {
-        document.body.classList.add("dark-mode");
-        document.getElementById("SunMoon").src = "/static/img/Moon.svg";
-        if (idiomaGuardado === "es") {
-            document.getElementById("SunMoon2").textContent = "Oscuro";
-        } else if (idiomaGuardado === "en") {
-            document.getElementById("SunMoon2").textContent = "Dark";
-        } else if (idiomaGuardado === "fr") {
-            document.getElementById("SunMoon2").textContent = "Sombre";
+    Dev.forEach((devElemento, index) => {
+        const tipo = devElemento.innerText.replace("Dispositivo: ", "").trim();
+        const img = ImagenDev[index];
+
+        if (tipo === "Móvil") {
+            img.src = "/static/img/Celular.svg";
+        } else if (tipo === "Tablet") {
+            img.src = "/static/img/Tablet.svg";
+        } else if (tipo === "Computador") {
+            img.src = "/static/img/Computador.svg";
+        } else {
+            img.src = "/static/img/Desconocido.svg";
         }
-    } else if (modoGuardado === "claro") {
-        document.getElementById("SunMoon").src = "/static/img/Sun.svg";
-        if (idiomaGuardado === "es") {
-            document.getElementById("SunMoon2").textContent = "Claro";
-        } else if (idiomaGuardado === "en") {
-            document.getElementById("SunMoon2").textContent = "Light";
-        } else if (idiomaGuardado === "fr") {
-            document.getElementById("SunMoon2").textContent = "Clair";
-        }
-    }
-    if (estado === "Activado") {
-        link.style.display = "block";
-    } else {
-        link.style.display = "none";
-    }    
+    });
+    DevEliminar.forEach(btn => {
+        btn.addEventListener("click", async () =>  {
+            const id = btn.dataset.eliminar;
+            const tarjeta = btn.closest(".FrameVerCasos_Caso2");
+            const respuesta = await fetch(`/dispositivos/eliminar/${id}`, {method: "POST",});
+            if (respuesta.ok) {
+                tarjeta.classList.add("explotar");
+                tarjeta.addEventListener("animationend", () => {
+                    tarjeta.remove();
+                }, { once: true });                    
+            }
+        });
+    });
+    VerModoGuardado();
+    ActualizarTextoTema();
     ValidarYActualizarBoton();
     ValidarYActualizarBoton2();
     ValidarYActualizarBoton3();

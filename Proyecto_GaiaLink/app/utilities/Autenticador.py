@@ -1,10 +1,11 @@
-from app.utilities.Base_Datos import Get_BaseDatos, Close_BaseDatos, Get_Errores
+from app.utilities.Base_Datos import Get_BaseDatos, Close_BaseDatos
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import flash, redirect, url_for, session, render_template, request
 from email.utils import formatdate, make_msgid, formataddr
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
+from app.utilities.dispositivos import Crear_Dispositivo, obtener_total_dispositivos
 import smtplib
 import uuid
 import re
@@ -28,7 +29,6 @@ def Verificar_Rol(id_usuario):
         return rol.lower() in roles_admin
 
     except Exception as e:
-        print(f"Error al verificar rol admin: {e}")
         return False
 
     finally:
@@ -84,7 +84,6 @@ def procesar_login(usuario, contraseña, datos2):
         Close_BaseDatos(conexion, cursor)
         return render_template("login.html", usuario_invalido=True, datos2=datos2)
     bloqueado_hasta_str = datos.get("Bloqueado")
-    print(bloqueado_hasta_str)
     if not bloqueado_hasta_str:
         bloqueado_hasta = None
     elif bloqueado_hasta_str == "NO":
@@ -143,10 +142,32 @@ def procesar_login(usuario, contraseña, datos2):
     session["usuario_id"] = datos["Id_usuario"]
     session["username"] = usuario
     session["rol"] = "admin" if Verificar_Rol(datos["Id_usuario"]) else "usuario"
-
+    Crear_Dispositivo()
     if session["rol"] == "admin":
         return redirect(url_for("auth.admin"))
     return redirect(url_for("auth.user"))
+def mostrar_dashboard_rol(rol, frame_activo, username, estado_2fa, total_dispositivos):
+    if rol == "admin":
+        if request.path != "/dashboard/admin":
+            return redirect(url_for("auth.admin", frame=frame_activo))
+        return render_template("dashboard_admin.html", username=username, frame_activo=frame_activo, estado_2fa=estado_2fa, total_dispositivos=total_dispositivos)
+    elif rol == "usuario":
+        if request.path != "/dashboard/user":
+            return redirect(url_for("auth.user", frame=frame_activo))
+        return render_template("dashboard_usuario.html", username=username, frame_activo=frame_activo, estado_2fa=estado_2fa, total_dispositivos=total_dispositivos)
+    else:
+        flash("Rol no permitido")
+        return redirect(url_for("auth.login"))
+def validar_tokens_validos(usuario_id):
+    token = session.get("token_session")
+    conexion, cursor = Get_BaseDatos()
+
+    cursor.execute("SELECT Token FROM tbl_dispositivos WHERE Fk_usuario = %s AND Activo = 1", (usuario_id,))
+    tokens = cursor.fetchall()    
+    Close_BaseDatos(conexion, cursor)
+
+    tokens_validos = [t["Token"] for t in tokens if t["Token"] is not None and t["Token"] != ""]   
+    return token in tokens_validos
 def mostrar_dashboard():
     usuario_id = session.get("usuario_id")
     rol = (session.get("rol") or "").lower()
@@ -157,22 +178,21 @@ def mostrar_dashboard():
 
     frame_activo = request.args.get("frame", "Frame1")
 
+    if not validar_tokens_validos(usuario_id):
+        session.clear()
+
     conexion, cursor = Get_BaseDatos()
     cursor.execute("SELECT `2FA` FROM prueba.tbl_usuario WHERE Id_usuario = %s", (usuario_id,))
     autenticador = cursor.fetchone()
     Close_BaseDatos(conexion, cursor)
     estado_2fa = "Activado" if autenticador and autenticador["2FA"] == 1 else "Desactivado"
-    if rol == "admin":
-        if request.path != "/dashboard/admin":
-            return redirect(url_for("auth.admin", frame=frame_activo))
-        return render_template("dashboard_admin.html", username=username, frame_activo=frame_activo, estado_2fa=estado_2fa)
-    elif rol == "usuario":
-        if request.path != "/dashboard/user":
-            return redirect(url_for("auth.user", frame=frame_activo))
-        return render_template("dashboard_usuario.html", username=username, frame_activo=frame_activo)
+    total_dispositivos = obtener_total_dispositivos(usuario_id)
+    if session.get("2fa_ok") == True:
+        return mostrar_dashboard_rol(rol, frame_activo, username, estado_2fa, total_dispositivos)    
+    if estado_2fa == "Activado" and not session.get("2fa_ok"):
+        return redirect(url_for("auth.autenticador"))
     else:
-        flash("Rol no permitido")
-        return redirect(url_for("auth.login"))
+        return mostrar_dashboard_rol(rol, frame_activo, username, estado_2fa, total_dispositivos) 
 def Validar_Contraseña(Contraseña):
     if len(Contraseña) < 8:
         return "La contraseña debe tener mas de 8 caracteres"
@@ -232,7 +252,6 @@ def Verificar_Documento(Documento):
         if cursor.fetchone():
             return "El documento ya está en uso."
     except Exception as e:
-        print(f"Error al verificar el documento: {e}")
         return False
 def Verificar_Correo(Correo):
     try:
@@ -241,7 +260,6 @@ def Verificar_Correo(Correo):
         if cursor.fetchone():
             return "El correo ya está en uso."
     except Exception as e:
-        print(f"Error al verificar el correo: {e}")
         return False
 def Verificar_Usuario(Usuario):
     try:
@@ -250,7 +268,6 @@ def Verificar_Usuario(Usuario):
         if cursor.fetchone():
             return "El usuario ya está en uso."
     except Exception as e:
-        print(f"Error al verificar el usuario: {e}")
         return False
 def Verificar_Usuario2(Usuario):
     try:
@@ -264,7 +281,6 @@ def Verificar_Usuario2(Usuario):
             return None
         return "El usuario ya está en uso."
     except Exception as e:
-        print(f"Error al verificar el usuario: {e}")
         return False    
     finally:
         Close_BaseDatos(conexion, cursor)    
@@ -674,7 +690,6 @@ def Obtener_Contraseña(usuario):
             return None
         return resultado["Contraseña"]
     except Exception as e:
-        print(f"Error al obtener la contraseña del usuario {usuario}: {e}")
         return None
     finally:
         Close_BaseDatos(conexion, cursor)
@@ -688,7 +703,6 @@ def Obtener_DocumentoCodigo(codigo):
             return "Error en el documento"
         return documento["Id_Persona"]
     except Exception as e:
-        print(f"Error al obtener el documento: {e}")
         return None
     finally:
         Close_BaseDatos(conexion, cursor)

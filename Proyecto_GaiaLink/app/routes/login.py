@@ -1,5 +1,5 @@
 from flask import Blueprint
-from app.utilities.Route.login import get_registrar, get_login, get_logout, get_recuperar, get_recuperar_token, get_dashboard, get_QR
+from app.utilities.Route.login import get_registrar, get_login, get_logout, get_recuperar, get_recuperar_token, get_dashboard, get_QR, get_autenticador
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -27,3 +27,6 @@ def user():
 @auth_bp.route("/2fa/generar")
 def generar_2fa():
     return get_QR()
+@auth_bp.route("/autenticador", methods=["GET", "POST"])
+def autenticador():
+    return get_autenticador()

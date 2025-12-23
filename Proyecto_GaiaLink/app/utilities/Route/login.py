@@ -56,7 +56,7 @@ def get_login():
             "contraseña": contraseña
         }
         respuesta = procesar_login(usuario, contraseña, datos2)
-        if "usuario" in session:
+        if "usuario_id" in session:
             session.permanent = True
         return respuesta
     return render_template("login.html", datos2={})
@@ -105,6 +105,32 @@ def get_recuperar_token():
         resultado, tipo = validar_token(Token_bot, Correo, Hora, Token_Usu, Nombre, Contraseña3)
         return render_template("recuperar-token.html", confirmacion=resultado, tipo=tipo)
     return render_template("recuperar-token.html")
+def get_autenticador():
+    if session.get("2fa_ok"):
+        rol = (session.get("rol") or "").lower()
+        if rol == "admin":
+            return redirect(url_for("auth.admin"))
+        return redirect(url_for("auth.user"))    
+    if request.method == "GET":
+        return render_template("autenticador.html")    
+    if request.method == "POST":
+        codigo = request.form["2fa"]
+        usuario = session.get("usuario_id")
+
+        conexion, cursor = Get_BaseDatos()
+        cursor.execute("SELECT Secret_Key FROM tbl_usuario WHERE Id_usuario = %s", (usuario,))
+        secreto = cursor.fetchone()
+        Close_BaseDatos(conexion, cursor)
+
+        totp = pyotp.TOTP(secreto["Secret_Key"])
+        if totp.verify(codigo):
+            session["2fa_ok"] = True
+            rol = (session.get("rol") or "").lower()
+            if rol == "admin":
+                return redirect(url_for("auth.admin"))
+            return redirect(url_for("auth.user"))
+        else:
+            return render_template("autenticador.html", mensaje="Codigo de autenticacion invalido", tipo="error")            
 def get_dashboard():
     return mostrar_dashboard()
 def get_QR():
@@ -113,7 +139,6 @@ def get_QR():
         conexion, cursor = Get_BaseDatos()
         cursor.execute("SELECT `2FA`, Secret_Key, Nombre FROM tbl_usuario WHERE Id_usuario = %s", (usuario_id,))
         usuario = cursor.fetchone()
-        print(usuario)
         Close_BaseDatos(conexion, cursor)
 
         if not usuario:
@@ -138,5 +163,4 @@ def get_QR():
         })
 
     except Exception as e:
-        print("Error al generar QR 2FA:", e)
         return jsonify({"error": str(e)}), 500

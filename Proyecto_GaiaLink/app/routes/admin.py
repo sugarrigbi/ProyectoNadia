@@ -50,3 +50,12 @@ def Eliminar_Usuario_Admin():
 @admin_bp.route("/actualizar_2FA", methods=['POST'])
 def Actualizar_2FA():
     return Admin.get_actualizar_2fa()
+@admin_bp.route("/dashboard/admin/cuenta/dispositivos")
+def Buscar_Dispositivos_Admin():
+    return Admin.get_buscar_dispositivos()
+@admin_bp.route('/dispositivos/eliminar/<id>', methods=["POST"])
+def Eliminar_Dispositivo_Admin(id):
+    return Admin.get_eliminar_dispositivos(id)
+@admin_bp.route('/dashboard/admin/cuenta/datos', methods=["GET"])
+def Cuenta_Datos_Admin():
+    return Admin.get_cuenta_datos()
