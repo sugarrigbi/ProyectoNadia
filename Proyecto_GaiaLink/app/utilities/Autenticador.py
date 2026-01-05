@@ -721,20 +721,31 @@ def Comparar_Contraseñas4(Usuario, Contraseña_Actual, Contraseña_Nueva1, Cont
     if resultado:
         errores["Contraseña_Error3"] = resultado 
     return errores
-def Obtener_Usuarios():
+
+def Obtener_Datalist_CrearCaso():
     conexion, cursor = Get_BaseDatos()
     cursor.execute("SELECT Nombre, Id_usuario FROM tbl_usuario")
-    resultados = cursor.fetchall()
-    Close_BaseDatos(conexion, cursor)
-
-    return resultados
-def Obtener_Estados():
-    conexion, cursor = Get_BaseDatos()
+    resultados1 = cursor.fetchall()
     cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'Caso_%'")
-    resultados = cursor.fetchall()
-    Close_BaseDatos(conexion, cursor)
+    resultados2 = cursor.fetchall()
+    cursor.execute("SELECT Radicado FROM tbl_num_caso ORDER BY Id_num_caso")
+    resultados3 = cursor.fetchall()
+    cursor.execute("SELECT Prioridad FROM tbl_prioridad ORDER BY Id_prioridad")
+    resultados4 = cursor.fetchall()
+    cursor.execute("SELECT Incidente FROM tbl_incidente ORDER BY Id_incidente")
+    resultados5 = cursor.fetchall()
+    cursor.execute("SELECT Nom_departamento FROM tbl_departamento ORDER BY Id_dep")
+    resultados6 = cursor.fetchall()
+    cursor.execute("SELECT Nom_ciudad FROM tbl_ciudad ORDER BY Id_ciudad")    
+    resultados7 = cursor.fetchall()
+    cursor.execute("SELECT Localidad FROM tbl_localidad ORDER BY Id_local") 
+    resultados8 = cursor.fetchall()
+    cursor.execute("SELECT Barrio FROM tbl_barrio ORDER BY Id_barrio")   
+    resultados9 = cursor.fetchall()
+    Close_BaseDatos(conexion, cursor)        
 
-    return resultados
+    return resultados1, resultados2, resultados3, resultados4, resultados5, resultados6, resultados7, resultados8, resultados9
+
 def Obtener_Estados2():
     conexion, cursor = Get_BaseDatos()
     cursor.execute("SELECT Id_estado, Estado FROM tbl_estado WHERE Id_estado LIKE 'Entidad_%'")

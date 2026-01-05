@@ -211,18 +211,22 @@ Sistema de notificaciones de GaiaLink
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada
 class Caso_Admin:
-    def __init__(self, Codigo, Fecha, Descripcion, Personas_Afectadas, Direccion, Usuario, incidente, departamento, tipo_caso, estado, Radicado):
+    def __init__(self,Codigo,Incidente,Fecha,Direccion,Personas,Usuario,Estado,Caso_Asociado,Prioridad,Departamento,Ciudad,Localidad,Barrio,Descripcion):
         self.Codigo = Codigo
+        self.Incidente = Incidente
         self.Fecha = Fecha
-        self.Descripcion = Descripcion
-        self.Personas_Afectadas = Personas_Afectadas
-        self.Usuario = Usuario
         self.Direccion = Direccion
-        self.incidente = incidente
-        self.departamento = departamento
-        self.tipo_caso = tipo_caso
-        self.estado = estado
-        self.Radicado = Radicado
+        self.Personas = Personas
+        self.Usuario = Usuario
+        self.Estado = Estado
+        self.Caso_Asociado = Caso_Asociado
+        self.Prioridad = Prioridad
+        self.Departamento = Departamento
+        self.Ciudad = Ciudad
+        self.Localidad = Localidad
+        self.Barrio = Barrio
+        self.Descripcion = Descripcion
+
     def Buscar_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
         Numeros = []
@@ -392,9 +396,8 @@ class Caso_Admin:
         return lista_fusionada       
     def Crear_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
-        id_usuario = self.Usuario
-        fecha_antes = self.Fecha
-        fecha = datetime.strptime(fecha_antes, "%Y-%m-%d").date()
+
+        fecha = datetime.strptime(self.Fecha, "%Y-%m-%d").date()
         id_departamento = "001DEP"
         id_caso = "Caso"
 
@@ -404,7 +407,7 @@ class Caso_Admin:
         if Fecha2 > hoy:
             return "El caso no puede ocurrir en el futuro", "error"
 
-        cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (id_usuario,))
+        cursor.execute("SELECT tbl_adic_persona.Email FROM tbl_usuario JOIN tbl_persona ON tbl_usuario.Id_usuario = tbl_persona.fk_Usuario JOIN tbl_adic_persona on tbl_persona.Id_Persona = tbl_adic_persona.fk_persona Where tbl_usuario.Id_usuario = %s", (self.Usuario,))
         Correo = cursor.fetchone()      
         if not Correo:
             return "No se encontro el Usuario", "error"      
@@ -415,7 +418,22 @@ class Caso_Admin:
             count = resultado.get('COUNT(*)', 0) if resultado else 0
             return str(count + 1).zfill(longitud) + prefijo      
         
-        cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (id_usuario, ))
+        def obtener_o_crear(Id, tabla, campo_nombre, valor, prefijo):
+            cursor.execute(f"SELECT {Id} FROM {tabla} WHERE {campo_nombre} = %s",(valor,))
+            row = cursor.fetchone()
+            if row:
+                return row[Id]
+
+            nuevo_id = generar_id(tabla, prefijo, longitud=3)
+
+            cursor.execute(f"INSERT INTO {tabla} ({Id}, {campo_nombre}) VALUES (%s, %s)",(nuevo_id, valor))
+            return nuevo_id
+        id_departamento = obtener_o_crear("Id_dep","tbl_departamento","Nom_departamento",self.Departamento, "DEP")
+        id_ciudad = obtener_o_crear("Id_ciudad","tbl_ciudad","Nom_ciudad",self.Ciudad, "CIU")
+        id_localidad = obtener_o_crear("Id_local","tbl_localidad","Localidad",self.Localidad, "LOC")
+        id_barrio = obtener_o_crear("Id_barrio","tbl_barrio","Barrio",self.Barrio, "BAR")
+
+        cursor.execute("SELECT Nombre FROM tbl_usuario WHERE id_usuario = %s", (self.Usuario, ))
         Nombre_Usuario = cursor.fetchone()
         if not Nombre_Usuario:
             return "El usuario no se encontro", "error"     
@@ -424,9 +442,23 @@ class Caso_Admin:
         radicado = generar_id("tbl_num_caso", "R", longitud=6)
         id_entidad = generar_id("tbl_num_caso", "NUC", longitud=3)    
         try:
+            print("1.)",self.Codigo)
+            print("2.)",self.Incidente)
+            print("3.)",self.Fecha)
+            print("4.)",self.Direccion)
+            print("5.)",self.Personas)
+            print("6.)",self.Usuario)
+            print("7.)",self.Estado)
+            print("8.)",self.Caso_Asociado)
+            print("9.)",self.Prioridad)
+            print("10.)",self.Departamento)
+            print("11.)",self.Ciudad)
+            print("12.)",self.Localidad)
+            print("13.)",self.Barrio)
+            print("14.)",self.Descripcion)
             if not conexion.in_transaction:
                 conexion.start_transaction()
-            cursor.execute("INSERT INTO tbl_caso (Id_Caso_Incidente, Fecha, Descripción, Personas_Afectadas, Direccion, Fk_Usuario, Fk_Incidente, Fk_Dep, Fk_Tipo_Caso, Fk_Estado) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (Id_Caso_Incidente, fecha, self.Descripcion, self.Personas_Afectadas, self.Direccion, id_usuario, self.incidente, id_departamento, id_caso, self.estado))
+            cursor.execute("INSERT INTO tbl_caso (Id_Caso_Incidente, Fecha, Descripción, Personas_Afectadas, Direccion, Caso_Asociado, Fk_Usuario, Fk_Incidente, Fk_Tipo_Caso, Fk_Estado, fk_prioridad, fk_departamento, fk_ciudad, fk_localidad, fk_barrio) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (Id_Caso_Incidente, fecha, self.Descripcion, self.Personas, self.Direccion, self.Caso_Asociado, self.Usuario, self.Incidente, id_caso, self.Estado, self.Prioridad, id_departamento, id_ciudad, id_localidad, id_barrio))
             cursor.execute("INSERT INTO tbl_num_caso (Id_num_caso, Radicado, Fk_Caso) VALUES (%s, %s, %s)", (id_entidad, radicado, Id_Caso_Incidente)) 
             conexion.commit()
             return "Caso creado con exito", "exito"
@@ -465,7 +497,7 @@ El equipo de soporte de GaiaLink
             cuerpo2 = f"""
 Estimado miembro del equipo de soporte,
 
-ha generado un nuevo caso con el ID: {radicado}, registrado por un admin, asociado al usuario {Nombre_Usuario} identificado con el codigo {id_usuario}.
+ha generado un nuevo caso con el ID: {radicado}, registrado por un admin, asociado al usuario {Nombre_Usuario} identificado con el codigo {self.Usuario}.
 
 Por favor, revisa los detalles en la plataforma y procede con la atención correspondiente.
 

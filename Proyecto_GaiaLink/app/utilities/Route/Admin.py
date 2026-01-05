@@ -13,30 +13,42 @@ def get_buscar_casos_admin():
 
     return render_template("dashboard_admin.html", lista_casos=lista_casos, frame_activo="FrameBuscarCasos")
 def get_crear_casos_admin():
-    nombres = Autenticador.Obtener_Usuarios()
-    estados = Autenticador.Obtener_Estados()
+    nombres, estados, casos, prioridad, TipoCasos, Departamentos, Ciudades, Localidades, Barrios = Autenticador.Obtener_Datalist_CrearCaso()
+    def return_rend(mensaje, datos):
+        return render_template("dashboard_admin.html", Barrios=Barrios, Localidades=Localidades, Ciudades=Ciudades, Departamentos=Departamentos, TipoCasos=TipoCasos, prioridades=prioridad, casos=casos, estados=estados,nombres=nombres,confirmacion=mensaje, datos=datos, tipo="error", frame_activo="FrameCrearCaso")    
     if request.method == "POST":
         datos = {
+            "Tipo_Incidente": request.form["Tipo_Incidente"],
             "Fecha_Incidente": request.form["Fecha_Incidente"],
-            "Descripcion": request.form["Descripcion"],
+            "Direccion": request.form["Direccion"],
             "Personas_Afectadas": request.form["Personas_Afectadas"],
             "Usuario_Relacionado": request.form["Usuario_Relacionado"],
-            "Tipo_Incidente": request.form["Tipo_Incidente"],
-            "Direccion": request.form["Direccion"],
-            "Estado": request.form["Estado"]
+            "Estado": request.form["Estado"],
+            "Caso_Asociado": request.form["Caso_Asociado"],
+            "Prioridad": request.form["Prioridad"],
+            "Departamento": request.form["Departamento"].capitalize().strip(),
+            "Ciudad": request.form["Ciudad"].capitalize().strip(),
+            "Localidad": request.form["Localidad"].capitalize().strip(),
+            "Barrio": request.form["Barrio"].capitalize().strip(),
+            "Descripcion": request.form["Descripcion"]
         }
 
-        if datos["Estado"] not in [estado["Id_estado"] for estado in estados]:
-            return render_template("dashboard_admin.html", estados=estados,nombres=nombres,confirmacion="Error, el estado no existe", datos=datos, tipo="error", frame_activo="FrameCrearCaso")
-        
-        c = Caso_Admin(None, datos["Fecha_Incidente"], datos["Descripcion"], datos["Personas_Afectadas"], datos["Direccion"],datos["Usuario_Relacionado"], datos["Tipo_Incidente"], None, None, datos["Estado"], None)
+        if datos["Tipo_Incidente"] not in [TipoCaso["Incidente"] for TipoCaso in TipoCasos]:
+            return return_rend("Error, el tipo de caso no existe", datos)
+        if datos["Estado"] not in [estado["Estado"] for estado in estados]:
+            return return_rend("Error, el estado no existe", datos)
+        if datos["Prioridad"] not in [priorida["Prioridad"] for priorida in prioridad]:  
+            return return_rend("Error, la prioridad no existe", datos)
+
+        c = Caso_Admin(None, datos["Tipo_Incidente"], datos["Fecha_Incidente"], datos["Direccion"], datos["Personas_Afectadas"], datos["Usuario_Relacionado"], datos["Estado"], datos["Caso_Asociado"], datos["Prioridad"], datos["Departamento"], datos["Ciudad"], datos["Localidad"], datos["Barrio"], datos["Descripcion"])
         resultado, tipo = c.Crear_Caso_Admin()
+
         if tipo == "error":
-            return render_template("dashboard_admin.html", estados=estados,nombres=nombres,confirmacion=resultado, datos=datos, tipo=tipo, frame_activo="FrameCrearCaso")
+            return return_rend(resultado, datos)
         elif tipo == "exito":
             return render_template("dashboard_admin.html",confirmacion=resultado, tipo=tipo, frame_activo="FrameCrearCaso")
     if request.method == "GET":
-        return render_template("dashboard_admin.html", estados=estados,nombres=nombres, frame_activo="FrameCrearCaso")
+        return render_template("dashboard_admin.html", Barrios=Barrios, Localidades=Localidades, Ciudades=Ciudades, Departamentos=Departamentos, TipoCasos=TipoCasos, prioridades=prioridad, casos=casos, estados=estados,nombres=nombres, frame_activo="FrameCrearCaso")
 def get_modificar_buscar_casos_admin():
     if request.method == "POST":
         codigo = request.form["Radicado"]

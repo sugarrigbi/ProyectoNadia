@@ -318,7 +318,7 @@
                                 <p><strong data-lang="Casos_Buscar.PersonasAfectadas">Personas afectadas:</strong> {{ caso.Persona }}</p>
                                 <p><strong data-lang="Casos_Buscar.Direccion">Direccion:</strong> {{ caso.Departamento }}</p>
                                 <p><strong data-lang="Casos_Buscar.Incidente">Incidente:</strong> {{ caso.Incidente }}</p>
-                                <p><strong data-lang="Casos_Buscar.Estado">Estado:</strong> {{ caso.Estado }}</p>
+                                <p><strong data-la  ng="Casos_Buscar.Estado">Estado:</strong> {{ caso.Estado }}</p>
                                 <p><strong data-lang="Casos_Buscar.Usuario">Usuario Asociado:</strong> {{ caso.Nombre }}</p>
                             </div>
                         </div>                    
@@ -357,13 +357,12 @@
                                 <div class="FormularioRegistrarse_Input6">
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email" data-lang="Casos_Crear.TipoIncidente">Tipo de Incidente</label><span> *</span></div>
                                 </div>
-                                <select  id="Input_TipoIncidente"class="Formulario_CrearCaso_Input7" name="Tipo_Incidente" required>
-                                    <option value="">Seleccion</option>
-                                    <option value="Despl" {% if datos and datos.Tipo_Incidente == 'Despl' %}selected{% endif %}>Desplazamiento</option>
-                                    <option value="Despo" {% if datos and datos.Tipo_Incidente == 'Despo' %}selected{% endif %}>Despojo de predios</option>
-                                    <option value="Expro" {% if datos and datos.Tipo_Incidente == 'Expro' %}selected{% endif %}>Expropiacion</option>
-                                    <option value="Hurt" {% if datos and datos.Tipo_Incidente == 'Hurt' %}selected{% endif %}>Hurto</option>
-                                </select>
+                                <datalist id="Lista_Tipos">
+                                    {% for TipoCaso in TipoCasos %}
+                                        <option value="{{ TipoCaso.Incidente }}">
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Tipos" value="{{ datos.Tipo_Incidente if datos else '' }}" id="Input_TipoIncidente"class="Formulario_CrearCaso_Input7" name="Tipo_Incidente" required>                                
                             </div>
                             <div class="Formulario_CrearCaso_Contenedor">
                                 <div class="FormularioRegistrarse_Input6">
@@ -396,20 +395,92 @@
                                         <option value="{{ nombre.Id_usuario }}">{{ nombre.Nombre }}</option>
                                     {% endfor %}
                                 </datalist>
-                                <input value="{{ datos.Usuario_Relacionado if datos else '' }}" list="Lista_Usuarios" id="Input_Usuario" class="Formulario_CrearCaso_Input7" required name="Usuario_Relacionado">
+                                <input autocomplete="off" value="{{ datos.Usuario_Relacionado if datos else '' }}" list="Lista_Usuarios" id="Input_Usuario" class="Formulario_CrearCaso_Input7" required name="Usuario_Relacionado">
                             </div>
                             <div class="Formulario_CrearCaso_Contenedor">
                                 <div class="FormularioRegistrarse_Input6">
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email" data-lang="Casos_Crear.Estado"">Estado</label><span> *</span></div>
                                 </div>
-                                <datalist id="Lista_Estados">
+                                <datalist id="Lista_Estados" >
                                     {% for estado in estados %}
-                                        <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
+                                        <option value="{{ estado.Estado }}"></option>
                                     {% endfor %}
                                 </datalist>                               
-                                <input value="{{ datos.Estado if datos else '' }}" list="Lista_Estados" class="Formulario_CrearCaso_Input7" required name="Estado">
+                                <input autocomplete="off" value="{{ datos.Estado if datos else '' }}" list="Lista_Estados" class="Formulario_CrearCaso_Input7" required name="Estado">
                             </div>
-                        </div>                        
+                        </div>       
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Caso Asociado</label></div>
+                                </div>
+                                <datalist id="Lista_Casos" >
+                                    {% for caso in casos %}
+                                        <option value="{{ caso.Radicado }}">{{ caso.Radicado }}</option>
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Casos" value="{{ datos.Caso_Asociado if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" name="Caso_Asociado">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Prioridad</label><span> *</span></div>
+                                </div>
+                                <datalist id="Lista_Prioridad">
+                                    {% for prioridad in prioridades %}
+                                        <option value="{{ prioridad.Prioridad }}">{{ prioridad.Prioridad }}</option>
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Prioridad" value="{{ datos.Prioridad if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" required name="Prioridad">
+                            </div>
+                        </div> 
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Departamento</label><span> *</span></div>
+                                </div>
+                                <datalist id="Lista_Departamentos" >
+                                    {% for Departamento in Departamentos %}
+                                        <option value="{{ Departamento.Nom_departamento }}">
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Departamentos" value="{{ datos.Departamento if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" required name="Departamento">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Ciudad</label><span> *</span></div>
+                                </div>
+                                <datalist id="Lista_Ciudades">
+                                    {% for Ciudad in Ciudades %}
+                                        <option value="{{ Ciudad.Nom_ciudad }}">
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Ciudades" value="{{ datos.Ciudad if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" required name="Ciudad">
+                            </div>
+                        </div>
+                        <div class="Formulario_CrearCaso_Doble">
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Localidad</label></div>
+                                </div>
+                                <datalist id="Lista_Localidades" >
+                                    {% for Localidad in Localidades %}
+                                        <option value="{{ Localidad.Localidad }}">
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Localidades" value="{{ datos.Localidad if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" name="Localidad">
+                            </div>
+                            <div class="Formulario_CrearCaso_Contenedor">
+                                <div class="FormularioRegistrarse_Input6">
+                                        <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Barrio</label></div>
+                                </div>
+                                <datalist id="Lista_Barrios">
+                                    {% for Barrio in Barrios %}
+                                        <option value="{{ Barrio.Barrio }}">
+                                    {% endfor %}
+                                </datalist>                                
+                                <input autocomplete="off" list="Lista_Barrios" value="{{ datos.Barrio if datos else '' }}" minlength="3" class="Formulario_CrearCaso_Input7" type="text" name="Barrio">
+                            </div>
+                        </div>
                         <div class="Formulario_CrearCaso_Contenedor2">
                                 <div class="FormularioRegistrarse_Input6">
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email" data-lang="Casos_Crear.Descripcion">Descripcion del incidente</label><span> *</span></div>
@@ -504,7 +575,7 @@
                                     <div class="FormularioRegistrarse_Input6">
                                             <div class="FormularioRegistrarse_Input2"><label for="Input_Email" data-lang="Casos_Modificar.Usuario">Usuario Relacionado</label><span> *</span></div>
                                     </div>
-                                    <input list="Lista_Usuarios" id="Input_Usuario_Relacionado" minlength="3" class="Formulario_CrearCaso_Input7 campo-modificar" type="text" required name="Usuario" value="{{ datos.Id_usuario if datos else '' }}">
+                                    <input autocomplete="off" list="Lista_Usuarios" id="Input_Usuario_Relacionado" minlength="3" class="Formulario_CrearCaso_Input7 campo-modificar" type="text" required name="Usuario" value="{{ datos.Id_usuario if datos else '' }}">
                                 </div>
                                 <div class="Formulario_CrearCaso_Contenedor">
                                     <div class="FormularioRegistrarse_Input6">
@@ -530,12 +601,12 @@
                                     <div class="FormularioRegistrarse_Input6">
                                             <div class="FormularioRegistrarse_Input2"><label for="Input_Email" data-lang="Casos_Modificar.Estado">Estado</label><span> *</span></div>
                                     </div>
-                                    <datalist id="Lista_Estados">
+                                    <datalist id="Lista_Estados" >
                                         {% for estado in estados %}
                                             <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
                                         {% endfor %}
                                     </datalist>                               
-                                    <input list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar" required type="text" name="Estado" value="{{ datos.Estado }}">
+                                    <input autocomplete="off" list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar" required type="text" name="Estado" value="{{ datos.Estado }}">
                                 </div>
                             </div>                        
                             <div class="Formulario_CrearCaso_Contenedor2">
@@ -693,7 +764,7 @@
                                         <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
                                     {% endfor %}
                                 </datalist>                               
-                                <input value="{{ datos.Estado_Entidad if datos else '' }}" list="Lista_Estados" class="Formulario_CrearCaso_Input7" required name="Estado_Entidad">
+                                <input autocomplete="off" value="{{ datos.Estado_Entidad if datos else '' }}" list="Lista_Estados" class="Formulario_CrearCaso_Input7" required name="Estado_Entidad">
                             </div>
                         </div>                        
                         <div class="Formulario_CrearCaso_Contenedor2">
@@ -796,7 +867,7 @@
                                             <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
                                         {% endfor %}
                                     </datalist>                               
-                                    <input list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar2" required type="text" name="Estado_Entidad" value="{{ datos.Estado_Entidad }}">
+                                    <input autocomplete="off" list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar2" required type="text" name="Estado_Entidad" value="{{ datos.Estado_Entidad }}">
                                 </div>
                                 <div class="Formulario_CrearCaso_Contenedor">
                                     <div class="FormularioRegistrarse_Input6">
@@ -983,12 +1054,12 @@
                                 <div class="FormularioRegistrarse_Input6">
                                     <div class="FormularioRegistrarse_Input2"><label data-lang="Usuarios_Crear.EstadoUsuario">Estado del usuario</label><span> *</span></div>
                                 </div>
-                                <datalist id="Lista_Estados">
+                                <datalist id="Lista_Estados" >
                                     {% for estado in estados %}
                                         <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
                                     {% endfor %}
                                 </datalist>
-                                <input list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar2" required type="text" name="Estado_Entidad" value="{{ datos.Estado_Entidad if datos else '' }}">
+                                <input autocomplete="off" list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar2" required type="text" name="Estado_Entidad" value="{{ datos.Estado_Entidad if datos else '' }}">
                             </div>  
                         </div>  
                         <div class="Formulario_CrearCaso_Doble">
@@ -1226,7 +1297,7 @@
                                             <option value="{{ estado.Id_estado }}">{{ estado.Estado }}</option>
                                         {% endfor %}
                                     </datalist>
-                                    <input list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar3" required type="text" name="Estado_Entidad" value="{{ datos.Estado}}">
+                                    <input autocomplete="off" list="Lista_Estados" class="Formulario_CrearCaso_Input7 campo-modificar3" required type="text" name="Estado_Entidad" value="{{ datos.Estado}}">
                                 </div>  
                             </div>  
                             <div class="Formulario_CrearCaso_Doble">
