@@ -1,21 +1,17 @@
 html, body {
-    width: 100vw;
-    height: auto;
-    scroll-behavior: smooth;
     margin: 0;
     padding: 0;
-    display: flex;
     font-family: 'Great Vibes';
-    align-items: center;
-    justify-content: center;
+    scroll-behavior: smooth;
     background-color: #ffffff;
 }
+
 .Cuadro1{
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 93%;
+    height: 90%;
     border: 8px solid rgb(112, 112, 112);
     border-radius: 0 20px 0 20px;
 }
@@ -23,7 +19,7 @@ html, body {
     width: fit-content;
     font-weight: bold;
     margin: 0;
-    font-size: 55px;
+    font-size: 40px;
     justify-content: center;
     display: flex;
 }
@@ -33,37 +29,37 @@ html, body {
     font-weight: bold;
     color:#7cc4fc;
     margin: 0;
-    font-size: 70px;
+    font-size: 60px;
     justify-content: center;
     display: flex;
     -webkit-text-stroke: 0.1px #005690;
 }
 .solapa{
-    width: 330px;
-    left: 0.5%;
+    width: 300px;
+    left: 0%;
     z-index: -1;
-    top: 3%;
+    top: 0%;
     position: absolute;
 }
 .solapa.animar {
     animation: subir 1s ease forwards;
 }
 .flores_esquina{
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     transform: rotate(-90deg);
 }
 .flores_esquina_cont{
     position: fixed;
     z-index: 10;
-    bottom: -23px;
+    bottom: -10px;
     right: -23px;
-    width: 300px;
-    height: 300px;
+    width: fit-content;
+    height: fit-content;
 }
 .flores_esquina2{
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     transform: rotate(90deg);
 }
 .flores_esquina_cont2{
@@ -71,23 +67,23 @@ html, body {
     z-index: 10;
     top: -23px;
     left: -23px;
-    width: 300px;
-    height: 300px;
+    width: fit-content;
+    height: fit-content;
 }
 .crown{
     z-index: 5;
-    width: 180px;
-    height: 120px;
+    width: 130px;
+    height: 90px;
     animation: up-down 3s ease-in-out infinite;
 }
 .crown-cont{
-    margin-top: 110px;
+    margin-top: 40px;
     width: fit-content;
     height: fit-content;
 }
 .sobre{
-    width: 330px;
-    height: 210px;
+    width: 300px;
+    height: 180px;
     border-radius: 12px;
 }
 .sello{
@@ -163,9 +159,9 @@ html, body {
 .decorado{
     position: absolute;
     z-index: 10000;
-    right: 20.5%;
+    right: 24.5%;
     height: 80px;
-    width: 200px;
+    width: 160px;
 }
 .Boton_Sello:hover{
     transform: scale(1.1);
@@ -197,7 +193,8 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;    flex-direction: column;
+    height: 86vh;    
+    flex-direction: column;
 }
 .Frame2 {
     display: none;
@@ -232,7 +229,8 @@ html, body {
 }
 seccion{
     height: 280px;
-    width: 100vw;
+    width: 100%;
+    position: relative
 }
 .contador{
     display: flex;
@@ -245,7 +243,7 @@ seccion{
 #seccion6,
 #seccion8,
 #seccion10{
-    background-color: #898989;
+    background-color: #5a5a5a;
 }
 #seccion2{
     display: flex;
@@ -300,17 +298,9 @@ seccion{
     font-size: 20px;
     margin: 0;
 }
-#seccion3 h5{
-    font-family: 'Great Vibes', sans-serif;
-    font-weight: bold;
-    color:#7cc4fc;
-    margin: 0;
-    font-size: 65px;
-    -webkit-text-stroke: 0.1px #005690;
-}
 #seccion3 h2{
     font-family: 'Dancing Script', sans-serif;
-    color: rgb(0, 159, 187);
+    color: rgb(172, 130, 130);
     font-size: 45px;
     margin: 0;
 }
@@ -321,6 +311,14 @@ seccion{
     height: 550px;
     padding: 20px 0 20px 0;
     justify-content: space-evenly;
+}
+#seccion3 h5{
+    font-family: 'Great Vibes', sans-serif;
+    font-weight: bold;
+    color:#bdbcbc;
+    margin: 0;
+    font-size: 65px;
+    -webkit-text-stroke: 0.1px #353535;
 }
 .Laura{
     width: 80%;
@@ -334,7 +332,7 @@ seccion{
         radial-gradient(circle 30px at bottom left, transparent 98%, black 100%),
         radial-gradient(circle 30px at bottom right, transparent 98%, black 100%);
     -webkit-mask-composite: source-in;
-    background: linear-gradient(to bottom, rgb(172, 161, 0), rgb(255, 238, 0), rgb(172, 161, 0));
+    background: linear-gradient(to bottom, rgb(78, 78, 78), rgb(192, 191, 191), rgb(78, 78, 78));
 }
 .Laura2 h5 span {
     display: block;
@@ -352,7 +350,7 @@ seccion{
         radial-gradient(circle 30px at bottom left, transparent 98%, black 100%),
         radial-gradient(circle 30px at bottom right, transparent 98%, black 100%);
     -webkit-mask-composite: source-in;
-    background-color: rgb(255, 243, 153);
+    background-color: rgb(219, 219, 219);
 }
 .flores1{
     width: 100px;
@@ -387,14 +385,14 @@ seccion{
 }
 #seccion4 h1{
     font-family: 'Dancing Script', sans-serif;
-    color: rgb(10, 10, 10);
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 50px;
     margin: 0;
 }
 #seccion4 h2{
     font-family: 'Roboto Slab', sans-serif;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-align: center;
     font-weight: 400;
     font-size: 34px;
@@ -405,7 +403,7 @@ seccion{
     display: flex;
     justify-content: center;
     font-family: 'Roboto Slab', sans-serif;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 37px;
     margin: 0;
@@ -419,8 +417,8 @@ seccion{
     width: fit-content;
     height: fit-content;
     padding: 3px 13px 3px 13px;
-    border-top: 6px solid black;
-    border-bottom: 6px solid black;
+    border-top: 6px solid rgb(255, 255, 255);
+    border-bottom: 6px solid rgb(255, 255, 255);
 }
 .arco1{
     width: 100%;
@@ -428,8 +426,8 @@ seccion{
     transform: rotate(1deg);
 }
 .arco12{
-    width: 30%;
-    height: 13%;
+    width: 23%;
+    height: 14%;
     padding-right: 12px;
 }
 .arco{
@@ -455,19 +453,104 @@ seccion{
     height: 100px;
     transform: scaleX(-1);
 }
+.floresesquina23{
+    width: 100px;
+    height: 100px;
+}
 .floresesquina11{
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 30.6%;
+    top: 0%;
     left: 0%;    
 }
 .floresesquina21{
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 30.6%;
-    right: 0%;
+    top: 0%;
+    right: 0%;  
+}
+.floresesquina211{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 10%;
+    right: 11%;  
+}
+.floresesquina2112{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:-5%;
+    left: 14%;
+}
+.floresesquina211a{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0%;
+    right: 0%;  
+}
+.floresesquina2112a{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 26%;
+    left: 0%;
+}
+#seccion1{
+    height: 86vh;
+}
+.princesa{
+    width: 95%;
+}
+.princesa_cont{
+    position: absolute;
+    bottom: -1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fondo2{
+    width: 100%;
+    height: 86vh;
+    position: absolute;
+}
+.hoja {
+    position: fixed;
+    top: -50px;
+    width: 30px;
+    height: 30px;
+    background-image: url("img/Brillo_Bola.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: caer linear infinite;
+}
+.Desliza_Cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.Desliza{
+    color: white;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+.flecha2{
+    transform: scaleY(-1);
+}
+@keyframes caer {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 @keyframes up-down {
     0%, 100% {

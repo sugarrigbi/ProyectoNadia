@@ -79,8 +79,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const frame1 = document.getElementById("Frame2");
     if (frame1) {
         frame1.classList.add("visible");
+        AOS.refreshHard();
     }
     const intervalo = setInterval(actualizarContador, 1000);
     actualizarContador();
-    
+    const cantidad = 30;
+
+    for (let i = 0; i < cantidad; i++) {
+        const hoja = document.createElement("div");
+        hoja.classList.add("hoja");
+
+        hoja.style.left = Math.random() * 100 + "vw";
+        hoja.style.animationDuration = 5 + Math.random() * 5 + "s";
+        hoja.style.opacity = Math.random();
+
+        document.body.appendChild(hoja);
+    }    
 });
