@@ -243,7 +243,7 @@ seccion{
 #seccion6,
 #seccion8,
 #seccion10{
-    background-color: #5a5a5a;
+    background-color: #a3a1a1;
 }
 #seccion2{
     display: flex;
@@ -253,19 +253,19 @@ seccion{
 }
 #seccion2 h1{
     font-family: "Roboto Slab";
-    color: white;
+    color: #1F3C5B;
     font-size: 50px;
     margin: 0;
 }
 #seccion2 h2{
     font-family: 'Dancing Script';
-    color: white;
+    color: #1F3C5B;
     font-size: 28px;
     margin: 0;
 }
 #seccion2 h3{
     font-family: 'Dancing Script';
-    color: white;
+    color: #1F3C5B;
     font-size: 50px;
     margin: 0;
 }
@@ -274,13 +274,6 @@ seccion{
     color: rgb(10, 10, 10);
     text-align: center;
     font-size: 50px;
-    margin: 0;
-}
-#seccion3 h2{
-    font-family: 'Dancing Script', sans-serif;
-    color: rgb(2, 88, 218);
-    text-align: center;
-    font-size: 37px;
     margin: 0;
 }
 #seccion3 h3{
@@ -300,7 +293,7 @@ seccion{
 }
 #seccion3 h2{
     font-family: 'Dancing Script', sans-serif;
-    color: rgb(172, 130, 130);
+    color: #255b95;
     font-size: 45px;
     margin: 0;
 }
@@ -308,49 +301,40 @@ seccion{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 550px;
-    padding: 20px 0 20px 0;
+    height: 630px;
     justify-content: space-evenly;
 }
 #seccion3 h5{
     font-family: 'Great Vibes', sans-serif;
-    font-weight: bold;
-    color:#bdbcbc;
+    font-weight: 500;
+    color:#ffffff;
     margin: 0;
     font-size: 65px;
-    -webkit-text-stroke: 0.1px #353535;
+    width: 70%;
 }
 .Laura{
     width: 80%;
     height: 35%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    -webkit-mask:
-        radial-gradient(circle 30px at top left, transparent 98%, black 100%),
-        radial-gradient(circle 30px at top right, transparent 98%, black 100%),
-        radial-gradient(circle 30px at bottom left, transparent 98%, black 100%),
-        radial-gradient(circle 30px at bottom right, transparent 98%, black 100%);
-    -webkit-mask-composite: source-in;
-    background: linear-gradient(to bottom, rgb(78, 78, 78), rgb(192, 191, 191), rgb(78, 78, 78));
+    justify-content: space-around;
 }
-.Laura2 h5 span {
-    display: block;
-    margin-left: 70px;
-}
-.Laura2{
-    width: 96%;
-    height: 92%;
+.Cont_Laura{
+    width: 100%;
+    height: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-mask:
-        radial-gradient(circle 30px at top left, transparent 98%, black 100%),
-        radial-gradient(circle 30px at top right, transparent 98%, black 100%),
-        radial-gradient(circle 30px at bottom left, transparent 98%, black 100%),
-        radial-gradient(circle 30px at bottom right, transparent 98%, black 100%);
-    -webkit-mask-composite: source-in;
-    background-color: rgb(219, 219, 219);
+    position: absolute;
+    bottom: 1%;
+}
+.Laura3{
+    width: 93%;
+    height: 100%;
+}
+#seccion3 h5 span {
+    display: block;
+    margin-left: 70px;
 }
 .flores1{
     width: 100px;
@@ -534,13 +518,72 @@ seccion{
     flex-direction: column;
 }
 .Desliza{
-    color: white;
+    color: #ffffff;
     font-size: 50px;
     margin-top: 20px;
     margin-bottom: 0px;
+    font-weight: 500;
 }
 .flecha2{
     transform: scaleY(-1);
+}
+.Boton{
+    background: linear-gradient(to left,#478cd7, #2a527c,#478cd7);
+    padding: 5px 20px 5px 20px;
+    color: white;
+    font-family: 'Roboto Slab', sans-serif;
+    border-radius: 100px;
+    text-decoration: None;
+    font-size: 25px;
+    Border: None;
+    border: 2px solid black;
+}
+#seccion5{
+    height: 500px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#seccion5{
+    background: linear-gradient(to bottom,#a3a1a1 0%, #ffffff 30%);
+}
+#seccion5 h2{
+    font-family: 'Roboto Slab', sans-serif;
+    margin: 0;
+    font-size: 20px;
+}
+#seccion3{
+    background: linear-gradient(to bottom,#a3a1a1 0%,#ffffff 15%,#ffffff 85%,#a3a1a1 100%);
+}
+#seccion7{
+    background: linear-gradient(to bottom,#a3a1a1 0%,#ffffff 50%);
+}
+.cont_ubicacion{
+    position: absolute;
+    width: 80%;
+    height: 65%;
+    gap: 18px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 10px outset #255b95;
+    border-radius: 20px;
+    top: 10%;
+}
+#seccion5 h1{
+    margin: 0;
+    font-size: 28px;
+}
+.Cont_Edificios{
+    width: 100%;
+    position: absolute;
+    bottom: 0%;
+    height: 33%;
+}
+.Edificios{
+    width: 100%;
+    height: 100%;
 }
 @keyframes caer {
     0% {
