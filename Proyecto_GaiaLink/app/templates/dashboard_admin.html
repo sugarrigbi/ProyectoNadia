@@ -312,14 +312,22 @@
                             <div class="modal-content">
                                 <span class="cerrar" onclick="cerrarModal('modal-{{ loop.index }}')">&times;</span>
                                 <h4 data-lang="Casos_Buscar.Detalles" class="FrameVerCasos_Caso_Texto">Detalles del caso</h4>
-                                <p><strong data-lang="Casos_Buscar.Radicado">Radicado:</strong> {{ caso.Radicado }}</p>
-                                <p><strong data-lang="Casos_Buscar.Fecha">Fecha:</strong> {{ caso.Fecha }}</p>
-                                <p><strong data-lang="Casos_Buscar.Descripcion">Descripción:</strong> {{ caso.Descripcion }}</p>
-                                <p><strong data-lang="Casos_Buscar.PersonasAfectadas">Personas afectadas:</strong> {{ caso.Persona }}</p>
-                                <p><strong data-lang="Casos_Buscar.Direccion">Direccion:</strong> {{ caso.Departamento }}</p>
-                                <p><strong data-lang="Casos_Buscar.Incidente">Incidente:</strong> {{ caso.Incidente }}</p>
-                                <p><strong data-la  ng="Casos_Buscar.Estado">Estado:</strong> {{ caso.Estado }}</p>
-                                <p><strong data-lang="Casos_Buscar.Usuario">Usuario Asociado:</strong> {{ caso.Nombre }}</p>
+                                <p><strong data-lang="Casos_Buscar.Radicado">Radicado:</strong>{{ caso.Radicado }}</p>
+                                <p><strong>Código:</strong>{{ caso.Codigo }}</p>
+                                <p><strong data-lang="Casos_Buscar.Fecha">Fecha:</strong>{{ caso.Fecha }}</p>
+                                <p><strong data-lang="Casos_Buscar.Descripcion">Descripción:</strong>{{ caso.Descripcion }}</p>
+                                <p><strong data-lang="Casos_Buscar.PersonasAfectadas">Personas afectadas:</strong>{{ caso.Persona }}</p>
+                                <p><strong data-lang="Casos_Buscar.Direccion">Dirección:</strong>{{ caso.Direccion }}</p>
+                                <p><strong>Departamento:</strong>{{ caso.Departamento }}</p>
+                                <p><strong>Ciudad:</strong>{{ caso.Ciudad }}</p>
+                                <p><strong>Localidad:</strong>{{ caso.Localidad }}</p>
+                                <p><strong>Barrio:</strong>{{ caso.Barrio }}</p>
+                                <p><strong data-lang="Casos_Buscar.Incidente">Incidente:</strong>{{ caso.Incidente }}</p>
+                                <p><strong>Tipo de caso:</strong>{{ caso.Tipo_Caso }}</p>
+                                <p><strong data-lang="Casos_Buscar.Estado">Estado:</strong>{{ caso.Estado }}</p>
+                                <p><strong>Prioridad:</strong>{{ caso.Prioridad }}</p>
+                                <p><strong data-lang="Casos_Buscar.Usuario">Usuario asociado:</strong>{{ caso.Nombre }}</p>
+                                <p><strong>Caso asociado:</strong>{{ caso.Caso_Asociado }}</p>
                             </div>
                         </div>                    
                     {% endfor %}
@@ -415,6 +423,7 @@
                                         <div class="FormularioRegistrarse_Input2"><label for="Input_Email">Caso Asociado</label></div>
                                 </div>
                                 <datalist id="Lista_Casos" >
+                                    
                                     {% for caso in casos %}
                                         <option value="{{ caso.Radicado }}">{{ caso.Radicado }}</option>
                                     {% endfor %}

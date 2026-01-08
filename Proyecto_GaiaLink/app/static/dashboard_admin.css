@@ -1585,6 +1585,91 @@ body, html {
     .Cuadro2_Boton{
         flex-wrap: wrap;
     }
+@media (max-width: 900px) {
+    .Cuadro1{
+        flex: 1 1 200px;          /* 250 → 200 */
+        max-width: 240px;         /* 300 → 240 */
+    }
+    .Cuadro1 h3{
+        white-space: nowrap;
+    }
+    .FrameVerCasos_Caso{
+        width: 24.8%;             /* 31% → 24.8% */
+    }       
+    .FormularioBuscar{
+        width: 48%;               /* 60% → 48% */
+    } 
+    .Cuadro1 h2 {
+        font-size: 17.6px;        /* 22 → 17.6 */
+    }
+    .Barra_Texto{
+        display: none;
+    }
+    .Selector1{
+        justify-content: center;
+    }
+    .Logo h2{
+        display: none;
+    }
+    .Barra_Lateral button{
+        padding-left: 16%;        /* 20% → 16% */
+        padding-right: 16%;
+    }
+    .Frame h2{
+        font-size: 24px;          /* 30 → 24 */
+        padding-left: 12px;       /* 15 → 12 */      
+    } 
+    .Boton img{
+        width: 20.8px;            /* 26 → 20.8 */
+        height: 20.8px;
+        padding: 9.6px;           /* 12 → 9.6 */
+    }
+    .Botones{
+        width: 48%;               /* 60% → 48% */
+    }    
+    .Formulario_CrearCaso_Input4{
+        font-size: 14.4px;        /* 18 → 14.4 */
+    }        
+    .FrameVerCasos_Caso_Texto{
+        font-size: 20px;          /* 25 → 20 */
+    }          
+    .modal-content p{
+        font-size: 16px;          /* 20 → 16 */
+    }
+    .modal-content p a{
+        font-size: 16px;
+    }
+    .modal-content{
+        width: 72%;               /* 90% → 72% */
+    }
+    .Formulario_CrearCaso_Contenedor label{
+        font-size: 14.4px;
+    }
+    .Formulario_CrearCaso_Contenedor2 label{
+        font-size: 14.4px;
+    }
+    .Formulario_CrearCaso_Input7{
+        font-size: 14.4px;
+    }
+    .Formulario{
+        width: 64%;               /* 80% → 64% */
+    }
+    .Formulario_CrearCaso{
+        gap: 12px;                /* 15 → 12 */
+    }
+    .Formulario_Contenedor_Texto{
+        font-size: 22.4px;        /* 28 → 22.4 */
+    }
+    .Formulario_Contenedor{
+        margin-top: 4px;          /* 5 → 4 */
+    }
+    .Formulario_CrearCaso_Contenedor3{
+        width: 72%;               /* 90% → 72% */
+    }
+    .Cuadro2_Boton{
+        flex-wrap: wrap;
+    }
+}
 }
 @media (max-width: 600px) {
     .Cuadro1{

@@ -337,6 +337,18 @@ class Caso_Admin:
             Close_BaseDatos(conexion, cursor)
             return "No existen casos", "error"
         
+        cursor.execute("SELECT Direccion FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        direccion = cursor.fetchall()
+        if not direccion:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Caso_Asociado FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        Caso_Asociado = cursor.fetchall()
+        if not Caso_Asociado:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"        
+        
         cursor.execute("SELECT Fk_Usuario FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
         usuarios = cursor.fetchall()
         for i in usuarios:
@@ -353,9 +365,9 @@ class Caso_Admin:
             if Incidente:
                 Incidentes.append(Incidente)
 
-        cursor.execute("SELECT Direccion FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
-        departamento = cursor.fetchall()
-        if not departamento:
+        cursor.execute("SELECT Fk_Tipo_Caso FROM prueba.tbl_caso ORDER BY Id_Caso_Incidente")
+        Tipo_Caso = cursor.fetchall()
+        if not Tipo_Caso:
             Close_BaseDatos(conexion, cursor)
             return "No existen casos", "error"
 
@@ -367,6 +379,36 @@ class Caso_Admin:
             if estado_name:
                 Estados.append(estado_name)
 
+        cursor.execute("SELECT Prioridad FROM prueba.tbl_caso JOIN tbl_prioridad ON tbl_caso.fk_prioridad = tbl_prioridad.Id_prioridad ORDER BY Id_Caso_Incidente")
+        Prioridad = cursor.fetchall()
+        if not Prioridad:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Nom_departamento FROM prueba.tbl_caso JOIN tbl_departamento ON tbl_caso.fk_departamento = tbl_departamento.Id_dep ORDER BY Id_Caso_Incidente")
+        Departamento = cursor.fetchall()
+        if not Departamento:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Nom_ciudad FROM prueba.tbl_caso JOIN tbl_ciudad ON tbl_caso.fk_ciudad = tbl_ciudad.Id_ciudad ORDER BY Id_Caso_Incidente")
+        Ciudad = cursor.fetchall()
+        if not Ciudad:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Localidad FROM prueba.tbl_caso JOIN tbl_localidad ON tbl_caso.fk_localidad = tbl_localidad.Id_local ORDER BY Id_Caso_Incidente")
+        Localidad = cursor.fetchall()
+        if not Localidad:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+        
+        cursor.execute("SELECT Barrio FROM prueba.tbl_caso JOIN tbl_barrio ON tbl_caso.fk_barrio = tbl_barrio.Id_barrio ORDER BY Id_Caso_Incidente")
+        Barrio = cursor.fetchall()
+        if not Barrio:
+            Close_BaseDatos(conexion, cursor)
+            return "No existen casos", "error"
+
         cursor.execute("SELECT Radicado FROM prueba.tbl_num_caso ORDER BY Fk_Caso")
         radicados = cursor.fetchall()
         if not radicados:
@@ -375,16 +417,23 @@ class Caso_Admin:
 
         for i in range(len(casos)):
             try:
-                if (i < len(fechas) and i < len(descripciones) and i < len(personas) and i < len(Usuarios) and i < len(Incidentes) and i < len(departamento) and i < len(Estados) and i < len(radicados)):                
+                if (i < len(fechas) and i < len(descripciones) and i < len(personas) and i < len(Usuarios) and i < len(Incidentes) and i < len(direccion) and i < len(Estados) and i < len(radicados)):                
                     caso = {
                         "Codigo": casos[i]["Id_Caso_Incidente"],
                         "Fecha": fechas[i]["Fecha"],
                         "Descripcion": descripciones[i]["Descripción"],
                         "Persona": personas[i]["Personas_Afectadas"],
+                        "Direccion": direccion[i]["Direccion"],
+                        "Caso_Asociado": Caso_Asociado[i]["Caso_Asociado"],
                         "Nombre": Usuarios[i]["Nombre"],
                         "Incidente": Incidentes[i],
-                        "Direccion": departamento[i]["Direccion"],
+                        "Tipo_Caso": Tipo_Caso[i]["Fk_Tipo_Caso"],
                         "Estado": Estados[i]["Estado"],
+                        "Prioridad": Prioridad[i]["Prioridad"],
+                        "Departamento": Departamento[i]["Nom_departamento"],   
+                        "Ciudad": Ciudad[i]["Nom_ciudad"],   
+                        "Localidad": Localidad[i]["Localidad"],   
+                        "Barrio": Barrio[i]["Barrio"],   
                         "Radicado": radicados[i]["Radicado"]
                     }
                 if all(caso.values()) and caso["Estado"] != "Caso Eliminado":
@@ -396,6 +445,25 @@ class Caso_Admin:
         return lista_fusionada       
     def Crear_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()
+
+        if self.Localidad == "":
+            self.Localidad = "No"
+        if self.Barrio == "":
+            self.Barrio = "No"
+        if self.Caso_Asociado == "":
+            self.Caso_Asociado = "No"
+
+        cursor.execute("SELECT Id_incidente FROM prueba.tbl_incidente WHERE Incidente = %s",(self.Incidente,))
+        resultado_incidente = cursor.fetchone()
+        self.Incidente = resultado_incidente["Id_incidente"]
+        
+        cursor.execute("SELECT Id_estado FROM prueba.tbl_estado WHERE Estado = %s",(self.Estado,))
+        resultado_estado = cursor.fetchone()      
+        self.Estado = resultado_estado["Id_estado"]  
+
+        cursor.execute("SELECT Id_prioridad FROM prueba.tbl_prioridad WHERE Prioridad = %s",(self.Prioridad,))
+        resultado_prioridad = cursor.fetchone()
+        self.Prioridad = resultado_prioridad["Id_prioridad"]
 
         fecha = datetime.strptime(self.Fecha, "%Y-%m-%d").date()
         id_departamento = "001DEP"
