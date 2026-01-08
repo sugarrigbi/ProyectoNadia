@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    const frame1 = document.getElementById("Frame2");
+    const frame1 = document.getElementById("Frame1");
     if (frame1) {
         frame1.classList.add("visible");
         AOS.refreshHard();

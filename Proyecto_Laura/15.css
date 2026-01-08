@@ -11,7 +11,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 90%;
+    height: 100%;
     border: 8px solid rgb(112, 112, 112);
     border-radius: 0 20px 0 20px;
 }
@@ -584,6 +584,83 @@ seccion{
 .Edificios{
     width: 100%;
     height: 100%;
+}
+.Codigo_Vestimenta{
+    width: 70%;
+    height: 55%;
+}
+.cuadro_vestimenta h1{
+    font-size: 48px;
+    color: #ffffff;
+    font-weight: 500;
+    margin: 0;
+}
+.cuadro_vestimenta h2{
+    font-size: 32px;
+    color: #ffffff;
+    font-family: "Roboto Slab";
+    margin: 0;
+}
+.cuadro_vestimenta{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #e0e0e0, #00395f);
+    border-radius: 30px;
+    border: 5px dashed #000000;
+}
+.cuadro_lluvia{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    border: 5px double #000000;
+}
+#seccion6{
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#seccion7{
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#seccion7 h1{
+    font-size: 32px;
+    color: #000000;
+    font-family: "Roboto Slab";
+    margin: 0;
+}
+.lluvia_img{
+    width: 80%;
+    height: 45%;
+}
+.Boton2{
+    background: linear-gradient(to left,#478cd7, #2a527c,#478cd7);
+    padding: 5px 20px 5px 20px;
+    color: white;
+    font-family: 'Roboto Slab', sans-serif;
+    border-radius: 100px;
+    text-decoration: None;
+    font-size: 25px;
+    Border: None;
+    border: 2px solid black;
+    position: fixed;
+    bottom: 10px;
+    z-index: 999;
+}
+#seccion1 h1{
+    margin-top: 40px;
+    font-size: 40px;
 }
 @keyframes caer {
     0% {
