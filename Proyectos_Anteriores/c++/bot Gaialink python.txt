@@ -1,0 +1,38 @@
+#LIBRERIAS
+from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
+#DATOS DE CUENTA
+#RUTA DEL ARCHIVO
+file_path = "C:\\Users\\User\\Downloads\\datos_arduino.txt"
+#DEFINIR FUNCION DE ABRIR EL ARCHIVO
+def obtener_ultimos_datos():
+#ABRIR EL ARCHIVO
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()[-8:]
+            return ''.join(lines)
+    except FileNotFoundError:
+        return "Error: No se encontró el archivo de datos."
+#CREAR APP
+app = Flask(__name__)
+@app.route("/webhook", methods=["POST"])
+#DEFINIR FUNCION DEL WEBHOOK
+def webhook():
+#LEER CUERPO DEL MENSAJE ENVIADO
+    incoming_msg = request.values.get('Body', '').strip().lower()
+#FUNCION DE RESPONDER
+    resp = MessagingResponse()
+    msg = resp.message()
+#VERIFICAR QUE EL MENSAJE SEA IGUAL A dame los datos ENVIAR LOS DAOTS
+    if incoming_msg == "dame los datos":
+        lectura = obtener_ultimos_datos()
+        msg.body(f'Última lectura de Gaialink:\n{lectura}')
+#SI NO ENVIAR ERROR
+    else:
+        msg.body("Comando no reconocido. Escribe 'dame los datos'.")
+#DEVOLVER DATOS
+    return str(resp)
+#INICIAR APP
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)

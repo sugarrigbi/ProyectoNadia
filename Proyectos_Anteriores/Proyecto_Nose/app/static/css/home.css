@@ -1,0 +1,300 @@
+.section {
+  min-height: max-content; /* mínimo el alto visible */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #c9e7c9, #80a880);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 4px 5px 10px 0px #00000059;
+  margin-top: 10px;
+}
+
+/* TITULOS GENERALES */
+.title {
+  font-family: "Limelight", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: clamp(24px, 4vw, 70px);
+  line-height: 1.5;
+  letter-spacing: 3px;
+  color: #222;
+}
+.content-text {
+  margin: 20px 0px;
+}
+
+.text {
+  font-size: clamp(15px, 1vw, 25px);
+}
+
+.Green-text {
+  color: #1c7c54; /* verde */
+  font-style: italic;
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.Blue-text {
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 3rem);
+  background: linear-gradient(180deg, #000000, #1b5aad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Compatibilidad: WebKit y Firefox */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: bold;
+}
+
+/* --------------------------------------------------------------------SECTION SERVICIOS-------------------------------------------------------------------*/
+.card-group {
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  min-width: 0;
+  height: 520px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.185) !important; /* capa semitransparente */
+  border-radius: 20px !important;
+  backdrop-filter: blur(10px) !important; /* efecto vidrio */
+  -webkit-backdrop-filter: blur(10px) !important; /* soporte Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 5px 5px 5px 1px #0000004f !important;
+  box-shadow: 5px 5px 5px 1px #0000004f;
+  overflow: hidden;
+}
+.card * {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.services-img {
+  max-width: 100%;
+  width: 200px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------SECTION NOSOTROS---------------------------------------------------------------------------------*/
+.carousel {
+  max-width: 100%;
+  margin: auto;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+.we {
+  width: 100%;
+  max-width: 500px;
+  margin: 20px;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.185); 
+  border-radius: 20px;
+  backdrop-filter: blur(10px); /* efecto vidrio */
+  -webkit-backdrop-filter: blur(10px); /* soporte Safari */
+  border: 1px solid rgba(66, 61, 61, 0.3); /* borde sutil */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.we:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+.we img {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+
+/*---------------------------------------------------------------------------SECTION CONTACTO------------------------------------------------- */
+.contacto {
+  max-width: 1200px;
+  height: max-content;
+  background:rgba(224, 254, 235, 0.56);
+  border-radius: 20px;
+  backdrop-filter: blur(10px); /* efecto vidrio */
+  -webkit-backdrop-filter: blur(10px); /* soporte Safari */
+  box-shadow: 5px 5px 5px 1px #0000004f;
+  border-radius: 20px;
+}
+
+.contacto-form {
+  border-radius: 15px;
+  background: linear-gradient(180deg,  #c9e7c9, #80a880);
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contacto-form input,
+.contacto-form textarea {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/*------------------------------------------------------------------------LOGIN----------------------------------------------------------------*/
+.login-form {
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.288);
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align:start;
+  align-items: center;
+  justify-content: center;
+ width: 40%;           /* ocupa el 40% del ancho */
+  max-width: 400px; 
+
+}
+.img-form{
+  max-width: 150px;
+  object-fit: contain;
+}
+
+/*-------------------------------------------------------------------------REGISTER----------------------------------------------------------------*/
+/* Contenedor del formulario */
+.registro-form {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Título */
+.form-title {
+  font-size: clamp(30px, 2vw, 35px);
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #007bff;
+}
+
+.form-subtitle {
+  font-size: clamp(20px, 1,1vw, 25px);
+  background-color: #007bff;
+  color: whitesmoke;
+  width:100%;
+}
+
+/* Grupos de inputs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #000000;
+    font-size: clamp(15px, 0,9vw, 20px);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #626266;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+    margin-inline-end: 10px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
+}
+
+/* Botón */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+
+
+
+
+
+
+/*----------------------------------------------------------------------------------MEDIA QUERY----------------------------------------------------------------*/
+@media (max-width: 768px) {
+  .services-img {
+    width: 100px;
+    height: 50px;
+  }
+  .card-img {
+    width: 50px;
+    height: 50px;
+  }
+  .img-we {
+    width: 70px;
+    max-width: 70px;
+    margin-top: 8px;
+  }
+  .carousel {
+    padding: 10px 0;
+  }
+  .we {
+    max-width: 350px;
+    height: 400px;
+  }
+  .we img {
+    width: 120px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .services-img {
+    width: 60px;
+    height: 40px;
+  }
+  .card-img {
+    width: 40px;
+    height: 40px;
+  }
+  .Blue-text {
+    font-size: 1.2rem;
+  }
+
+  /* Asegurar que el texto no se vea amontonado */
+  .card p,
+  .card span {
+    line-height: 1;
+  }
+}

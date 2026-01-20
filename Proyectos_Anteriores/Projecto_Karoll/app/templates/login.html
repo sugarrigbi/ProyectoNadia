@@ -1,0 +1,151 @@
+{% extends "layout2.html" %} {% include 'navbar2.html' %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/layout2.css') }}"
+/>
+  <div class="container mt-3 d-flex">
+    <div
+      id="toast"
+      class="toast fade align-items-center text-white bg-success border-0 position-fixed top-5 start-50 translate-middle"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 2000;"
+    >
+      <div class="d-flex">
+        <!-- Aquí entra el mensaje -->
+        <div class="toast-body" id="toast-message"></div>
+        <!-- Botón de cerrar -->
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideToast()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+<section id="Login" class="section">
+  <div class="container py-5 d-flex">
+    <div class="row d-flex justify-content-center" style="width: 100%">
+      <!-- Título -->
+      <h2 class="navbar-title text-center mb-4">Inicia Sesión</h2>
+
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="login-form">
+          <!-- Formulario -->
+          <form method="POST" action="/auth/login">
+            <!-- Imagen superior -->
+            <img
+              src="{{ url_for('static', filename='img/login.png') }}"
+              alt="Login"
+              class="img-form d-block mx-auto mb-3"
+            />
+
+            <!-- Username -->
+            <div class="mb-3">
+              <label class="text"><strong>Usuario</strong></label>
+              <input
+                type="text"
+                name="username"
+                class="form-control"
+                placeholder="Nombre de usuario"
+                required
+                required
+              />
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+              <label class="text"><strong>Contraseña</strong></label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Contraseña"
+                required
+                required
+              />
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+            </button>
+
+            <!-- Enlace de recuperación -->
+            <div class="text-center my-3">
+              <a href="/">Olvidé mi contraseña</a>
+            </div>
+
+            <div class="text-center">
+              <p>
+                ¿No tiene una cuenta?
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalPoliticas">Regístrese aquí</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="modalPoliticas" tabindex="-1" aria-labelledby="modalPoliticasLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="modalPoliticasLabel">Política de Tratamiento de datos</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Estimado Usuario</h3>
+        <p>
+          En cumplimiento de la normativa vigente sobre protección de datos personales, le informamos que sus datos serán tratados de acuerdo con nuestra Política de Tratamiento de Datos Personales redactada a continuación:
+          <br>
+          <h5>1. Reponsable del tratamiento:</h5>
+            Vitaria SOS es responsable del tratamiento de los datos personales suministrados por los usuarios, conforme a lo dispuesto en la Ley 1581 de 2012 y demás normas que la modifiquen o complementen.
+          <h5>2. Finalidades del Tratamiento:</h5>
+          Los datos personales recolectados serán utilizados para las siguientes finalidades:<br>
+          <li>
+            <a>Gestionar el registro, autenticación y acceso de usuarios a la plataforma.</a>
+          </li>
+          <li>
+            <a>Administrar y mantener actualizada la información de los usuarios.</a>
+          </li>
+          <li>
+            <a>Procesar solicitudes, reportes o casos relacionados con el uso del sistema.</a>
+          </li>
+          <li>
+            <a>Enviar información relevante sobre actualizaciones, cambios o avisos del servicio</a>
+          </li>
+          <li>
+            <a>Realizar análisis estadísticos y de mejora continua del sistema</a>
+          </li>
+        <h5>3. Derechos del Titular:</h5>
+        De acuerdo con la ley, el titular de los datos personales tiene derecho a:
+        <li>
+            <a>Conocer, actualizar y rectificar sus datos.</a>
+          </li>
+          <li>
+            <a>Ser informado sobre el uso que se da a sus datos.</a>
+          </li>
+          <li>
+            <a>Revocar la autorización y/o solicitar la supresión de sus datos cuando no se respeten los principios, derechos y garantías constitucionales y legales.</a>
+          </li>
+        <h5>4. Autorización:</h5>
+        Al aceptar esta Política, usted autoriza de manera libre, previa, expresa e informada el tratamiento de sus datos personales conforme a las finalidades descritas. El responsable garantiza que sus datos serán tratados de forma segura, confidencial y únicamente para los fines autorizados.
+        <h5>5. Vigencia:</h5>
+        Esta Política entra en vigencia a partir de su publicación y permanecerá vigente mientras se mantenga la relación con el usuario o mientras sea necesario para el cumplimiento de las finalidades descritas.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+{% endblock %}

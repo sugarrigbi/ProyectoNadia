@@ -1,0 +1,252 @@
+/*================================================================  SECTION GENERAL================================================================  */
+.section {
+  height: max-content; /* mínimo el alto visible */
+  background: linear-gradient(180deg, #c9e7c9, #80a880);
+  border-radius: 12px;
+  box-shadow: 4px 5px 10px 0px #00000059;
+  margin-top: 10px;
+  min-height: 700px;
+  width: 100vw;
+}
+
+.dashboard{
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px;
+}
+/* ================================================================ SIDEBAR================================================================  */
+.sidebar {
+  width: 320px;
+  background: rgba(255, 255, 255, 0.288);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height:100%;
+  margin-inline-start: 5%;
+}
+
+.sidebar-avatar {
+  max-width: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.sidebar-menu li {
+  margin: 12px 0;
+}
+
+.sidebar-menu a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  display: block;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  
+}
+
+.sidebar-menu a:hover {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.modal-header {
+  border-bottom: none;
+  background-color: #007bff;
+  color: white;
+}
+/* ================================================================ MAIN CONTENT================================================================  */
+.main-content {
+  flex-grow: 1; 
+  background: rgba(255, 255, 255, 0.288);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  height: max-content;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ================================================================ CARDS================================================================  */
+.card-group {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  min-width: 0;
+  height: 180px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.185) !important; /* capa semitransparente */
+  border-radius: 20px !important;
+  backdrop-filter: blur(10px) !important; /* efecto vidrio */
+  -webkit-backdrop-filter: blur(10px) !important; /* soporte Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  
+  overflow: hidden;
+}
+.card * {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+  max-width: 100px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;   /* centra la imagen */
+  height: auto;     /
+}
+
+
+
+.text {
+  font-size: clamp(15px, 1vw, 25px);
+}
+
+/*================================================================ SECCION MI CUENTA===================================================================== */
+
+.count {
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  width: 100%;
+  max-width: 900px;
+  margin: 30px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.count:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+.profile-avatar {
+  width: 150px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 250px;
+    margin: 10px;
+  }
+
+  .main-content {
+    padding: 20px;
+    margin: 10px;
+    max-width: 95%;
+  }
+
+  .card {
+    max-width: 280px;
+    height: 160px;
+  }
+
+  .card-img {
+    max-width: 80px;
+  }
+
+  .text {
+    font-size: clamp(14px, 1.5vw, 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  
+  .dashboard {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .main-content {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  .card-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .card-img {
+    max-width: 70px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  .count {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .profile-avatar {
+    width: 120px;
+  }
+}
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+  }
+
+  .sidebar-menu a {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .card-img {
+    max-width: 60px;
+  }
+
+  .text {
+    font-size: 13px;
+  }
+}

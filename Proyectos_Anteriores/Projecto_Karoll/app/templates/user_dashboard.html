@@ -1,0 +1,709 @@
+{% extends "layout2.html" %}
+{% include 'navbar3.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+<script src="{{ url_for('static', filename='js/contador.js') }}"></script>
+
+<!-- Mensaje java -->
+  <div class="container mt-3 d-flex">
+    <div
+      id="toast"
+      class="toast fade align-items-center text-white bg-success border-0 position-fixed top-5 start-50 translate-middle"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 2000;"
+    >
+      <div class="d-flex">
+        <!-- Aquí entra el mensaje -->
+        <div class="toast-body" id="toast-message"></div>
+        <!-- Botón de cerrar -->
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideToast()"
+        ></button>
+      </div>
+    </div>
+  </div>
+  
+  
+<!-- Section principal -->
+<section id="content" class="section">
+    <div class="dashboard">
+      
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Perfil de Uusario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="sidebar-header text-center">
+          <img src="{{ url_for('static', filename='img/login.png') }}" alt="Admin" class="sidebar-avatar">
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+          <li><a id="consultar_cuenta_offcanvas" href="#" class="text">Mi cuenta</a></li>
+        </ul>
+        <ul class="sidebar-menu list-unstyled">
+          <li><a data-bs-toggle="modal" data-bs-target="#logoutModal" class="text">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn btn-primary d-lg-none m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+    ☰ Menú
+    </button>
+  
+<!-- sidebar fijo -->
+  <div class="sidebar"> 
+    <div class="sidebar-header text-center"> 
+      <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="Admin" class="sidebar-avatar"> 
+      <h5 class="mt-2">Perfil de Usuario</h5> 
+    </div> 
+    <ul class="sidebar-menu list-unstyled"> 
+      <li>
+        <a id="consultar_cuenta_sidebar" href="#" class="text">Mi cuenta</a>
+      </li> 
+    </ul> 
+    <ul class="sidebar-menu list-unstyled"> 
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#logoutModal" class="text">Cerrar Sesión</a>
+      </li> 
+    </ul> 
+  </div>
+
+    <!-- Main content  -->
+    <div id="main-content" class="main-content mb-4">
+      <div class="text-center mb-4">
+        <h2 class="navbar-title">Bienvenid@ {{ username }}!</h2>
+        <h2 class="text">¿Qué desea hacer?</h2>
+      </div>
+
+      <!-- Cards -->
+      <div class="container card-group justify-content-center align-items-center">
+        <div class="row mb-5 g-4">
+          <div class="col-md-6">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <img src="{{ url_for('static', filename='img/Register_case.png') }}" alt="btn1" class="card-img">
+                <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalRegistrarCaso">Registrar Caso
+                </a>              
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <img src="{{ url_for('static', filename='img/Search_case.png') }}" alt="btn2" class="card-img">
+                <a id="consultar_caso_usuario" href="#" class="btn btn-primary mt-3">Consultar mis casos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content d-flex flex-column align-items-center justify-content-center mt-2">
+        <h2 class="text">Si no sabe que paso seguir puede dar click a continuación y ver cómo funciona el aplicativo</h2>
+        <div class="align-items-center justify-content-center mt-2">
+          <a href="#servicios" class="btn btn-primary">
+            <i class="fa fa-info-circle me-1"></i> ¿Cómo funciona?
+          </a>
+        </div>
+      </div>
+</section>
+
+
+<!-- Modal Registrar Caso -->
+<div class="modal fade" id="modalRegistrarCaso" tabindex="-1" aria-labelledby="modalRegistrarCasoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRegistrarCasoLabel">Registrar Caso</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="registerCaseForm" method="POST" action="{{ url_for('user.register_case') }}">
+          
+          <!-- Fecha -->
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha
+              <br>
+              <small id="fechahelp" class="form-text text-muted">Ingrese la fecha en la que ocurrieron los hechos</small></label>
+            <input type="date" name="fecha" class="form-control" required>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción<br><small id="descripcionhelp" class="form-text text-muted">Ingrese una descripción breve de los hechos que no supere los 2000 carácteres</small></label>
+            <textarea name="descripcion" id="descripcion" maxlength="2000" class="form-control" rows="3" required></textarea>
+            <div id="contador" class="form-text">0/2000 carácteres</div>
+            
+          </div>
+
+          <!-- Dirección -->
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección
+            <br>
+            <small id="direccionhelp" class="form-text text-muted">Ingrese dirección donde el hecho ocurrió</small>
+          </label>
+            <input type="text" name="direccion" id="direccion" class="form-control" required>
+          </div>
+
+
+          <!-- Personas afectadas -->
+          <div class="mb-3">
+            <label for="personas_afectadas" class="form-label">Personas afectadas            
+            <br>
+            <small id="personasehelp" class="form-text text-muted">Ingrese el número de personas de su núcleo familiar afectadas por el desastre</small>
+          </label>
+            <input type="number" name="personas_afectadas" id="personas_afectadas" class="form-control" required>
+          </div>
+
+          <!-- Tipo de desastre -->
+          <div class="mb-3">
+            <label for="tipo_desastre" class="form-label">Tipo de desastre
+              <br>
+              <small id="desastrehelp" class="form-text text-muted">Seleccione el desastre ocurrido</small>
+            </label>
+            <select name="tipo_desastre" id="tipo_desastre" multiple class="form-control" required>
+              <option value="In">Incendio</option>
+              <option value="Inund">Inundación</option>
+              <option value="SI-T">Sismo / Temblor</option>
+              <option value="Ter">Terremoto</option>
+            </select>
+
+          </div>
+
+          <!-- Ciudad o Municipio -->
+          <div class="mb-3">
+            <label for="Ciudad" class="form-label">Ciudad/Municipio
+              <br>
+              <small id="ciudadhelp" class="form-text text-muted">Seleccione la ciudad o municipio donde ocurrieron o el más cercano al lugar de los hechos</small></label>
+            <select name="ciudad" id="ciudad" multiple class="form-select" size="4" required>
+              <option value="AGD">Agua de Dios</option>
+              <option value="ALB">Albán</option>
+              <option value="ANA">Anapoima</option>
+              <option value="ANO">Anolaima</option>
+              <option value="APU">Apulo</option>
+              <option value="ARB">Arbeláez</option>
+              <option value="BEL">Beltrán</option>
+              <option value="BIT">Bituima</option>
+              <option value="BOJ">Bojacá</option>
+              <option value="CAB">Cabrera</option>
+              <option value="CAC">Cachipay</option>
+              <option value="CAJ">Cajicá</option>
+              <option value="CAP">Caparrapí</option>
+              <option value="CAQ">Cáqueza</option>
+              <option value="CAR">Carmen de Carupa</option>
+              <option value="CHA">Chaguaní</option>
+              <option value="CHI">Chía</option>
+              <option value="CHP">Chipaque</option>
+              <option value="CHO">Choachí</option>
+              <option value="CHC">Chocontá</option>
+              <option value="COG">Cogua</option>
+              <option value="COT">Cota</option>
+              <option value="CUC">Cucunubá</option>
+              <option value="COL">El Colegio</option>
+              <option value="PEN">El Peñón</option>
+              <option value="ROS">El Rosal</option>
+              <option value="FAC">Facatativá</option>
+              <option value="FOM">Fómeque</option>
+              <option value="FOS">Fosca</option>
+              <option value="FUN">Funza</option>
+              <option value="FUQ">Fúquene</option>
+              <option value="FUS">Fusagasugá</option>
+              <option value="GAC">Gachalá</option>
+              <option value="GAN">Gachancipá</option>
+              <option value="GAT">Gachetá</option>
+              <option value="GAM">Gama</option>
+              <option value="GIR">Girardot</option>
+              <option value="GRA">Granada</option>
+              <option value="GUA">Guachetá</option>
+              <option value="GUD">Guaduas</option>
+              <option value="GUS">Guasca</option>
+              <option value="GUQ">Guataquí</option>
+              <option value="GUV">Guatavita</option>
+              <option value="GUSI">Guayabal de Síquima</option>
+              <option value="GUY">Guayabetal</option>
+              <option value="GUT">Gutiérrez</option>
+              <option value="JER">Jerusalén</option>
+              <option value="JUN">Junín</option>
+              <option value="LAC">La Calera</option>
+              <option value="LAM">La Mesa</option>
+              <option value="LAP">La Palma</option>
+              <option value="LPE">La Peña</option>
+              <option value="LVE">La Vega</option>
+              <option value="LEN">Lenguazaque</option>
+              <option value="MAC">Machetá</option>
+              <option value="MAD">Madrid</option>
+              <option value="MAN">Manta</option>
+              <option value="MED">Medina</option>
+              <option value="MOS">Mosquera</option>
+              <option value="NAR">Nariño</option>
+              <option value="NEM">Nemocón</option>
+              <option value="NIL">Nilo</option>
+              <option value="NIM">Nimaima</option>
+              <option value="NOC">Nocaima</option>
+              <option value="PAC">Pacho</option>
+              <option value="PAI">Paime</option>
+              <option value="PAN">Pandi</option>
+              <option value="PAR">Paratebueno</option>
+              <option value="PAS">Pasca</option>
+              <option value="PSA">Puerto Salgar</option>
+              <option value="PUL">Pulí</option>
+              <option value="QUE">Quebradanegra</option>
+              <option value="QET">Quetame</option>
+              <option value="QUI">Quipile</option>
+              <option value="RIC">Ricaurte</option>
+              <option value="SAT">San Antonio del Tequendama</option>
+              <option value="SBE">San Bernardo</option>
+              <option value="SCY">San Cayetano</option>
+              <option value="SFR">San Francisco</option>
+              <option value="SJR">San Juan de Rioseco</option>
+              <option value="SAS">Sasaima</option>
+              <option value="SES">Sesquilé</option>
+              <option value="SIB">Sibaté</option>
+              <option value="SIL">Silvania</option>
+              <option value="SIM">Simijaca</option>
+              <option value="SOA">Soacha</option>
+              <option value="SOP">Sopó</option>
+              <option value="SUB">Subachoque</option>
+              <option value="SUE">Suesca</option>
+              <option value="SUP">Supatá</option>
+              <option value="SUS">Susa</option>
+              <option value="SUT">Sutatausa</option>
+              <option value="TAB">Tabio</option>
+              <option value="TAU">Tausa</option>
+              <option value="TEN">Tenjo</option>
+              <option value="TNA">Tena</option>
+              <option value="TIB">Tibacuy</option>
+              <option value="TIR">Tibirita</option>
+              <option value="TOC">Tocaima</option>
+              <option value="TCP">Tocancipá</option>
+              <option value="TOP">Topaipí</option>
+              <option value="UBA">Ubalá</option>
+              <option value="UBQ">Ubaque</option>
+              <option value="UBT">Ubaté</option>
+              <option value="UNE">Une</option>
+              <option value="UTI">Útica</option>
+              <option value="VEN">Venecia</option>
+              <option value="VER">Vergara</option>
+              <option value="VIA">Vianí</option>
+              <option value="VGO">Villagómez</option>
+              <option value="VPN">Villapinzón</option>
+              <option value="VIL">Villeta</option>
+              <option value="VIO">Viotá</option>
+              <option value="YAC">Yacopí</option>
+              <option value="ZIPA">Zipaquirá</option>
+              <option value="ZIPC">Zipacón</option>
+            </select>
+            
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Registrar Caso</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Datos -->
+<div class="modal fade" id="modalEditarDatos" tabindex="-1" aria-labelledby="modalEditarDatosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarDatosLabel">
+          <i class="bi bi-pencil-fill"></i> Editar mis datos
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="editDataForm" method="POST" action="{{ url_for('user.update_account') }}">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Primer nombre</label>
+              <input type="text" name="pri_nom" id="pri_nom" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Segundo nombre</label>
+              <input type="text" name="seg_nom" id="seg_nom" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Primer apellido</label>
+              <input type="text" name="pri_ape" id="pri_ape" class="form-control" >
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Segundo apellido</label>
+              <input type="text" name="seg_ape" id="seg_ape" class="form-control">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input type="text" name="direccion_user" id="direccion_user" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" name="email" id="email" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefono </label>
+            <input type="number" name="telefono" id="telefono" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Edad</label>
+            <input type="number" name="edad" id="edad" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre de Usuario</label>
+            <input type="text" name="username" id="username" class="form-control">
+          </div>
+      </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de cierre de sesión -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="logoutModalLabel">Cierre de sesión</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        Está cerrando sessión. ¿Desea continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/contador.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const botonConsultar = document.getElementById("consultar_caso_usuario");
+  const mainContent = document.getElementById("main-content");
+  const botonesCuenta = document.querySelectorAll("#consultar_cuenta_sidebar, #consultar_cuenta_offcanvas");
+  async function cargarDatosCuenta() {
+  const dashboard = document.getElementById("content");
+  
+  dashboard.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-3">Cargando datos de tu cuenta...</p>
+    </div>
+  `;
+
+  try {
+    const response = await fetch("/user/manage-account");
+    const usuario = await response.json();
+
+    if (!usuario || Object.keys(usuario).length === 0) {
+      dashboard.innerHTML = `
+        <div class="text-center mt-5">
+          <h4>No se encontraron datos de tu cuenta.</h4>
+          <a href="#" class="btn btn-primary mt-3" onclick="location.reload()">
+            <i class="bi bi-reply-all-fill"></i> Volver
+          </a>
+        </div>
+      `;
+     return;
+    }
+
+    
+    const perfilHTML = `
+        <div class="count">
+          <div class="text-center mb-4">
+          <h2 class="navbar-title">Mi Cuenta</h2>
+          <h4 class="form-subtitle mb-3 fw-bold">${usuario.nombres} ${usuario.apellidos}</h4>  
+          <div class="row w-100 justify-content-center align-items-center">
+            <div class="col-md-6">
+              <div>
+                <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="Foto de perfil" class="profile-avatar">
+              </div>
+            </div>
+            <div class="col-md-3 text-align-items justify-content-center">
+                  <label class="form-label fw-bold text">Nombres:</label>
+                  <p class="text">${usuario.nombres}</p>
+                </div>
+                <div class="col-md-3 text-align-items">
+                  <label class="form-label fw-bold text">Apellidos:</label>
+                  <p class="text">${usuario.apellidos}</p>
+                </div>     
+            </div>
+          <div class="row text-center mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-bold mt-3">Nombre de usuario:</label>
+                <p class="text">${usuario.nombre_usuario}</p>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Contraseña:</label>
+                <p class="text">${usuario.contrasena_masked}</p>
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                  Cambiar contraseña
+                </button>
+            </div>
+
+          </div>
+          </div>
+          <h4 class="form-subtitle text-center mb-3 fw-bold">Información de contacto y estado</h4>
+          <div class="w-75 mx-auto">
+        
+            <div class="row">
+              <div class="col-md-6 p-3">
+                <label class="form-label fw-bold text">Número de documento:</label>
+                <p class="text">${usuario.documento}</p>
+                <label class="form-label fw-bold text">Dirección:</label>
+                <p class="text">${usuario.direccion}</p>
+                <label class="form-label fw-bold text">Correo electrónico:</label>
+                <p class="text">${usuario.email}</p>
+              </div>
+              <div class="col-md-6 p-3 ">
+                <label class="form-label fw-bold text">Estado:</label>
+                <p class="text">${usuario.estado_usuario}</p>
+                <label class="form-label fw-bold text">Tipo de documento:</label>
+                <p class="text">${usuario.tipo_documento}</p>
+                <label class="form-label fw-bold text">Teléfono:</label>
+                <p class="text">${usuario.telefono}</p>
+              </div>
+            </div>
+          </div>
+            <div class="text-center mt-4">
+            <a href="#" class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#modalEditarDatos">
+              <i class="bi bi-pencil-fill"></i> Editar datos
+            </a>
+            <a href="#" class="btn btn-primary" onclick="location.reload()">
+              <i class="bi bi-reply-all-fill"></i> Volver
+            </a>
+          </div>
+        </div>
+
+        <!-- Modal Cambiar Contraseña -->
+        <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <form id="changePasswordForm" method="POST" action="{{ url_for('user.change_password') }}">
+                  <div class="mb-3">
+                    <label for="actualPassword" class="form-label">Contraseña Actual</label>
+                    <input type="password" class="form-control" id="actualPassword" name="actual_password" required>
+                    </div>
+                  <div class="mb-3">
+                    <label for="newPassword" class="form-label">Nueva contraseña</label>
+                    <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                      <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Actualizar contraseña</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      `;
+    dashboard.innerHTML = perfilHTML;
+
+  } catch (error) {
+    console.error("Error al obtener datos de cuenta:", error);
+    dashboard.innerHTML = `
+      <div class="text-center mt-5 text-danger">
+        <h4>❌ Error al cargar los datos del perfil.</h4>
+        <a href="#" class="btn btn-primary mt-3" onclick="location.reload()">Volver</a>
+      </div>
+    `;
+  }
+}
+  
+  botonConsultar.addEventListener("click", async (e) => {
+    e.preventDefault(); // evita recargar la página
+
+    // Muestra un loader mientras carga
+    mainContent.innerHTML = `
+      <div class="text-center mt-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3">Cargando tus casos...</p>
+      </div>
+    `;
+
+    try {
+      const response = await fetch("/user/query_cases");
+      const casos = await response.json();
+
+      if (!casos || casos.length === 0) {
+        setTimeout(() => {
+        mainContent.innerHTML = `
+        <div class="text-center mt-5">
+            <h4>No se encontraron casos registrados.</h4>
+            <a href="#" class="btn btn-primary mt-3"onclick="window.location.href = window.location.pathname">
+              <i class="bi bi-reply-all-fill"></i> Volver
+            </a>
+          </div>
+      `;
+    }, 50);
+
+      }
+
+      // Construir la tabla
+      let tableHTML = `
+      <div class="w-100">
+        <div class="text-center mb-4">
+          <h2 class="navbar-title">Mis casos registrados</h2>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th>Número de caso</th>
+                <th>Fecha del evento</th>
+                <th>Descripción de los hechos</th>
+                <th>Dirección</th>
+                <th>Número de personas afectadas</th>
+                <th>Desastre ocurrido</th>
+                <th>Municipio/Ciudad</th>
+                <th>Tipo de Caso</th>
+                <th>Estado del caso</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      casos.forEach(caso => {
+        tableHTML += `
+          <tr>
+            <td>${caso.id}</td>
+            <td>${caso.fecha}</td>
+            <td>${caso.descripcion}</td>
+            <td>${caso.direccion}</td>
+            <td>${caso.personas_afectadas}</td>
+            <td>${caso.desastre}</td>
+            <td>${caso.municipio}</td>
+            <td>${caso.tipo_caso}</td>
+            <td>${caso.estado}</td>
+          </tr>`;
+      });
+
+      tableHTML += `
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="#" class="btn btn-primary" onclick="location.reload()">
+          <i class="bi bi-reply-all-fill"></i> Volver</a>
+        </div>
+      `;
+
+      // Reemplazar el contenido original por la tabla
+      mainContent.innerHTML = tableHTML;
+
+    } catch (error) {
+      console.error("Error al obtener los casos:", error);
+      mainContent.innerHTML = `
+        <div class="text-center mt-5 text-danger">
+          <h4>❌ Ocurrió un error al cargar tus casos.</h4>
+          <a href="#" class="btn btn-primary mt-3" onclick="location.reload()">Volver</a>
+        </div>
+      `;
+    }
+  });
+
+  botonesCuenta.forEach(boton => {
+  boton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    cargarDatosCuenta();
+  });
+  });
+
+  document.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    if (form.id === "changePasswordForm") {
+      const formData = new FormData(form);
+      const response = await fetch("/user/change_password", { method: "POST", body: formData });
+      const result = await response.json();
+
+      showToast(result.msg, result.status);
+
+      if (result.status === "success") {
+        const modal = bootstrap.Modal.getInstance(document.getElementById("changePasswordModal"));
+        modal.hide();
+        setTimeout(cargarDatosCuenta, 400);
+      }
+    }
+
+    if (form.id === "editDataForm") {
+      const formData = new FormData(form);
+      const response = await fetch("/user/update_account", { method: "POST", body: formData });
+      const result = await response.json();
+
+      showToast(result.msg, result.status);
+
+      if (result.status === "success") {
+        const modal = bootstrap.Modal.getInstance(document.getElementById("modalEditarDatos"));
+        modal.hide();
+        setTimeout(cargarDatosCuenta, 400);
+      }
+    }
+
+    if (form.id === "registerCaseForm") {
+      const formData = new FormData(form);
+      const response = await fetch("/user/register_case", { method: "POST", body: formData });
+      const result = await response.json();
+
+      showToast(result.msg, result.status);
+
+      if (result.status === "success") {
+        const modal = bootstrap.Modal.getInstance(document.getElementById("modalRegistrarCaso"));
+        modal.hide();
+        setTimeout(() => {
+          // Si quieres refrescar la lista de casos después
+          document.getElementById("consultar_caso_usuario")?.click();
+        }, 400);
+      }
+    }
+
+  });
+});
+
+</script>
+
+
+{% endblock %}

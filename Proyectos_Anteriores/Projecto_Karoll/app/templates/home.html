@@ -1,0 +1,276 @@
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- SECTION INICIO -->
+<section id="inicio" class="section mt-5">
+  <div class="container my-5">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center">
+        <h1 class="title">De la adversidad a la prosperidad</h1>
+        <br />
+        <div class="d-flex gap-4 justify-content-center mt-2">
+          <a href="#servicios" class="btn btn-primary">
+            <i class="fa fa-info-circle me-1"></i> ¿Cómo funciona?
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='img/home.png') }}" alt="Imagen ilustrativa" class="img-fluid"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION SERVICIOS -->
+<section id="servicios" class="section">
+  <div class="container py-5">
+    
+    <!-- 🔹 Título principal -->
+    <h2 class="navbar-title text-center my-5">Datos Estadísticos</h2>
+
+    <!-- 🔹 Primer grupo de tarjetas -->
+    <div class="container card-group">
+      <div class="row mb-5 g-4">
+        
+        <!-- Tarjeta 1 -->
+        <div class="col-md-4 d-felx">
+          <div class="card text-center h-100 w-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <p class="text">
+                De acuerdo a cifras de la<br>
+                <span class="Green-text">UNGRD</span> <br>
+                han habido más de <br>
+                <span class="Blue-text">2 MIL</span> <br>
+                afectados por desastres naturales en lo que va del año <br>
+                <span class="Green-text">2025</span> <br>
+              </p>
+              <img src="{{ url_for('static', filename='img/Dato1.jpg') }}" alt="Dato 1" class="services-img">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="col-md-4 d-flex">
+          <div class="card text-center h-100 w-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <img src="{{ url_for('static', filename='img/Dato2.jpg') }}" alt="Dato 2" class="services-img">
+              <p class="text">
+                Los desastres naturales más comunes son:<br>
+                <span class="Blue-text"> Inundaciones Terremotos Deslizamientos de tierra </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="col-md-4 d-flex">
+          <div class="card text-center h-100 w-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <p class="text">
+                Más del <span class="Blue-text text-md">62%</span> <br>
+                de la población de Cundinamarca es propensa a ser víctima de<br>
+                <span class="Blue-text">eventos catastróficos</span>
+              </p>
+              <img src="{{ url_for('static', filename='img/Dato3.png') }}" alt="Dato 3" class="services-img">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 🔹 Título intermedio -->
+    <h2 class="navbar-title text-center my-5">Nuestros Servicios</h2>
+
+    <!-- 🔹 Segundo grupo de tarjetas -->
+    <div class="container card-group">
+      <div class="row mb-5 g-4">
+
+        <!-- Servicio 1 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Services1.png') }}" alt="Servicio 1" class="services-img">
+              <h4 class="mt-3">Registro de desastre</h4>
+              <p class="text">Permite registrar de manera rápida el desastre ocurrido y los afectados</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Services2.png') }}" alt="Servicio 2" class="services-img">
+              <h4 class="mt-3">Clasificación de emergencias</h4>
+              <p class="text">Organiza las emergencias según el desastre y su prioridad</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Services3.png') }}" alt="Servicio 3" class="services-img">
+              <h4 class="mt-3">Notificación a autoridades</h4>
+              <p class="text">Envía alertas inmediatas a las entidades competentes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 4 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Services4.png') }}" alt="Servicio 4" class="services-img">
+              <h4 class="mt-3">Generación de reportes</h4>
+              <p class="text">Crea reportes detallados con la información de cada caso registrado.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION NOSOTROS -->
+<section id="nosotros" class="section">
+  <div class="container py-3">
+    <div class="row justify-content-center align-items-center flex-md-row flex-column">
+      <!-- Texto -->
+      <div class="col-md-6 col-12 mb-4">
+        <div class="d-flex align-items-center justify-content-center mb-3">
+          <img src="{{ url_for('static', filename='img/logo-k3.png') }}" class="logo-we" alt="Logo">
+        </div>
+        <div class="content-text text-center">
+          <h4>
+            Vitaria SOS es un proyecto que busca ayudar a personas afectadas por desastres naturales en
+            Cundinamarca permitiéndoles registrar los detalles de lo ocurrido en un "caso" de manera que
+            nosotros podamos clasificar y notificar a las autoridades de lo sucedido. Este proyecto se
+            desarrolló con el objetivo de agilizar el proceso de registro en el Registro Único de Damnificados (RUD)
+            y facilitar el acceso a ayudas humanitarias brindadas por el gobierno.
+          </h4>
+        </div>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="col-md-6 col-12 text-center">
+        <h2 class="navbar-title my-4">¿Quiénes somos?</h2>
+        <h4>Nuestro equipo está conformado por:</h4>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <!-- Item 1 -->
+            <div class="carousel-item active">
+              <div class="d-flex justify-content-center">
+                <div class="we">
+                  <img src="{{ url_for('static', filename='img/Líder.jpeg') }}" class="card-img-top" alt="Líder">
+                  <div class="card-body text-center">
+                    <h2 class="card-title">Karoll Orjuela</h2>
+                    <h6 class="text">Líder</h6>
+                    <p class="text px-4">
+                      Líder en la planeación, estructuración y desarrollo del proyecto. Estudiante de cuarto semestre de 
+                      ingeniería de sistemas en la Fundación Universitaria San Mateo aspirante a desempeñarse en el ambito laboral
+                      como desarrolladora frontend, diseñadora UX/UI y project manager.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Item 2 -->
+            <div class="carousel-item">
+              <div class="d-flex justify-content-center">
+                <div class="we">
+                  <img src="{{ url_for('static', filename='img/Miembro1.jpeg') }}" class="card-img-top" alt="Miembro 1">
+                  <div class="card-body text-center">
+                    <h2 class="card-title">Juan Trujillo</h2>
+                    <h6 class="text">Miembro 1</h6>
+                    <p class="text px-4">
+                      Encargado de la estructuración, planeación y verificación del proyecto. 
+                      Responsable de gestionar todo lo relacionado a la documentación oficial y los procesos de calidad, destacando por su proactividad, 
+                      orden y empeño en todas las labores asignadas por la líder.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Item 3 -->
+            <div class="carousel-item">
+              <div class="d-flex justify-content-center">
+                <div class="we">
+                  <img src="{{ url_for('static', filename='img/Miembro2.jpeg') }}" class="card-img-top" alt="Miembro 2">
+                  <div class="card-body text-center">
+                    <h2 class="card-title">Kevin Anzola</h2>
+                    <h6 class="text">Miembro 2</h6>
+                    <p class="text px-4">
+                      Encargado del desarrollo backend y pruebas de funcionalidad. 
+                      Desarrollador de las funcionalidades básicas y lógica de programación detrás del
+                      proyecto siguiendo las instrucciones dadas por la líder.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Controles -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION CONTACTO -->
+<section id="contacto" class="section">
+  <div class="container py-5">
+    <div class="contacto p-4">
+      <h3 class="navbar-title text-center my-5">Contáctanos</h3>
+      <div class="row">
+        <div class="col-md-6 justify-content-center">
+          <h5 class="text-center mt-5 ">
+            Si tiene alguna petición, queja, reclamo o sugerencia completar el siguiente formulario con su datos completos y nos comunicaremos con
+            usted lo más pronto posible para resolverla.
+            <br> En caso de buscar atención inmediata comunicarse directamente al siguiente correo y número de celular: <br>
+            <br /><strong>Correo:</strong> correoempresa@gmail.com  
+            <br /><strong>Celular:</strong> xxx-xxx-xxxx  
+          </h5>
+        </div>
+        <div class="col-md-6">
+          <form method="post" class="contacto-form" action="">
+            <div class="mb-3">
+              <label class="text"><strong>Nombres</strong></label>
+              <input type="text" class="form-control" name="nombres" required>
+            </div>
+            <div class="mb-3">
+              <label class="text"><strong>Apellidos</strong></label>
+              <input type="text" class="form-control" name="apellidos" required>
+            </div>
+            <div class="mb-3">
+              <label class="text"><strong>Email</strong></label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label class="text"><strong>Mensaje</strong></label>
+              <textarea class="form-control" name="mensaje" rows="3" required></textarea>
+            </div>
+            <div class="justify-content-center align-items-center">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-paper-plane me-1"></i> Enviar
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

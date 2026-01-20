@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+/*
+Programa que permite Insertar y mostrar datos de un arreglo
+Realizado por 
+Anzola Garzón Kevin Mauricio
+kmanzolag@sanmateo.edu.com
+20/09/24
+*/
+int TamañoArreglo = 5;
+int Arreglo[5];
+
+void TomarDatos () {
+    cout << "\033[32mIngrese los datos del arreglo\033[0m\n";
+    cout << "\n";
+    for (int i = 1; i < TamañoArreglo; i++){
+        cout << "\033[34mDato " << i << ":\033[0m ";
+        cin >> Arreglo[i];
+    }
+}
+
+void MostrarDatos () {
+    cout << "\033[32mDatos Almacenados:" << endl;
+    cout << "\n";
+    for (int i = 1; i < TamañoArreglo; i++) {
+        cout << "\033[35m" << i << ".)\033[0m " << Arreglo[i] << endl;
+    }
+}
+
+int main() {
+    
+    TomarDatos();
+    cout << "\n";
+    MostrarDatos();
+    return 0;
+}

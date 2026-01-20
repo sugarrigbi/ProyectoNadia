@@ -1,0 +1,619 @@
+{% extends "layout2.html" %}
+{% include 'navbar3.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+
+  <div class="container mt-3 d-flex">
+    <div
+      id="toast"
+      class="toast fade align-items-center text-white bg-success border-0 position-fixed top-5 start-50 translate-middle"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 2000;"
+    >
+      <div class="d-flex">
+        <!-- Aquí entra el mensaje -->
+        <div class="toast-body" id="toast-message"></div>
+        <!-- Botón de cerrar -->
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideToast()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+<section id="Dashboard" class="section ">
+
+  <div class="dashboard">
+  
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Perfil de Administrador</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="sidebar-header text-center">
+          <img src="{{ url_for('static', filename='img/login.png') }}" alt="Admin" class="sidebar-avatar">
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+          <li><a id="consultar_cuenta" href="#" class="text">Mi cuenta</a></li>
+        </ul>
+        <ul class="sidebar-menu list-unstyled">
+          <li><a data-bs-toggle="modal" data-bs-target="#logoutModal" class="text">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn btn-primary d-lg-none m-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+    ☰ Menú
+    </button>
+
+
+    <!-- sidebar  -->
+    <div class="sidebar"> 
+      <div class="sidebar-header text-center"> 
+        <img src="{{ url_for('static', filename='img/login.png') }}" alt="Admin" class="sidebar-avatar"> 
+        <h5 class="mt-2">Perfil de Administrador</h5> 
+      </div> 
+      <ul class="sidebar-menu list-unstyled"> 
+        <li><a id="consultar_cuenta" href="#" class="text">Mi cuenta</a></li> 
+      </ul> 
+      <ul class="sidebar-menu list-unstyled"> <li><a data-bs-toggle="modal" data-bs-target="#logoutModal" class="text">Cerrar Sesión</a></li> 
+      </ul> 
+    </div>
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content mb-4">
+      <div class="text-center mb-4">
+        <h2 class="navbar-title">Bienvenid@, {{ username }}! </h2>
+        <p>¿Qué desea hacer?</p>
+      </div>
+
+          <div class="container card-group">
+      <div class="row mb-5 g-4">
+
+        <!-- Servicio 1 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Register_case.png') }}" alt="btn1" class="card-img">
+              <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalRegistrarCasoAdmin">Registrar Caso</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_case.png') }}" alt="btn2" class="card-img">
+              <a href="#" id="consultar_casos" class="btn btn-primary mt-3">Consultar casos</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Report.png') }}" alt="Servicio 3" class="card-img">
+              <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalGenerarReporte">Generar reporte</a>              
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 4 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_user.png') }}" alt="Servicio 4" class="card-img">
+              <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalConsultarUsuarios">Consultar usuario</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_disaster.png') }}" alt="Servicio 4" class="card-img">
+              <a href="{{ url_for('admin.query_disasters') }}" class="btn btn-primary mt-3">Consultar desastres</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Registrar Caso -->
+<div class="modal fade" id="modalRegistrarCasoAdmin" tabindex="-1" aria-labelledby="modalRegistrarCasoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRegistrarCasoLabel">Registrar Caso</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="registerCaseAdminForm" method="POST" action="{{ url_for('admin.register_case') }}">
+          
+          <div class="mb-3">
+            <label for="fk_usuario" class="form-label">Seleccionar usuario</label>
+            <select name="fk_usuario" id="fk_usuario" class="form-select" required>
+              <option value="">Seleccione un usuario...</option>
+            </select>
+          </div>
+                    <!-- Fecha -->
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha
+              <br>
+              <small id="fechahelp" class="form-text text-muted">Ingrese la fecha en la que ocurrieron los hechos</small></label>
+            <input type="date" name="fecha" class="form-control" required>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción<br><small id="descripcionhelp" class="form-text text-muted">Ingrese una descripción breve de los hechos que no supere los 2000 carácteres</small></label>
+            <textarea name="descripcion" id="descripcion" maxlength="2000" class="form-control" rows="3" required></textarea>
+            <div id="contador" class="form-text">0/2000 carácteres</div>
+            
+          </div>
+
+          <!-- Dirección -->
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección
+            <br>
+            <small id="direccionhelp" class="form-text text-muted">Ingrese dirección donde el hecho ocurrió</small>
+          </label>
+            <input type="text" name="direccion" id="direccion" class="form-control" required>
+          </div>
+
+
+          <!-- Personas afectadas -->
+          <div class="mb-3">
+            <label for="personas_afectadas" class="form-label">Personas afectadas            
+            <br>
+            <small id="personasehelp" class="form-text text-muted">Ingrese el número de personas de su núcleo familiar afectadas por el desastre</small>
+          </label>
+            <input type="number" name="personas_afectadas" id="personas_afectadas" class="form-control" required>
+          </div>
+
+          <!-- Tipo de desastre -->
+          <div class="mb-3">
+            <label for="tipo_desastre" class="form-label">Tipo de desastre
+              <br>
+              <small id="desastrehelp" class="form-text text-muted">Seleccione el desastre ocurrido</small>
+            </label>
+            <select name="tipo_desastre" id="tipo_desastre" multiple class="form-control" required>
+              <option value="In">Incendio</option>
+              <option value="Inund">Inundación</option>
+              <option value="SI-T">Sismo / Temblor</option>
+              <option value="Ter">Terremoto</option>
+            </select>
+
+          </div>
+
+          <!-- Ciudad o Municipio -->
+          <div class="mb-3">
+            <label for="Ciudad" class="form-label">Ciudad/Municipio
+              <br>
+              <small id="ciudadhelp" class="form-text text-muted">Seleccione la ciudad o municipio donde ocurrieron o el más cercano al lugar de los hechos</small></label>
+            <select name="ciudad" id="ciudad" multiple class="form-select" size="4" required>
+              <option value="AGD">Agua de Dios</option>
+              <option value="ALB">Albán</option>
+              <option value="ANA">Anapoima</option>
+              <option value="ANO">Anolaima</option>
+              <option value="APU">Apulo</option>
+              <option value="ARB">Arbeláez</option>
+              <option value="BEL">Beltrán</option>
+              <option value="BIT">Bituima</option>
+              <option value="BOJ">Bojacá</option>
+              <option value="CAB">Cabrera</option>
+              <option value="CAC">Cachipay</option>
+              <option value="CAJ">Cajicá</option>
+              <option value="CAP">Caparrapí</option>
+              <option value="CAQ">Cáqueza</option>
+              <option value="CAR">Carmen de Carupa</option>
+              <option value="CHA">Chaguaní</option>
+              <option value="CHI">Chía</option>
+              <option value="CHP">Chipaque</option>
+              <option value="CHO">Choachí</option>
+              <option value="CHC">Chocontá</option>
+              <option value="COG">Cogua</option>
+              <option value="COT">Cota</option>
+              <option value="CUC">Cucunubá</option>
+              <option value="COL">El Colegio</option>
+              <option value="PEN">El Peñón</option>
+              <option value="ROS">El Rosal</option>
+              <option value="FAC">Facatativá</option>
+              <option value="FOM">Fómeque</option>
+              <option value="FOS">Fosca</option>
+              <option value="FUN">Funza</option>
+              <option value="FUQ">Fúquene</option>
+              <option value="FUS">Fusagasugá</option>
+              <option value="GAC">Gachalá</option>
+              <option value="GAN">Gachancipá</option>
+              <option value="GAT">Gachetá</option>
+              <option value="GAM">Gama</option>
+              <option value="GIR">Girardot</option>
+              <option value="GRA">Granada</option>
+              <option value="GUA">Guachetá</option>
+              <option value="GUD">Guaduas</option>
+              <option value="GUS">Guasca</option>
+              <option value="GUQ">Guataquí</option>
+              <option value="GUV">Guatavita</option>
+              <option value="GUSI">Guayabal de Síquima</option>
+              <option value="GUY">Guayabetal</option>
+              <option value="GUT">Gutiérrez</option>
+              <option value="JER">Jerusalén</option>
+              <option value="JUN">Junín</option>
+              <option value="LAC">La Calera</option>
+              <option value="LAM">La Mesa</option>
+              <option value="LAP">La Palma</option>
+              <option value="LPE">La Peña</option>
+              <option value="LVE">La Vega</option>
+              <option value="LEN">Lenguazaque</option>
+              <option value="MAC">Machetá</option>
+              <option value="MAD">Madrid</option>
+              <option value="MAN">Manta</option>
+              <option value="MED">Medina</option>
+              <option value="MOS">Mosquera</option>
+              <option value="NAR">Nariño</option>
+              <option value="NEM">Nemocón</option>
+              <option value="NIL">Nilo</option>
+              <option value="NIM">Nimaima</option>
+              <option value="NOC">Nocaima</option>
+              <option value="PAC">Pacho</option>
+              <option value="PAI">Paime</option>
+              <option value="PAN">Pandi</option>
+              <option value="PAR">Paratebueno</option>
+              <option value="PAS">Pasca</option>
+              <option value="PSA">Puerto Salgar</option>
+              <option value="PUL">Pulí</option>
+              <option value="QUE">Quebradanegra</option>
+              <option value="QET">Quetame</option>
+              <option value="QUI">Quipile</option>
+              <option value="RIC">Ricaurte</option>
+              <option value="SAT">San Antonio del Tequendama</option>
+              <option value="SBE">San Bernardo</option>
+              <option value="SCY">San Cayetano</option>
+              <option value="SFR">San Francisco</option>
+              <option value="SJR">San Juan de Rioseco</option>
+              <option value="SAS">Sasaima</option>
+              <option value="SES">Sesquilé</option>
+              <option value="SIB">Sibaté</option>
+              <option value="SIL">Silvania</option>
+              <option value="SIM">Simijaca</option>
+              <option value="SOA">Soacha</option>
+              <option value="SOP">Sopó</option>
+              <option value="SUB">Subachoque</option>
+              <option value="SUE">Suesca</option>
+              <option value="SUP">Supatá</option>
+              <option value="SUS">Susa</option>
+              <option value="SUT">Sutatausa</option>
+              <option value="TAB">Tabio</option>
+              <option value="TAU">Tausa</option>
+              <option value="TEN">Tenjo</option>
+              <option value="TNA">Tena</option>
+              <option value="TIB">Tibacuy</option>
+              <option value="TIR">Tibirita</option>
+              <option value="TOC">Tocaima</option>
+              <option value="TCP">Tocancipá</option>
+              <option value="TOP">Topaipí</option>
+              <option value="UBA">Ubalá</option>
+              <option value="UBQ">Ubaque</option>
+              <option value="UBT">Ubaté</option>
+              <option value="UNE">Une</option>
+              <option value="UTI">Útica</option>
+              <option value="VEN">Venecia</option>
+              <option value="VER">Vergara</option>
+              <option value="VIA">Vianí</option>
+              <option value="VGO">Villagómez</option>
+              <option value="VPN">Villapinzón</option>
+              <option value="VIL">Villeta</option>
+              <option value="VIO">Viotá</option>
+              <option value="YAC">Yacopí</option>
+              <option value="ZIPA">Zipaquirá</option>
+              <option value="ZIPC">Zipacón</option>
+            </select>
+            
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Registrar Caso</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Genererar Reporte Excel -->
+<div class="modal fade" id="modalGenerarReporte" tabindex="-1" aria-labelledby="modalmodalGenerarReporteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalGenerarReporteLabel">Generar Reporte de Casos Registrados</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="generatereportForm" method="POST" action="{{ url_for('admin.generate_report') }}">
+          <h5 class="text">El reporte ha generar contiene datos e información confidencial, no la comparta con personal no autorizado</h5>
+          <div class="mb-3">
+            <label for="FechaInicial" class="form-label">Fecha Inicial</label>
+              <br>
+              <small id="fechahelp" class="form-text text-muted">Ingrese la fecha desde la que desea generar el reporte</small></label>
+            <input type="date" name="FechaInicial" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="FechaFinal" class="form-label">Fecha Final</label>
+              <br>
+              <small id="fechahelp" class="form-text text-muted">Ingrese la fecha hasta la que desea generar el reporte</small></label>
+            <input type="date" name="FechaFinal" class="form-control" required>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Generar Reporte</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal de cierre de sesión -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="logoutModalLabel">Cierre de sesión</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        Está cerrando sessión. ¿Desea continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const modalRegistrarCasoAdmin = document.getElementById("modalRegistrarCasoAdmin");
+  const botonConsultar = document.getElementById("consultar_casos");
+  const mainContent = document.getElementById("main-content");
+  const formReporte = document.getElementById("generatereportForm");
+
+  botonConsultar.addEventListener("click", async (e) => {
+    e.preventDefault(); // evita recargar la página
+
+    // Muestra un loader mientras carga
+    mainContent.innerHTML = `
+      <div class="text-center mt-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3">Cargando tus casos...</p>
+      </div>
+    `;
+
+    try {
+      const response = await fetch("/admin/query_cases");
+      const casos = await response.json();
+
+      if (!casos || casos.length === 0) {
+        setTimeout(() => {
+        mainContent.innerHTML = `
+        <div class="text-center mt-5">
+            <h4>No se encontraron casos registrados.</h4>
+            <a href="#" class="btn btn-primary mt-3"onclick="window.location.href = window.location.pathname">
+              <i class="bi bi-reply-all-fill"></i> Volver
+            </a>
+          </div>
+      `;
+    }, 50);
+
+      }
+
+      // Construir la tabla
+      let tableHTML = `
+      <div class="align-items-center justify-content-center">
+        <div class="text-center mb-4">
+          <h2 class="navbar-title">Casos registrados en el Sistema</h2>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th>Fecha del evento</th>
+                <th>Número de caso</th>
+                <th>Descripción de los hechos</th>
+                <th>Dirección</th>
+                <th>Número de personas afectadas</th>
+                <th>Desastre ocurrido</th>
+                <th>Municipio/Ciudad</th>
+                <th>Tipo de Caso</th>
+                <th>Estado del caso</th>
+                <th>Id de Usuario</th>
+                <th>Nombre de Usuario</th>
+                <th>Nombre Completo</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      casos.forEach(caso => {
+        tableHTML += `
+          <tr>
+            <td>${caso.fecha}</td>
+            <td>${caso.id}</td>
+            <td>${caso.descripcion}</td>
+            <td>${caso.direccion}</td>
+            <td>${caso.personas_afectadas}</td>
+            <td>${caso.desastre}</td>
+            <td>${caso.municipio}</td>
+            <td>${caso.tipo_caso}</td>
+            <td>${caso.estado}</td>
+            <td>${caso.id_usuario}</td>
+            <td>${caso.nombre_usuario}</td>
+            <td>${caso.nombre_completo}</td>
+          </tr>`;
+      });
+
+      tableHTML += `
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="#" class="btn btn-primary" onclick="location.reload()">
+          <i class="bi bi-reply-all-fill"></i> Volver</a>
+        </div>
+      `;
+
+      // Reemplazar el contenido original por la tabla
+      mainContent.innerHTML = tableHTML;
+
+    } catch (error) {
+      console.error("Error al obtener los casos:", error);
+      mainContent.innerHTML = `
+        <div class="text-center mt-5 text-danger">
+          <h4>❌ Ocurrió un error al cargar tus casos.</h4>
+          <a href="#" class="btn btn-primary mt-3" onclick="location.reload()">Volver</a>
+        </div>
+      `;
+    }
+  });
+
+  async function cargarUsuarios() {
+    try {
+      // Obtener el select dentro del modal (por si se renderiza dinámicamente)
+      const selectUsuario = document.getElementById("fk_usuario");
+      if (!selectUsuario) {
+        console.warn("⚠️ No se encontró el select con id='fk_usuario'");
+        return;
+      }
+
+      const response = await fetch("/admin/select_users", { cache: "no-store" });
+      if (!response.ok) {
+        console.error("❌ Error en la respuesta del servidor:", response.status);
+        selectUsuario.innerHTML = '<option value="">Error al cargar usuarios</option>';
+        return;
+      }
+
+      const usuarios = await response.json();
+
+      // Limpiar el select antes de llenarlo
+      selectUsuario.innerHTML = '<option value="">Seleccione un usuario...</option>';
+
+      if (!Array.isArray(usuarios) || usuarios.length === 0) {
+        selectUsuario.innerHTML = '<option value="">No hay usuarios disponibles</option>';
+        return;
+      }
+
+      usuarios.forEach(u => {
+        const option = document.createElement("option");
+        option.value = u.id;      // El ID que se enviará al backend
+        option.textContent = u.nombre;  // Lo visible (primer nombre + primer apellido)
+        selectUsuario.appendChild(option);
+      });
+
+    } catch (error) {
+      console.error("Error cargando usuarios:", error);
+    }
+  }
+
+  // Asociar la función al evento de mostrar el modal
+  if (modalRegistrarCasoAdmin) {
+    modalRegistrarCasoAdmin.addEventListener("show.bs.modal", cargarUsuarios);
+  }
+
+  if (formReporte) {
+    formReporte.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(formReporte);
+
+      try {
+        const response = await fetch("/admin/generate_report", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const result = await response.json();
+          showToast(result.msg, "error");
+          return;
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Reporte_Casos.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById("modalGenerarReporte"));
+        if (modal) modal.hide();
+
+        showToast("Reporte generado y descargado correctamente ✅", "success");
+      } catch (error) {
+        console.error("❌ Error al generar el reporte:", error);
+        showToast("Ocurrió un error al generar el reporte ❌", "error");
+      }
+    });
+  }
+  document.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    if (form.id === "registerCaseAdminForm") {
+      try {
+        const formData = new FormData(form);
+        const response = await fetch("/admin/register_case", { method: "POST", body: formData });
+        const result = await response.json();
+
+        showToast(result.msg, result.status);
+
+        if (result.status === "success") {
+          const modal = bootstrap.Modal.getInstance(document.getElementById("modalRegistrarCasoAdmin"));
+          modal.hide();
+
+          // Refrescar lista de casos si aplica
+          setTimeout(() => {
+            document.getElementById("consultar_caso_usuario")?.click();
+          }, 400);
+        }
+      } catch (error) {
+        console.error("❌ Error al registrar caso:", error);
+        showToast("Error inesperado al registrar el caso.", "error");
+      }
+    }
+  });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg custom-navbar">
+  <div class="container">
+    <a class="navbar-brand d-inline-flex align-items-center" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='img/logo-t.png') }}" alt="Logo" class="navbar-logo" />
+      <span class="navbar-title ms-2">VITARIA. SOS</span>
+    </a>
+
+    <!-- Toggle responsive -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link text" href="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text" href="#servicios">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text" href="#nosotros">Nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text" href="#contacto">Contacto</a>
+        </li>
+      </ul>
+
+      <!-- Botones -->
+      <div class="d-flex gap-2">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+          <i class="bi bi-person-circle"></i> Ingresar
+        </a>
+        <a href="#" class="btn btn-primary" 
+        data-bs-toggle="modal" data-bs-target="#modalPoliticas">
+          <i class="bi bi-person-fill"></i> Registrarse
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="modal fade" id="modalPoliticas" tabindex="-1" aria-labelledby="modalPoliticasLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="modalPoliticasLabel">Política de Tratamiento de datos</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Estimado Usuario</h3>
+        <p>
+          En cumplimiento de la normativa vigente sobre protección de datos personales, le informamos que sus datos serán tratados de acuerdo con nuestra Política de Tratamiento de Datos Personales redactada a continuación:
+          <br>
+          <h5>1. Reponsable del tratamiento:</h5>
+            Vitaria SOS es responsable del tratamiento de los datos personales suministrados por los usuarios, conforme a lo dispuesto en la Ley 1581 de 2012 y demás normas que la modifiquen o complementen.
+          <h5>2. Finalidades del Tratamiento:</h5>
+          Los datos personales recolectados serán utilizados para las siguientes finalidades:<br>
+          <li>
+            <a>Gestionar el registro, autenticación y acceso de usuarios a la plataforma.</a>
+          </li>
+          <li>
+            <a>Administrar y mantener actualizada la información de los usuarios.</a>
+          </li>
+          <li>
+            <a>Procesar solicitudes, reportes o casos relacionados con el uso del sistema.</a>
+          </li>
+          <li>
+            <a>Enviar información relevante sobre actualizaciones, cambios o avisos del servicio</a>
+          </li>
+          <li>
+            <a>Realizar análisis estadísticos y de mejora continua del sistema</a>
+          </li>
+        <h5>3. Derechos del Titular:</h5>
+        De acuerdo con la ley, el titular de los datos personales tiene derecho a:
+        <li>
+            <a>Conocer, actualizar y rectificar sus datos.</a>
+          </li>
+          <li>
+            <a>Ser informado sobre el uso que se da a sus datos.</a>
+          </li>
+          <li>
+            <a>Revocar la autorización y/o solicitar la supresión de sus datos cuando no se respeten los principios, derechos y garantías constitucionales y legales.</a>
+          </li>
+        <h5>4. Autorización:</h5>
+        Al aceptar esta Política, usted autoriza de manera libre, previa, expresa e informada el tratamiento de sus datos personales conforme a las finalidades descritas. El responsable garantiza que sus datos serán tratados de forma segura, confidencial y únicamente para los fines autorizados.
+        <h5>5. Vigencia:</h5>
+        Esta Política entra en vigencia a partir de su publicación y permanecerá vigente mientras se mantenga la relación con el usuario o mientras sea necesario para el cumplimiento de las finalidades descritas.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+

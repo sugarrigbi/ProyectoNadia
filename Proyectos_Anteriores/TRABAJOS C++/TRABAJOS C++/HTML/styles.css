@@ -1,0 +1,13 @@
+.resaltado {
+    color: red;
+    border-color: red;
+    border-radius: 10px;
+  }
+  li {
+    list-style-type: none;
+  }
+  .special {
+    color: orange;
+    font-weight: bold;
+  }
+  

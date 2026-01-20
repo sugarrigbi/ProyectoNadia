@@ -1,0 +1,137 @@
+#include <iostream>
+#include <list>
+#include <string>
+
+using namespace std;
+
+/*
+Playlist en c++
+Anzola Kevin
+314 4048151
+kmanzolagsanmateo.edu.co
+*/
+
+struct Playlist {
+    string Cancion;
+    string Artista;
+};
+
+void MostrarPlaylist(const list<Playlist>& playlist) {
+    cout << "\033[45m---------\033[0m" << endl;
+    cout << "\033[45mPlaylist:\033[0m" << endl;
+    cout << "\033[45m---------\033[0m" << endl;
+    if (playlist.empty()) {
+        cout << "\033[42m------------------------------------\033[0m" << endl;
+        cout << "\033[42mLa lista de reproducción está vacía.\033[0m" << endl;
+        cout << "\033[42m------------------------------------\033[0m" << endl;
+        return;
+    }
+
+    for (const auto& Playlist : playlist) {
+        cout << "\033[45m--\033[0m " << Playlist.Cancion << " -- " << Playlist.Artista << endl;
+    }
+    cout << endl;
+}
+
+int main() {
+
+  cout << "\033[45m---------------" << endl;
+  cout << "Playlist en c++" << endl;
+  cout << "\033[45m---------------\033[0m" << endl;
+  cout << "\n";
+
+    list<Playlist> playlist;
+    int opcion;
+
+    do {
+      cout << "\033[44m----------------------\033[0m" << endl;
+      cout << "\033[44mSeleccione una opción:\033[0m" << endl;
+      cout << "\033[44m----------------------\033[0m" << endl;
+      cout << "\n"; 
+        cout << "\033[45m1.)\033[0m Agregar Cancion" << endl;
+        cout << "\033[45m2.)\033[0m Mostrar playlist" << endl;
+        cout << "\033[45m3.)\033[0m Eliminar Cancion" << endl;
+        cout << "\033[45m4.)\033[0m Salir\n" << endl;
+        cout << "\033[44m-------\033[0m" << endl;
+        cout << "\033[44mOpción:\033[0m" << endl;
+        cout << "\033[44m-------\033[0m\n" << endl;
+        cin >> opcion;
+        cin.ignore(); 
+
+        switch (opcion) {
+            case 1: {
+              Playlist nuevaPlaylist;
+              cout << "\033[41m--------------------------------\033[0m" << endl;
+              cout << "\033[41mIngrese el nombre de la cancion:\033[0m" << endl;
+              cout << "\033[41m--------------------------------\033[0m" << endl;
+              cout << "\n"; 
+                getline(cin, nuevaPlaylist.Cancion);
+              cout << "\033[41m-------------------\033[0m" << endl;
+              cout << "\033[41mIngrese el artista:\033[0m" << endl;
+              cout << "\033[41m-------------------\033[0m" << endl;
+              cout << "\n"; 
+                getline(cin, nuevaPlaylist.Artista);
+                playlist.push_back(nuevaPlaylist);
+              cout << "\033[41m-----------------\033[0m" << endl;
+              cout << "\033[41mCancion agregada.\033[0m" << endl;
+              cout << "\033[41m-----------------\033[0m" << endl;
+              cout << "\n"; 
+                break;
+            }
+
+            case 2:
+                MostrarPlaylist(playlist);
+                break;
+
+            case 3: {
+                string Cancion;
+              cout << "\033[41m-------------------------------\033[0m" << endl;
+              cout << "\033[41mIngrese la cancion a eliminar:\033[0m"<< endl;
+              cout << "\033[41m-------------------------------\033[0m" << endl;
+              cout << "\n"; 
+                getline(cin, Cancion);
+
+                auto it = playlist.begin();
+                bool encontrado = false;
+
+                while (it != playlist.end()) {
+                    if (it->Cancion == Cancion) {
+                        it = playlist.erase(it);
+                      cout << "\033[42m-------------------\033[0m" << endl;
+                      cout << "\033[42mPlaylist eliminado.\033[0m" << endl;
+                      cout << "\033[42m-------------------\033[0m" << endl;
+
+                        encontrado = true;
+                        break;
+                    } else {
+                        ++it;
+                    }
+                }
+
+                if (!encontrado) {
+                  cout << "\033[41m-----------------------\033[0m" << endl;
+                  cout << "\033[41mPlaylist no encontrada.\033[0m." << endl;
+                  cout << "\033[41m-----------------------\033[0m" << endl;
+                }
+                break;
+            }
+
+
+            case 4:
+                cout << "\033[41m-----------\033[0m" << endl;
+                cout << "\033[41mSaliendo...\033[0m" << endl;
+                cout << "\033[41m-----------\033[0m" << endl;
+                break;
+
+            default:
+                cout << "\033[42m----------------------------------\033[0m" << endl;
+                cout << "\033[42mOpción inválida, Intente de nuevo.\033[0m" << endl;
+                cout << "\033[42m----------------------------------\033[0m" << endl;
+        }
+
+        cout << endl;
+
+    } while (opcion != 5);
+
+    return 0;
+}

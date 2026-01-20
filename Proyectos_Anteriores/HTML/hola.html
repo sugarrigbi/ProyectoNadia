@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Usuario</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f6f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .registro {
+      background: #fff;
+      width: 700px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      border: 6px solid #1956EC;
+    }
+
+    .encabezado {
+      background-color: #1956EC;
+      color: white;
+      text-align: center;
+      padding: 25px 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      padding: 40px 50px;
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    input {
+      border: 2px solid #b8b8b8;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: #1956EC;
+      box-shadow: 0 0 4px #1956EC;
+      outline: none;
+    }
+
+    .boton {
+      grid-column: span 2;
+      background-color: #1956EC;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 0;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .boton:hover {
+      background-color: #2fb2de;
+      transform: translateY(-2px);
+    }
+
+    .texto {
+      grid-column: span 2;
+      text-align: center;
+      font-size: 15px;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .texto a {
+      color: #1956EC;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .texto a:hover {
+      color: #2fb2de;
+    }
+
+    @media (max-width: 720px) {
+      form {
+        grid-template-columns: 1fr;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="registro">
+    <div class="encabezado">Registro de Usuario</div>
+    <form>
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" required>
+      </div>
+      <div class="campo">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" required>
+      </div>
+      <div class="campo">
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" required>
+      </div>
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" required>
+      </div>
+      <div class="campo">
+        <label for="usuario">Nombre de usuario</label>
+        <input type="text" id="usuario" required>
+      </div>
+      <div class="campo">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" id="contraseña" required>
+      </div>
+      <div class="campo">
+        <label for="confirmar">Confirmar contraseña</label>
+        <input type="password" id="confirmar" required>
+      </div>
+      <button type="submit" class="boton">Crear cuenta</button>
+      <p class="texto">¿Ya tienes cuenta? <a href="#">Inicia sesión</a></p>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+
+    :root{
+      --bg:#ffffff;
+      --muted:#6b7f8d;
+      --corporate:#0f6fbf;
+      --accentB:#7a6dff;
+      --accentC:#ff6ea1;
+      --text:#042433;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      height:100%;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color:var(--text);
+      background:var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+
+    .frame{
+      width:680px; /* más ancho para 2 columnas */
+      padding:1px;
+      border-radius:18px;
+      background:linear-gradient(90deg,var(--corporate),var(--accentB),var(--accentC));
+      box-shadow:0 20px 50px rgba(10,20,40,0.1)
+    }
+    .inner{
+      border-radius:16px;
+      background:#fff;
+      padding:28px 40px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center
+    }
+
+    h2{font-size:24px;margin-bottom:6px;font-weight:800;color:var(--text)}
+    p{font-size:14px;margin-bottom:16px;color:var(--muted)}
+
+    label{display:block;text-align:left;font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+    input,select{
+      width:100%;
+      padding:11px;
+      border-radius:8px;
+      border:1px solid #d3dae0;
+      font-size:15px;
+      margin-bottom:14px
+    }
+    input:focus,select:focus{
+      border-color:var(--accentB);
+      outline:none;
+      box-shadow:0 0 0 4px rgba(122,109,255,0.06)
+    }
+
+    /* 🔹 Grid de dos columnas */
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      width:100%;
+    }
+
+    .btn{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      background:linear-gradient(90deg,var(--accentC),var(--accentB));
+      color:#fff;
+      box-shadow:0 6px 16px rgba(122,109,255,0.2);
+      transition:transform .2s
+    }
+    .btn:hover{transform:translateY(-2px)}
+
+    .extra-links{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap:6px
+    }
+    .extra-links a{color:var(--accentB);margin-left:4px}
+
+    /* Políticas de contraseña */
+    .policy{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:-10px;
+      margin-bottom:14px;
+      text-align:left
+    }
+
+    /* Modal de éxito */
+    .modal{
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      background:rgba(0,0,0,0.5);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      visibility:hidden;
+      opacity:0;
+      transition:opacity .3s ease;
+    }
+    .modal.active{
+      visibility:visible;
+      opacity:1;
+    }
+    .modal-content{
+      background:#fff;
+      padding:30px;
+      border-radius:16px;
+      text-align:center;
+      width:360px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    }
+    .modal-content h3{
+      font-size:20px;
+      margin-bottom:10px;
+      color:var(--corporate);
+    }
+    .modal-content p{
+      font-size:14px;
+      margin-bottom:20px;
+    }
+    .modal-content a{
+      display:inline-block;
+      padding:10px 20px;
+      border-radius:8px;
+      background:linear-gradient(90deg,var(--accentC),var(--accentB));
+      color:#fff;
+      font-weight:600;
+      text-decoration:none;
+    }
+  

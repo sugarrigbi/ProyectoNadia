@@ -1,0 +1,120 @@
+{% extends "layout2.html" %}
+{% include 'navbar2.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+
+  <div class="container mt-3 d-flex">
+    <div
+      id="toast"
+      class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 2000"
+    >
+      <div class="d-flex">
+        <!-- Aquí entra el mensaje -->
+        <div class="toast-body" id="toast-message"></div>
+        <!-- Botón de cerrar -->
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideToast()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+<section id="Dashboard" class="section">
+  <div class="container mt-3 d-flex">
+    <div id="toast" class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" 
+     role="alert" aria-live="assertive" aria-atomic="true" style="display: none; z-index: 2000;">
+      <div class="d-flex">
+        <div class="toast-body" id="toast-message">
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="hideToast()"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3 d-flex">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header text-center">
+        <img src="{{ url_for('static', filename='img/login.png') }}" alt="Admin" class="sidebar-avatar">
+        <h5 class="mt-2">Perfil de Administrador</h5>
+      </div>
+      <ul class="sidebar-menu list-unstyled">
+        <li><a href="{{ url_for('admin.manage_account') }}">Mi cuenta</a></li>
+      </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content mb-4">
+
+      <div class="text-center mb-4">
+        <h2 class="navbar-title">Bienvenid@, {{ username }}! </h2>
+        <p>¿Qué deseas hacer?</p>
+      </div>
+
+          <div class="container card-group">
+      <div class="row mb-5 g-4">
+
+        <!-- Servicio 1 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Register_case.png') }}" alt="btn1" class="card-img">
+              <a href="{{ url_for('admin.register_case') }}" class="btn btn-primary mt-3">Registrar Caso</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_case.png') }}" alt="btn2" class="card-img">
+              <a href="{{ url_for('admin.query_cases') }}" class="btn btn-primary mt-3">Consultar casos</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Report.png') }}" alt="Servicio 3" class="card-img">
+              <a href="{{ url_for('admin.generate_report') }}" class="btn btn-primary mt-3">Generar reporte</a>              
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 4 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_user.png') }}" alt="Servicio 4" class="card-img">
+              <a href="{{ url_for('admin.query_user') }}" class="btn btn-primary mt-3">Consultar usuario</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <img src="{{ url_for('static', filename='img/Search_disaster.png') }}" alt="Servicio 4" class="card-img">
+              <a href="{{ url_for('admin.query_disasters') }}" class="btn btn-primary mt-3">Consultar desastres</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock %}

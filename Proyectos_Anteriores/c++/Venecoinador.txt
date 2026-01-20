@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+string DiasComer;
+string DiasSinLuz;
+string OdioMaduro;
+string EresVeneco;
+string Nombre;
+
+bool DiasComer2 = false;
+bool DiasSinLuz2 = false;
+bool OdioMaduro2 = false;
+bool EresVeneco2 = false;
+
+fstream outFile ("Venecoinador.txt", ios::app);
+
+int main(){
+  cout << "Venecoinador" << endl;
+  cout << "Digite su nombre: " << endl;
+  getline (cin, Nombre);
+  cout << "PREGUNTA 1" << endl;
+  cout << "Hace cuantos dias no comes?" << endl;
+  cin >> DiasComer;
+  if (stoi(DiasComer) >= 2) {
+    DiasComer2 = true;
+  }
+  else {
+        DiasComer2 = false;
+  }
+  cout << "PREGUNTA 2" << endl;
+  cout << "Cuantos dias has durado como maximo sin luz?" << endl;
+  cin >> DiasSinLuz;
+  if (stoi(DiasSinLuz) >= 2) {
+      DiasSinLuz2 = true;
+  }
+  else {
+        DiasSinLuz2 = false;
+  }
+  cout << "PREGUNTA 3" << endl;
+  cout << "Odias a Maduro?(1=si/2=no)" << endl;
+  cin >> OdioMaduro;
+  if (stoi(OdioMaduro) == 1) {
+      OdioMaduro2 = true;
+  }
+  else {
+      OdioMaduro2 = false;
+  }
+  cout << "PREGUNTA 4" << endl;
+  cout << "eres venezolano?(1=si/2=no/3=No,que asco)" << endl;
+  cin >> EresVeneco;
+  if (stoi(EresVeneco) == 2) {
+      EresVeneco2 = true;
+  }
+  else if (stoi(EresVeneco) == 1) {
+        EresVeneco2 = true;
+    }
+  else if (stoi(EresVeneco) == 3) {
+        EresVeneco2 = false;
+    }
+  else {
+      EresVeneco2 = false;
+  }
+  cout << "calculando..." << endl;
+  int Respuesta;
+  cout << "Quiere ver su resultado?(1=si/2=no)" << endl;
+  cin >> Respuesta;
+  switch (Respuesta){
+case 1:
+  if (DiasComer2 == true && DiasSinLuz2 == true && OdioMaduro2 == true && EresVeneco2 == true){
+    cout << "Ust es 100% Veneco, Morite..." << endl;
+      outFile << Nombre  << ": Ust es 100% Veneco, Morite..." << endl;
+  }
+  else if (DiasComer2 == true && DiasSinLuz2 == true && OdioMaduro2 == true && EresVeneco2 == false){
+    cout << "Ust es 75% Veneco, Vete pa tu pais chamo.." << endl;
+      outFile << Nombre  << ": Ust es 75% Veneco, Vete pa tu pais chamo.." << endl;
+  }
+  else if (DiasComer2 == true && DiasSinLuz2 == true && OdioMaduro2 == false && EresVeneco2 == false){
+      cout << "Ust es 50% Veneco, estas a tiempo de cambiar..." << endl;
+        outFile << Nombre  << ": Ust es 50% Veneco, estas a tiempo de cambiar..." << endl;
+    }
+  else if (DiasComer2 == true && DiasSinLuz2 == false && OdioMaduro2 == false && EresVeneco2 == false){
+      cout << "Ust es 25% Veneco, Ojo al piojo..." << endl;
+       outFile << Nombre  << ": Ust es 25% Veneco, Ojo al piojo..." << endl;
+    }
+  else if (DiasComer2 == false && DiasSinLuz2 == false && OdioMaduro2 == false && EresVeneco2 == false){
+      cout << "Ust es 0% Me enorgulleces..." << endl;
+      outFile << Nombre  << ": Ust es 0% Me enorgulleces..." << endl;
+    }
+  else{
+    cout << "que paso master" << endl;
+      outFile << Nombre << ": Ust es 0% Me enorgulleces..." << endl;
+    return 1;
+  }
+case 2 :
+    return 1;
+  }
+  
+}

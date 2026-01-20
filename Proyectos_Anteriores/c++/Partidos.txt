@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int numPartidos = 0;
+    cout << "\n";
+    cout << "Ingrese el número de partidos que se jugarán: ";
+    cout << "\n";
+    cin >> numPartidos;
+
+    while (numPartidos <= 0) {
+      cout << "\n";
+        cout << "El número de partidos debe ser mayor que 0. Intente nuevamente: ";
+      cout << "\n";
+        cin >> numPartidos;
+    }
+
+    int resultados[numPartidos][2];
+    string equipos[numPartidos][2];
+    for (int i = 0; i < numPartidos; i++) {
+        for (int j = 0; j < 2; j++) {
+          cout << "\n";
+            cout << "Ingrese el nombre del equipo " << (j + 1) << " para el partido " << (i + 1) << ": ";
+            cout << "\n";
+          cin >> equipos[i][j];
+        }
+      cout << "\n";
+        cout << "Ingrese los resultados para el partido " << (i + 1) << ":\n";
+        cout << "Goles de " << equipos[i][0] << ": ";
+        cin >> resultados[i][0];
+        cout << "Goles de " << equipos[i][1] << ": ";
+        cin >> resultados[i][1];
+      cout << "------------------------------------------------------\n";
+    }
+
+    cout << "\nResultados almacenados:\n";
+    cout << "------------------------------------------------------\n";
+    cout << "Partido | Equipos              | Resultados          | Ganador\n";
+    cout << "------------------------------------------------------\n";
+
+    for (int i = 0; i < numPartidos; i++) {
+        string ganador;
+        if (resultados[i][0] > resultados[i][1]) {
+            ganador = equipos[i][0];
+        } else if (resultados[i][0] < resultados[i][1]) {
+            ganador = equipos[i][1];
+        } else {
+            ganador = "Empate";
+        }
+
+        cout << "  " << (i + 1) << "    | " << equipos[i][0] << " vs " << equipos[i][1]
+             << "  | " << resultados[i][0] << " - " << resultados[i][1]
+             << "                | " << ganador << endl;
+    }
+
+    cout << "------------------------------------------------------\n";
+
+    return 0;
+}

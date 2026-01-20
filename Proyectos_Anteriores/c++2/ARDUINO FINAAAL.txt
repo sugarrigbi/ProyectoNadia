@@ -1,0 +1,286 @@
+/*
+==================================================================
+Proyecto: GaiaArduino
+Autor: Anzola Kevin
+Versión: 7.0.2
+Fecha de creación: 27/08/24
+Última actualización: 20/11/24
+
+Copyright (c) 2024-2024 GaiaLink
+Todos los derechos reservados.
+
+Contribuciones:
+- Nadia Urrego
+- Steven Mora
+
+Contacto:
+- kmanzolag@sanmateo.edu.co
+- +57 3144048151
+
+Nota:
+Este código está destinado únicamente para [uso personal] y no debe ser reproducido, modificado, ni distribuido sin el consentimiento explícito del autor
+==================================================================
+*/
+//LIBRERIAS
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_AHTX0.h>
+#include <LiquidCrystal_I2C.h>
+//AHT10
+Adafruit_AHTX0 aht;
+//LCD I2C
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+//HC-SR04
+const int trigPin = 10;
+const int echoPin = 9;
+//HUMEDAD SUELO
+const int soilMoistureAnalogPin = A0;
+const int soilMoistureDigitalPin = 3;
+//FOTOCELDA
+const int lightSensorPin = A1;
+int lightValue = 0;
+//POTENCIOMETRO
+int A = 2;
+int B = 4;
+//POSICION POTENCIOMETRO
+int ANTERIOR = 45;
+volatile int POSICION = 45;
+//ACTUALIZACION
+unsigned long previousMillis = 0;
+const long interval = 1000;
+
+void setup() {
+//INICIAR LCD
+  lcd.begin(16, 2);
+  lcd.backlight();
+//PINES POTENCIOMETRO
+  pinMode(A, INPUT); 
+  pinMode(B, INPUT);
+//PINES HC-SR04
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+//PINES TIERRA
+  pinMode(soilMoistureDigitalPin, INPUT);
+//PINES FOTOCELDA
+  pinMode(lightSensorPin, INPUT);
+//COMUNICACIONES
+  Serial.begin(9600);
+//ERRORES
+  if (!aht.begin()) {
+    Serial.println("No se pudo encontrar el sensor AHT10");
+    while (1); 
+  }
+//INICIO             
+  attachInterrupt(digitalPinToInterrupt(A), encoder, LOW);
+  Serial.print("Iniciando Arduino");
+    lcd.setCursor(0, 0);  
+    lcd.print("Iniciando");
+    lcd.setCursor(0, 1);
+    lcd.print("Arduino");
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");      
+        delay(700);       
+    lcd.print(".");
+    Serial.print(".");    
+        delay(700);
+    lcd.print(".");
+    Serial.println(".");     
+        delay(1000);               
+        lcd.clear();          
+  Serial.print("Creando Datos");
+    lcd.setCursor(0, 0);  
+    lcd.print("Creando");
+    lcd.setCursor(0, 1);
+    lcd.print("Datos"); 
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");      
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");    
+        delay(700);
+    lcd.print(".");
+    Serial.println(".");     
+        delay(1000);
+        lcd.clear();               
+  Serial.print("Calibrando Sensores");
+    lcd.setCursor(0, 0);  
+    lcd.print("Calibrando ");
+    lcd.setCursor(0, 1);
+    lcd.print("Sensores");  
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");      
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");    
+        delay(700);
+    lcd.print(".");
+    Serial.println(".");     
+        delay(1000);
+        lcd.clear(); 
+  Serial.print("Finalizado");
+    lcd.setCursor(0, 0);  
+    lcd.print("Finalizado");
+        delay(700);
+    lcd.print("!");  
+    Serial.print("!");
+        delay(700);
+    lcd.print("!");
+    Serial.print("!");    
+        delay(700);
+    lcd.print("!");
+    Serial.println("!");     
+        delay(1000);
+        lcd.clear();          
+    lcd.setCursor(0, 0);
+  Serial.print("Iniciando programa");    
+    lcd.print("Iniciando");   
+    lcd.setCursor(0, 1);    
+    lcd.print("programa"); 
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");      
+        delay(700);
+    lcd.print(".");
+    Serial.print(".");    
+        delay(700);
+    lcd.print(".");
+    Serial.println(".");     
+        delay(1000);
+        lcd.clear();               
+}
+
+void loop() {
+//TIEMPO REFRESCO PANTALLA
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;      
+//MEDIR DISTANCIA
+    long distance = measureDistance();
+//MEDIR TEMPERATURA Y HUMEDAD
+    sensors_event_t humidity, temperature;
+    aht.getEvent(&humidity, &temperature);
+//MEDIR LUZ FOTOCELDA
+    int lightValue = analogRead(lightSensorPin);
+//MEDIR HUMEDAD DEL SUELO
+    int moistureValueAnalog = analogRead(soilMoistureAnalogPin);
+    int moistureValueDigital = digitalRead(soilMoistureDigitalPin);
+//DAR LECTURA DE 0%-100% A LA HUMEDAD DEL SUELO
+    int moisturePercentage = map(moistureValueAnalog, 0, 1023, 100, 0);
+//DAR LECTURA de 0%-100% A LA LUZ
+    int porcentajeLuz = map(lightValue, 0, 1023, 100, 0);
+//PREPARAR LCD
+    lcd.clear();
+    lcd.setCursor(0, 0);
+//SWITCH DE POSICION EN LCD Y EN SERIAL MONITOR
+    switch (POSICION) {
+      case 50:
+        lcd.print("Distancia: ");    
+        lcd.setCursor(0, 1);
+        if (distance < 0) {
+          lcd.print("Sin lectura");
+        } else {
+          lcd.print(distance);
+          lcd.print("cm");
+        }
+        break;
+      case 49:
+        lcd.print("Luz");
+        lcd.setCursor(0, 1);
+        lcd.print("Ambiente: ");
+        lcd.print(porcentajeLuz);
+        lcd.print("%");       
+        break;
+      case 48:
+        lcd.setCursor(0, 0);
+        lcd.print("Temperatura:");
+        lcd.setCursor(0, 1);
+        lcd.print(temperature.temperature);
+        lcd.print(" C");       
+        break;
+      case 47:
+        lcd.print("Humedad: ");
+        lcd.print(humidity.relative_humidity); 
+        lcd.print("%");
+        break;
+      case 46:
+        lcd.setCursor(0, 0);
+        lcd.print("Humedad tierra: ");          
+        lcd.setCursor(0, 1);
+        lcd.print(moisturePercentage);          
+        lcd.print("%");                        
+        break;
+      case 45:
+        lcd.setCursor(0, 0);
+        lcd.print("   >PROYECTO<");
+        lcd.setCursor(0, 1);
+        lcd.print("   >GAIALINK<");     
+        break;         
+      default:
+        lcd.print("Sin Dato");         
+        lcd.setCursor(0, 1);
+        lcd.print("Regrese");        
+        break;
+    }
+//DATOS AL SERIAL PORT 
+  //HUMEDAD SUELO      
+      Serial.print(moisturePercentage);
+      Serial.println(" %");
+  //HUMEDAD
+      Serial.print(humidity.relative_humidity); 
+      Serial.println(" %");
+  //TEMPERATURA     
+      Serial.println(temperature.temperature);
+  //LUZ 
+      Serial.print(porcentajeLuz);
+      Serial.println(" %");
+  //DISTANCIA                      
+      if (distance < 0) {
+           Serial.println("Sin lectura");
+        } else {
+           Serial.print(distance);
+           Serial.println(" cm");
+        }              
+//ASIGNAR VALOR DEL POTENCIOMETRO
+    ANTERIOR = POSICION;
+  }
+}
+long measureDistance() {
+//PULSO DEL TRIGGER
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+//LECTURA DEL ECHO
+  long duration = pulseIn(echoPin, HIGH);
+//CALCULAR DISTANCIA DeL SONIDO
+  long distance = duration * 0.034 / 2;
+//SI EL VALOR ES MENOR QUE 0 ES SIN LECTURA
+  return (distance < 2 || distance > 41) ? -1 : distance;
+}
+
+void encoder() {
+//TIEMPO DE REFRESCO
+  static unsigned long ultimaInterrupcion = 0;
+  unsigned long tiempoInterrupcion = millis();
+
+  if (tiempoInterrupcion - ultimaInterrupcion > 5) { 
+    if (digitalRead(B) == HIGH) { 
+      POSICION++; 
+    } else { 
+      POSICION--; 
+    }
+    POSICION = min(100, max(0, POSICION));
+//CREAR CICLO ROTATIVO
+    if (POSICION < 45) {
+      POSICION = 50;
+    } else if (POSICION > 50) {
+      POSICION = 45;
+    }
+    ultimaInterrupcion = tiempoInterrupcion;
+}
+}

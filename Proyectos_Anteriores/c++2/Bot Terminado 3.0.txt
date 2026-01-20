@@ -1,0 +1,84 @@
+#LIBRERIAS
+from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
+#==================================================================
+# Proyecto: GaiaBot
+# Autor: Anzola Kevin
+# Versión: 4.0.1
+# Fecha de creación: 03/09/24
+# Última actualización: 11/11/24
+
+# Copyright (c) 2024-2024 GaiaLink
+# Todos los derechos reservados.
+
+# Contribuciones:
+# - Nadia Urrego
+# - Steven Mora
+
+# Contacto:
+# - kmanzolag@sanmateo.edu.co
+# - +57 3144048151
+
+# Nota:
+# Este código está destinado únicamente para [uso personal] y no debe ser reproducido, modificado, ni distribuido sin el consentimiento explícito del autor
+#==================================================================
+#DATOS DE CUENTA
+client = Client(account_sid, auth_token)
+#RUTA DEL ARCHIVO
+file_path = "C:\\Users\\User\\Downloads\\datos_arduino.txt"
+#DEFINIR FUNCION DE ABRIR EL ARCHIVO
+def obtener_ultimos_datos():
+#ABRIR EL ARCHIVO
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()[-8:]
+            return ''.join(lines)
+    except FileNotFoundError:
+        return "Error: No se encontró el archivo de datos."
+#CREAR APP
+app = Flask(__name__)
+@app.route("/webhook", methods=["POST"])
+#DEFINIR FUNCION DEL WEBHOOK
+def webhook():
+#LEER CUERPO DEL MENSAJE ENVIADO
+    incoming_msg = request.values.get('Body', '').strip().lower()
+#FUNCION DE RESPONDER
+    resp = MessagingResponse()
+    msg = resp.message()
+#VERIFICAR QUE EL MENSAJE SEA IGUAL A dame los datos ENVIAR LOS DAOTS
+    if incoming_msg == "dame los datos":
+        lectura = obtener_ultimos_datos()
+        msg.body(f'Última lectura de Gaialink:\n{lectura}')
+    elif incoming_msg == "cuanto cuesta":
+        msg.body("El precio de nuestros sensores para monitorear plantas es de 140,000 pesos colombianos, Si prefieres verlo en dólares, el costo aproximado sería de unos 30 dólares estadounidenses, considerando el tipo de cambio actual. Estos sensores son ideales para mantener un control preciso de las condiciones de tus plantas, garantizando su bienestar y optimizando su crecimiento.")        
+    elif incoming_msg == "que es gaialink":
+        msg.body("Mediante la conexión y comunicación de algunos sensores, podrás saber el estado de tu planta no importa la distancia, con ayuda sensores podremos llevar un control de su estado utilizando el Arduino UNO como principal mediador para poder comunicarnos y obtener los datos de nuestra planta")        
+    elif incoming_msg == "quienes somos":
+        msg.body("Gaia Link: es una empresa que desarrolla sistemas de monitoreo para plantas y jardines. Nuestra tecnología permite a los usuarios monitorear y controlar las condiciones óptimas para el cuidado y crecimiento de las plantas, reduciendo el desperdicio de recursos y mejorando su productividad")        
+    elif incoming_msg == "hola":
+        msg.body("Bienvenido, soy GaiaBot Estas son las opciones de GaiaLink para ti:\n1- Dame los datos\n2- Contactanos\n3- Que es Gaialink\n4- Cuanto cuesta\n5- Quienes somos\n6- Adios\n")
+    elif incoming_msg == "adiós":
+        msg.body("Adios, Te esperamos pronto, y recuerda siempre estare cuando me nesesites!")
+    elif incoming_msg == "gracias":
+        msg.body("De nada, siempre estoy cuando me Nesesitas, no como tu ex!")
+    elif incoming_msg == "4":
+        msg.body("El precio de nuestros sensores para monitorear plantas es de 140,000 pesos colombianos, Si prefieres verlo en dólares, el costo aproximado sería de unos 30 dólares estadounidenses, considerando el tipo de cambio actual. Estos sensores son ideales para mantener un control preciso de las condiciones de tus plantas, garantizando su bienestar y optimizando su crecimiento.")             
+    elif incoming_msg == "1":
+        lectura = obtener_ultimos_datos()
+        msg.body(f'Última lectura de Gaialink:\n{lectura}')
+    elif incoming_msg == "3":
+        msg.body("Mediante la conexión y comunicación de algunos sensores, podrás saber el estado de tu planta no importa la distancia, con ayuda sensores podremos llevar un control de su estado utilizando el Arduino UNO como principal mediador para poder comunicarnos y obtener los datos de nuestra planta")        
+    elif incoming_msg == "5":
+        msg.body("Gaia Link: es una empresa que desarrolla sistemas de monitoreo para plantas y jardines. Nuestra tecnología permite a los usuarios monitorear y controlar las condiciones óptimas para el cuidado y crecimiento de las plantas, reduciendo el desperdicio de recursos y mejorando su productividad")        
+    elif incoming_msg == "2":
+        msg.body("Estos son nuestros contactos, Te esperamos!\n\nAnzola Kevin - CEO\nkmanzolag@sanmateo.edu.co\n+57 3144048151\n\nMora Steven - Director de ventas\nsmorag@sanmateo.edu.co\n+57 3028293988\n\nNadia Urrego - Directora de Investigaciones\nndurregov@sanmateo.edu.co\n+57 3125261601 ")
+    elif incoming_msg == "6":
+        msg.body("Adios, Te esperamos pronto, y recuerda siempre estare cuando me nesesites!")
+    else:
+        msg.body("Disculpa, no logro entender tu solicitud, Escribe ¨hola¨ para darte la lista de opciones")
+#DEVOLVER DATOS
+    return str(resp)
+#INICIAR APP
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)

@@ -1,0 +1,5 @@
+Do
+msgbox "SE A DETECTADO VIRUS, NO SEA SAPO"
+msgbox "ATTE: Ingeniero Anzola"
+msgbox "Mero cacorro"
+Loop
