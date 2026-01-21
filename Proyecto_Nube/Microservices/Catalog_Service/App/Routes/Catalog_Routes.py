@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from App.Utilities.Get import Get_Books, Get_Categories
+from App.Utilities.Get import Get_Books, Get_Categories, Get_Publisher, Get_Authors
 
 Catalog_Bp = Blueprint("Catalog", __name__)
 
@@ -43,3 +43,44 @@ def Bp_Categories_Update(Category_Id):
 @Catalog_Bp.route("/Categories/Delete/<int:Category_Id>", methods=["DELETE"])
 def Bp_Categories_Delete(Category_Id):
     return Get_Categories.Categories_Delete(Category_Id)
+
+@Catalog_Bp.route("/Publisher/Create", methods=["POST"])
+def Bp_Publisher_Create():
+    return Get_Publisher.Publisher_Create()
+@Catalog_Bp.route("/Publisher/Read/All", methods=["GET"])
+def Bp_Publisher_Read_All():
+    return Get_Publisher.Publisher_Read_All()
+@Catalog_Bp.route("/Publisher/Read/<int:Publisher_Id>", methods=["GET"])
+def Bp_Publisher_Read_One(Publisher_Id):
+        return Get_Publisher.Publisher_Read_One(Publisher_Id)
+@Catalog_Bp.route("/Publisher/Read/Search", methods=["GET"])
+def Bp_Publisher_Read_By():
+    Name = request.args.get("Name")
+    return Get_Publisher.Publisher_Read_By(Name)
+@Catalog_Bp.route("/Publisher/Update/<int:Publisher_Id>", methods=["PUT"])
+def Bp_Publisher_Update(Publisher_Id):
+    return Get_Publisher.Publisher_Update(Publisher_Id)
+@Catalog_Bp.route("/Publisher/Delete/<int:Publisher_Id>", methods=["DELETE"])
+def Bp_Publisher_Delete(Publisher_Id):
+    return Get_Publisher.Publisher_Delete(Publisher_Id)
+
+@Catalog_Bp.route("/Authors/Create", methods=["POST"])
+def Bp_Authors_Create():
+    return Get_Authors.Authors_Create()
+@Catalog_Bp.route("/Authors/Read/All", methods=["GET"])
+def Bp_Authors_Read_All():
+    return Get_Authors.Authors_Read_All()
+@Catalog_Bp.route("/Authors/Read/<int:Authors_Id>", methods=["GET"])
+def Bp_Authors_Read_One(Authors_Id):
+        return Get_Authors.Authors_Read_One(Authors_Id)
+@Catalog_Bp.route("/Authors/Read/Search", methods=["GET"])
+def Bp_Authors_Read_By():
+    Field = request.args.get("Field")
+    Value = request.args.get("Value")
+    return Get_Authors.Authors_Read_By(Field, Value)
+@Catalog_Bp.route("/Authors/Update/<int:Authors_Id>", methods=["PUT"])
+def Bp_Authors_Update(Authors_Id):
+    return Get_Authors.Authors_Update(Authors_Id)
+@Catalog_Bp.route("/Authors/Delete/<int:Authors_Id>", methods=["DELETE"])
+def Bp_Authors_Delete(Authors_Id):
+    return Get_Authors.Authors_Delete(Authors_Id)

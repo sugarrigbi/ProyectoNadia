@@ -1,5 +1,6 @@
 from App.Utilities.Extension import db
-from App.Models.Catalog_Model import Books, Categories, Publisher, Authors, Books_Authors
+from App.Models.Catalog_Model import Books, Categories, Publisher, Authors, Books_Authors, Book_Copies
+from sqlalchemy import and_
 
 class Books_Service:
     @staticmethod
@@ -10,7 +11,7 @@ class Books_Service:
         return Book
     @staticmethod
     def Read_All():
-        return Books.query.all()    
+        return Books.query.order_by(Books.ID.asc()).all()
     @staticmethod
     def Read_One(Book_Id):
         Book = Books.query.get(Book_Id)
@@ -46,6 +47,11 @@ class Books_Service:
         if not Book:
             return False
         
+        Copies_Count = Book_Copies.query.filter_by(Fk_Book=Book_Id).count()
+
+        if Copies_Count > 0:
+            return False
+        
         db.session.delete(Book)
         db.session.commit()
         
@@ -59,7 +65,7 @@ class Categories_Service:
         return Category
     @staticmethod
     def Read_All():
-        return Categories.query.all()
+        return Categories.query.order_by(Categories.ID.asc()).all()
     @staticmethod
     def Read_One(Category_Id):
         Category = Categories.query.get(Category_Id)
@@ -70,7 +76,7 @@ class Categories_Service:
         return Category
     @staticmethod
     def Read_By(Name):
-        Category = Categories.query.filter_by(Category_Name=Name).all()
+        Category = Categories.query.filter(Categories.Category_Name.ilike(f"%{Name}%")).all()
 
         if not Category:
             return False
@@ -112,13 +118,22 @@ class Publisher_Service:
         return Publish
     @staticmethod
     def Read_All():
-        return Publisher.query.all()
+        return Publisher.query.order_by(Publisher.ID.asc()).all()
     @staticmethod
     def Read_One(Publisher_Id):
-        return Publisher.query.get(Publisher_Id)
+        Publish = Publisher.query.get(Publisher_Id)
+
+        if not Publish:
+            return False
+        
+        return Publish
     @staticmethod
     def Read_By(Name):
-        return Publisher.query.filter_by(Publisher_Name=Name).all()
+        Publish = Publisher.query.filter(Publisher.Publisher_Name.ilike(f"%{Name}%")).all()
+        if not Publish:
+            return False
+        
+        return Publish
     @staticmethod
     def Update(Publisher_Id, Data):
         Publish = Publisher.query.get(Publisher_Id)
@@ -137,6 +152,11 @@ class Publisher_Service:
         if not Publish:
             return False
         
+        Books_Count = Books.query.filter_by(Fk_Publisher=Publisher_Id).count()
+
+        if Books_Count > 0:
+            return False
+
         db.session.delete(Publish)
         db.session.commit()
         
@@ -182,60 +202,8 @@ class Authors_Service:
         Author = Authors.query.get(Authors_Id)
         if not Author:
             return False
-        
-        Books_Count = Books_Authors.query.filter_by(Fk_Author=Authors_Id).count()
-        if Books_Count > 0:
-            return False
 
         db.session.delete(Author)
         db.session.commit()
         
         return True
-class Books_Authors_Service:
-    @staticmethod
-    def Assign_Author_Book(Book_Id, Author_Id):
-        Book = Books.query.get(Book_Id)
-        Author = Authors.query.get(Author_Id)
-
-        if not Book or not Author:
-            return False
-        
-        Exists = Books_Authors.query.filter_by(Fk_Book=Book_Id,Fk_Author=Author_Id).first()
-
-        if Exists:
-            return False
-        
-        Relation = Books_Authors(Fk_Book=Book_Id,Fk_Author=Author_Id)
-
-        db.session.add(Relation)
-        db.session.commit()
-
-        return Relation
-    @staticmethod
-    def Delete_Author_Book(Book_Id, Author_Id):
-        Relation = Books_Authors.query.filter_by(Fk_Book=Book_Id,Fk_Author=Author_Id).first()
-
-        if not Relation:
-            return False
-        
-        db.session.delete(Relation)
-        db.session.commit()
-
-        return True
-    @staticmethod
-    def Read_All_Author_Book():
-        return Books_Authors.query.all()
-    @staticmethod
-    def Read_One_Author_Book(Book_Id, Author_Id):
-        return Books_Authors.query.filter_by(Fk_Book=Book_Id,Fk_Author=Author_Id).first()
-    @staticmethod
-    def Read_By_Author_Book(Field, Value):
-        if not hasattr(Books_Authors, Field):
-            return []
-        
-        Column = getattr(Books_Authors, Field)
-
-        if hasattr(Column.type, "length"):
-            return Books_Authors.query.filter(Column.ilike(f"%{Value}%")).all()
-        
-        return Books_Authors.query.filter(Column == Value).all()

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Libros</title>
+</head>
+<body>
+    <h1>Lista de libros</h1>
+    <ul id="book-list"></ul>
+
+    <script>
+        // URL de la API
+        const API_URL = "http://127.0.0.1:5000/Catalog/Books/Read/All";
+
+        // Función para obtener todos los libros
+        async function getBooks() {
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+
+            const ul = document.getElementById("book-list");
+            ul.innerHTML = ""; // limpiar
+
+            data.forEach(book => {
+                const li = document.createElement("li");
+                li.textContent = `${book.Title} - ${book.Author}`;
+                ul.appendChild(li);
+            });
+
+            } catch (error) {
+                console.error("Error al obtener libros:", error);
+            }
+        }
+
+        getBooks();
+    </script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 from App.Utilities.Extension import db, Base_Model
 
 Books_Authors = db.Table(
-    'books_authors',
-    db.Column('Book_Id', db.Integer, db.ForeignKey('tbl_books.ID'), primary_key=True),
-    db.Column('Author_Id', db.Integer, db.ForeignKey('tbl_authors.ID'), primary_key=True)
+    'tbl_book_authors',
+    db.Column('Fk_Book', db.Integer, db.ForeignKey('tbl_books.ID'), primary_key=True),
+    db.Column('Fk_Author', db.Integer, db.ForeignKey('tbl_authors.ID'), primary_key=True)
 )
 class Books(Base_Model):
     __tablename__ = "tbl_books"
@@ -54,5 +54,18 @@ class Authors(Base_Model):
     
     def __repr__(self):
         return f"<Author {self.First_Name} {self.Last_Name}>"
+class Book_Copies(db.Model):
+    __tablename__ = "tbl_book_copies"
 
+    ID = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    Barcode = db.Column(db.String(50), nullable=False, unique=True)
+    Acquisition_Date = db.Column(db.DateTime, nullable=False)
+    Location = db.Column(db.String(50), nullable=False)
+    Created_At = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
+
+    Fk_Book = db.Column(db.Integer, db.ForeignKey("tbl_books.ID"), nullable=False)
+    Fk_Status = db.Column(db.String(20), db.ForeignKey("tbl_book_status.ID"), nullable=False)
+
+    def __repr__(self):
+        return f"<Book_Copy {self.Barcode} - Status {self.Fk_Status}>"
 

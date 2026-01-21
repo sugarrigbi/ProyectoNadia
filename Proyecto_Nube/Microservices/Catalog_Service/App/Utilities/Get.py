@@ -1,6 +1,5 @@
-from flask import request, jsonify
+from flask import request, jsonify, Response, json
 from App.Services import Catalog_Logic
-from App.Utilities.Extension import Base_Model
 
 class Get_Books:
     @staticmethod
@@ -16,9 +15,8 @@ class Get_Books:
         return jsonify({"Message": "Book created successfully"}), 201
     @staticmethod
     def Books_Read_All():
-        Book = Catalog_Logic.Books_Service.Read_All()
-        json = [B.to_dict() for B in Book]
-        return Base_Model.to_json(json, 200)
+        Book = Catalog_Logic.Books_Service.Read_All() 
+        return Response(json.dumps([B.to_dict() for B in Book], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Books_Read_One(Book_Id):
         Book = Catalog_Logic.Books_Service.Read_One(Book_Id)
@@ -26,7 +24,7 @@ class Get_Books:
         if Book == False:
             return jsonify({"Error": "No books finded"}), 404
 
-        return jsonify(Book.to_dict()), 200
+        return Response(json.dumps(Book.to_dict(), ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Books_Read_By(Field, Value):
         Book = Catalog_Logic.Books_Service.Read_By(Field, Value)
@@ -34,7 +32,7 @@ class Get_Books:
         if Book == False:
             return jsonify({"Error": "No books finded"}), 400
         
-        return jsonify([B.to_dict() for B in Book]), 200
+        return Response(json.dumps([B.to_dict() for B in Book], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Books_Update(Book_Id):
         Data = request.get_json()
@@ -71,7 +69,7 @@ class Get_Categories:
     @staticmethod
     def Categories_Read_All():
         Category = Catalog_Logic.Categories_Service.Read_All()
-        return jsonify([C.to_dict() for C in Category]), 200
+        return Response(json.dumps([C.to_dict() for C in Category], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Categories_Read_One(Category_Id):
         Category = Catalog_Logic.Categories_Service.Read_One(Category_Id)
@@ -79,7 +77,7 @@ class Get_Categories:
         if Category == False:
             return jsonify({"Error": "No Categories finded"}), 404
 
-        return jsonify(Category.to_dict()), 200
+        return Response(json.dumps(Category.to_dict(), ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Categories_Read_By(Name):
         Category = Catalog_Logic.Categories_Service.Read_By(Name)
@@ -87,7 +85,7 @@ class Get_Categories:
         if Category == False:
             return jsonify({"Error": "No Categories finded"}), 400
         
-        return jsonify([C.to_dict() for C in Category]), 200
+        return Response(json.dumps([C.to_dict() for C in Category], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
     @staticmethod
     def Categories_Update(Category_Id):
         Data = request.get_json()
@@ -109,3 +107,109 @@ class Get_Categories:
             return jsonify({"Error": "No Categories updated"}), 400
         
         return jsonify({"Message": "Category deleted successfully"}), 200
+class Get_Publisher:
+    @staticmethod
+    def Publisher_Create():
+        Data = request.get_json()
+
+        if not Data:
+            return jsonify({"Error": "No data provided"}), 400
+        
+        Publish = Catalog_Logic.Publisher_Service.Create(Data)
+        if not Publish:
+            return jsonify({"Error": "No publisher created"}), 400
+        return jsonify({"Message": "publisher created successfully"}), 201
+    @staticmethod
+    def Publisher_Read_All():
+        Publish = Catalog_Logic.Publisher_Service.Read_All()
+        return Response(json.dumps([P.to_dict() for P in Publish], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Publisher_Read_One(Publisher_Id):
+        Publish = Catalog_Logic.Publisher_Service.Read_One(Publisher_Id)
+
+        if Publish == False:
+            return jsonify({"Error": "No Publishers finded"}), 404
+
+        return Response(json.dumps(Publish.to_dict(), ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Publisher_Read_By(Name):
+        Publish = Catalog_Logic.Publisher_Service.Read_By(Name)
+
+        if Publish == False:
+            return jsonify({"Error": "No Publishers finded"}), 400
+        
+        return Response(json.dumps([P.to_dict() for P in Publish], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Publisher_Update(Publisher_Id):
+        Data = request.get_json()
+
+        if not Data:
+            return jsonify({"Error": "No data provided"}), 400
+
+        Publish = Catalog_Logic.Publisher_Service.Update(Publisher_Id, Data)
+
+        if Publish == False:
+            return jsonify({"Error": "No Publisher updated"}), 400
+        
+        return jsonify({"Message": "Publisher updated successfully"}), 200
+    @staticmethod
+    def Publisher_Delete(Publisher_Id):
+        Publish = Catalog_Logic.Publisher_Service.Delete(Publisher_Id)
+
+        if Publish == False:
+            return jsonify({"Error": "No Publisher updated"}), 400
+        
+        return jsonify({"Message": "Publisher deleted successfully"}), 200    
+class Get_Authors:
+    @staticmethod
+    def Authors_Create():
+        Data = request.get_json()
+
+        if not Data:
+            return jsonify({"Error": "No data provided"}), 400
+        
+        Author = Catalog_Logic.Authors_Service.Create(Data)
+        if not Author:
+            return jsonify({"Error": "No author created"}), 400
+        return jsonify({"Message": "author created successfully"}), 201
+    @staticmethod
+    def Authors_Read_All():
+        Author = Catalog_Logic.Authors_Service.Read_All()
+        return Response(json.dumps([A.to_dict() for A in Author], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Authors_Read_One(Authors_Id):
+        Author = Catalog_Logic.Authors_Service.Read_One(Authors_Id)
+
+        if Author == False:
+            return jsonify({"Error": "No Author finded"}), 404
+
+        return Response(json.dumps(Author.to_dict(), ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Authors_Read_By(Field, Value):
+        Author = Catalog_Logic.Authors_Service.Read_By(Field, Value)
+
+        if Author == False:
+            return jsonify({"Error": "No Authors finded"}), 400
+        
+        return Response(json.dumps([A.to_dict() for A in Author], ensure_ascii=False, indent=2),status=200,mimetype='application/json')
+    @staticmethod
+    def Authors_Update(Authors_Id):
+        Data = request.get_json()
+
+        if not Data:
+            return jsonify({"Error": "No data provided"}), 400
+
+        Author = Catalog_Logic.Authors_Service.Update(Authors_Id, Data)
+
+        if Author == False:
+            return jsonify({"Error": "No Author updated"}), 400
+        
+        return jsonify({"Message": "Author updated successfully"}), 200
+    @staticmethod
+    def Authors_Delete(Authors_Id):
+        Author = Catalog_Logic.Authors_Service.Delete(Authors_Id)
+
+        if Author == False:
+            return jsonify({"Error": "No Author updated"}), 400
+        
+        return jsonify({"Message": "Author deleted successfully"}), 200        
