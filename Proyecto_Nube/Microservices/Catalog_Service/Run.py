@@ -1,5 +1,5 @@
-from app import create_app
+from App import Create_App
 
-app = create_app()
+App = Create_App()
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    App.run(debug=True, port=5003)

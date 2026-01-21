@@ -32,7 +32,7 @@ CREATE TABLE `tbl_add_person` (
   KEY `FK_Contacts_2` (`Fk_Contacts`),
   CONSTRAINT `FK_Contacts_2` FOREIGN KEY (`Fk_Contacts`) REFERENCES `tbl_contacts` (`ID`),
   CONSTRAINT `tbl_add_person_ibfk_1` FOREIGN KEY (`Fk_Person`) REFERENCES `tbl_person` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `tbl_add_person` (
 
 LOCK TABLES `tbl_add_person` WRITE;
 /*!40000 ALTER TABLE `tbl_add_person` DISABLE KEYS */;
+INSERT INTO `tbl_add_person` VALUES (1,1,1,1),(2,0,2,2);
 /*!40000 ALTER TABLE `tbl_add_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,8 +57,8 @@ CREATE TABLE `tbl_address` (
   `Address` text,
   `Country` varchar(50) DEFAULT NULL,
   `City` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`ID`)  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +67,7 @@ CREATE TABLE `tbl_address` (
 
 LOCK TABLES `tbl_address` WRITE;
 /*!40000 ALTER TABLE `tbl_address` DISABLE KEYS */;
+INSERT INTO `tbl_address` VALUES (1,'Calle 123 #45-67','Colombia','Bogotá'),(2,'Carrera 89 #12-34','Colombia','Medellín');
 /*!40000 ALTER TABLE `tbl_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +83,7 @@ CREATE TABLE `tbl_authors` (
   `First_Name` varchar(50) DEFAULT NULL,
   `Last_Name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,6 +92,7 @@ CREATE TABLE `tbl_authors` (
 
 LOCK TABLES `tbl_authors` WRITE;
 /*!40000 ALTER TABLE `tbl_authors` DISABLE KEYS */;
+INSERT INTO `tbl_authors` VALUES (1,'Gabriel','García'),(2,'Isabel','Allende');
 /*!40000 ALTER TABLE `tbl_authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,6 +119,7 @@ CREATE TABLE `tbl_book_authors` (
 
 LOCK TABLES `tbl_book_authors` WRITE;
 /*!40000 ALTER TABLE `tbl_book_authors` DISABLE KEYS */;
+INSERT INTO `tbl_book_authors` VALUES (1,1),(2,2);
 /*!40000 ALTER TABLE `tbl_book_authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +133,7 @@ DROP TABLE IF EXISTS `tbl_book_copies`;
 CREATE TABLE `tbl_book_copies` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Barcode` varchar(50) DEFAULT NULL,
-  `Acquisition_Date` timestamp DEFAULT NULL,
+  `Acquisition_Date` date DEFAULT NULL,
   `Location` varchar(50) DEFAULT NULL,
   `Created_At` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `Fk_Status` varchar(20) NOT NULL,
@@ -140,7 +144,7 @@ CREATE TABLE `tbl_book_copies` (
   KEY `Fk_Status` (`Fk_Status`),
   CONSTRAINT `tbl_book_copies_ibfk_1` FOREIGN KEY (`Fk_Book`) REFERENCES `tbl_books` (`ID`),
   CONSTRAINT `tbl_book_copies_ibfk_2` FOREIGN KEY (`Fk_Status`) REFERENCES `tbl_book_status` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +153,7 @@ CREATE TABLE `tbl_book_copies` (
 
 LOCK TABLES `tbl_book_copies` WRITE;
 /*!40000 ALTER TABLE `tbl_book_copies` DISABLE KEYS */;
+INSERT INTO `tbl_book_copies` VALUES (1,'BC-001',NULL,NULL,'2026-01-21 00:18:39','available',1),(2,'BC-002',NULL,NULL,'2026-01-21 00:18:39','available',2);
 /*!40000 ALTER TABLE `tbl_book_copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,6 +178,7 @@ CREATE TABLE `tbl_book_status` (
 
 LOCK TABLES `tbl_book_status` WRITE;
 /*!40000 ALTER TABLE `tbl_book_status` DISABLE KEYS */;
+INSERT INTO `tbl_book_status` VALUES ('available','Disponible'),('loaned','Prestado');
 /*!40000 ALTER TABLE `tbl_book_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,9 +203,9 @@ CREATE TABLE `tbl_books` (
   UNIQUE KEY `Isbn` (`Isbn`),
   KEY `Fk_Category` (`Fk_Category`),
   KEY `Fk_Publisher` (`Fk_Publisher`),
-  CONSTRAINT `tbl_books_ibfk_1` FOREIGN KEY (`Fk_Category`) REFERENCES `tbl_categories` (`ID`),
+  CONSTRAINT `tbl_books_ibfk_1` FOREIGN KEY (`Fk_Category`) REFERENCES `tbl_contacts` (`ID`),
   CONSTRAINT `tbl_books_ibfk_2` FOREIGN KEY (`Fk_Publisher`) REFERENCES `tbl_publishers` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +214,7 @@ CREATE TABLE `tbl_books` (
 
 LOCK TABLES `tbl_books` WRITE;
 /*!40000 ALTER TABLE `tbl_books` DISABLE KEYS */;
+INSERT INTO `tbl_books` VALUES (1,'Libro A','111-AAA',2020,200,'Español','2026-01-21 00:18:39',1,1),(2,'Libro B','222-BBB',2021,150,'Español','2026-01-21 00:18:39',2,2);
 /*!40000 ALTER TABLE `tbl_books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +230,7 @@ CREATE TABLE `tbl_categories` (
   `Category_Name` varchar(100) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Category_Name` (`Category_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,6 +239,7 @@ CREATE TABLE `tbl_categories` (
 
 LOCK TABLES `tbl_categories` WRITE;
 /*!40000 ALTER TABLE `tbl_categories` DISABLE KEYS */;
+INSERT INTO `tbl_categories` VALUES (2,'Ciencia'),(1,'Ficción'),(3,'Historia');
 /*!40000 ALTER TABLE `tbl_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +258,7 @@ CREATE TABLE `tbl_contacts` (
   PRIMARY KEY (`ID`),
   KEY `Fk_Add_Person` (`Fk_Add_Person`),
   CONSTRAINT `tbl_contacts_ibfk_1` FOREIGN KEY (`Fk_Add_Person`) REFERENCES `tbl_add_person` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,6 +267,7 @@ CREATE TABLE `tbl_contacts` (
 
 LOCK TABLES `tbl_contacts` WRITE;
 /*!40000 ALTER TABLE `tbl_contacts` DISABLE KEYS */;
+INSERT INTO `tbl_contacts` VALUES (1,'kevin@example.com','3101234567',NULL),(2,'tatiana@example.com','3107654321',NULL);
 /*!40000 ALTER TABLE `tbl_contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,78 +292,45 @@ CREATE TABLE `tbl_document_type` (
 
 LOCK TABLES `tbl_document_type` WRITE;
 /*!40000 ALTER TABLE `tbl_document_type` DISABLE KEYS */;
+INSERT INTO `tbl_document_type` VALUES ('cc','Cédula de Ciudadanía'),('ti','Tarjeta de Identidad');
 /*!40000 ALTER TABLE `tbl_document_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_fine_history`
+-- Table structure for table `tbl_inventory_history`
 --
 
-DROP TABLE IF EXISTS `tbl_fine_history`;
+DROP TABLE IF EXISTS `tbl_inventory_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tbl_fine_history` (
+CREATE TABLE `tbl_inventory_history` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `Change_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Fk_Performed_By` int DEFAULT NULL,
-  `Fk_Penalty` int NOT NULL,
-  `Previous_Status` varchar(20) DEFAULT NULL,
-  `New_Status` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `Fk_Penalty` (`Fk_Penalty`),
-  KEY `Previous_Status` (`Previous_Status`),
-  KEY `New_Status` (`New_Status`),
-  KEY `Fk_Performed_By` (`Fk_Performed_By`),
-  CONSTRAINT `tbl_fine_history_ibfk_1` FOREIGN KEY (`Fk_Penalty`) REFERENCES `tbl_penalties` (`ID`),
-  CONSTRAINT `tbl_fine_history_ibfk_2` FOREIGN KEY (`Previous_Status`) REFERENCES `tbl_penalties_status` (`ID`),
-  CONSTRAINT `tbl_fine_history_ibfk_3` FOREIGN KEY (`New_Status`) REFERENCES `tbl_penalties_status` (`ID`),
-  CONSTRAINT `tbl_fine_history_ibfk_4` FOREIGN KEY (`Fk_Performed_By`) REFERENCES `tbl_user` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_fine_history`
---
-
-LOCK TABLES `tbl_fine_history` WRITE;
-/*!40000 ALTER TABLE `tbl_fine_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_fine_history` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tbl_inventory_movements`
---
-
-DROP TABLE IF EXISTS `tbl_inventory_movements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tbl_inventory_movements` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `Movement_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Notes` varchar(255) DEFAULT NULL,
-  `Fk_Performed_By_User` int DEFAULT NULL,
+  `Movement_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Notes` varchar(255) NOT NULL,
+  `Fk_Performed_By_User` int NOT NULL,
   `Fk_Book_Copy` int NOT NULL,
-  `Fk_Previous_Status` varchar(20) DEFAULT NULL,
-  `Fk_New_Status` varchar(20) DEFAULT NULL,
+  `Fk_Previous_Status` varchar(20) NOT NULL,
+  `Fk_New_Status` varchar(20) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `Fk_Book_Copy` (`Fk_Book_Copy`),
-  KEY `Fk_Previous_Status` (`Fk_Previous_Status`),
-  KEY `Fk_New_Status` (`Fk_New_Status`),
-  KEY `Fk_Performed_By_User` (`Fk_Performed_By_User`),
-  CONSTRAINT `tbl_inventory_movements_ibfk_1` FOREIGN KEY (`Fk_Book_Copy`) REFERENCES `tbl_book_copies` (`ID`),
-  CONSTRAINT `tbl_inventory_movements_ibfk_2` FOREIGN KEY (`Fk_Previous_Status`) REFERENCES `tbl_book_status` (`ID`),
-  CONSTRAINT `tbl_inventory_movements_ibfk_3` FOREIGN KEY (`Fk_New_Status`) REFERENCES `tbl_book_status` (`ID`),
-  CONSTRAINT `tbl_inventory_movements_ibfk_4` FOREIGN KEY (`Fk_Performed_By_User`) REFERENCES `tbl_user` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `tbl_inventory_history_ibfk_2` (`Fk_Previous_Status`),
+  KEY `tbl_inventory_history_ibfk_3` (`Fk_New_Status`),
+  KEY `tbl_inventory_history_ibfk_4` (`Fk_Performed_By_User`),
+  CONSTRAINT `tbl_inventory_history_ibfk_1` FOREIGN KEY (`Fk_Book_Copy`) REFERENCES `tbl_book_copies` (`ID`),
+  CONSTRAINT `tbl_inventory_history_ibfk_2` FOREIGN KEY (`Fk_Previous_Status`) REFERENCES `tbl_book_status` (`ID`),
+  CONSTRAINT `tbl_inventory_history_ibfk_3` FOREIGN KEY (`Fk_New_Status`) REFERENCES `tbl_book_status` (`ID`),
+  CONSTRAINT `tbl_inventory_history_ibfk_4` FOREIGN KEY (`Fk_Performed_By_User`) REFERENCES `tbl_user` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_inventory_movements`
+-- Dumping data for table `tbl_inventory_history`
 --
 
-LOCK TABLES `tbl_inventory_movements` WRITE;
-/*!40000 ALTER TABLE `tbl_inventory_movements` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_inventory_movements` ENABLE KEYS */;
+LOCK TABLES `tbl_inventory_history` WRITE;
+/*!40000 ALTER TABLE `tbl_inventory_history` DISABLE KEYS */;
+INSERT INTO `tbl_inventory_history` VALUES (1,'2026-01-21 00:18:39','Cambio de estado a prestado',1,1,'available','loaned');
+/*!40000 ALTER TABLE `tbl_inventory_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -381,7 +357,7 @@ CREATE TABLE `tbl_loan_history` (
   CONSTRAINT `tbl_loan_history_ibfk_2` FOREIGN KEY (`Fk_Previous_Status`) REFERENCES `tbl_loan_status` (`ID`),
   CONSTRAINT `tbl_loan_history_ibfk_3` FOREIGN KEY (`Fk_New_Status`) REFERENCES `tbl_loan_status` (`ID`),
   CONSTRAINT `tbl_loan_history_ibfk_4` FOREIGN KEY (`Fk_Performed_By`) REFERENCES `tbl_user` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -390,6 +366,7 @@ CREATE TABLE `tbl_loan_history` (
 
 LOCK TABLES `tbl_loan_history` WRITE;
 /*!40000 ALTER TABLE `tbl_loan_history` DISABLE KEYS */;
+INSERT INTO `tbl_loan_history` VALUES (1,'2026-01-21 00:18:39','Préstamo devuelto',1,'active','returned',1);
 /*!40000 ALTER TABLE `tbl_loan_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,6 +391,7 @@ CREATE TABLE `tbl_loan_status` (
 
 LOCK TABLES `tbl_loan_status` WRITE;
 /*!40000 ALTER TABLE `tbl_loan_status` DISABLE KEYS */;
+INSERT INTO `tbl_loan_status` VALUES ('active','Activo'),('returned','Devuelto');
 /*!40000 ALTER TABLE `tbl_loan_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,8 +405,8 @@ DROP TABLE IF EXISTS `tbl_loans`;
 CREATE TABLE `tbl_loans` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Loan_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Due_Date` DATE NOT NULL,
-  `Return_Date` timestamp DEFAULT NULL,
+  `Due_Date` date NOT NULL,
+  `Return_Date` date DEFAULT NULL,
   `Fk_Book_Copy` int NOT NULL,
   `Fk_User` int NOT NULL,
   `Fk_Status` varchar(20) NOT NULL,
@@ -442,7 +420,7 @@ CREATE TABLE `tbl_loans` (
   CONSTRAINT `tbl_loans_ibfk_2` FOREIGN KEY (`Fk_User`) REFERENCES `tbl_user` (`ID`),
   CONSTRAINT `tbl_loans_ibfk_3` FOREIGN KEY (`Fk_Status`) REFERENCES `tbl_loan_status` (`ID`),
   CONSTRAINT `tbl_loans_ibfk_4` FOREIGN KEY (`Fk_Created_By`) REFERENCES `tbl_user` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -451,6 +429,7 @@ CREATE TABLE `tbl_loans` (
 
 LOCK TABLES `tbl_loans` WRITE;
 /*!40000 ALTER TABLE `tbl_loans` DISABLE KEYS */;
+INSERT INTO `tbl_loans` VALUES (1,'2026-01-21 00:18:39','2026-01-30',NULL,1,2,'active',1);
 /*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,6 +481,7 @@ CREATE TABLE `tbl_notification_status` (
 
 LOCK TABLES `tbl_notification_status` WRITE;
 /*!40000 ALTER TABLE `tbl_notification_status` DISABLE KEYS */;
+INSERT INTO `tbl_notification_status` VALUES ('sent','Enviado'),('read','Leído');
 /*!40000 ALTER TABLE `tbl_notification_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,7 +537,7 @@ CREATE TABLE `tbl_penalties` (
   CONSTRAINT `tbl_penalties_ibfk_1` FOREIGN KEY (`Fk_Loan`) REFERENCES `tbl_loans` (`ID`),
   CONSTRAINT `tbl_penalties_ibfk_2` FOREIGN KEY (`Fk_User`) REFERENCES `tbl_user` (`ID`),
   CONSTRAINT `tbl_penalties_ibfk_3` FOREIGN KEY (`Fk_Status`) REFERENCES `tbl_penalties_status` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -566,7 +546,43 @@ CREATE TABLE `tbl_penalties` (
 
 LOCK TABLES `tbl_penalties` WRITE;
 /*!40000 ALTER TABLE `tbl_penalties` DISABLE KEYS */;
+INSERT INTO `tbl_penalties` VALUES (1,10.50,'2026-01-21 00:18:39','pending',1,2);
 /*!40000 ALTER TABLE `tbl_penalties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_penalties_history`
+--
+
+DROP TABLE IF EXISTS `tbl_penalties_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_penalties_history` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Change_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `Fk_Performed_By` int DEFAULT NULL,
+  `Fk_Penalty` int NOT NULL,
+  `Previous_Status` varchar(20) DEFAULT NULL,
+  `New_Status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Fk_Penalty` (`Fk_Penalty`),
+  KEY `Previous_Status` (`Previous_Status`),
+  KEY `New_Status` (`New_Status`),
+  KEY `Fk_Performed_By` (`Fk_Performed_By`),
+  CONSTRAINT `tbl_penalties_history_ibfk_1` FOREIGN KEY (`Fk_Penalty`) REFERENCES `tbl_penalties` (`ID`),
+  CONSTRAINT `tbl_penalties_history_ibfk_2` FOREIGN KEY (`Previous_Status`) REFERENCES `tbl_penalties_status` (`ID`),
+  CONSTRAINT `tbl_penalties_history_ibfk_3` FOREIGN KEY (`New_Status`) REFERENCES `tbl_penalties_status` (`ID`),
+  CONSTRAINT `tbl_penalties_history_ibfk_4` FOREIGN KEY (`Fk_Performed_By`) REFERENCES `tbl_user` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_penalties_history`
+--
+
+LOCK TABLES `tbl_penalties_history` WRITE;
+/*!40000 ALTER TABLE `tbl_penalties_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_penalties_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -585,7 +601,7 @@ CREATE TABLE `tbl_penalties_payments` (
   PRIMARY KEY (`ID`),
   KEY `Fk_Penalty` (`Fk_Penalty`),
   CONSTRAINT `tbl_penalties_payments_ibfk_1` FOREIGN KEY (`Fk_Penalty`) REFERENCES `tbl_penalties` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -594,6 +610,7 @@ CREATE TABLE `tbl_penalties_payments` (
 
 LOCK TABLES `tbl_penalties_payments` WRITE;
 /*!40000 ALTER TABLE `tbl_penalties_payments` DISABLE KEYS */;
+INSERT INTO `tbl_penalties_payments` VALUES (1,'2026-01-21 00:18:39',5.50,NULL,1);
 /*!40000 ALTER TABLE `tbl_penalties_payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -618,6 +635,7 @@ CREATE TABLE `tbl_penalties_status` (
 
 LOCK TABLES `tbl_penalties_status` WRITE;
 /*!40000 ALTER TABLE `tbl_penalties_status` DISABLE KEYS */;
+INSERT INTO `tbl_penalties_status` VALUES ('paid','Pagado'),('pending','Pendiente');
 /*!40000 ALTER TABLE `tbl_penalties_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -634,7 +652,7 @@ CREATE TABLE `tbl_person` (
   `Second_Name` varchar(50) DEFAULT NULL,
   `First_LastName` varchar(50) NOT NULL,
   `Second_LastName` varchar(50) DEFAULT NULL,
-  `Birth_Date` DATE DEFAULT NULL,
+  `Birth_Date` date DEFAULT NULL,
   `Fk_DocumentType` varchar(50) DEFAULT NULL,
   `Fk_User` int DEFAULT NULL,
   `Fk_Address` int NOT NULL,
@@ -645,7 +663,7 @@ CREATE TABLE `tbl_person` (
   CONSTRAINT `fk_person_address` FOREIGN KEY (`Fk_Address`) REFERENCES `tbl_address` (`ID`),
   CONSTRAINT `tbl_person_ibfk_1` FOREIGN KEY (`Fk_DocumentType`) REFERENCES `tbl_document_type` (`ID`),
   CONSTRAINT `tbl_person_ibfk_2` FOREIGN KEY (`Fk_User`) REFERENCES `tbl_user` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -654,6 +672,7 @@ CREATE TABLE `tbl_person` (
 
 LOCK TABLES `tbl_person` WRITE;
 /*!40000 ALTER TABLE `tbl_person` DISABLE KEYS */;
+INSERT INTO `tbl_person` VALUES (1,'Kevin',NULL,'Anzola',NULL,NULL,'cc',1,1),(2,'Tatiana',NULL,'Gómez',NULL,NULL,'cc',2,2);
 /*!40000 ALTER TABLE `tbl_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -669,7 +688,7 @@ CREATE TABLE `tbl_publishers` (
   `Publisher_Name` varchar(100) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Publisher_Name` (`Publisher_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -678,6 +697,7 @@ CREATE TABLE `tbl_publishers` (
 
 LOCK TABLES `tbl_publishers` WRITE;
 /*!40000 ALTER TABLE `tbl_publishers` DISABLE KEYS */;
+INSERT INTO `tbl_publishers` VALUES (1,'Editorial Alfa'),(2,'Editorial Beta');
 /*!40000 ALTER TABLE `tbl_publishers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -731,6 +751,7 @@ CREATE TABLE `tbl_reservation_status` (
 
 LOCK TABLES `tbl_reservation_status` WRITE;
 /*!40000 ALTER TABLE `tbl_reservation_status` DISABLE KEYS */;
+INSERT INTO `tbl_reservation_status` VALUES ('cancelled','Cancelado'),('reserved','Reservado');
 /*!40000 ALTER TABLE `tbl_reservation_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -755,7 +776,7 @@ CREATE TABLE `tbl_reservations` (
   CONSTRAINT `FK_Book2` FOREIGN KEY (`Fk_Book`) REFERENCES `tbl_books` (`ID`),
   CONSTRAINT `tbl_reservations_ibfk_1` FOREIGN KEY (`Fk_User`) REFERENCES `tbl_user` (`ID`),
   CONSTRAINT `tbl_reservations_ibfk_2` FOREIGN KEY (`Fk_Status`) REFERENCES `tbl_reservation_status` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -764,6 +785,7 @@ CREATE TABLE `tbl_reservations` (
 
 LOCK TABLES `tbl_reservations` WRITE;
 /*!40000 ALTER TABLE `tbl_reservations` DISABLE KEYS */;
+INSERT INTO `tbl_reservations` VALUES (1,'2026-01-21 00:18:39','2026-01-25 05:00:00',2,2,'reserved');
 /*!40000 ALTER TABLE `tbl_reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -808,20 +830,20 @@ CREATE TABLE `tbl_user` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Username` varchar(50) NOT NULL,
   `Password_Hash` varchar(255) NOT NULL,
-  `Created_At` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Is_Blocked` tinyint(1) DEFAULT '0',
-  `Failed_Attempts` int DEFAULT '0',
-  `Active_2FA` tinyint(1) DEFAULT '0',
-  `SecretKey_2FA` varchar(255) DEFAULT NULL,
-  `Fk_Role` varchar(50) DEFAULT NULL,
-  `Fk_State` varchar(50) DEFAULT NULL,
+  `Created_At` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Is_Blocked` tinyint(1) NOT NULL DEFAULT '0',
+  `Failed_Attempts` int NOT NULL DEFAULT '0',
+  `Active_2FA` tinyint(1) NOT NULL DEFAULT '0',
+  `SecretKey_2FA` varchar(255) NOT NULL DEFAULT '0',
+  `Fk_Role` varchar(50) NOT NULL,
+  `Fk_State` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Username` (`Username`),
   KEY `Fk_Role` (`Fk_Role`),
   KEY `Fk_State` (`Fk_State`),
   CONSTRAINT `tbl_user_ibfk_1` FOREIGN KEY (`Fk_Role`) REFERENCES `tbl_user_roles` (`ID`),
   CONSTRAINT `tbl_user_ibfk_2` FOREIGN KEY (`Fk_State`) REFERENCES `tbl_user_states` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -830,6 +852,7 @@ CREATE TABLE `tbl_user` (
 
 LOCK TABLES `tbl_user` WRITE;
 /*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
+INSERT INTO `tbl_user` VALUES (1,'kevin','hash123','2026-01-21 00:18:39',0,0,0,'0','admin','active'),(2,'tatiana','hash456','2026-01-21 00:18:39',0,0,0,'0','user','active');
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -854,6 +877,7 @@ CREATE TABLE `tbl_user_roles` (
 
 LOCK TABLES `tbl_user_roles` WRITE;
 /*!40000 ALTER TABLE `tbl_user_roles` DISABLE KEYS */;
+INSERT INTO `tbl_user_roles` VALUES ('admin','Administrador'),('user','Usuario');
 /*!40000 ALTER TABLE `tbl_user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -878,6 +902,7 @@ CREATE TABLE `tbl_user_states` (
 
 LOCK TABLES `tbl_user_states` WRITE;
 /*!40000 ALTER TABLE `tbl_user_states` DISABLE KEYS */;
+INSERT INTO `tbl_user_states` VALUES ('active','Activo'),('inactive','Inactivo');
 /*!40000 ALTER TABLE `tbl_user_states` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -890,4 +915,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-01-15 11:32:09
+-- Dump completed on 2026-01-20 19:21:37

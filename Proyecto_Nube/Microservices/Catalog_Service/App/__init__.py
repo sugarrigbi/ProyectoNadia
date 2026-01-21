@@ -1,15 +1,14 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from App.Routes.Catalog_Routes import Catalog_Bp
+from App.Config import Config
+from App.Utilities.Extension import db
 
-db = SQLAlchemy()
+def Create_App():
+    App = Flask(__name__)
+    App.config.from_object(Config)
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object("app.config.Config")
+    db.init_app(App)
 
-    db.init_app(app)
+    App.register_blueprint(Catalog_Bp, url_prefix="/Catalog")
 
-#    from app.routes import inventory_bp
-#    app.register_blueprint(inventory_bp, url_prefix="/inventory")
-
-    return app
+    return App

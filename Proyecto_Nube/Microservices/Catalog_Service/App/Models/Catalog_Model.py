@@ -1,11 +1,11 @@
-from Config import db
+from App.Utilities.Extension import db, Base_Model
 
-tbl_book_authors = db.Table(
-    "tbl_book_authors",
-    db.Column("Fk_Book",db.Integer,db.ForeignKey("tbl_books.ID"),primary_key=True),
-    db.Column("Fk_Author",db.Integer,db.ForeignKey("tbl_authors.ID"),primary_key=True)
+Books_Authors = db.Table(
+    'books_authors',
+    db.Column('Book_Id', db.Integer, db.ForeignKey('tbl_books.ID'), primary_key=True),
+    db.Column('Author_Id', db.Integer, db.ForeignKey('tbl_authors.ID'), primary_key=True)
 )
-class Books(db.Model):
+class Books(Base_Model):
     __tablename__ = "tbl_books"
 
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -19,11 +19,11 @@ class Books(db.Model):
     Fk_Category = db.Column(db.Integer,db.ForeignKey("tbl_categories.ID"),nullable=True)
     Fk_Publisher = db.Column(db.Integer,db.ForeignKey("tbl_publishers.ID"),nullable=True)
 
-    Authors = db.relationship("Author",secondary=tbl_book_authors,back_populates="Books")
+    Authors = db.relationship("Authors",secondary=Books_Authors,back_populates="Books")
 
     def __repr__(self):
         return f"<Books {self.Title}>"
-class Category(db.Model):
+class Categories(Base_Model):
     __tablename__ = "tbl_categories"
 
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -33,7 +33,7 @@ class Category(db.Model):
 
     def __repr__(self):
         return f"<Category {self.Category_Name}>"
-class Publisher(db.Model):
+class Publisher(Base_Model):
     __tablename__ = "tbl_publishers"
 
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -43,14 +43,14 @@ class Publisher(db.Model):
 
     def __repr__(self):
         return f"<Publisher {self.Publisher_Name}>"
-class Author(db.Model):
+class Authors(Base_Model):
     __tablename__ = "tbl_authors"
 
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     First_Name = db.Column(db.String(50), nullable=True)
     Last_Name = db.Column(db.String(50), nullable=True)
 
-    Books = db.relationship("Books",secondary=tbl_book_authors,back_populates="Authors")
+    Books = db.relationship("Books",secondary=Books_Authors,back_populates="Authors")
     
     def __repr__(self):
         return f"<Author {self.First_Name} {self.Last_Name}>"
