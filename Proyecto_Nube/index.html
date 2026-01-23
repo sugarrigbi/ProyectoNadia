@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Sistema Biblioteca - CRUD estilo SIEF</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f4f6f8}
+  header{background:#1e1e2f;color:#fff;padding:14px}
+  header h1{margin:0;font-size:18px}
+  nav{background:#2c2c3e;padding:10px}
+  nav button{margin-right:8px;padding:8px 12px;border:0;background:#4a4a7d;color:#fff;cursor:pointer}
+  .container{padding:18px}
+  .card{background:#fff;padding:14px;margin-bottom:12px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;border-bottom:1px solid #e6e9ee;text-align:left}
+  .muted{color:#666;font-size:13px}
+  .error{color:#b00020}
+  .btn{padding:6px 10px;border:0;border-radius:4px;cursor:pointer}
+  .btn-primary{background:#2b6cb0;color:#fff}
+  .btn-danger{background:#c53030;color:#fff}
+  .btn-ghost{background:#eee}
+  .flex{display:flex;gap:8px;align-items:center}
+  .right{margin-left:auto}
+  /* modal */
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:50}
+  .modal{background:#fff;padding:16px;border-radius:8px;width:520px;max-width:95%}
+  .modal h3{margin-top:0}
+  .toast{position:fixed;right:18px;bottom:18px;background:#222;color:#fff;padding:10px 14px;border-radius:6px;z-index:60}
+  .small{font-size:13px;color:#666}
+  .checkbox{width:16px;height:16px}
+  .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .search{padding:6px;border:1px solid #ddd;border-radius:6px;width:260px}
+  .badge{background:#e2e8f0;padding:4px 8px;border-radius:999px;font-size:12px}
+  .audit-list{max-height:200px;overflow:auto;border:1px solid #eee;padding:8px;border-radius:6px;background:#fafafa}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<header><h1>Sistema Biblioteca — CRUD avanzado (estilo SIEF)</h1></header>
+<nav id="menu" style="display:none">
+  <button onclick="show('dashboard')">Dashboard</button>
+  <button onclick="show('catalog')">Catálogo</button>
+  <button onclick="show('inventory')">Inventario</button>
+  <button id="usersNavBtn" onclick="show('users')">Usuarios</button>
+  <button onclick="show('trash')">Papelera</button>
+  <button onclick="logout()">Salir</button>
+</nav>
+
+<div class="container">
+  <!-- LOGIN -->
+  <section id="login" class="card">
+    <h2>Login</h2>
+    <p class="small">Usa <b>Admin</b> / <b>Admin</b> para rol administrador (mockup).</p>
+    <input id="loginEmail" placeholder="Email o usuario" style="width:220px;padding:8px"/><br>
+    <input id="loginPassword" placeholder="Contraseña" type="password" style="width:220px;padding:8px"/><br>
+    <div style="margin-top:8px">
+      <button class="btn btn-primary" onclick="login()">Entrar</button>
+      <span id="loginMsg" class="error"></span>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="card hidden">
+    <div class="flex">
+      <h2>Dashboard</h2>
+      <div class="right">
+        <span class="badge">Catálogo: <b id="countCatalog">0</b></span>
+        <span class="badge">Inventario: <b id="countInventory">0</b></span>
+        <span class="badge">Usuarios: <b id="countUsers">0</b></span>
+      </div>
+    </div>
+    <p class="small">Registro de auditoría reciente:</p>
+    <div class="audit-list" id="auditList"></div>
+  </section>
+
+  <!-- CATALOGO -->
+  <section id="catalog" class="card hidden">
+    <div class="flex toolbar">
+      <input id="catalogSearch" class="search" placeholder="Buscar por título o autor" oninput="renderCatalog()"/>
+      <select id="catalogFilter" class="search" style="width:160px" onchange="renderCatalog()">
+        <option value="title">Título</option>
+        <option value="author">Autor</option>
+        <option value="category">Categoría</option>
+      </select>
+      <div class="right">
+        <button class="btn btn-primary" onclick="openModal('catalog','create')">Nuevo libro</button>
+        <button class="btn btn-ghost" onclick="bulkDelete('catalog')">Eliminar seleccionados</button>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th><input id="catSelectAll" type="checkbox" onchange="toggleSelectAll('catalog',this.checked)"/></th><th>Título</th><th>Autor</th><th>Categoría</th><th>Acción</th></tr></thead>
+      <tbody id="catalogTable"></tbody>
+    </table>
+  </section>
+
+  <!-- INVENTARIO -->
+  <section id="inventory" class="card hidden">
+    <div class="flex toolbar">
+      <input id="invSearch" class="search" placeholder="Buscar en inventario" oninput="renderInventory()"/>
+      <select id="inventoryFilter" class="search" style="width:160px" onchange="renderInventory()">
+        <option value="title">Título</option>
+        <option value="qty">Cantidad</option>
+      </select>
+
+      <div class="right">
+        <button class="btn btn-primary" onclick="openModal('inventory','create')">Agregar inventario</button>
+        <button class="btn btn-ghost" onclick="bulkDelete('inventory')">Eliminar seleccionados</button>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th><input id="invSelectAll" type="checkbox" onchange="toggleSelectAll('inventory',this.checked)"/></th><th>Título</th><th>Cantidad</th><th>Acción</th></tr></thead>
+      <tbody id="inventoryTable"></tbody>
+    </table>
+  </section>
+
+  <!-- USUARIOS -->
+  <section id="users" class="card hidden">
+    <div class="flex toolbar">
+      <input id="userSearch" class="search" placeholder="Buscar usuarios" oninput="renderUsers()"/>
+      <select id="userFilter" class="search" style="width:160px" onchange="renderUsers()">
+        <option value="email">Email</option>
+        <option value="role">Rol</option>
+      </select>
+
+      <div class="right">
+        <button id="btnNewUser" class="btn btn-primary" onclick="openModal('users','create')">Nuevo usuario</button>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Email</th><th>Rol</th><th>Acción</th></tr></thead>
+      <tbody id="usersTable"></tbody>
+    </table>
+  </section>
+
+  <!-- PAPELERA -->
+  <section id="trash" class="card hidden">
+    <h2>Papelera</h2>
+    <p class="small">Elementos eliminados (soft delete). Puedes restaurar o eliminar definitivamente.</p>
+    <div style="margin-bottom:8px">
+      <button class="btn btn-primary" onclick="restoreAll()">Restaurar todo</button>
+      <button class="btn btn-danger" onclick="emptyTrash()">Vaciar papelera</button>
+    </div>
+    <table>
+      <thead><tr><th>Tipo</th><th>Nombre</th><th>Eliminado por</th><th>Fecha</th><th>Acción</th></tr></thead>
+      <tbody id="trashTable"></tbody>
+    </table>
+  </section>
+</div>
+
+<!-- MODAL -->
+<div id="modalBack" class="modal-back hidden">
+  <div class="modal" id="modal">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div style="margin-top:12px;text-align:right">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" id="modalSaveBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<script>
+/* ---------- Datos y sesión ---------- */
+const STORAGE_KEY = 'sief_mock_data_v1';
+let state = {
+  catalog: [
+    {id: id(), title:'Harry Potter', author:'J.K. Rowling', category:'Fantasía', deleted:false},
+    {id: id(), title:'Cien Años de Soledad', author:'G. García Márquez', category:'Novela', deleted:false}
+  ],
+  inventory: [
+    // {id:id(), title:'Harry Potter', qty:3, deleted:false}
+  ],
+  users: [
+    {id:id(), email:'admin@demo.com', role:'ADMIN', deleted:false}
+  ],
+  trash: [], // {type:'catalog'|'inventory'|'users', item: {...}, deletedBy:'user', deletedAt:ts}
+  audit: [] // {when, who, action, type, id, details}
+};
+let session = {logged:false, isAdmin:false, userEmail:null};
+let selection = {catalog:new Set(), inventory:new Set()};
+
+/* ---------- Util ---------- */
+function id(){ return Math.random().toString(36).slice(2,9); }
+function now(){ return new Date().toISOString(); }
+function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function load(){ const s = localStorage.getItem(STORAGE_KEY); if(s) state = JSON.parse(s); }
+function audit(who, action, type, itemId, details=''){ state.audit.unshift({when:now(), who, action, type, id:itemId, details}); if(state.audit.length>200) state.audit.pop(); save(); renderAudit(); }
+function show(sectionId){ document.querySelectorAll('section').forEach(s=>s.classList.add('hidden')); document.getElementById(sectionId).classList.remove('hidden'); }
+function logout(){ localStorage.removeItem(STORAGE_KEY); location.reload(); }
+
+/* ---------- Login ---------- */
+function login(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  const msg = document.getElementById('loginMsg'); msg.innerText='';
+  if(!email || !pass){ msg.innerText='Ingrese credenciales'; return; }
+  // Mock: Admin/Admin => admin; también si existe usuario con role ADMIN
+  const isAdmin = (email==='Admin' && pass==='Admin') || state.users.some(u=>u.email.toLowerCase()===email.toLowerCase() && u.role==='ADMIN');
+  session = {logged:true, isAdmin, userEmail: email};
+  document.getElementById('menu').style.display='block';
+  document.getElementById('login').classList.add('hidden');
+  show('dashboard');
+  renderAll();
+  updateCounts();
+}
+
+/* ---------- Renderers ---------- */
+function updateCounts(){
+  document.getElementById('countCatalog').innerText = state.catalog.filter(c=>!c.deleted).length;
+  document.getElementById('countInventory').innerText = state.inventory.filter(i=>!i.deleted).length;
+  document.getElementById('countUsers').innerText = state.users.filter(u=>!u.deleted).length;
+}
+function renderAudit(){
+  const el = document.getElementById('auditList'); el.innerHTML='';
+  state.audit.slice(0,20).forEach(a=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<b>${a.action}</b> ${a.type} — <span class="small">${a.who} • ${new Date(a.when).toLocaleString()}</span>`;
+    el.appendChild(div);
+  });
+}
+function renderCatalog(){
+  const q = document.getElementById('catalogSearch').value.trim().toLowerCase();
+  const field = document.getElementById('catalogFilter').value;
+
+  const tbody = document.getElementById('catalogTable');
+  tbody.innerHTML='';
+
+  state.catalog
+    .filter(c => !c.deleted)
+    .filter(c => {
+      if(!q) return true;
+      return (c[field] || '').toLowerCase().includes(q);
+    })
+    .forEach(c=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="checkbox" data-id="${c.id}" onchange="toggleSelect('catalog',this)"/></td>
+        <td>${escape(c.title)}</td>
+        <td>${escape(c.author)}</td>
+        <td>${escape(c.category)}</td>
+        <td>
+          <button class="btn" onclick="openModal('catalog','edit','${c.id}')">Editar</button>
+          <button class="btn btn-danger" onclick="softDelete('catalog','${c.id}')">Eliminar</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+}
+function renderInventory(){
+  const q = document.getElementById('invSearch').value.trim().toLowerCase();
+  const field = document.getElementById('inventoryFilter').value;
+
+  const tbody = document.getElementById('inventoryTable');
+  tbody.innerHTML='';
+
+  state.inventory
+    .filter(i => !i.deleted)
+    .filter(i => {
+      if(!q) return true;
+      return String(i[field] ?? '').toLowerCase().includes(q);
+    })
+    .forEach(i=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="checkbox" data-id="${i.id}" onchange="toggleSelect('inventory',this)"/></td>
+        <td>${escape(i.title)}</td>
+        <td>${i.qty}</td>
+        <td>
+          <button class="btn" onclick="openModal('inventory','edit','${i.id}')">Editar</button>
+          <button class="btn btn-danger" onclick="softDelete('inventory','${i.id}')">Eliminar</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+}
+
+function renderUsers(){
+  const q = document.getElementById('userSearch').value.trim().toLowerCase();
+  const field = document.getElementById('userFilter').value;
+
+  const tbody = document.getElementById('usersTable');
+  tbody.innerHTML='';
+
+  state.users
+    .filter(u => !u.deleted)
+    .filter(u => {
+      if(!q) return true;
+      return (u[field] || '').toLowerCase().includes(q);
+    })
+    .forEach(u=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escape(u.email)}</td>
+        <td>${escape(u.role)}</td>
+        <td>
+          ${session.isAdmin
+            ? `<button class="btn" onclick="openModal('users','edit','${u.id}')">Editar</button>
+               <button class="btn btn-danger" onclick="softDelete('users','${u.id}')">Eliminar</button>`
+            : '<span class="small">No autorizado</span>'}
+        </td>`;
+      tbody.appendChild(tr);
+    });
+}
+
+function renderTrash(){
+  const tbody = document.getElementById('trashTable'); tbody.innerHTML='';
+  state.trash.forEach(t=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${t.type}</td><td>${escape(t.item.title || t.item.email || t.item.name || '')}</td>
+      <td>${escape(t.deletedBy)}</td><td>${new Date(t.deletedAt).toLocaleString()}</td>
+      <td>
+        <button class="btn" onclick="restore('${t.type}','${t.item.id}')">Restaurar</button>
+        <button class="btn btn-danger" onclick="permanentDelete('${t.type}','${t.item.id}')">Eliminar definitivamente</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+function renderAll(){ renderCatalog(); renderInventory(); renderUsers(); renderTrash(); renderAudit(); updateCounts(); }
+
+/* ---------- Selection helpers ---------- */
+function toggleSelect(type, checkbox){
+  const set = (type==='catalog')? selection.catalog : selection.inventory;
+  if(checkbox.checked) set.add(checkbox.dataset.id); else set.delete(checkbox.dataset.id);
+}
+function toggleSelectAll(type, checked){
+  const selector = (type==='catalog')? '#catalogTable input[type=checkbox]' : '#inventoryTable input[type=checkbox]';
+  document.querySelectorAll(selector).forEach(cb=>{ cb.checked = checked; if(checked) selection[type].add(cb.dataset.id); else selection[type].delete(cb.dataset.id); });
+}
+
+/* ---------- Modal (create/edit) ---------- */
+function openModal(type, mode, id=null){
+  const back = document.getElementById('modalBack'); const title = document.getElementById('modalTitle'); const body = document.getElementById('modalBody'); const saveBtn = document.getElementById('modalSaveBtn');
+  saveBtn.onclick = null;
+  body.innerHTML = ''; title.innerText = '';
+  if(type==='catalog'){
+    if(mode==='create'){ title.innerText='Crear libro'; body.innerHTML = formCatalog(); saveBtn.onclick = ()=>saveCatalog(null); }
+    else { const item = state.catalog.find(c=>c.id===id); title.innerText='Editar libro'; body.innerHTML = formCatalog(item); saveBtn.onclick = ()=>saveCatalog(id); }
+  } else if(type==='inventory'){
+    if(mode==='create'){ title.innerText='Agregar inventario'; body.innerHTML = formInventory(); saveBtn.onclick = ()=>saveInventory(null); }
+    else { const item = state.inventory.find(i=>i.id===id); title.innerText='Editar inventario'; body.innerHTML = formInventory(item); saveBtn.onclick = ()=>saveInventory(id); }
+  } else if(type==='users'){
+    if(!session.isAdmin){ alert('No autorizado'); return; }
+    if(mode==='create'){ title.innerText='Crear usuario'; body.innerHTML = formUser(); saveBtn.onclick = ()=>saveUser(null); }
+    else { const item = state.users.find(u=>u.id===id); title.innerText='Editar usuario'; body.innerHTML = formUser(item); saveBtn.onclick = ()=>saveUser(id); }
+  }
+  back.classList.remove('hidden');
+}
+function closeModal(){ document.getElementById('modalBack').classList.add('hidden'); }
+
+/* ---------- Forms HTML ---------- */
+function formCatalog(item={title:'',author:'',category:''}){
+  return `<div>
+    <label>Título</label><input id="f_title" style="width:100%;padding:8px" value="${escapeAttr(item.title)}"/><br>
+    <label>Autor</label><input id="f_author" style="width:100%;padding:8px" value="${escapeAttr(item.author)}"/><br>
+    <label>Categoría</label><input id="f_category" style="width:100%;padding:8px" value="${escapeAttr(item.category)}"/><br>
+    <div id="f_msg" class="error"></div>
+  </div>`;
+}
+function formInventory(item={title:'',qty:1,author:'',category:''}){
+  return `<div>
+    <label>Título</label><input id="f_title" style="width:100%;padding:8px" value="${escapeAttr(item.title)}"/><br>
+    <label>Cantidad</label><input id="f_qty" type="number" style="width:120px;padding:8px" value="${item.qty||1}"/><br>
+    <label>Autor (opcional)</label><input id="f_author" style="width:100%;padding:8px" value="${escapeAttr(item.author||'')}"/><br>
+    <label>Categoría (opcional)</label><input id="f_category" style="width:100%;padding:8px" value="${escapeAttr(item.category||'')}"/><br>
+    <div id="f_msg" class="error"></div>
+  </div>`;
+}
+function formUser(item={email:'',role:'USER'}){
+  return `<div>
+    <label>Email</label><input id="f_email" style="width:100%;padding:8px" value="${escapeAttr(item.email)}"/><br>
+    <label>Rol</label>
+    <select id="f_role" style="padding:8px">
+      <option ${item.role==='USER'?'selected':''}>USER</option>
+      <option ${item.role==='ADMIN'?'selected':''}>ADMIN</option>
+    </select>
+    <div id="f_msg" class="error"></div>
+  </div>`;
+}
+
+/* ---------- Save handlers ---------- */
+function saveCatalog(editId){
+  const title = document.getElementById('f_title').value.trim();
+  const author = document.getElementById('f_author').value.trim();
+  const category = document.getElementById('f_category').value.trim();
+  const msg = document.getElementById('f_msg'); msg.innerText='';
+  if(!title || !author){ msg.innerText='Título y autor obligatorios'; return; }
+  // duplicate check
+  const dup = state.catalog.find(c=>c.title.toLowerCase()===title.toLowerCase() && c.id!==editId && !c.deleted);
+  if(dup){ msg.innerText='Ya existe un libro con ese título'; return; }
+  if(editId){
+    const it = state.catalog.find(c=>c.id===editId);
+    it.title = title; it.author = author; it.category = category;
+    audit(session.userEmail||'anon','Editar','catalog',it.id,`Título:${title}`);
+    showToast('Libro actualizado');
+  } else {
+    const newItem = {id:id(), title, author, category, deleted:false};
+    state.catalog.push(newItem);
+    audit(session.userEmail||'anon','Crear','catalog',newItem.id,`Título:${title}`);
+    showToast('Libro creado');
+  }
+  save(); closeModal(); renderAll();
+}
+function saveInventory(editId){
+  const title = document.getElementById('f_title').value.trim();
+  const qty = Number(document.getElementById('f_qty').value);
+  const author = document.getElementById('f_author').value.trim();
+  const category = document.getElementById('f_category').value.trim();
+  const msg = document.getElementById('f_msg'); msg.innerText='';
+  if(!title || !Number.isFinite(qty) || qty<0){ msg.innerText='Título y cantidad válidos'; return; }
+  // ensure catalog exists
+  let book = state.catalog.find(c=>c.title.toLowerCase()===title.toLowerCase() && !c.deleted);
+  if(!book){
+    book = {id:id(), title, author, category, deleted:false};
+    state.catalog.push(book);
+    audit(session.userEmail||'anon','Crear','catalog',book.id,`Auto-creado por inventario`);
+  }
+  if(editId){
+    const it = state.inventory.find(i=>i.id===editId);
+    it.title = title; it.qty = qty;
+    audit(session.userEmail||'anon','Editar','inventory',it.id,`Qty:${qty}`);
+    showToast('Inventario actualizado');
+  } else {
+    const existing = state.inventory.find(i=>i.title.toLowerCase()===title.toLowerCase() && !i.deleted);
+    if(existing){ existing.qty = existing.qty + qty; audit(session.userEmail||'anon','Actualizar cantidad','inventory',existing.id,`+${qty}`); showToast('Cantidad sumada al inventario'); }
+    else { const newItem = {id:id(), title, qty, deleted:false}; state.inventory.push(newItem); audit(session.userEmail||'anon','Crear','inventory',newItem.id,`Qty:${qty}`); showToast('Inventario agregado'); }
+  }
+  save(); closeModal(); renderAll();
+}
+function saveUser(editId){
+  if(!session.isAdmin){ alert('No autorizado'); return; }
+  const email = document.getElementById('f_email').value.trim();
+  const role = document.getElementById('f_role').value;
+  const msg = document.getElementById('f_msg'); msg.innerText='';
+  if(!/\S+@\S+\.\S+/.test(email)){ msg.innerText='Email inválido'; return; }
+  const dup = state.users.find(u=>u.email.toLowerCase()===email.toLowerCase() && u.id!==editId && !u.deleted);
+  if(dup){ msg.innerText='Email ya registrado'; return; }
+  if(editId){
+    const u = state.users.find(x=>x.id===editId);
+    u.email = email; u.role = role;
+    audit(session.userEmail||'admin','Editar','users',u.id,`Rol:${role}`);
+    showToast('Usuario actualizado');
+  } else {
+    const newU = {id:id(), email, role, deleted:false};
+    state.users.push(newU);
+    audit(session.userEmail||'admin','Crear','users',newU.id,`Rol:${role}`);
+    showToast('Usuario creado');
+  }
+  save(); closeModal(); renderAll();
+}
+
+/* ---------- Soft delete / Trash / Restore ---------- */
+function softDelete(type, itemId){
+  const who = session.userEmail || 'anon';
+  if(!confirm('¿Confirma eliminar? (se moverá a papelera)')) return;
+  if(type==='catalog'){
+    const it = state.catalog.find(c=>c.id===itemId); if(!it) return;
+    it.deleted = true; state.trash.unshift({type:'catalog', item:it, deletedBy:who, deletedAt:now()});
+    audit(who,'Eliminar','catalog',it.id,'soft');
+  } else if(type==='inventory'){
+    const it = state.inventory.find(i=>i.id===itemId); if(!it) return;
+    it.deleted = true; state.trash.unshift({type:'inventory', item:it, deletedBy:who, deletedAt:now()});
+    audit(who,'Eliminar','inventory',it.id,'soft');
+  } else if(type==='users'){
+    if(!session.isAdmin){ alert('No autorizado'); return; }
+    const it = state.users.find(u=>u.id===itemId); if(!it) return;
+    it.deleted = true; state.trash.unshift({type:'users', item:it, deletedBy:who, deletedAt:now()});
+    audit(who,'Eliminar','users',it.id,'soft');
+  }
+  save(); renderAll(); showToast('Elemento enviado a papelera', ()=>{ /* optional undo */ });
+  // show undo toast
+  showUndoToast(type, itemId);
+}
+function showUndoToast(type, idToRestore){
+  const t = document.getElementById('toast'); t.classList.remove('hidden'); t.innerHTML = `Eliminado • <button class="btn" onclick="undoDelete('${type}','${idToRestore}')">Deshacer</button>`;
+  // auto hide after 6s
+  const timer = setTimeout(()=>{ t.classList.add('hidden'); }, 6000);
+  t.dataset.timer = timer;
+}
+function undoDelete(type, itemId){
+  // find in trash
+  const idx = state.trash.findIndex(t=>t.type===type && t.item.id===itemId);
+  if(idx===-1) return;
+  const t = state.trash.splice(idx,1)[0];
+  // restore
+  if(type==='catalog'){ const it = state.catalog.find(c=>c.id===itemId); if(it) it.deleted=false; }
+  if(type==='inventory'){ const it = state.inventory.find(i=>i.id===itemId); if(it) it.deleted=false; }
+  if(type==='users'){ const it = state.users.find(u=>u.id===itemId); if(it) it.deleted=false; }
+  audit(session.userEmail||'anon','Deshacer eliminación',type,itemId,'restaurado');
+  save(); renderAll(); document.getElementById('toast').classList.add('hidden');
+  showToast('Restaurado');
+}
+function restore(type, itemId){
+  const idx = state.trash.findIndex(t=>t.type===type && t.item.id===itemId);
+  if(idx===-1) return;
+  const t = state.trash.splice(idx,1)[0];
+  if(type==='catalog'){ const it = state.catalog.find(c=>c.id===itemId); if(it) it.deleted=false; }
+  if(type==='inventory'){ const it = state.inventory.find(i=>i.id===itemId); if(it) it.deleted=false; }
+  if(type==='users'){ const it = state.users.find(u=>u.id===itemId); if(it) it.deleted=false; }
+  audit(session.userEmail||'anon','Restaurar',type,itemId,'restaurado desde papelera');
+  save(); renderAll(); showToast('Restaurado');
+}
+function permanentDelete(type, itemId){
+  if(!confirm('Eliminar definitivamente. Esta acción no se puede deshacer.')) return;
+  // remove from trash and from main arrays
+  const tIdx = state.trash.findIndex(t=>t.type===type && t.item.id===itemId);
+  if(tIdx!==-1) state.trash.splice(tIdx,1);
+  if(type==='catalog'){ state.catalog = state.catalog.filter(c=>c.id!==itemId); state.inventory = state.inventory.filter(i=>i.title.toLowerCase()!== (state.catalog.find(c=>c.id===itemId)?.title||'').toLowerCase()); }
+  if(type==='inventory'){ state.inventory = state.inventory.filter(i=>i.id!==itemId); }
+  if(type==='users'){ state.users = state.users.filter(u=>u.id!==itemId); }
+  audit(session.userEmail||'anon','Eliminar definitivo',type,itemId,'permanente');
+  save(); renderAll(); showToast('Eliminado definitivamente');
+}
+function restoreAll(){
+  state.trash.slice().forEach(t=>{ if(t.type==='catalog'){ const it = state.catalog.find(c=>c.id===t.item.id); if(it) it.deleted=false; } if(t.type==='inventory'){ const it = state.inventory.find(i=>i.id===t.item.id); if(it) it.deleted=false; } if(t.type==='users'){ const it = state.users.find(u=>u.id===t.item.id); if(it) it.deleted=false; } audit(session.userEmail||'anon','Restaurar','bulk',t.item.id,'restaurado todo'); });
+  state.trash = []; save(); renderAll(); showToast('Restaurados todos');
+}
+function emptyTrash(){ if(!confirm('Vaciar papelera (eliminación definitiva)?')) return; state.trash.forEach(t=>{ if(t.type==='catalog') state.catalog = state.catalog.filter(c=>c.id!==t.item.id); if(t.type==='inventory') state.inventory = state.inventory.filter(i=>i.id!==t.item.id); if(t.type==='users') state.users = state.users.filter(u=>u.id!==t.item.id); audit(session.userEmail||'anon','Vaciar papelera',t.type,t.item.id,'vaciar'); }); state.trash = []; save(); renderAll(); showToast('Papelera vaciada'); }
+
+/* ---------- Bulk delete ---------- */
+function bulkDelete(type){
+  const set = (type==='catalog')? selection.catalog : selection.inventory;
+  if(set.size===0){ alert('No hay elementos seleccionados'); return; }
+  if(!confirm(`Eliminar ${set.size} elementos seleccionados?`)) return;
+  Array.from(set).forEach(id=>softDelete(type,id));
+  set.clear();
+  renderAll();
+}
+
+/* ---------- Helpers UI ---------- */
+function showToast(text, cb){
+  const t = document.getElementById('toast'); t.classList.remove('hidden'); t.innerHTML = text;
+  setTimeout(()=>{ t.classList.add('hidden'); if(cb) cb(); }, 2500);
+}
+function escape(s){ if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+/* ---------- Init ---------- */
+document.getElementById('modalBack').classList.add('hidden');
+load(); renderAll(); updateCounts(); // render audit etc
+
+// expose some functions to global for inline handlers
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.renderCatalog = renderCatalog;
+window.renderInventory = renderInventory;
+window.renderUsers = renderUsers;
+window.renderTrash = renderTrash;
+window.softDelete = softDelete;
+window.restore = restore;
+window.permanentDelete = permanentDelete;
+window.bulkDelete = bulkDelete;
+window.toggleSelect = toggleSelect;
+window.toggleSelectAll = toggleSelectAll;
+window.undoDelete = undoDelete;
+window.restoreAll = restoreAll;
+window.emptyTrash = emptyTrash;
+window.login = login;
+window.logout = logout;
+window.show = show;
+window.renderAll = renderAll;
+</script>
+</body>
+</html>

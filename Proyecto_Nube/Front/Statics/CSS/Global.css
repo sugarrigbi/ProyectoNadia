@@ -1,0 +1,25 @@
+
+.navbar .nav-link {
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}
+.navbar .nav-link:hover {
+  background-color: #7301d1;
+  color: white !important;
+}
+.cerrar:hover {
+  background-color: #dc3545!important;
+  color: white !important;
+}
+.custom2-btn {
+    background-color: #7301d1 !important;
+    color: white !important;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.custom2-btn:hover {
+    background-color: #501081 !important;
+    color: white !important;
+}
+
