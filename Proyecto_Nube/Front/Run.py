@@ -5,7 +5,7 @@ app = Flask(__name__,template_folder="Templates",static_folder="Statics")
 
 API_URL = "http://127.0.0.1:5000/"
 
-@app.route("/")
+@app.route("/Dashboard")
 def Dashboard():
     return render_template("Dashboard.html", Books="a", Datos="e")
 @app.route("/Catalog/Books/Read/All")
@@ -54,7 +54,6 @@ def App_Books_Update(Book_Id):
     elif Response.status_code == 200:
         return redirect(url_for("App_Books_Read_All", Status2="Success"))  
     return redirect(url_for("App_Books_Read_All"))  
-
 @app.route("/Inventory/Books/Read/All")
 def App_Inventory_Read_All():
     Status = request.args.get("Status")
