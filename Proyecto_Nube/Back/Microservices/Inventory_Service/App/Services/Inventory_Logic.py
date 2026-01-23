@@ -44,6 +44,13 @@ class Inventory_Service:
         db.session.delete(Copy)
         db.session.commit()
         return True
+    def Delete_Selected(Books_List):
+        for Book_Id in Books_List:
+            Book = Inventory.query.get(Book_Id)
+            if Book:
+                db.session.delete(Book)  
+        db.session.commit()
+        return True
 class Inventory_Status_Service:
     @staticmethod
     def Create(Data):

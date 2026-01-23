@@ -20,10 +20,10 @@
             <a class="nav-link px-3 py-2 rounded" href="/">Dashboard</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded active" href="/Catalog/Books/Read/All">Catálogo</a>
+            <a class="nav-link px-3 py-2 rounded" href="/Catalog/Books/Read/All">Catálogo</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded" href="/Inventory/Books/Read/All">Inventario</a>
+            <a class="nav-link px-3 py-2 rounded active" href="/Inventory/Books/Read/All" >Inventario</a>
             </li>
             <li class="nav-item">
             <a class="nav-link px-3 py-2 rounded" href="#">Papelera</a>
@@ -35,15 +35,15 @@
     </div>
 </nav>
 <div class="container mt-3 mt-md-4">
-    <form action="/Catalog/Books/Read/Search" method="get" class="row g-2 align-items-center">
+    <form action="/Inventory/Books/Read/Search" method="get" class="row g-2 align-items-center">
         <div class="col-12 col-md-auto">
             <select name="Field" class="form-select rounded" required>
                 <option value="" {% if Datos.Field == '' %}selected{% endif %} disabled>Selecciona un campo</option>
-                <option value="Title" {% if Datos.Field == 'Title' %}selected{% endif %}>Título</option>
-                <option value="Isbn" {% if Datos.Field == 'Isbn' %}selected{% endif %}>Isbn</option>
-                <option value="Publication_Year" {% if Datos.Field == 'Publication_Year' %}selected{% endif %}>Año de Publicación</option>
-                <option value="Fk_Category" {% if Datos.Field == 'Fk_Category' %}selected{% endif %}>Categoría</option>
-                <option value="Authors" {% if Datos.Field == 'Authors' %}selected{% endif %}>Authors</option>
+                <option value="Barcode" {% if Datos.Field == 'Barcode' %}selected{% endif %}>Codigo</option>
+                <option value="Quantity" {% if Datos.Field == 'Quantity' %}selected{% endif %}>Cantidad</option>
+                <option value="Fk_Status" {% if Datos.Field == 'Fk_Status' %}selected{% endif %}>Estado</option>
+                <option value="Fk_Location" {% if Datos.Field == 'Fk_Location' %}selected{% endif %}>Locacion</option>
+                <option value="Fk_Book" {% if Datos.Field == 'Fk_Book' %}selected{% endif %}>Libro asociado</option>
             </select>
         </div>
         <div class="col-12 col-md-auto flex-grow-1">
@@ -65,25 +65,30 @@
     {% endif %}
     {% if Status == "Success" %}
     <div class="my-3 p-3 bg-success-subtle text-success-emphasis border border-success-subtle rounded">
-        Exito, Catalogo eliminado con exito
+        Exito, Inventario eliminado con exito
     </div>
     {% endif %}
     {% if Status2 == "Error" %}
     <div class="my-3 p-3 bg-danger-subtle text-danger-emphasis border border-danger-subtle rounded">
-        Error, Catalogo no modificado
+        Error, Inventario no modificado
     </div>
     {% endif %}
     {% if Status2 == "Success" %}
     <div class="my-3 p-3 bg-success-subtle text-success-emphasis border border-success-subtle rounded">
-        Exito, Catalogo modificado con exito
+        Exito, Inventario modificado con exito
     </div>
     {% endif %}
-    <form id="booksForm" method="POST" action="/Catalog/Books/Delete/Selected"></form>             
-        <h3 class="mb-4">Catalogo de Libros</h3>
-        <div class="my-3 d-flex flex-row">
-            <input class="form-check-input me-3" type="checkbox" id="selectAll">
-            <h5>Seleccionar Todos</h5>
-        </div>    
+    <form id="booksForm" method="POST" action="/Inventory/Books/Delete/Selected"></form>             
+        <h3 class="mb-4">Inventario de Libros</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="my-3 d-flex flex-row">
+                <input class="form-check-input me-3" type="checkbox" id="selectAll">
+                <h5>Seleccionar Todos</h5>
+            </div>    
+            <div class="my-3 d-flex flex-row">
+                <button class="btn btn-success rounded w-100">Crear</button>
+            </div>
+        </div>
         <div class="list-group">
             {% for Book in Books %}
             <div class="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center shadow-sm mb-3 rounded py-3">
@@ -92,10 +97,10 @@
                     <img src="{{ url_for('static', filename='Images/book{{ Book.ID }}.png') }}" alt="{{ Book.Title }}" style="max-width: 100%; max-height: 100%;">
                 </div>
                 <div class="flex-grow-1 mt-2 mt-md-0">      
-                    <h5>{{ Book.Title }}</h5>
-                    <p class="mb-1">{{ Book.Authors }} - {{ Book.Publication_Year }}</p>
-                    <p class="mb-1"><strong>Editorial:</strong> {{ Book.Publisher }}</p>
-                    <p class="mb-1"><strong>Categoría:</strong> {{ Book.Category }}</p>
+                    <h5>{{ Book.ID }}</h5>
+                    <p class="mb-1"><strong>Cantidad:</strong> {{ Book.Quantity }}</p>
+                    <p class="mb-1"><strong>Ubicacion:</strong> {{ Book.Fk_Location }}</p>
+                    <p class="mb-1"><strong>Estado:</strong> {{ Book.Fk_Status }}</p>
                     <button type="button" class="btn btn-success btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modal{{ Book.ID }}">Ver detalles</button>           
                 </div>
                 <div class="d-flex flex-column">
@@ -107,17 +112,17 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header text-success-emphasis bg-success">
-                            <h5 class="modal-title">{{ Book.Title }}</h5>
+                            <h5 class="modal-title">{{ Book.ID }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <p><strong>Autores:</strong> {{ Book.Authors }}</p>
-                            <p><strong>Año:</strong> {{ Book.Publication_Year }}</p>
-                            <p><strong>Páginas:</strong> {{ Book.Pages }}</p>
-                            <p><strong>Isbn:</strong> {{ Book.Isbn }}</p>
-                            <p><strong>Idioma:</strong> {{ Book.Language }}</p>
-                            <p><strong>Editorial:</strong> {{ Book.Publisher }}</p>
-                            <p><strong>Categoría:</strong> {{ Book.Category }}</p>
+                            <p><strong>Codigo:</strong> {{ Book.Barcode }}</p>
+                            <p><strong>Cantidad:</strong> {{ Book.Quantity }}</p>
+                            <p><strong>Fecha de adquisicion:</strong> {{ Book.Acquisition_Date }}</p>
+                            <p><strong>Creacion :</strong> {{ Book.Created_At }}</p>
+                            <p><strong>Estado:</strong> {{ Book.Fk_Status }}</p>
+                            <p><strong>Catalogo:</strong> {{ Book.Fk_Book }}</p>
+                            <p><strong>Ubicacion:</strong> {{ Book.Fk_Location }}</p>
                         </div>
                     </div>
                 </div>
@@ -134,7 +139,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <a id="confirmDeleteBtn" type="button" class="btn btn-danger" href="/Catalog/Books/Delete/{{ Book.ID }}">Sí, eliminar</a>
+                            <a id="confirmDeleteBtn" type="button" class="btn btn-danger" href="/Inventory/Books/Delete/{{ Book.ID }}">Sí, eliminar</a>
                         </div>
                     </div>
                 </div>
@@ -143,58 +148,57 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header text-warning-emphasis bg-warning">
-                            <h5 class="modal-title">Modificar</h5>
+                            <h5 class="modal-title">Modificar libro #{{ Book.ID }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
+
                         <div class="modal-body">
-                            <form action="/Catalog/Books/Update/{{ Book.ID }}" method="post">
+                            <form action="/Inventory/Books/Update/{{ Book.ID }}" method="post">
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Autores</label>
-                                    <input type="text" class="form-control" value="{{ Book.Authors }}" Name="Autores">
-                                </div>
+                                    <label class="form-label fw-bold">Cantidad</label>
+                                    <input type="text" class="form-control" name="Quantity" value="{{ Book.Quantity }}">
+                                </div>                                
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Año</label>
-                                    <input type="text" class="form-control" value="{{ Book.Publication_Year }}" Name="Año">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Páginas</label>
-                                    <input type="text" class="form-control" value="{{ Book.Pages }}" Name="Páginas">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Idioma</label>
-                                    <input type="text" class="form-control" value="{{ Book.Language }}" Name="Idioma">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Editorial</label>
-                                    <select class="form-select" name="Editorial">
-                                        <option value="">Seleccione una editorial</option>
-                                        <option value="Editorial Alfa" {% if Book.Publisher == "Editorial Alfa" %}selected{% endif %}>Editorial Alfa</option>
-                                        <option value="Editorial Beta" {% if Book.Publisher == "Editorial Beta" %}selected{% endif %}>Editorial Beta</option>
+                                    <label class="form-label fw-bold">Estado</label>
+                                    <select class="form-select" name="Fk_Status">
+                                        <option value="">Seleccione estado</option>
+                                        <option value="AVAILABLE" {% if Book.Fk_Status == "AVAILABLE" %}selected{% endif %}>Disponible</option>
+                                        <option value="DAMAGED" {% if Book.Fk_Status == "DAMAGED" %}selected{% endif %}>Prestado</option>
+                                        <option value="LOANED" {% if Book.Fk_Status == "LOANED" %}selected{% endif %}>Dañado</option>
+                                        <option value="LOST" {% if Book.Fk_Status == "LOST" %}selected{% endif %}>Perdido</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Categoría</label>
-                                    <select class="form-select" name="Categoría">
-                                        <option value="">Seleccione una categoría</option>
-                                        <option value="Ciencia"{% if Book.Category == "Ciencia" %}selected{% endif %}>Ciencia</option>
-                                        <option value="Ficción"{% if Book.Category == "Ficción" %}selected{% endif %}>Ficción</option>
-                                        <option value="Pruebas"{% if Book.Category == "Pruebas" %}selected{% endif %}>Pruebas</option>
-                                        <option value="Python3"{% if Book.Category == "Python3" %}selected{% endif %}>Python3</option>
-                                    </select>
+                                    <label class="form-label fw-bold">Catálogo</label>
+                                    <input type="text" class="form-control" name="Fk_Book" value="{{ Book.Fk_Book }}">
                                 </div>
-                                <div class="alert alert-warning mt-3">¿Estás seguro de que deseas modificar este elemento?  <strong>Esta acción no se puede deshacer.</strong></div>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmUpdateModal{{ Book.ID }}">Modificar</button>                                      
-                            </form>              
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Ubicación</label>
+                                    <input type="text" class="form-control" name="Fk_Location" value="{{ Book.Fk_Location }}">
+                                </div>
+
+                                <div class="alert alert-warning mt-3">
+                                    ¿Estás seguro de que deseas modificar este elemento?  
+                                    <strong>Esta acción no se puede deshacer.</strong>
+                                </div>
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-warning">
+                                        Modificar
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </div>      
+                    </div>
                 </div>
-            </div>          
+            </div>         
             {% endfor %}
         </div>
     </form>
 </div>
-<script src="{{ url_for('static', filename='Scripts/Books_Read_All.js') }}"></script>
+<script src="{{ url_for('static', filename='Scripts/Inventory_Read_All.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

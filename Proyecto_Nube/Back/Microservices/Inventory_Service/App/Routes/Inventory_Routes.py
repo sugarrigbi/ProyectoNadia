@@ -1,25 +1,29 @@
 from flask import Blueprint, request
-from App.Utilities import Get
+from App.Utilities.Get import Get_Inventory
 
 Inventory_Bp = Blueprint("Inventory", __name__)
 
 @Inventory_Bp.route("/Books/Create", methods=["POST"])
-def Bp_Books_Create():
-    return Get.Books_Create()
+def Bp_Inventory_Create():
+    return Get_Inventory.Inventory_Create()
 @Inventory_Bp.route("/Books/Read/All", methods=["GET"])
-def Bp_Books_Read_All():
-    return Get.Books_Read_All()
+def Bp_Inventory_Read_All():
+    return Get_Inventory.Inventory_Read_All()
 @Inventory_Bp.route("/Books/Read/<int:Book_Id>", methods=["GET"])
-def Bp_Books_Read_One(Book_Id):
-    return Get.Books_Read_One(Book_Id)
+def Bp_Inventory_Read_One(Book_Id):
+    return Get_Inventory.Inventory_Read_One(Book_Id)
 @Inventory_Bp.route("/Books/Read/Search", methods=["GET"])
-def Books_Read_By():
+def Inventory_Read_By():
     Field = request.args.get("Field")
     Value = request.args.get("Value")
-    return Get.Books_Read_By(Field, Value)
+    return Get_Inventory.Inventory_Read_By(Field, Value)
 @Inventory_Bp.route("/Books/Update/<int:Book_Id>", methods=["PUT"])
-def Bp_Books_Update(Book_Id):
-    return Get.Books_Update(Book_Id)
+def Bp_Inventory_Update(Book_Id):
+    return Get_Inventory.Inventory_Update(Book_Id)
 @Inventory_Bp.route("/Books/Delete/<int:Book_Id>", methods=["DELETE"])
-def Bp_Books_Delete(Book_Id):
-    return Get.Books_Delete(Book_Id)
+def Bp_Inventory_Delete(Book_Id):
+    return Get_Inventory.Inventory_Delete(Book_Id)
+@Inventory_Bp.route("/Books/Delete/Selected", methods=["DELETE"])
+def Bp_Inventory_Delete_Selected():
+    Book_List = request.get_json()
+    return Get_Inventory.Inventory_Delete_Selected(Book_List)
