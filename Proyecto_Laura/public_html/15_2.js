@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const simbolo = document.getElementById("Simbolo");
     const simbolo2 = document.getElementById("Simbolo2");
     const contador = document.querySelector(".contador");
+    const audio = new Audio('cancion.mp3');
+    audio.preload = "auto";
+    audio.loop = true;
 
     botones.forEach(boton => {
         boton.addEventListener("click", () => {
@@ -76,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    const frame1 = document.getElementById("Frame1");
+    const frame1 = document.getElementById("Frame2");
     if (frame1) {
         frame1.classList.add("visible");
         AOS.refreshHard();

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página con Secciones</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        section {
+            padding: 20px;
+            margin: 10px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #cronometro {
+            background-color: #d0f0ff;
+        }
+
+        #boton {
+            background-color: #ffd0d0;
+        }
+
+        #otra {
+            background-color: #e0ffd0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🕒 Sección del cronómetro -->
+    <section id="cronometro">
+        <h2>Cronómetro</h2>
+        <p id="tiempo">00:00</p>
+        <button onclick="iniciar()">Iniciar</button>
+        <button onclick="detener()">Detener</button>
+        <button onclick="reiniciar()">Reiniciar</button>
+    </section>
+
+    <!-- 🔘 Sección del botón -->
+    <section id="boton">
+        <h2>Botón especial</h2>
+        <button onclick="alert('¡Hola!')">Haz clic aquí</button>
+    </section>
+
+    <!-- 📄 Otra sección -->
+    <section id="otra">
+        <h2>Información adicional</h2>
+        <p>Esta es otra sección de ejemplo.</p>
+    </section>
+
+    <script>
+        let segundos = 0;
+        let intervalo;
+
+        function actualizarTiempo() {
+            const minutos = Math.floor(segundos / 60);
+            const seg = segundos % 60;
+            document.getElementById("tiempo").textContent =
+                `${minutos.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
+        }
+
+        function iniciar() {
+            if (!intervalo) {
+                intervalo = setInterval(() => {
+                    segundos++;
+                    actualizarTiempo();
+                }, 1000);
+            }
+        }
+
+        function detener() {
+            clearInterval(intervalo);
+            intervalo = null;
+        }
+
+        function reiniciar() {
+            detener();
+            segundos = 0;
+            actualizarTiempo();
+        }
+    </script>
+
+</body>
+</html>

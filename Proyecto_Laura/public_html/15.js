@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const simbolo = document.getElementById("Simbolo");
     const simbolo2 = document.getElementById("Simbolo2");
     const contador = document.querySelector(".contador");
+    const audio = document.createElement("audio");
+    audio.src = "cancion.mp3";
+    audio.preload = "auto";
+    document.body.appendChild(audio);    
 
     botones.forEach(boton => {
         boton.addEventListener("click", () => {
@@ -31,7 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }, 400);
             }, { once: true });
-
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
         });
     });
 
@@ -94,5 +99,5 @@ document.addEventListener("DOMContentLoaded", () => {
         hoja.style.opacity = Math.random();
 
         document.body.appendChild(hoja);
-    }    
+    }
 });
