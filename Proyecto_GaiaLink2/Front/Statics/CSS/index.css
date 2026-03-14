@@ -1,0 +1,921 @@
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Roboto' !important; 
+}
+section{
+    scroll-margin-top: 120px;
+}
+h4{
+    margin: 0;
+}
+.Bg_Azul{
+    background-color: #16213d !important;
+    color: white !important;
+}
+.Bg_Azul2{
+    background-color: #22356a !important;
+}
+.Bg_Azul3{
+    background-color: #1b40a4 !important; 
+}
+.Bg_Azul4{
+    background-color: #3a5cb3 !important;
+    color: white !important;
+}
+.Bg_Azul5{
+    background-color: #4f6cbdae !important;
+}
+.Bg_Morado{
+    background-color: #311d4f !important;
+}
+.Bg_Morado2{
+    background-color: #522694 !important;
+}
+.Bg_Morado3{
+    background-color: #dac1ff !important;
+}
+.Bg_Verde{
+    background-color: #22c55e !important;
+}
+.Bg_Rojo{
+    background-color: #c52222 !important;
+}
+.Border_Morado2{
+    border-color: #522694 !important;
+    transition: all 0.3s ease;
+}
+.Bg_Blanco{
+    background-color: #F8FAFC;
+}
+.Bg_Blanco2{
+    background-color: #f2f3f9;
+}
+.Bg_Oscuro{
+    background-color: #424a5d;
+}
+.Bg_Black{
+    background-color: #292929 !important;
+    color: white !important;
+}
+.Bg_Sombra{
+    color: white !important;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);    
+}
+.Bg_Sombra2{
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);    
+}
+.Bg_Sombra3{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);    
+}
+.C_Morado{
+    background-color: #311d4f !important;
+}
+.C_Azul3{
+    color: #1b40a4 !important; 
+}
+.Fondo{
+    background-image: url("../img/Fondo2.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.Fondo1{
+    background-color: #c7c7c7;
+}
+.Fondo2{
+    background-color: #F8FAFC;
+}
+.Fondo_Negro{
+    background: radial-gradient(
+        circle at 50% 40%,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0.65) 45%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+}
+.Fondo_Diagonal {
+    position: relative;
+    background: linear-gradient(
+        110deg,
+        #f8fafc 50%,
+        #22356a 50%
+    );
+    overflow: hidden;
+}
+.Fondo_Diagonal2 {
+    position: relative;
+    background: linear-gradient(
+        90deg,
+        #22356a 50%,
+        #f8fafc 50%
+    );
+    overflow: hidden;
+}
+.Fondo_Diagonal3 {
+    position: relative;
+    background: linear-gradient(
+        90deg,
+        #22356a 50%,
+        #f8fafc 50%
+    );
+    overflow: hidden;
+}
+.fsr-1{ 
+    font-size: clamp(2.5rem, 5vw, 5rem); 
+}
+.fsr-2{ 
+    font-size: clamp(2.3rem, 4.6vw, 4.6rem); 
+}
+.fsr-3{ 
+    font-size: clamp(2.1rem, 4.2vw, 4.2rem); 
+}
+.fsr-4{ 
+    font-size: clamp(1.9rem, 3.8vw, 3.8rem); 
+}
+.fsr-5{ 
+    font-size: clamp(1.7rem, 3.4vw, 3.4rem); 
+}
+.fsr-6{ 
+    font-size: clamp(1.6rem, 3vw, 3rem); 
+}
+.fsr-7{ 
+    font-size: clamp(1.5rem, 2.7vw, 2.7rem); 
+}
+.fsr-8{ 
+    font-size: clamp(1.4rem, 2.4vw, 2.4rem); 
+}
+.fsr-9{ 
+    font-size: clamp(1.3rem, 2.1vw, 2.1rem); 
+}
+.fsr-10 { 
+    font-size: clamp(1.2rem, 1.9vw, 1.9rem); 
+}
+.fsr-11{ 
+    font-size: clamp(1.15rem, 1.7vw, 1.7rem); 
+}
+.fsr-12{ 
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem); 
+}
+.fsr-13{ 
+    font-size: clamp(1.08rem, 1.3vw, 1.3rem); 
+}
+.fsr-14{ 
+    font-size: clamp(1.04rem, 1.15vw, 1.15rem); 
+}
+.fsr-15{ 
+    font-size: clamp(1rem, 1vw, 1rem); 
+}
+.fsr-16{ 
+    font-size: clamp(0.96rem, 0.9vw, 0.96rem); 
+}
+.fsr-17{ 
+    font-size: clamp(0.92rem, 0.8vw, 0.92rem); 
+}
+.fsr-18{ 
+    font-size: clamp(0.88rem, 0.75vw, 0.88rem); 
+}
+.fsr-19{ 
+    font-size: clamp(0.84rem, 0.7vw, 0.84rem); 
+}
+.fsr-20{ 
+    font-size: clamp(0.8rem, 0.65vw, 0.8rem); 
+}
+.fsr-21{ 
+    font-size: clamp(0.76rem, 0.6vw, 0.76rem); 
+}
+.fsr-22{ 
+    font-size: clamp(0.72rem, 0.55vw, 0.72rem); 
+}
+.fsr-23{ 
+    font-size: clamp(0.68rem, 0.5vw, 0.68rem); 
+}
+.fsr-24{ 
+    font-size: clamp(0.64rem, 0.45vw, 0.64rem); 
+}
+.fsr-25{ 
+    font-size: clamp(0.6rem, 0.4vw, 0.6rem); 
+}
+.fs-nav-1{
+    font-size: 1.75rem;
+}
+.fs-nav-2{
+    font-size: 1.5rem;
+}
+.fs-nav-3{
+    font-size: 2.5rem;
+}
+.fw-500{
+    font-weight: 500!important;
+}
+.wh-loading {
+    width: 200px;
+    height: 200px;
+}
+.w-10{
+    width: 10%;
+}
+.w-15{
+    width: 15%;
+}
+.w-19{
+    width: 19%;
+}
+.w-67{
+    width: 67%;
+}
+.w-70{
+    width: 70%;
+}
+.w-90{
+    width: 90%
+}
+.h-70{
+    height: 70%;
+}
+.vh-88{
+    height: 88vh;
+}
+.dvh-100{
+    height: 100dvh;
+}
+.Texto-1{
+    width: 50%;
+}
+.Texto-2{
+    width: 50%;
+}    
+.gap-10{
+    gap: 10rem;
+}
+.gap-15{
+    gap: 9rem
+}
+.gap-20{
+    gap: 20rem;
+}
+.boton{
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.boton:hover{
+    transform: scale(1.08);
+    background-color: #bababa !important;
+}
+.boton2{
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.boton2:hover{
+    transform: scale(1.08);
+    background-color: #5877d3 !important;
+    transition: all 0.3s ease;
+}
+.boton3{
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.boton3:hover{
+    transform: scale(1.08);
+    background-color: #ef051c !important;
+    transition: all 0.3s ease;
+}
+.boton4{
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.boton4:hover{
+    transform: scale(1.08);
+    background-color: #7530dd !important;
+    transition: all 0.3s ease;
+}
+.boton5{
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.boton5:hover{
+    transform: scale(1.08);
+    background-color: #07b301 !important;
+    transition: all 0.3s ease;
+}
+.boton6{
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.boton6:hover{
+    transform: scale(1.08);
+    background-color: #ad0000 !important;
+    transition: all 0.3s ease;
+}
+.Neon:hover {
+    text-shadow: 
+        0px 0px 5px #ffffff,
+        0px 0px 10px #ffffff,
+        0px 0px 15px #ffffff;
+    transition: all 0.3s ease;    
+}
+.nav-hover:hover{
+    transition: all 0.3s ease;
+    background-color: #533a7a;
+}
+.Imagen_Redes:hover{
+    width: 60px;
+    height: 60px;
+}
+.text-hover:hover{
+    color: #5877d3 !important;
+    transition: color 0.3s ease;
+}
+.Footer_hover:hover{
+    transition: all 0.3s ease;
+    transform: scale(1.2);
+}
+.Link_Hover:hover {
+    transition: all 0.3s ease;
+    background-color: transparent !important;
+    cursor: pointer !important;
+    color: #6d93fe !important;
+    text-decoration: underline !important;
+}
+.Card_Hover:hover{
+    transform: translateY(-12px);
+    border-color: #7434fe!important;
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+.dropdown-item:hover{
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    background-color: #5877d3 !important;
+}
+.Español{
+    width: 60px;
+    height: 30px;
+}
+.Redes{
+    width: 58px;
+    height: auto;   
+}
+.Rectangulo_Redes{
+    margin-top: 0px;
+    opacity: 75%;
+    position: fixed;
+    display: flex;    
+    z-index: 3000;    
+    top: 50%;
+    transform: translateY(-50%);         
+}
+.Redes_Contenedor{
+    width: 58px;
+    height: auto; 
+    top: 50%;
+    transform: translateY(-50%);    
+    z-index: 3000;
+    align-items: center; 
+    flex-direction: column;
+    position: fixed;
+    display: flex;        
+}
+.Imagen_Redes{
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+}
+.Centrar-Izquierda{
+    width: 25%;
+    height: 100%;
+}
+.texto_frame2{
+    width: 80%; 
+    font-size: 1.53rem;
+}
+.Imagen_Estrella{
+    width: 16%
+}
+.Largo-Pantalla{
+    height: auto;
+}
+.quote-box{
+    width: 60px;
+    height: 50px;
+}
+.imagen2{
+    width: 100%;
+}
+.Ayuda{
+    width: 34%; 
+    height: 65%;
+}
+.Ayuda2{
+    width: 52%; 
+    height: 49%;
+}
+.mv-card {
+    transition: all 0.3s ease;
+}
+.border_azul2{
+    border-color: #22356a !important;
+}
+.imagen_restitucion{
+    width: 25%;
+}
+.icono-card {
+    width: 50px;
+    height: 50px;
+}
+.icono-card img {
+    width: 28px;
+    height: 28px;
+}
+.col-2-custom{
+    width: 20%;
+}
+.icono-nav{
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+.icono-nav2{
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+.icono-nav3{
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+.icono-nav4{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.rotate-315 {
+    transform: rotate(315deg);
+}
+.vi-hi {
+    visibility: hidden;
+}
+.one {
+    animation: one_move 3.5s infinite;
+}
+.two {
+    animation: two_move 3.5s 0.15s infinite;
+}
+.three {
+    animation: three_move 3.5s 0.3s infinite;
+}
+.four {
+    animation: four_move 3.5s 0.575s infinite;
+}
+.five {
+    animation: five_move 3.5s 0.725s infinite;
+}
+.six {
+    animation: six_move 3.5s 0.875s infinite;
+}
+.Message_Success{
+    background-color: #bcfcd6 !important;
+    border: 3px solid #22c55e !important;
+    color: #166534!important;
+}
+.Message_Error{
+    background-color: #fbd8d8 !important;
+    border: 3px solid #ef4444 !important;
+    color: #7f1d1d!important;
+}
+.Message_Warning{
+    background-color: #fef6d3 !important;
+    border: 3px solid #f59e0b !important;
+    color: #78350f!important;
+}
+.Message_Info{
+    background-color: #c3ddfe !important;
+    border: 3px solid #3b82f6 !important;
+    color: #1e3a8a!important;
+}
+@keyframes one_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@keyframes two_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@keyframes three_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(0% 70% 70% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(35% 70% 35% 0 round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@keyframes four_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@keyframes five_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@keyframes six_move {
+    0% {
+        visibility: visible;
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    14% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    28% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    42% {
+        clip-path: inset(70% 0 0 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    57% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    71% {
+        clip-path: inset(35% 0% 35% 70% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    85% {
+        clip-path: inset(35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+    100% {
+        clip-path: inset(70% 35% 0% 35% round 5%);
+        animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    }
+}
+@media (max-width: 1500px) {
+    .Logo_Gaia{
+        width: 29%;
+    }
+    .Español{
+        width: 50px;
+        height: 20px;
+    }    
+    .w-80{
+        width: 105%;
+    }
+    .h-65{
+        width:22%;
+    }    
+    .quote-box{
+        width: 55px;
+        height: 48px;
+    }    
+    .w-fotos{
+        width: 90%;
+    }
+    .fs-nav-1{
+        font-size: 1.3rem;
+    }
+    .fs-nav-2{
+        font-size: 1.1rem;
+    }    
+    .fs-nav-3{
+        font-size: 2.2rem;
+    }            
+}
+@media (max-width: 1250px){
+    .quote-box{
+        width: 47px;
+        height: 40px;
+    }
+}
+@media (min-width: 1200px) {
+    .col-xl2-3 {
+        flex: 0 0 auto;
+        width: 26%;
+    }
+    .col-3-custom{
+        width: 23%;
+    }    
+}
+@media (max-width: 991px) {
+    .Fondo{
+        background-image: url("../img/Fondo_Tablet.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }      
+    .Fondo_Diagonal {
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            #f8fafc 52%,
+            #22356a 48%
+        );
+        overflow: hidden;
+    }
+    .Fondo_Diagonal2 {
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            #22356a 50%,
+            #f8fafc 50%
+        );
+        overflow: hidden;
+    }
+    .Fondo_Diagonal3 {
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            #22356a 53.2%,
+            #f8fafc 46%
+        );
+        overflow: hidden;
+    }
+    .Largo-Pantalla-auto{
+        height: auto;
+        padding: 1rem;
+    }      
+    .gap-20{
+        gap: 6rem
+    }    
+    .w-80{
+        width: 85%;
+    }    
+    .w-35 {
+        width: 80%;
+    }    
+    .imagen_restitucion{
+        width: 17%;
+    }   
+    .Texto-1{
+        font-size: 50px;
+        width: 60%;
+    }
+    .Texto-2{
+        font-size: 25px;
+        width: 60%;
+    }     
+    .h-65{
+        height: 10%
+    }    
+    .rem-33{
+        font-size: 1.3rem;
+    }    
+    .w-40-2{
+        width: 51%;
+    }     
+    .w-67{
+        width: 100%;
+    }
+}
+@media (max-width: 600px) {
+    section{
+        scroll-margin-top: 98px;
+    }    
+    .Logo_Gaia{
+        width: 26%;
+    }    
+    .img-fluid{
+        max-width: 69%;
+    }
+    .Fondo{
+        background-image: url("../img/Fondo_Celular.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }    
+    .Texto-1{
+        width: 90%;
+    }
+    .Texto-2{
+        width: 90%;
+    }    
+    .quote-box{
+        width: 38px;
+        height: 32px;
+    }
+    .gap-20{
+        gap: 4rem;
+    }
+    .Fondo_Diagonal {
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            #f8fafc 50%,
+            #22356a 50%
+        );
+        overflow: hidden;
+    }    
+    .fsr-1  { 
+        font-size: clamp(3.5rem, 11vw, 5rem); 
+    }
+    .fsr-2  { 
+        font-size: clamp(3.1rem, 10vw, 4.6rem); 
+    }
+    .fsr-3  { 
+        font-size: clamp(2.7rem, 9vw, 4.2rem); 
+    }
+    .fsr-4  { 
+        font-size: clamp(2.4rem, 8vw, 3.8rem); 
+    }
+    .fsr-5  { 
+        font-size: clamp(2.1rem, 7.2vw, 3.4rem); 
+    }
+    .fsr-6  { 
+        font-size: clamp(1.9rem, 6.8vw, 3rem); 
+    }
+    .fsr-7  { 
+        font-size: clamp(1.7rem, 6.2vw, 2.7rem); 
+    }
+    .fsr-8  { 
+        font-size: clamp(1.6rem, 5.8vw, 2.4rem); 
+    }
+    .fsr-9  { 
+        font-size: clamp(1.5rem, 5.3vw, 2.1rem); 
+    }
+    .fsr-10 { 
+        font-size: clamp(1.4rem, 4.9vw, 1.9rem); 
+    }
+    .fsr-11 { 
+        font-size: clamp(1.3rem, 4.5vw, 1.7rem); 
+    }
+    .fsr-12 { 
+        font-size: clamp(1.2rem, 4.1vw, 1.5rem); 
+    }
+    .fsr-13 { 
+        font-size: clamp(1.1rem, 3.7vw, 1.3rem); 
+    }
+    .fsr-14 { 
+        font-size: clamp(1rem, 3.3vw, 1.15rem); 
+    }
+    .fsr-15 { 
+        font-size: clamp(0.95rem, 3vw, 1rem); 
+    } 
+    .dvh-100{
+        height: auto;
+    }
+}

@@ -1,6 +1,5 @@
 from App.Utilities.Extension import db
 from App.Models.Catalog_Model import Books, Categories, Publisher, Authors, Books_Authors, Book_Copies
-from sqlalchemy import and_
 
 class Books_Service:
     @staticmethod

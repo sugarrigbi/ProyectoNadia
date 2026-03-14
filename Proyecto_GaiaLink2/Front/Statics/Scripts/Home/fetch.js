@@ -1,0 +1,241 @@
+const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
+
+if (document.getElementById("Formulario_Ayuda")){
+    document.getElementById("Formulario_Ayuda").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Ayuda_Mensaje");
+        Boton = document.getElementById("Formulario_Ayuda_Boton");        
+        Boton.disabled = true;
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch(`${API_BASE}/api/forms/ayuda/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+
+        if(response.status === 201){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+            Boton.disabled = false;
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Error");
+
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}
+if (document.getElementById("Formulario_Calificanos")){
+    document.getElementById("Formulario_Calificanos").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Calificanos_Mensaje");
+        Boton = document.getElementById("Formulario_Calificanos_Boton");        
+        Boton.disabled = true;
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch(`${API_BASE}/api/forms/calificanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+
+        if(response.status === 201){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+            Boton.disabled = false;
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Error");
+
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}
+if (document.getElementById("Formulario_Contactanos")){
+    document.getElementById("Formulario_Contactanos").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Contactanos_Mensaje");
+        Boton = document.getElementById("Formulario_Contactanos_Boton");
+        Boton.disabled = true;
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch(`${API_BASE}/api/forms/contactanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+
+        if(response.status === 201){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Error");
+            Boton.disabled = false;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}
+if (document.getElementById("Formulario_Registrar")){
+    document.getElementById("Formulario_Registrar").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Registrar_Mensaje");
+        Boton = document.getElementById("Formulario_Registrar_Boton");        
+        Boton.disabled = true;
+        
+        const Pass1 = document.getElementById("Input_Password1").value;
+        const Pass2 = document.getElementById("Input_Password2").value;
+
+        if(Pass1 !== Pass2){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.setAttribute("data-lang", "formularios.Error_Contraseña");
+
+            CambiarIdioma(localStorage.getItem("idioma") || "es");         
+            return;   
+        }
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        const response = await fetch(`${API_BASE}/api/registro`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const result = await response.json()
+
+        if(response.status === 200){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            window.location.href = "/registro/codigo"
+            Boton.disabled = true;
+            localStorage.setItem("Correo_Registro", data.Correo)
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400){
+            window.scrollTo(0, 0);
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            Boton.disabled = false;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}
+if (document.getElementById("Formulario_Codigo")){
+    document.getElementById("Formulario_Codigo").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Codigo_Mensaje");
+        Boton = document.getElementById("Formulario_Codigo_Boton");        
+        Boton.disabled = true;
+
+        const Inputs = document.querySelectorAll("input[type='text']");
+        const codigo = Array.from(Inputs).map(input => input.value).join("");
+        const correoGuardado = localStorage.getItem("Correo_Registro") || "";
+
+        const payload = {
+            Correo: correoGuardado,
+            Codigo: codigo
+        };
+
+        const response = await fetch(`${API_BASE}/api/registro/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const result = await response.json()        
+
+        if(response.status === 200){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+            localStorage.removeItem("Correo_Registro");
+            window.location.href = "/login"
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            Boton.disabled = false;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}

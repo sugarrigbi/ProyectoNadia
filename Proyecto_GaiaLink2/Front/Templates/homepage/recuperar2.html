@@ -1,0 +1,83 @@
+{% extends "/homepage/base.html" %}
+{% block contenido %}
+    <!--Recuperar Contraseña-->
+    <section id="Login" class="Fondo1">
+        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5">
+            <div class="row w-100 mt-3">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                        <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
+                        <span data-lang="recuperar2.Ayuda">
+                            Ayuda
+                        </span>
+                    </a> 
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                        <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
+                        <span data-lang="recuperar2.Volver">
+                            Volver
+                        </span>
+                    </a>                    
+                </div>
+            </div>          
+            <div class="row w-100 d-flex align-items-center justify-content-center">
+                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
+                    <img src="{{ url_for('static', filename='img/Recuperar.svg') }}" class="w-25">
+                    <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
+                        <h2 data-lang="recuperar2.Recuperar_Contraseña" class="fsr-9 m-0">
+                            Recuperar Contraseña
+                        </h2>
+                    </div>
+                    <div class="col-10 d-flex align-items-center justify-content-center flex-column">
+                        <div class="w-67 d-flex align-items-center justify-content-start">
+                            <label data-lang="recuperar2.Codigo" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                                Codigo
+                            </label>
+                        </div>
+                        <div class="d-flex gap-1 gap-md-2 align-items-center justify-content-start w-67">
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10 d-flex align-items-center justify-content-center flex-column">
+                        <div class="w-67">
+                            <label data-lang="recuperar2.Nueva1" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                                Nueva contraseña
+                            </label>
+                            <input type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
+                        </div>
+                    </div> 
+                    <div class="col-10 d-flex align-items-center justify-content-center flex-column">
+                        <div class="w-67">
+                            <label data-lang="recuperar2.Nueva2" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                                Confirma contraseña
+                            </label>
+                            <input type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
+                        </div>
+                    </div>                                          
+                    <a data-lang="recuperar2.Recuperar" href="/" class="Bg_Azul4 d-inline-flex boton2 text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold">
+                        Recuperar
+                    </a>                                                      
+                </div>                
+            </div>
+        </div>
+    </section>
+{% endblock %}

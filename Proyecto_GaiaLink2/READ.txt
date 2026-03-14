@@ -1,0 +1,43 @@
+TAREAS PENDIENTES:
+Login - tienes 3 intentos, bloqueo perma y temp de 15 mins, estados de usuario
+Autenticador 2fa
+recuperar contraseña
+sistema de permisos, con tabla Rol_Permisos, mostrar ciertas secciones dependiendo de esos permisos con JS
+CRUD casos, hacer q casos tengan etapas, respuesta cliente/respuesta asesor
+CRUD de entidades
+CRUD Personas
+Tema Claro/Oscuro
+Idioma Dashboard
+Dispositivos apartado
+Mis Datos personales, (imaegnes de usuario, q salga la imagen y el nombre de usuario arriba)
+contactenos
+sessions, para mantener activa la sesion, boton de recuerdame, o no en el login, para entrar sin contraseña en 1 semana
+Notificaciones al hacer cosas, (CRUD de casos personas entidades etv)
+hacer auditorias de lo q pasa y cuando, eso tmb para el seguimiento de casos
+rate limit para evitar ataques DOS (Ataques de fuerza bruta)
+Logs de todo, cambios de contraseña etc
+expiracion de sesiones
+proteccion contra subida de archivos maliciosos
+desactivar o suspender cuentas
+asignacion de casos a analistas en turno, tipo TFS
+comentarios dentro del caso
+cierre formal de casos
+historial de casos (Liena del tiempo del caso)
+Carga de documentos, evidencia, tipo opcion del clip en TFS
+Los casos pasan por etapas definidas(solicitud, validación, análisis, decisión, restitución)
+fecha límite entrega de casos
+Asignación inteligente de casos	qué analista recibe el caso según carga laboral
+Relaciones entre casos mejor, tipo TFS
+Observaciones de los analistas
+Notifica a usuarios o funcionarios cuando cambia el estado de un caso o se requiere acción.
+Búsqueda avanzada de casos permite filtrar casos por región, estado, tipo de bien etc
+Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc
+tiempo promedio de resolucion
+exportacion a xls de datos de casos entidades personas a tablas de exel
+indicadores de rendimiento
+prioridad de casos
+Sistema de auditorías
+
+
+
+Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda

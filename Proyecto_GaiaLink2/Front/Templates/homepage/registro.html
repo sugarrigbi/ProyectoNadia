@@ -1,0 +1,272 @@
+{% extends "/homepage/base.html" %}
+{% block contenido %}
+    <!--Registro-->
+    <section id="Registro" class="Fondo1 Largo-Pantalla-auto">
+        <div class="container-fluid justify-content-start align-items-center d-flex h-100 flex-column gap-3 gap-md-5 pb-5">
+            <div class="row w-100 mt-3">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                        <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
+                        <span data-lang="registro.Ayuda">
+                            Ayuda
+                        </span>
+                    </a> 
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                        <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
+                        <span data-lang="registro.Volver2">
+                            Volver
+                        </span>
+                    </a>                    
+                </div>
+            </div>     
+            <form id="Formulario_Registrar" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
+                <h3 data-lang="registro.Registrarse" class="w-auto d-inline-flex fw-bold mb-3 p-3 text-white text-center Bg_Azul2 rounded-3 text-center fsr-9">
+                    Registrarse
+                </h3>
+                <div id="Formulario_Registrar_Mensaje" class="p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                    Mensaje Generico
+                </div>                                
+                <div class="row">
+                    <h3 data-lang="registro.Personales" class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                        Datos Personales
+                    </h3>
+                </div>
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Primer_Nombre">
+                                Primer nombre 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Primer_Nombre" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Segundo_Nombre">
+                                Segundo nombre 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Segundo_Nombre" type="text" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Primer_Apellido">
+                                Primer apellido 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Primer_Apellido" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Segundo_Apellido">
+                                Segundo apellido 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Segundo_Apellido" type="text" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>                   
+                </div>
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Tipo">
+                                Tipo de documento 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="Tipo_Documento_ID" required class="form-select rounded-2 border-3 mt-2">
+                            <option data-lang="formularios.Selecciona_opcion" value="" selected disabled>
+                                Selecciona una opción
+                            </option>
+                            <option value="1" data-lang="registro.CC">
+                                Cedula de ciudadania
+                            </option>
+                            <option value="2" data-lang="registro.CE">
+                                Cedula de extranjeria
+                            </option>
+                            <option value="3" data-lang="registro.PA">
+                                Pasaporte
+                            </option>
+                            <option value="4" data-lang="registro.TI">
+                                Tarjeta de identidad
+                            </option>
+                            <option value="5" data-lang="registro.RC">
+                                Registro Civil
+                            </option>
+                        </select>
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Documento">
+                                Documento 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Documento" type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="6" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Fecha">
+                                Fecha de nacimiento 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Fecha_Nacimiento" type="date" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        
+                    </div>                   
+                </div> 
+                <div class="row">
+                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                        <span data-lang="registro.Direccion">
+                            Direccion
+                        </span>
+                    </h3>
+                </div> 
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Departamento">
+                                Departamento 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Departamento_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Ciudad">
+                                Ciudad 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Ciudad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Localidad">
+                                Localidad
+                            </span>
+                        </label>
+                        <input name="Localidad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Barrio">
+                                Barrio
+                            </span>
+                        </label>
+                        <input name="Barrio_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                    </div>                   
+                </div>
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Direccion">
+                                Direccion 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Direccion" type="text" required minlength="5" maxlength="40" class="form-control rounded-2 border-3 mt-2">
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                    </div>                   
+                </div>   
+                <div class="row">
+                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                        <span data-lang="registro.Cuenta">
+                            Datos de la cuenta
+                        </span>
+                    </h3>
+                </div> 
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Correo">
+                                Correo 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Correo" type="email" minlength="6" class="form-control rounded-2 border-3 mt-2">
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Nombre">
+                                Nombre de usuario 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Nombre" type="text" minlength="5" maxlength="50" pattern="^\S+$" title="No se permiten espacios" class="form-control rounded-2 border-3 mt-2">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Contraseña">
+                                Contraseña 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="d-flex align-items-center justify-content-center flex-row position-relative">
+                            <input id="Input_Password1" name="Contraseña" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <button id="Boton_Password1" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
+                                <img id="Imagen_Password1" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
+                            </button>
+                        </div>                        
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Confirmar">
+                                Confirma Contraseña  
+                            </span>
+                        </label>
+                        <div class="d-flex align-items-center justify-content-center flex-row position-relative">
+                            <input id="Input_Password2" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <button id="Boton_Password2" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
+                                <img id="Imagen_Password2" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
+                            </button>
+                        </div>                        
+                    </div>                                     
+                </div>
+                <div class="row flex-column flex-sm-row gap-3 gap-md-0">
+                    <div class="col-sm-12 col-md-3">
+                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="registro.Telefono">
+                                Telefono 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input name="Telefono" type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="8" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                    </div> 
+                    <div class="col-sm-12 col-md-3">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                    </div>                   
+                </div>   
+                <div class="d-flex flex-row align-items-center justify-content-center gap-2">
+                    <input required type="checkbox" class="form-check-input m-0">
+                    <h2 class="fsr-11 m-0">
+                        Acepto terminos y condiciones
+                    </h2> 
+                </div>
+                <button id="Formulario_Registrar_Boton" data-lang="formularios.Enviar" href="/" class="Bg_Azul4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
+                    Enviar
+                </button>                                            
+                <a data-lang="registro.Volver" href="{{ url_for('Login') }}" class="text-decoration-none C_Azul3 Link_Hover fw-bold fsr-12 w-100 text-center">
+                    Volver al inicio de sesion
+                </a>                   
+            </form>
+        </div>
+    </section>
+{% endblock %}

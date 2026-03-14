@@ -1,0 +1,67 @@
+{% extends "/homepage/base.html" %}
+{% block contenido %}
+    <!--Autenticador-->
+    <section id="Login" class="Fondo1">
+        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5">
+            <div class="row w-100 mt-3">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                        <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
+                        <span data-lang="autenticador.Ayuda">
+                            Ayuda
+                        </span>
+                    </a> 
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                        <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
+                        <span data-lang="autenticador.Volver">
+                            Volver
+                        </span>
+                    </a>                    
+                </div>
+            </div>            
+            <div class="row w-100 d-flex align-items-center justify-content-center">
+                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
+                    <img src="{{ url_for('static', filename='img/Multifa.svg') }}" class="w-25">
+                    <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
+                        <h2 class="fsr-9 m-0" data-lang="autenticador.Autenticador">
+                            Autenticador
+                        </h2>
+                    </div>
+                    <div class="col-12 col-md-10 d-flex align-items-center justify-content-center flex-column">
+                        <div class="w-67 d-flex align-items-center justify-content-start">
+                            <label data-lang="autenticador.Codigo" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                                Codigo
+                            </label>
+                        </div>
+                        <div class="d-flex gap-1 gap-md-2 align-items-center justify-content-start w-67">
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-black w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                            <div class="col-2-custom p-0">
+                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                            </div>
+                        </div>
+                    </div>
+                    <a data-lang="autenticador.Iniciar_Sesion" href="/" class="Bg_Azul4 d-inline-flex boton2 text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold">
+                        Iniciar Sesion
+                    </a>                                                      
+                </div>                
+            </div>
+        </div>
+    </section>
+{% endblock %}
