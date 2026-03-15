@@ -38,29 +38,29 @@ def Recuperar_Usuario():
 @app.route("/login/recuperar/codigo")
 def Recuperar_Codigo():
     return render_template("homepage/recuperar2.html")
-@app.route("/dashboard/admin")
+@app.route("/dashboard")
 def Dashboard_Admin():
-    return render_template("dashboard/admin/dashboard.html")
-@app.route("/dashboard/admin/inicio")
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/inicio")
 def Dashboard_Admin_Inicio():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/admin/inicio.html")
-    return render_template("dashboard/admin/dashboard.html")
-@app.route("/dashboard/admin/casos")
+        return render_template("dashboard/inicio.html")
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/casos")
 def Dashboard_Admin_Casos():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/admin/casos.html")
-    return render_template("dashboard/admin/dashboard.html")
-@app.route("/dashboard/admin/entidades")
+        return render_template("dashboard/casos.html")
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/entidades")
 def Dashboard_Admin_Entidades():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/admin/entidades.html")
-    return render_template("dashboard/admin/dashboard.html")
-@app.route("/dashboard/admin/usuarios")
+        return render_template("dashboard/entidades.html")
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/usuarios")
 def Dashboard_Admin_Usuarios():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/admin/usuarios.html")
-    return render_template("dashboard/admin/dashboard.html")
+        return render_template("dashboard/usuarios.html")
+    return render_template("dashboard/dashboard.html")
 
 
 

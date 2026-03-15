@@ -1,16 +1,10 @@
-from App.Utilities.Mailer import Enviar_Email
+from App.Utilities.Mailer import Enviar_Correo
 
 class Email_Service:
-
     @staticmethod
-    def Send(Correo, Asunto, Mensaje):
-
+    def Envio(Template, Data, Correo, Asunto):
         try:
-
-            Enviar_Email(Correo, Asunto, Mensaje)
-
+            Enviar_Correo(Template, Data, Correo, Asunto)
             return {"Message": "Correo enviado"}
-
         except Exception as e:
-
             return {"Error": str(e)}

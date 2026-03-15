@@ -25,10 +25,7 @@
             <form id="Formulario_Registrar" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
                 <h3 data-lang="registro.Registrarse" class="w-auto d-inline-flex fw-bold mb-3 p-3 text-white text-center Bg_Azul2 rounded-3 text-center fsr-9">
                     Registrarse
-                </h3>
-                <div id="Formulario_Registrar_Mensaje" class="p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
-                    Mensaje Generico
-                </div>                                
+                </h3>                                
                 <div class="row">
                     <h3 data-lang="registro.Personales" class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
                         Datos Personales
@@ -217,7 +214,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="d-flex align-items-center justify-content-center flex-row position-relative">
-                            <input id="Input_Password1" name="Contraseña" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <input oncopy="return false;" onpaste="return false;" autocomplete="new-password" id="Input_Password1" name="Contraseña" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
                             <button id="Boton_Password1" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
                                 <img id="Imagen_Password1" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
                             </button>
@@ -230,7 +227,7 @@
                             </span>
                         </label>
                         <div class="d-flex align-items-center justify-content-center flex-row position-relative">
-                            <input id="Input_Password2" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <input oncopy="return false;" onpaste="return false;" autocomplete="new-password" id="Input_Password2" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
                             <button id="Boton_Password2" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
                                 <img id="Imagen_Password2" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
                             </button>
@@ -252,14 +249,22 @@
                     <div class="col-sm-12 col-md-3">
                     </div>
                     <div class="col-sm-12 col-md-3">
-                    </div>                   
+                    </div>                                       
                 </div>   
                 <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                     <input required type="checkbox" class="form-check-input m-0">
                     <h2 class="fsr-11 m-0">
-                        Acepto terminos y condiciones
+                        <span data-lang="registro.Acepto">
+                            Acepto
+                        </span>
+                        <a data-lang="registro.Terminos" href="{{ url_for('Terminos') }}" class="text-decoration-none C_Azul3 Link_Hover fw-bold fsr-12 w-100 text-center">
+                            Terminos y Condiciones
+                        </a>                         
                     </h2> 
                 </div>
+                <div id="Formulario_Registrar_Mensaje" class="p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                    Mensaje Generico
+                </div>                
                 <button id="Formulario_Registrar_Boton" data-lang="formularios.Enviar" href="/" class="Bg_Azul4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
                     Enviar
                 </button>                                            

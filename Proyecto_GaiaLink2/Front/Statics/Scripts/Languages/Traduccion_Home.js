@@ -152,7 +152,9 @@ const Traducciones = {
             CE: "Cedula de Extranjeria",
             PA: "Pasaporte",
             TI: "Tarjeta de identidad",
-            RC: "Registro Civil"
+            RC: "Registro Civil",
+            Acepto: "Acepto",
+            Terminos: "Terminos y Condiciones"
         },
         soporte:{
             Creacion: "Creacion de tickets",
@@ -386,7 +388,9 @@ const Traducciones = {
             CE: "Foreigner ID",
             PA: "Passport",
             TI: "Identity Card",
-            RC: "Civil Registry"
+            RC: "Civil Registry",
+            Acepto: "Accept",
+            Terminos: "Terms and Conditions"
         },
         soporte:{
             Creacion: "Ticket creation",
@@ -619,7 +623,9 @@ const Traducciones = {
             CE: "Carte d'identité d'étranger",
             PA: "Passeport",
             TI: "Carte d'identité",
-            RC: "Registre civil"
+            RC: "Registre civil",
+            Acepto: "Accepter",
+            Terminos: "Termes et Conditions"
         },
         soporte:{
             Creacion: "Création de tickets",

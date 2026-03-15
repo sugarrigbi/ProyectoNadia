@@ -1,6 +1,7 @@
 from flask import Flask
 from App.Routes.Forms_Service import Forms_Service_Bp
 from App.Routes.User_Service import User_Service_Bp
+from App.Routes.Auth_Service import Auth_Service_Bp
 from flask_cors import CORS
 
 def Create_App():
@@ -16,5 +17,6 @@ def Create_App():
 
     App.register_blueprint(Forms_Service_Bp)
     App.register_blueprint(User_Service_Bp)
+    App.register_blueprint(Auth_Service_Bp)
 
     return App 

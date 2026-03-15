@@ -1,5 +1,6 @@
 {% extends "/homepage/base.html" %}
 {% block contenido %}
+    <script src="{{ url_for('static', filename='Scripts/Home/Login.js') }}"></script>
     <!--Login-->
     <section id="Login" class="Fondo1">
         <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5">
@@ -23,31 +24,45 @@
                 </div>
             </div>            
             <div class="row w-100 d-flex align-items-center justify-content-center">
-                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
+                <form id="Formulario_Login" class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
                     <img src="{{ url_for('static', filename='img/Usuario1.svg') }}" class="w-25">
                     <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
                         <h2 data-lang="login.Iniciar_Sesion" class="fsr-9 m-0">
                             Iniciar Sesión
                         </h2>
                     </div>
+                    <div id="Formulario_Login_Mensaje" class="p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                        Mensaje Generico
+                    </div>                     
                     <div class="col-12 col-md-8">
                         <label data-lang="login.Nombre" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             Nombre de usuario o Correo
                         </label>
-                        <input type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
-                    </div>  
+                        <input id="Identificacion" type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
+                    </div>
                     <div class="col-12 col-md-8">
                         <label data-lang="login.Contraseña" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             Contraseña
                         </label>
-                        <input type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
+                        <div class="d-flex align-items-center justify-content-center flex-row position-relative">
+                            <input oncopy="return false;" autocomplete="new-password" id="Input_Password3" name="Contraseña" type="password" class="form-control rounded-2 border-3 mt-2">
+                            <button id="Boton_Password3" type="button" class="bg-transparent border-0 position-absolute end-0 d-flex justify-content-end">
+                                <img id="Imagen_Password3" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2 mt-2">
+                            </button>
+                        </div>
                     </div>
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-2">
+                        <input id="Remember_Me" name="Remember_Me" type="checkbox" class="form-check-input m-0">
+                        <h2 class="fsr-11 m-0 text-dark">
+                            Recordar mi sesión en este dispositivo                          
+                        </h2> 
+                    </div>                    
                     <a data-lang="login.Contraseña_Olvidaste" href="{{ url_for('Recuperar_Usuario') }}" class="text-decoration-none C_Azul3 Link_Hover fw-bold fsr-12">
                         ¿Olvidaste tu contraseña?
                     </a>
-                    <a data-lang="login.Iniciar_Sesion" href="/" class="Bg_Azul4 d-inline-flex boton2 text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold">
+                    <button id="Formulario_Login_Boton" data-lang="login.Iniciar_Sesion" href="/" class="Bg_Azul4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
                         Iniciar Sesion
-                    </a>               
+                    </button>               
                     <a data-lang="login.Puedes_Ingresar" href="{{ url_for('Soporte') }}" class="text-decoration-none C_Azul3 Link_Hover fw-bold fsr-12">
                         ¿No puedes ingresar?
                     </a>    
@@ -59,7 +74,7 @@
                             Registrate
                         </a>    
                     </h2>                                        
-                </div>                
+                </form>                
             </div>
         </div>
     </section>

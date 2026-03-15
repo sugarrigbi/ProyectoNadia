@@ -1,26 +1,34 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
+import re
 
 EMAIL = "bot.gaialink@gmail.com"
 PASSWORD = "sizv jqee ojco ixqc"
 
+def Cargar_Template(Ruta, **Variables):
 
-def Enviar_Email(destino, asunto, mensaje):
+    Ruta_Real = os.path.join(os.path.dirname(__file__), "Templates", f"{Ruta}.html")
 
-    msg = MIMEMultipart()
+    with open(Ruta_Real, "r", encoding="utf-8") as File:
+        Html = File.read()
+    Html = re.sub(r"\[\[(\w+)\]\]", r"{\1}", Html)
+    return Html.format(**Variables)
+def Enviar_Correo(Template, Data, Correo, Asunto):
+    Msg = MIMEMultipart("alternative")
 
-    msg["From"] = EMAIL
-    msg["To"] = destino
-    msg["Subject"] = asunto
+    Msg["From"] = EMAIL
+    Msg["To"] = Correo
+    Msg["Subject"] = Asunto
 
-    msg.attach(MIMEText(mensaje, "plain"))
+    Html = Cargar_Template(Template, **Data)
+    Msg.attach(MIMEText(Html, "html"))
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
+    Server = smtplib.SMTP("smtp.gmail.com", 587)
+    Server.starttls()
 
-    server.login(EMAIL, PASSWORD)
+    Server.login(EMAIL, PASSWORD)
 
-    server.sendmail(EMAIL, destino, msg.as_string())
-
-    server.quit()
+    Server.sendmail(EMAIL, Correo, Msg.as_string())
+    Server.quit()

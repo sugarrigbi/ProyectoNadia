@@ -768,6 +768,12 @@ h4{
         background-repeat: no-repeat;
         background-position: center;
     }      
+    .vh-88{
+        height: 100vh;
+    }      
+    .dvh-100{
+        height: auto;
+    }    
     .Fondo_Diagonal {
         position: relative;
         background: linear-gradient(
@@ -918,4 +924,7 @@ h4{
     .dvh-100{
         height: auto;
     }
+    .vh-88{
+        height: auto;
+    }    
 }

@@ -4,17 +4,15 @@ from App.Services.Notification_Logic import Email_Service
 Notification_Service_Bp = Blueprint("Notification", __name__)
 
 @Notification_Service_Bp.route("/email", methods=["POST"])
-def Enviar_Email():
-
+def Registro_Codigo():
     Data = request.get_json()
 
+    Template = Data["Template"]
+    Datos = Data["Datos"]
     Correo = Data["Correo"]
     Asunto = Data["Asunto"]
-    Mensaje = Data["Mensaje"]
 
-    Respuesta = Email_Service.Send(Correo, Asunto, Mensaje)
-
+    Respuesta = Email_Service.Envio(Template, Datos, Correo, Asunto)
     if "Error" in Respuesta:
         return jsonify(Respuesta), 400
-
     return jsonify({"Message": "Correo enviado"}), 200

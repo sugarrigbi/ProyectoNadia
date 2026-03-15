@@ -28,6 +28,21 @@ if (document.getElementById("Input_Password2")){
         }     
     });
 }
+if (document.getElementById("Input_Password3")){
+    Input3 = document.getElementById("Input_Password3");
+    Boton3 = document.getElementById("Boton_Password3");
+    Imagen3 = document.getElementById("Imagen_Password3");    
+    Boton3.addEventListener("click", () => {
+        if (Input3.type === "password"){
+            Input3.type = "text"
+            Imagen3.src = "Statics/img/Ver.svg"
+        }
+        else if (Input3.type === "text"){
+            Input3.type = "password"
+            Imagen3.src = "Statics/img/NoVer.svg"
+        }     
+    });
+}
 if (document.getElementById("Input_Container")){
     const Inputs = document.querySelectorAll("input[type='text']")
 

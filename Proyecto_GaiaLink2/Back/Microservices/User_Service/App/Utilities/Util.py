@@ -69,14 +69,6 @@ def Normalizar_Datos(Data_UN, Data_PN):
 def Generar_Codigo():
     Codigo = str(random.randint(100000, 999999))
     return Codigo
-def Enviar_Correo(Correo, Codigo):
-    requests.post("http://127.0.0.1:5007/email", 
-        json={
-            "Correo": Correo,
-            "Asunto": "Codigo de verificacion",
-            "Mensaje": f"Tu codigo de verificacion es {Codigo}"
-        }
-    )
 def Guardar_Codigo(Correo, Codigo):
     redis_client.setex(
         f"registro:{Correo}:codigo",
@@ -122,4 +114,4 @@ def Hashear_Contraseña(Contraseña):
     Contraseña_Pepper = (Contraseña + Pepper)
     Hash = bcrypt.hashpw(Contraseña_Pepper.encode("utf-8"), Salt)
 
-    return Hash
+    return Hash.decode("utf-8")

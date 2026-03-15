@@ -1,7 +1,7 @@
 from App.Models.User_Model import Persona as Tabla_Persona, Usuario as Tabla_Usuario, Departamento as T_Departamento, Ciudad as T_Ciudad, Localidad as T_Localidad, Barrio as T_Barrio
 from App.Utilities.Tables import db
-from App.Utilities.Util import Normalizar_Datos, Validar_Datos, Generar_Codigo, Enviar_Correo, Guardar_Codigo, Guardar_Datos, Obtener_Codigo, Obtener_Datos, Eliminar_Datos, Hashear_Contraseña
-
+from App.Utilities.Util import Normalizar_Datos, Validar_Datos, Generar_Codigo, Guardar_Codigo, Guardar_Datos, Obtener_Codigo, Obtener_Datos, Eliminar_Datos, Hashear_Contraseña
+import requests
 class User_Service:
     @staticmethod
     def Registro(Data_U, Data_P):
@@ -10,7 +10,15 @@ class User_Service:
             return Error
         
         Codigo = Generar_Codigo()
-        Enviar_Correo(Data_U["Correo"], Codigo)
+
+        requests.post("http://127.0.0.1:5007/email",
+            json={
+                "Template": "Verificar_Codigo",
+                "Datos": {"Nombre": Data_U["Nombre"], "Codigo": Codigo},
+                "Correo": Data_U["Correo"],
+                "Asunto": "Creacion de cuenta"
+            }
+        )
 
         Guardar_Codigo(Data_U["Correo"], Codigo)
         Guardar_Datos(Data_U["Correo"], Data_U, Data_P)
@@ -61,6 +69,14 @@ class User_Service:
         db.session.add(Persona)
         db.session.commit()
         
-        Eliminar_Datos(Correo)
+        requests.post("http://127.0.0.1:5007/email",
+            json={
+                "Template": "Bienvenido",
+                "Datos": {"Nombre": Data_P["Primer_Nombre"]+" "+Data_P["Primer_Apellido"]},
+                "Correo": Data_U["Correo"],
+                "Asunto": "Bienvenido a Gaialink"
+            }
+        )
 
+        Eliminar_Datos(Correo)
         return Usuario

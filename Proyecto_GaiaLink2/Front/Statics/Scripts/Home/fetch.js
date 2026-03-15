@@ -146,7 +146,8 @@ if (document.getElementById("Formulario_Registrar")){
             Mensaje.classList.add("Message_Error"); 
             Mensaje.setAttribute("data-lang", "formularios.Error_Contraseña");
 
-            CambiarIdioma(localStorage.getItem("idioma") || "es");         
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+            Boton.disabled = false;         
             return;   
         }
 
@@ -237,5 +238,78 @@ if (document.getElementById("Formulario_Codigo")){
             Boton.disabled = false;
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+    });
+}
+if (document.getElementById("Formulario_Login")){
+    document.getElementById("Formulario_Login").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Login_Mensaje");
+        Boton = document.getElementById("Formulario_Login_Boton");        
+        Boton.disabled = true;    
+
+        const Info = {
+            userAgent: navigator.userAgent || null,
+            uaData: navigator.userAgentData ? {
+                platform: navigator.userAgentData.platform || null,
+                brands: navigator.userAgentData.brands || null,
+                mobile: navigator.userAgentData.mobile || null
+            } : null,
+            screen: { width: screen.width, height: screen.height }
+        };
+
+        
+        const payload = {
+            Identificador: document.getElementById("Identificacion").value,
+            Contraseña: document.getElementById("Input_Password3").value,
+            Remember_Me: document.getElementById("Remember_Me").checked,
+            Dispositivo: localStorage.getItem("Device_Token") || "",
+            Client_Payload: Info
+        }; 
+        
+        const response = await fetch(`${API_BASE}/api/login`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const result = await response.json()
+
+        const expiresAtStr = result.Expires_At
+        const expiresAtMs = Date.parse(expiresAtStr);
+        const expiresAt = Math.floor(expiresAtMs / 1000);
+
+        if(response.status === 200){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+            localStorage.setItem("Device_Token", result.Device)
+            if (payload.Remember_Me) {
+                localStorage.setItem("Auth_Token", result.Token);
+                localStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+
+            } else {
+                sessionStorage.setItem("Auth_Token", result.Token);
+                sessionStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+            }
+            window.location.href = "/dashboard"
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400 || response.status === 401 || response.status === 403){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            Boton.disabled = false;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }        
     });
 }

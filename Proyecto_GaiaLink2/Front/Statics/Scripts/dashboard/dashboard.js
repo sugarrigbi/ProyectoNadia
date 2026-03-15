@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("Auth_Token") || sessionStorage.getItem("Auth_Token");
+    if (!token) {
+        window.location.href = "/login";
+    }
+
+    if(document.getElementById("Button_Cerrar")){
+        document.getElementById("Button_Cerrar").addEventListener("click", () => {
+            localStorage.removeItem("Auth_Token")
+            sessionStorage.removeItem("Auth_Token")
+            window.location.href = "/login";
+        })
+    }
 
     const Contenido = document.getElementById("contenido");
 
@@ -24,11 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let path = window.location.pathname;
 
-    if (path === "/dashboard/admin") {
-        path = "/dashboard/admin/inicio";
-        path = "/dashboard/admin/casos";
-        path = "/dashboard/admin/entidades";
-        path = "/dashboard/admin/usuarios";
+    if (path === "/dashboard") {
+        path = "/dashboard/inicio";
     }
 
     cargarPagina(path);
