@@ -11,4 +11,16 @@ def Api_Auth_Login():
     Respuesta = requests.post(f"{MICROSERVICE_URL}/login", json=Data)
 
     return jsonify(Respuesta.json()), Respuesta.status_code
+@Auth_Service_Bp.route("/api/recuperar", methods=["POST"])
+def Api_Auth_Recuperar():
+    Data = request.get_json()
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/recuperar", json=Data)
+
+    return jsonify(Respuesta.json()), Respuesta.status_code
+@Auth_Service_Bp.route("/api/recuperar/codigo", methods=["POST"])
+def Api_Auth_Recuperar_Codigo():
+    Data = request.get_json()
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/recuperar/codigo", json=Data)
+
+    return jsonify(Respuesta.json()), Respuesta.status_code
 

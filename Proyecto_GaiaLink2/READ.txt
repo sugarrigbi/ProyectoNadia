@@ -4,9 +4,6 @@ TAREAS PENDIENTES:
 		Login
 		Cambiar estado de dispositivos
 		Autenticador 2FA
-		Recuperar Contraseña
-		sessions, para mantener activa la sesion, boton de recuerdame, para entrar sin contraseña en 1 semana max, expiracion de sessions
-		rate limit para evitar ataques DOS (Ataques de fuerza bruta)
 		proteccion contra subida de archivos maliciosos
 	DASHBOARD:
 		sistema de permisos, con tabla Rol_Permisos, con JS(Tipo mostrar o no ese boton, para mantener 1 solo dashboard)

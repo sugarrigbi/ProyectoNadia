@@ -1,9 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__,template_folder="Templates",static_folder="Statics")
-
-API_URL = "http://127.0.0.1:5000/"
 
 @app.route("/")
 def Inicio():
@@ -61,9 +59,6 @@ def Dashboard_Admin_Usuarios():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render_template("dashboard/usuarios.html")
     return render_template("dashboard/dashboard.html")
-
-
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5009, debug=True)

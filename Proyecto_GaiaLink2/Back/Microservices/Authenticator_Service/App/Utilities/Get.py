@@ -1,8 +1,8 @@
 from flask import request, jsonify
 import bcrypt
-from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos
+from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona
 from App.Utilities.Tables import db
-from App.Utilities.Utils import Crear_Token, Get_Device, Get_Time
+from App.Utilities.Utils import Crear_Token, Get_Device, Get_Time, Generar_Codigo, Guardar_Codigo, Obtener_Codigo, Hashear_Contraseña, Eliminar_Datos, Validar_Contraseña
 from datetime import datetime, timedelta
 import pytz
 import requests
@@ -83,3 +83,71 @@ class Get_Auth():
             )            
 
         return jsonify({"Token": Token, "Expires_At": Expira, "User": {"ID": Usuario.ID, "Username": Usuario.Nombre}, "Device": Device  }), 200
+    @staticmethod
+    def Recuperar():
+        Data = request.get_json()
+
+        Identificador = Data["Identificador"]
+
+        Usuario = Tabla_Usuario.query.filter((Tabla_Usuario.Nombre == Identificador) | (Tabla_Usuario.Correo == Identificador)).first()
+        if not Usuario:
+            return jsonify({"Error": "El Correo/Nombre no existe"}), 401
+        
+        Codigo = Generar_Codigo()
+
+        requests.post("http://127.0.0.1:5007/email",
+            json={
+                "Template": "Recuperar_Contraseña",
+                "Datos": {"Nombre": Usuario.Nombre, "Codigo": Codigo},
+                "Correo": Usuario.Correo,
+                "Asunto": "Solicitud de recuperación de contraseña"
+            }
+        )
+
+        Guardar_Codigo(Usuario.Correo, Codigo)
+
+        return jsonify({"Message": "Codigo enviado con exito"}), 200
+    @staticmethod
+    def Recuperar_Codigo():
+        Data = request.get_json()
+
+        Identificador = Data["Identificador"]
+        Codigo = Data["Codigo"]
+        Contraseña = Data["Contraseña"]
+
+        Usuario = Tabla_Usuario.query.filter((Tabla_Usuario.Nombre == Identificador) | (Tabla_Usuario.Correo == Identificador)).first()
+        if not Usuario:
+            return jsonify({"Error": "El Correo/Nombre no existe"}), 401        
+        Persona = Tabla_Persona.query.filter_by(Usuario_ID=Usuario.ID).first()
+        if not Persona:
+            return jsonify({"Error": "El Correo/Nombre no existe"}), 401
+        
+        Codigo_Real = Obtener_Codigo(Usuario.Correo)
+        if Codigo != Codigo_Real:
+            return jsonify({"Error": "Codigo incorrecto"}), 401
+
+        Error = Validar_Contraseña(Contraseña, Persona.Documento)
+        if Error:
+            return jsonify({"Error": Error}), 401
+
+        Hash = Hashear_Contraseña(Contraseña)
+        if not Hash:
+            return jsonify({"Error": "Error al Hashear"}), 401
+
+        if bcrypt.checkpw((Contraseña + Pepper).encode("utf-8"), Usuario.Contraseña.encode("utf-8")):
+            return jsonify({"Error": "No se permite reutilizar contraseñas anteriores"}), 401
+        
+        Usuario.Contraseña = Hash
+        db.session.commit()
+
+        requests.post("http://127.0.0.1:5007/email",
+            json={
+                "Template": "Cambio_Contraseña",
+                "Datos": {"Nombre": Usuario.Nombre},
+                "Correo": Usuario.Correo,
+                "Asunto": "Cambio de Contraseña"
+            }
+        )        
+
+        Eliminar_Datos(Usuario.Correo)
+        return jsonify({"Message": "Contraseña cambiada con exito"}), 200

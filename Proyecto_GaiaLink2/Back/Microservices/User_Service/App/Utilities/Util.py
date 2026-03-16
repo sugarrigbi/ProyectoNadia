@@ -31,10 +31,10 @@ def Validar_Datos(Data_U, Data_P):
         return {"Error": "La contraseña debe contener una mayuscula"}
     
     if not any(c.isdigit() for c in Data_U["Contraseña"]):
-        return {"Error": "la contraseña debe tener un numero"}
+        return {"Error": "La contraseña debe contener un numero"}
     
     if not re.search(r'[^A-Za-z0-9]', Data_U["Contraseña"]):
-        return {"Error": "La contraseña debe tener un caracter especial"}
+        return {"Error": "La contraseña debe contener un caracter especial"}
     
     if Data_P["Documento"] in Data_U["Contraseña"]:
         return {"Error": "La contraseña no puede contener el documento"}

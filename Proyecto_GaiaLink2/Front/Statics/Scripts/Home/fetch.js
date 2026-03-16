@@ -313,3 +313,129 @@ if (document.getElementById("Formulario_Login")){
         }        
     });
 }
+if (document.getElementById("Formulario_Recuperar")){
+    document.getElementById("Formulario_Recuperar").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Recuperar_Mensaje");
+        Boton = document.getElementById("Formulario_Recuperar_Boton");        
+        Boton.disabled = true;
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        const response = await fetch(`${API_BASE}/api/recuperar`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const result = await response.json()
+
+        if (response.status === 200) {
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+            Boton.disabled = true;
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+
+            localStorage.setItem("Identificador_Recuperar", data.Identificador)
+            window.location.href = "/login/recuperar/codigo"
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if (response.status === 400 || response.status === 401) {
+            window.scrollTo(0, 0);
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+            Boton.disabled = false;
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}
+if (document.getElementById("Formulario_Recuperar2")){
+    document.getElementById("Formulario_Recuperar2").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Mensaje = document.getElementById("Formulario_Recuperar2_Mensaje");
+        Boton = document.getElementById("Formulario_Recuperar2_Boton");        
+        Boton.disabled = true;
+
+        const Pass1 = document.getElementById("Input_Password4").value;
+        const Pass2 = document.getElementById("Input_Password5").value;
+
+        if(Pass1 !== Pass2){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.setAttribute("data-lang", "formularios.Error_Contraseña");
+
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+            Boton.disabled = false;         
+            return;   
+        }        
+        
+        const Codigo_1 = document.getElementById("Input_1").value;
+        const Codigo_2 = document.getElementById("Input_2").value;
+        const Codigo_3 = document.getElementById("Input_3").value;
+        const Codigo_4 = document.getElementById("Input_4").value;
+        const Codigo_5 = document.getElementById("Input_5").value;
+        const Codigo_6 = document.getElementById("Input_6").value;
+
+        const Codigo = Codigo_1+Codigo_2+Codigo_3+Codigo_4+Codigo_5+Codigo_6;
+
+        const Identificador_Guardado = localStorage.getItem("Identificador_Recuperar") || "";
+
+        const payload = {
+            Identificador: Identificador_Guardado,
+            Codigo: Codigo,
+            Contraseña: document.getElementById("Input_Password5").value
+        };
+
+        const response = await fetch(`${API_BASE}/api/recuperar/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const result = await response.json()        
+
+        if(response.status === 200){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+            Boton.disabled = true;
+
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+
+            localStorage.removeItem("Identificador_Recuperar");
+            window.location.href = "/login"
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 400 || response.status === 401){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+            Boton.disabled = false;
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+    });
+}

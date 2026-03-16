@@ -30,17 +30,20 @@
                             Recuperar Contraseña
                         </h2>
                     </div>
-                    <div class="col-10 d-flex align-items-center justify-content-center flex-column">
+                    <div id="Formulario_Recuperar_Mensaje" class="p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                        Mensaje Generico
+                    </div>                    
+                    <form id="Formulario_Recuperar" class="col-10 d-flex align-items-center justify-content-center flex-column">
                         <div class="w-67">
                             <label data-lang="recuperar1.Nombre" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                                 Nombre de usuario o Correo
                             </label>
-                            <input type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
+                            <input name="Identificador" type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
                         </div>
-                    </div>  
-                    <a data-lang="recuperar1.Codigo" href="/" class="Bg_Azul4 d-inline-flex boton2 text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold">
-                        Enviar codigo
-                    </a>                                                      
+                        <button id="Formulario_Recuperar_Boton" data-lang="recuperar1.Codigo" class="Bg_Azul4 mt-4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
+                            Iniciar Sesion
+                        </button>                        
+                    </form>                                                      
                 </div>                
             </div>
         </div>
