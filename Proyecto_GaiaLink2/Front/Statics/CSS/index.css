@@ -50,7 +50,7 @@ h4{
     background-color: #F8FAFC;
 }
 .Bg_Blanco2{
-    background-color: #f2f3f9;
+    background-color: #e2e2e3!important;
 }
 .Bg_Oscuro{
     background-color: #424a5d;
@@ -240,13 +240,18 @@ h4{
     height: 70%;
 }
 .vh-88{
-    height: 88vh;
+    height: auto;
+    min-height: 88vh;
 }
 .vh-88-2{
     height: 88vh;
 }
+.vh-88-3{
+    height: 88vh;
+}
 .dvh-100{
-    height: 100dvh;
+    height: auto;
+    min-height: 100vh!important;
 }
 .Texto-1{
     width: 50%;
@@ -316,6 +321,49 @@ h4{
     background-color: #ad0000 !important;
     transition: all 0.3s ease;
 }
+.boton7{
+    transition: all 0.3s ease;
+}
+.boton7:hover{
+    transform: scale(1.05)!important;
+    background-color: #24ca7d !important;
+    transition: all 0.3s;
+}
+.boton8{
+    transition: all 0.3s ease;
+}
+.boton8:hover{
+    transform: scale(1.05)!important;
+    background-color: #f79494 !important;
+    transition: all 0.3s;
+}
+.boton9{
+    transition: all 0.3s ease;
+}
+.boton9:hover{
+    transform: scale(1.05)!important;
+    background-color: #c1c1c1 !important;
+    transition: all 0.3s;
+}
+.boton10{
+    transition: all 0.3s ease;
+}
+.boton10:hover{
+    transform: scale(1.05)!important;
+    background-color: #b5ceff !important;
+    transition: all 0.3s;
+}
+.boton11{
+    transition: all 0.3s ease;
+}
+.boton11:hover{
+    transform: scale(1.05)!important;
+    background-color: #b5ffb8 !important;
+    transition: all 0.3s;
+}
+.text-info2{
+    color: #3a6fd5!important;
+}
 .Neon:hover {
     text-shadow: 
         0px 0px 5px #ffffff,
@@ -353,7 +401,10 @@ h4{
 .dropdown-toggle::after {
     display: none !important;
 }
-.dropdown:hover .dropdown-menu {
+.mt-6{
+    margin-top: 5rem!important;
+}
+.dropdown2:hover .dropdown-menu {
     display: block;
     margin-top: 0;
 }
@@ -361,6 +412,11 @@ h4{
     transition: background-color 0.3s ease;
     border-radius: 5px;
     background-color: #5877d3 !important;
+}
+.hover-item:hover{
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    background-color: #b9b9b9 !important;
 }
 .Español{
     width: 60px;
@@ -464,6 +520,27 @@ h4{
     height: 30px;
     object-fit: contain;
 }
+.border-6{
+    border-width: 8px!important;
+}
+.icono-nav5{
+    width: 55px;
+    height: 55px;
+}
+.icono-nav6{
+    width: 40px;
+    height: 40px;
+}
+.icono-nav7{
+    width: 30px;
+    height: 30px;
+}
+.icono-nav8{
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
 .rotate-315 {
     transform: rotate(315deg);
 }
@@ -507,6 +584,83 @@ h4{
     background-color: #c3ddfe !important;
     border: 3px solid #3b82f6 !important;
     color: #1e3a8a!important;
+}
+.estado-pendiente {
+    background-color: #fff3cd !important;
+    border-color: #ffc107 !important;
+    color: #000 !important;
+}
+.estado-activo {
+    background-color: #d4edda !important;
+    border-color: #28a745 !important;
+    color: #000 !important;
+}
+.estado-resuelto {
+    background-color: #d1ecf1 !important;
+    border-color: #17a2b8 !important;
+    color: #000 !important;
+}
+.estado-eliminado {
+    background-color: #f8d7da !important;
+    border-color: #dc3545 !important;
+    color: #000 !important;
+}
+.estado-espera {
+    background-color: #e2e3e5 !important;
+    border-color: #6c757d !important;
+    color: #000 !important;
+}
+.estado-escalado {
+    background-color: #cfe2ff !important;
+    border-color: #0d6efd !important;
+    color: #000 !important;
+}
+.estado-reabierto {
+    background-color: #f8f9fa !important;
+    border-color: #343a40 !important;
+    color: #000 !important;
+}
+.prioridad-muy-baja {
+    background-color: #e2e3e5 !important;
+    border-color: #6c757d !important;
+    color: #000 !important;
+}
+.prioridad-baja {
+    background-color: #d1ecf1 !important;
+    border-color: #17a2b8 !important;
+    color: #000 !important;
+}
+.prioridad-media {
+    background-color: #fff3cd !important;
+    border-color: #ffc107 !important;
+    color: #000 !important;
+}
+.prioridad-alta {
+    background-color: #f8d7da !important;
+    border-color: #dc3545 !important;
+    color: #000 !important;
+}
+.prioridad-critica {
+    background-color: #f5c6cb !important;
+    border-color: #bd2130 !important;
+    color: #000 !important;
+}
+.h-40{
+    height: 40%!important;
+}
+.h-60{
+    height: 60%!important;
+}
+.h-80{
+    height: 80%!important;
+}
+textarea.nofocus {
+    background-color: #fff;
+    color: #000;
+    pointer-events: none;
+}
+.w-75-2{
+    width: 75%;
 }
 @keyframes one_move {
     0% {
@@ -758,7 +912,7 @@ h4{
 @media (min-width: 1200px) {
     .col-xl2-3 {
         flex: 0 0 auto;
-        width: 26%;
+        width: 35%;
     }
     .col-3-custom{
         width: 23%;
@@ -844,7 +998,18 @@ h4{
 @media (max-width: 600px) {
     section{
         scroll-margin-top: 98px;
+    }  
+    .icono-nav5{
+        width: 40px;
+        height: 40px;
     }    
+    .w-75-2{
+        width: 90%;
+    }    
+    .icono-nav{
+        width: 25px;
+        height: 25px;
+    }        
     .Logo_Gaia{
         width: 26%;
     }    
@@ -929,5 +1094,6 @@ h4{
     }
     .vh-88{
         height: auto;
+        min-height: 100vh;
     }    
 }

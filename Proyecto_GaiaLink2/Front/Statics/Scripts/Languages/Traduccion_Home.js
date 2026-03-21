@@ -232,6 +232,11 @@ const Traducciones = {
             Politica_6_Texto: "Nos reservamos el derecho de actualizar esta política en cualquier momento. Las modificaciones se publicarán en esta misma página.",
             Politica_7_Titulo: "7. Aceptación",
             Politica_7_Texto: "Al registrarte o usar nuestros servicios, aceptas los términos establecidos en esta Política de Privacidad."         
+        },
+        rate:{
+            Demasiadas: "Demasiadas solicitudes",
+            Enviado: "Has enviado demasiadas peticiones en poco tiempo. Espera un momento antes de intentarlo nuevamente.",
+            Volver: "Volver al inicio"
         }
     },
     en:{
@@ -467,6 +472,11 @@ const Traducciones = {
             Politica_6_Texto: "We reserve the right to update this policy at any time. Changes will be posted on this same page.",
             Politica_7_Titulo: "7. Acceptance",
             Politica_7_Texto: "By registering or using our services, you accept the terms set forth in this Privacy Policy."
+        },
+        rate:{
+            Demasiadas: "Too many requests",
+            Enviado: "You have sent too many requests in a short time. Please wait a moment before trying again.",
+            Volver: "Return to home"
         }
     },
     fr:{
@@ -702,6 +712,11 @@ const Traducciones = {
             Politica_6_Texto: "Nous nous réservons le droit de mettre à jour cette politique à tout moment. Les modifications seront publiées sur cette même page.",
             Politica_7_Titulo: "7. Acceptation",
             Politica_7_Texto: "En vous inscrivant ou en utilisant nos services, vous acceptez les termes énoncés dans cette Politique de confidentialité."
+        },
+        rate:{
+            Demasiadas: "Trop de requêtes",
+            Enviado: "Vous avez envoyé trop de requêtes en peu de temps. Veuillez patienter un instant avant de réessayer.",
+            Volver: "Retour à l'accueil"            
         }
     }
 };

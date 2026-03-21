@@ -1,58 +1,489 @@
 <div class="container-fluid p-3 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-4">
-    <h2 class="w-100 d-flex justify-content-between ">
-        Inicio > Casos
-        <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="Bg_Morado d-inline-flex boton4 text-white px-2 py-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
-            <img class="icono-nav4" src="{{ url_for('static', filename='img/Home.svg') }}">
-        </a>        
-    </h2>
-    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a href="/dashboard/casos" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Buscar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Buscar casos
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Consulta los casos registrados y
-                    revisa su estado y detalles completos.
-                </p>
+    <div class="w-100 d-flex justify-content-between px-0 px-sm-3 mb-2 mb-sm-0">
+        <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
+            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
+                <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
+            </a>        
+            <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
+                Inicio > Casos
+            </span>
+        </div>
+        <div class="d-flex gap-3 align-items-center justify-content-center">
+            <li class="nav-item dropdown list-unstyled fs-nav-1">
+                <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                    <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="rounded-circle icono-nav5">
+                </a>
+                <ul class="dropdown-menu Bg_Blanco p-2 border-round">
+                    <li>
+                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
+                            <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav6 rounded-circle">
+                            <span id="User_Name2">
+                                Usuario
+                            </span>
+                        </div>
+                    </li>                    
+                    <div class="dropdown-divider"></div>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
+                            <img src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
+                            Mis datos
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="/dashboard/preferencias">
+                            <img src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
+                            Ajustes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
+                            <img src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
+                            Ayuda
+                        </a>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li>
+                        <button id="Button_Cerrar" class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-danger fw-medium gap-2 px-2">
+                            <img src="{{ url_for('static', filename='img/Log_Out.svg') }}" class="icono-nav7">
+                            Cerrar sesion
+                        </button>
+                    </li>                                                                          
+                </ul>
+            </li>
+        </div>  
+    </div>
+    <div id="Casos_Busqueda" class="row justify-content-start align-items-stretch w-100 gap-3 p-0">
+        {% for Caso in Casos %}
+            <div class="list-group-item d-flex justify-content-between p-3 Bg_Blanco rounded-3 border-5 border-start Border_Morado2 flex-column gap-3 gap-md-0 flex-md-row">
+                <div class="mx-2">
+                    <h2 class="fsr-13 m-0 ">
+                        Caso {{ Caso["radicados"][0]["Radicado"] }}
+                    </h2>
+                    <p class="fsr-14 m-0 mb-2">
+                        {{ Caso["Nombre"] }}
+                    </p>
+                    <p class="fsr-15 m-0 mb-1">
+                        <b>
+                            Estado:
+                        </b>                         
+                        <span id="estado-span-{{ Caso['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1 ">
+                            {{ Caso["estado"]["Nombre"] }}
+                        </span>
+                    </p>
+                    <p class="fsr-15 m-0 mb-1">
+                        <b>
+                            Prioridad:
+                        </b> 
+                        <span id="prioridad-span-{{ Caso['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1">
+                            {{ Caso["prioridad"]["Prioridad"] }}    
+                        </span>                        
+                    </p>                    
+                    <p class="fsr-15 m-0 mb-1">
+                        <b>
+                            Encargado:
+                        </b> 
+                        {{ Caso["usuario_asociado"]["Persona"]["Primer_Nombre"] }} {{ Caso["usuario_asociado"]["Persona"]["Primer_Apellido"] }}
+                    </p>
+                    <p class="fsr-15 m-0">
+                        <b>
+                            Modificacion:
+                        </b>
+                        <span id="hora-span-{{ Caso['ID'] }}">
+                            {{ Caso["Actualizado_En"] }}
+                        </span>
+                    </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mx-2">
+                    <button type="button" class="btn btn-success fsr-15 boton7" data-bs-target="#ModalEdit{{ Caso['ID'] }}" data-bs-toggle="modal">
+                        Abrir caso
+                    </button>
+                </div>
             </div>
-        </a>
-        <a href="/dashboard/entidades" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Crear.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Crear casos
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Genera un nuevo caso y
-                    asigna responsables para su seguimiento.
-                </p>
+            <div class="modal w-100 p-0" id="ModalEdit{{ Caso['ID'] }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
+                    <div class="modal-content Bg_Blanco2" style="height:auto; overflow-y:auto;">
+                        <form id="Caso_Contenedor" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
+                            <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
+                                <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                                    <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                        <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                        CASO {{ Caso["radicados"][0]["Radicado"] }}
+                                    </p>
+                                    <p id="Obtener_Caso_Id" class="d-none">
+                                        {{ Caso['ID'] }}
+                                    </p>
+                                    <input required name="Caso_Nombre" value="{{ Caso['Nombre']}}" placeholder="Agregue un titulo..." class="border-0 w-auto rounded-1 fsr-13" style="resize: none;">
+                                    <div class="w-100 gap-2 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                                        <select required name="Caso_Usuario_Cargo" class="form-select m-0 py-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-auto">
+                                            {% for usuario in Data["Usuarios"] %}
+                                                <option value="{{ usuario['ID'] }}" {% if usuario['ID'] == Caso['usuario_asociado']['ID'] %}selected{% endif %}>                                                
+                                                    {{ usuario["Persona"]["Primer_Nombre"] }} {{ usuario["Persona"]["Segundo_Nombre"] }} {{ usuario["Persona"]["Primer_Apellido"] }} {{ usuario["Persona"]["Segundo_Apellido"] }} 
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <p class="m-0 d-flex align-items-center gap-2 fsr-14">
+                                            <img src="{{ url_for('static', filename='img/Mensajes.svg') }}" class="icono-nav8">
+                                            {{ Caso["discusiones"]|length }} Comentarios
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                                    <div class="d-none d-md-flex flex-row gap-2">
+                                        <button type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                            <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                            Volver
+                                        </button>                
+                                    </div>            
+                                    <div class="d-flex flex-row gap-3 gap-md-2">
+                                        <button type="button" data-bs-dismiss="modal" class="d-flex d-md-none boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                            <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                            Volver
+                                        </button>                                         
+                                        <button type="submit" disabled id="Caso_Boton_Guardar" class="boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                            <img id="Caso_Boton_Guardar_Img" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                            <span id="Caso_Boton_Guardar_Msg">
+                                                Guardar
+                                            </span>
+                                        </button>                
+                                        <button disabled type="button" id="Caso_Boton_Recarga" class="boton9 p-1 border-0 bg-white rounded-1">
+                                            <img src="{{ url_for('static', filename='img/Recarga.svg') }}" class="icono-nav7" style="transform: rotate(45deg);">
+                                        </button>
+                                        <button data-bs-target="#ModalDelete{{ Caso['ID'] }}" data-bs-toggle="modal" type="button" class="boton9 p-1 border-0 bg-white rounded-1">
+                                            <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav7">
+                                        </button>                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="m-0 border-4 border-dark w-100 rounded-1">
+                            <div class="row w-100 h-100 p-2 flex-column flex-md-row">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <div class="h-40">
+                                        <p class="fsr-12 m-0 fw-medium h-auto">
+                                            Descripcion
+                                        </p>
+                                        <hr class="mt-0 mb-3 border-4 rounded-1">
+                                        <textarea required name="Caso_Descripcion" placeholder="Agregue una descripción..." class="w-100 h-80 rounded-1 fsr-13" style="resize: none;">{{ Caso['Descripcion'] }}</textarea>
+                                    </div>
+                                    <div class="h-60">
+                                        <p class="fsr-12 m-0 fw-medium h-auto">
+                                            Comentarios
+                                        </p>
+                                        <hr class="mt-0 mb-3 border-4 rounded-1">
+                                        <div class="d-flex gap-3 flex-column h-80">
+                                            <div class="d-flex flex-column gap-2 h-50">
+                                                <div class="d-flex flex-row align-items-end gap-2">
+                                                    <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav rounded-circle">
+                                                    <p id="User_Name" class="m-0 fsr-13">
+                                                        Usuario
+                                                    </p>  
+                                                    <p class="m-0 fsr-16">
+                                                        Ahora
+                                                    </p>                                                
+                                                </div>
+                                                <textarea name="Caso_Comentario" placeholder="Agregue un comentario..." class="w-100 h-80 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                            </div>
+                                            {% for comentario in Caso['discusiones'] | reverse %}
+                                                <div class="d-flex flex-column h-50">
+                                                    <div class="d-flex flex-row align-items-end gap-2">
+                                                        <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav rounded-circle">
+                                                        <p class="d-none d-md-block m-0 fsr-13 text-muted">
+                                                            {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Segundo_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }} {{ comentario["Persona"]["Segundo_Apellido"] }} 
+                                                        </p>
+                                                        <p class="d-block d-md-none m-0 fsr-13 text-muted">
+                                                            {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }}
+                                                        </p>
+                                                        <p id="Fecha_Comentario_{{Caso['ID']}}_{{comentario['ID']}}" class="m-0 fsr-16">
+                                                            {{ comentario['Creado_En'] }}
+                                                        </p>                        
+                                                    </div>
+                                                    <textarea name="" class="ms-0 ms-md-5 border-0 p-0 Bg_Blanco2 w-100 h-80 rounded-1 fsr-13 nofocus" style="resize: none;" readonly >{{ comentario['Mensaje'] }}</textarea>
+                                                </div>                
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                    <div class="h-100">
+                                        <p class="fsr-12 m-0 fw-medium h-auto">
+                                            Impacto
+                                        </p>
+                                        <hr class="mt-0 mb-1 border-4 rounded-1">
+                                        <div class="ps-3 d-flex flex-column gap-1">
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Fecha de creacion
+                                                </p>                
+                                                <input required name="Caso_Fecha_Creacion" value="{{ Caso['Creacion'].split('T')[0] }}" type="date" placeholder="Agregue una fecha..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Creado por
+                                                </p>
+                                                <select required name="Caso_Usuario_Creador" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                    {% for usuario in Data["Usuarios"] %}
+                                                        <option value="{{ usuario['ID'] }}" {% if usuario['ID'] == Caso['usuario_asociado']['ID'] %}selected{% endif %}>                                                
+                                                            {{ usuario["Persona"]["Primer_Nombre"] }} {{ usuario["Persona"]["Segundo_Nombre"] }} {{ usuario["Persona"]["Primer_Apellido"] }} {{ usuario["Persona"]["Segundo_Apellido"] }} 
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>                                                
+                                            </div>   
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Estado
+                                                </p>                
+                                                <select required name="Caso_Estado" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                    {% for estado in Data['Estados']  %}
+                                                        <option value="{{ estado['ID'] }}" {% if estado['ID'] == Caso['Estado_Caso_ID'] %}selected{% endif %}>
+                                                            {{ estado['Nombre'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Prioridad
+                                                </p>                
+                                                <select required name="Caso_Prioridad" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                    {% for prioridad in Data['Prioridades'] %}
+                                                        <option value="{{ prioridad['ID'] }}" {% if prioridad['ID'] == Caso['Prioridad_ID'] %}selected{% endif %}>
+                                                            {{ prioridad['Prioridad'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Incidente
+                                                </p>                
+                                                <select required name="Caso_Incidente" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                    {% for incidente in Data['Incidentes'] %}
+                                                        <option value="{{ incidente['ID'] }}"{% if incidente['ID'] == Caso['Incidente_ID'] %}selected{% endif %}>
+                                                            {{ incidente['Incidente'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>                    
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Afectados
+                                                </p>                
+                                                <input required name="Caso_Afectados" value="{{ Caso['Afectados'] }}" type="number" placeholder="Agregue un numero..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            </div>                                  
+                                        </div>
+                                        <p class="fsr-12 m-0 fw-medium h-auto">
+                                            Ubicacion
+                                        </p>
+                                        <hr class="mt-0 mb-1 border-4 rounded-1">
+                                        <div class="ps-3 d-flex flex-column gap-1">
+                                            <div class="d-flex flex-column">
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Direccion
+                                                </p>                
+                                                <input required name="Caso_Direccion" value="{{ Caso['Direccion'] }}" placeholder="Agregue una direccion..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            </div>                    
+                                            <div class="d-flex flex-column">
+                                                <datalist id="Datalist_Barrio">
+                                                    {% for barrio in Data['Barrios'] %}
+                                                        <option value="{{ barrio['Nombre'] }}" data-id="{{ barrio['ID'] }}"></option>
+                                                    {% endfor %}
+                                                </datalist>
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Barrio
+                                                </p>      
+                                                <input id="barrio_input" required value="{{ Caso['barrio']['Nombre'] }}" list="Datalist_Barrio" placeholder="Agregue un barrio..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                <input type="hidden" id="Caso_Barrio_Nombre" name="Caso_Barrio_Nombre" value="{{ Caso['barrio']['Nombre'] }}">
+                                                <input type="hidden" id="Caso_Barrio_ID" name="Caso_Barrio_ID" value="{{ Caso['barrio']['ID'] }}">
+                                            </div> 
+                                            <div class="d-flex flex-column">
+                                                <datalist id="Datalist_Localidad">
+                                                    {% for localidad in Data['Localidades'] %}
+                                                        <option value="{{ localidad['Nombre'] }}" data-id="{{ localidad['ID'] }}"></option>
+                                                    {% endfor %}
+                                                </datalist>
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Localidad
+                                                </p>                
+                                                <input id="localidad_input" list="Datalist_Localidad" value="{{ Caso['barrio']['Localidad']['Nombre'] }}" placeholder="Agregue una localidad..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                <input type="hidden" id="Caso_Localidad_Nombre" name="Caso_Localidad_Nombre" value="{{ Caso['barrio']['Localidad']['Nombre'] }}">
+                                                <input type="hidden" id="Caso_Localidad_ID" name="Caso_Localidad_ID" value="">
+                                            </div>  
+                                            <div class="d-flex flex-column">
+                                                <datalist id="Datalist_Ciudad">
+                                                    {% for ciudad in Data['Ciudades'] %}
+                                                        <option value="{{ ciudad['Nombre'] }}" data-id="{{ ciudad['ID'] }}"></option>
+                                                    {% endfor %}
+                                                </datalist>                                                
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Ciudad
+                                                </p>                
+                                                <input id="ciudad_input" list="Datalist_Ciudad" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}" placeholder="Agregue una ciudad..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                <input type="hidden" id="Caso_Ciudad_Nombre" name="Caso_Ciudad_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}">
+                                                <input type="hidden" id="Caso_Ciudad_ID" name="Caso_Ciudad_ID" value="">
+                                            </div> 
+                                            <div class="d-flex flex-column">
+                                                <datalist id="Datalist_Departamento">
+                                                    {% for departamento in Data['Departamentos'] %}
+                                                        <option value="{{ departamento['Nombre'] }}" data-id="{{ departamento['ID'] }}"></option>
+                                                    {% endfor %}
+                                                </datalist>                                                
+                                                <p class="fsr-13 m-0 h-auto">
+                                                    Departamento
+                                                </p>                
+                                                <input id="departamento_input" list="Datalist_Departamento" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}" placeholder="Agregue un departamento..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                <input type="hidden" id="Caso_Departamento_Nombre" name="Caso_Departamento_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}">
+                                                <input type="hidden" id="Caso_Departamento_ID" name="Caso_Departamento_ID" value="">
+                                            </div>                                                       
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                    <div class="h-100">
+                                        <p class="fsr-12 m-0 fw-medium h-auto">
+                                            Trabajo relacionado
+                                        </p>
+                                        <hr class="mt-0 mb-3 border-4 rounded-1">
+                                        <button type="button" id="Agregar_Trabajo" class="boton9 mb-2 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                            <img id="Agregar_Trabajo_Imagen" src="{{ url_for('static', filename='img/Plus.svg') }}" class="icono-nav7">
+                                            <span id="Agregar_Trabajo_Mensaje">
+                                                Añadir trabajo
+                                            </span>
+                                        </button>
+                                        <div class="d-flex flex-column gap-3">
+                                            <div id="Crear_Relacion" class="d-flex flex-column align-items-start bg-white rounded-2 p-2 gap-2 d-none">
+                                                <div class="d-flex flex-row gap-2">
+                                                    <p class=" m-0 fsr-13">
+                                                        Vinculo:
+                                                    </p>
+                                                    <select id="Relacion_Tipo" name="Caso_Relacion_Tipo" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-100">
+                                                        <option value="" selected disabled>
+                                                            Seleccion...
+                                                        </option>                                                        
+                                                        {% for relacion in Data["Relaciones"] %}
+                                                            <option value="{{ relacion['ID'] }}" {% if relacion['Nombre'] == Caso['casos_asociados']['Tipo_Relacion_ID'] %}selected{% endif %}>                                                
+                                                                {{ relacion["Nombre"] }} 
+                                                        {% endfor %}
+                                                    </select>                                                    
+                                                </div>
+                                                <div>
+                                                    <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                                        Radicado:
+                                                        <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                                        <select id="Relacion_Radicado" name="Caso_Relacion_Radicado" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-100">
+                                                            <option value="" selected disabled>
+                                                                Seleccion...
+                                                            </option>
+                                                            {% for caso in Casos %}
+                                                                <option value="{{ caso['ID'] }}">
+                                                                    {{ caso["radicados"][0]["Radicado"] }}
+                                                                </option>
+                                                            {% endfor  %}
+                                                        </select>
+                                                    </p>                 
+                                                </div>
+                                            </div>                                            
+                                            {% for relacion in Caso['casos_asociados'] %}
+                                                <div class="d-flex flex-column align-items-start bg-white rounded-2 p-2">
+                                                    <div class="d-flex justify-content-between flex-row w-100">
+                                                        <p class=" m-0 fsr-13">
+                                                            {{ relacion['Tipo_Relacion_ID'] }}
+                                                        </p>
+                                                        <button data-rad-tipo="{{ relacion['Tipo_Relacion_ID_ID'] }}" data-rad-hijo="{{ relacion['Caso_Asociado_ID']['Radicado'] }}" data-rad-padre="{{ Caso['radicados'][0]['Radicado'] }}" id="Boton_Relacion_{{Caso['ID']}}_{{relacion['ID']}}" type="button" class="boton9 p-1 border-0 bg-white rounded-1">
+                                                            <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav8">
+                                                        </button>  
+                                                    </div>
+                                                    <div class="ps-3">
+                                                        <div>
+                                                            <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                                                <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                                                <b >
+                                                                    {{ relacion['Caso_Asociado_ID']['Radicado'] }}
+                                                                </b>                                                         
+                                                                {{ relacion['Caso_Asociado_ID']['Nombre'] }}
+                                                            </p>
+                                                        </div>                   
+                                                        <div class="d-flex flex-row gap-1">
+                                                            <p class="m-0 fsr-15 d-flex align-items-center gap-2 px-1">
+                                                                <span class="d-none d-md-block">
+                                                                    Se actualizó en 
+                                                                </span>
+                                                                <span id="Fecha_Relacion_{{ relacion['ID'] }}">
+                                                                    {{ relacion['Caso_Asociado_ID']['Actualizado'] }}
+                                                                </span>
+                                                            </p>
+                                                            <p id="Estado_Relacion_{{ relacion['ID'] }}" class="m-0 fsr-15 w-auto border-bottom border-3 rounded-1 px-2">
+                                                                {{ relacion['Caso_Asociado_ID']['Estado'] }}
+                                                            </p>                      
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}                
+                                        </div>
+                                        <p class="fsr-12 m-0 mt-2 fw-medium h-auto">
+                                            Historial
+                                        </p>
+                                        <hr class="mt-0 mb-3 border-4 rounded-1 gap-3"> 
+                                        <div class="d-flex flex-column gap-3">
+                                            {% for historia in Caso['auditorias'] | reverse %}
+                                                <div class="d-flex flex-column gap-3">
+                                                    <div class="d-flex flex-column align-items-start bg-white rounded-2 p-2">
+                                                        <div>
+                                                            <p class=" m-0 fsr-14">
+                                                                {{ historia['Fecha_Modificacion'] }}
+                                                            </p>
+                                                        </div>
+                                                        <hr class="m-0 mb-1 border-4 rounded-1 w-100">
+                                                        <div class="ps-3 w-100">
+                                                            <div>
+                                                                <p class="m-0 fsr-15 d-flex align-items-center justify-content-center gap-2">
+                                                                    <img src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav8">
+                                                                    <b>
+                                                                        {{ historia['Modificado_Por']['Primer_Nombre'] }} {{ historia['Modificado_Por']['Primer_Apellido'] }}
+                                                                    </b>
+                                                                    <span class="text-center">
+                                                                        {{ historia['Accion'] }}
+                                                                    </span>
+                                                                </p>
+                                                            </div>                                    
+                                                        </div>
+                                                    </div>         
+                                                </div>       
+                                            {% endfor %}                                   
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </form>       
+                    </div>
+                </div>                          
+            </div> 
+            <div class="modal fade" id="ModalDelete{{ Caso['ID'] }}" tabindex="-1" aria-labelledby="ModalDeleteLabel{{ Caso['ID'] }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-danger-emphasis bg-danger">
+                            <h5 class="modal-title" id="ModalDeleteLabel{{ Caso['ID'] }}">
+                                Atención
+                            </h5>
+                        </div>
+                        <div class="modal-body">
+                            <p class="fsr-14 m-0">
+                                ¿Estás seguro que deseas eliminar el caso <strong>{{ Caso["radicados"][0]["Radicado"] }}</strong>? 
+                            </p>
+                            <p class="fsr-14 m-0">
+                                Esta acción no se puede deshacer.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button type="button" class="btn btn-danger" id="Caso_Boton_Eliminar_{{ Caso['ID'] }}" data-case-id="{{ Caso['ID'] }}">
+                                Sí, eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </a>
-        <a href="/dashboard/usuarios" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Modificar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Modificar casos
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Actualiza la información de un caso y
-                    garantiza que los datos estén correctos.
-                </p>
-            </div>
-        </a>
-        <a href="/dashboard/ajustes" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Eliminar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Eliminar casos
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Elimina un caso del sistema y
-                    mantén la base de datos organizada.
-                </p>
-            </div>
-        </a>
+        {% endfor %}
     </div>
 </div>

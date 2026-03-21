@@ -26,6 +26,9 @@ if (document.getElementById("Formulario_Ayuda")){
 
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
@@ -67,6 +70,9 @@ if (document.getElementById("Formulario_Calificanos")){
             Boton.disabled = true;
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
@@ -107,6 +113,9 @@ if (document.getElementById("Formulario_Contactanos")){
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
             Boton.disabled = true;
             CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
         }
         else if(response.status === 400){
             Boton.classList.remove("boton2");
@@ -172,6 +181,9 @@ if (document.getElementById("Formulario_Registrar")){
             localStorage.setItem("Correo_Registro", data.Correo)
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400){
             window.scrollTo(0, 0);
             Boton.classList.remove("boton2");
@@ -224,6 +236,9 @@ if (document.getElementById("Formulario_Codigo")){
             window.location.href = "/login"
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
@@ -285,7 +300,8 @@ if (document.getElementById("Formulario_Login")){
             Mensaje.classList.add("Message_Success"); 
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
             Boton.disabled = true;
-            localStorage.setItem("Device_Token", result.Device)
+            localStorage.setItem("Device_Token", result.Device);
+            localStorage.setItem("User_Data", JSON.stringify(result.User));
             if (payload.Remember_Me) {
                 localStorage.setItem("Auth_Token", result.Token);
                 localStorage.setItem("Auth_ExpiresAt", String(expiresAt));
@@ -297,6 +313,9 @@ if (document.getElementById("Formulario_Login")){
             window.location.href = "/dashboard"
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400 || response.status === 401 || response.status === 403){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
@@ -342,6 +361,9 @@ if (document.getElementById("Formulario_Recuperar")){
             window.location.href = "/login/recuperar/codigo"
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if (response.status === 400 || response.status === 401) {
             window.scrollTo(0, 0);
             Boton.classList.remove("boton2");
@@ -424,6 +446,9 @@ if (document.getElementById("Formulario_Recuperar2")){
             window.location.href = "/login"
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
         else if(response.status === 400 || response.status === 401){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");

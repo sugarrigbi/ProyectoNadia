@@ -1,37 +1,43 @@
 Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
+
+	Sistema de imagenes de usuario
+	Crear caso
+
 TAREAS PENDIENTES:
 	SEGURIDAD:
-		Login
-		Cambiar estado de dispositivos
-		Autenticador 2FA
+		#Cambiar estado de dispositivos
+		#Autenticador 2FA
 		proteccion contra subida de archivos maliciosos
+		Subida de archivos no debe ir en el mismo backend
+		Sistema de almacenamiento serio, almacen tipo S3, versionado de archivos, registros MIME, url segura
 	DASHBOARD:
 		sistema de permisos, con tabla Rol_Permisos, con JS(Tipo mostrar o no ese boton, para mantener 1 solo dashboard)
 		Tema Claro/Oscuro
 		Traductor de idiomas
-		apartado para ver Dispositivos vinculados
-		Arriba poner un Avatar con el nombre y una flecha, y ahi abrir ajustes preferencias etc, mis datos personales
+		#apartado para ver Dispositivos vinculados
 		Carga de documentos, evidencia, tipo opcion del clip en TFS
 		Búsqueda avanzada de casos, entidades, personas permite filtrar casos por región, estado, tipo de bien etc
-		Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc
-		exportacion a xls de datos de casos entidades personas a tablas de exel
+		Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc, dashboard o estadisticas avanzadas
+		#heal check de microservicios para los devs, en un micro apartado llamado desarollo
+		descarga de archivos almacenados
+		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
 	CASOS:
+		si el caso lleva mas de 5 dias sin respuesta ponerlo en urgente, escalamiento automatico
 		CRUD casos, hacer q casos tengan etapas(En Gestion, Espera respuesta Cliente/Asesor, resuelto, escalado a superior, decisión)
 		asignacion de casos a analistas en turno, tipo TFS
-		comentarios dentro del caso
 		cierre formal de casos con correo
-		Liena del tiempo del caso bonita
+		Linea del tiempo del caso bonita
 		fecha límite entrega de casos
 		prioridad de casos
 		Relaciones entre casos mejor, tipo TFS
+		busquedas generales tipo google, read one by y all
+		podemos modificar el crud para q parezca tfs y ponemos leer, modificar, y eliminar en 1 sola pantalla, y arriba un boton para crear
 	ENTIDADES:
 		CRUD de entidades
 	USUARIOS:
 		CRUD Personas
-		desactivar o suspender cuent
+		desactivar o suspender cuenta
 	NOTIFICACIONES:
-		Notificaciones al hacer cosas(Crear cuenta, crear caso, caso cambia de estado etc)
-		mejorar como se ven los correos, mas empresariales
 		Notifica a usuarios o funcionarios cuando cambia el estado de un caso o se requiere acción.
 	AUDITORIAS:
-		hacer auditorias de lo q pasa y cuando, y estados anteriores, cambios de datos de usuario(Nombres, Contraseña etc)
+		hacer auditorias de lo q pasa y cuando, y estados anteriores, cambios de datos de usuario(Nombres, Contraseña etc), q TODO quede almacenado

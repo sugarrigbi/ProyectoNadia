@@ -1,39 +1,37 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+TRUNCATE TABLE Caso_Discusion;
+TRUNCATE TABLE Rol_a_Permiso;
+TRUNCATE TABLE Casos_a_Casos;
+TRUNCATE TABLE Tipo_Relacion;
 TRUNCATE TABLE Entidad_Auditoria;
 TRUNCATE TABLE Entidad;
 TRUNCATE TABLE Estado_Entidad;
-
 TRUNCATE TABLE Radicado_Caso;
 TRUNCATE TABLE Caso_Auditoria;
 TRUNCATE TABLE Caso;
 TRUNCATE TABLE Incidente;
 TRUNCATE TABLE Prioridad;
 TRUNCATE TABLE Estado_Caso;
-
 TRUNCATE TABLE Contactanos;
 TRUNCATE TABLE Ayuda;
 TRUNCATE TABLE Calificanos;
 TRUNCATE TABLE Tipo_Formulario;
-
 TRUNCATE TABLE Dispositivos_Auditoria;
 TRUNCATE TABLE Dispositivos;
-
 TRUNCATE TABLE Persona_Auditoria;
 TRUNCATE TABLE Persona;
-
 TRUNCATE TABLE Usuario_Auditoria;
 TRUNCATE TABLE Usuario;
-
 TRUNCATE TABLE Barrio;
 TRUNCATE TABLE Localidad;
 TRUNCATE TABLE Ciudad;
 TRUNCATE TABLE Departamento;
 TRUNCATE TABLE Pais;
-
 TRUNCATE TABLE Tipo_Documento;
 TRUNCATE TABLE Estado_Dispositivo;
 TRUNCATE TABLE Estado_Usuario;
+TRUNCATE TABLE Permiso;
 TRUNCATE TABLE Rol;
 
 SET FOREIGN_KEY_CHECKS = 1;

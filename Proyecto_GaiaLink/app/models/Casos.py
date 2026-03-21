@@ -211,7 +211,7 @@ Sistema de notificaciones de GaiaLink
         Close_BaseDatos(conexion, cursor)
         return lista_fusionada
 class Caso_Admin:
-    def __init__(self,Codigo,Incidente,Fecha,Direccion,Personas,Usuario,Estado,Caso_Asociado,Prioridad,Departamento,Ciudad,Localidad,Barrio,Descripcion):
+    def __init__(self,Codigo,Incidente,Fecha,Direccion,Personas,Usuario,Estado,Caso_Asociado,Prioridad,Departamento,Ciudad,Localidad,Barrio,Descripcion, Radicado):
         self.Codigo = Codigo
         self.Incidente = Incidente
         self.Fecha = Fecha
@@ -226,6 +226,7 @@ class Caso_Admin:
         self.Localidad = Localidad
         self.Barrio = Barrio
         self.Descripcion = Descripcion
+        self.Radicado = Radicado
 
     def Buscar_Caso_Admin(self):
         conexion, cursor = Get_BaseDatos()

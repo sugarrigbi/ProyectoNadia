@@ -4,6 +4,18 @@ VALUES
     ("Administrador"), 
     ("Usuario");
 
+INSERT INTO Permiso (Permiso) VALUES
+('CREAR_USUARIO'),
+('EDITAR_USUARIO'),
+('ELIMINAR_USUARIO'),
+('VER_USUARIO'),
+('CREAR_CASO'),
+('EDITAR_CASO'),
+('ELIMINAR_CASO'),
+('VER_CASO'),
+('ASIGNAR_ROL'),
+('GESTIONAR_PERMISOS');
+
 INSERT INTO Estado_Usuario (Nombre) 
 VALUES 
     ("Activo"), 
@@ -76,13 +88,13 @@ VALUES
     ('Ayuda'),
     ('Contactanos');
 
-INSERT INTO Calificanos (Nombre, Pregunta1, Pregunta2, Pregunta3, Pregunta4, Tipo_Formulario_ID)
+INSERT INTO Calificanos (Pregunta1, Pregunta2, Pregunta3, Pregunta4, Tipo_Formulario_ID)
 VALUES 
-    ('Sugarrigbi', 'Admin1_1', 'Admin1_2', 'Admin1_3', 'Admin1_4', 1);
+    ('Admin1_1', 'Admin1_2', 'Admin1_3', 'Admin1_4', 1);
 
-INSERT INTO Ayuda (Nombre, Soporte, Tipo_Formulario_ID)
+INSERT INTO Ayuda (Nombre, Correo, Soporte, Tipo_Formulario_ID)
 VALUES 
-    ('Sugarrigbi', 'Problemas con la aplicación móvil', 2);
+    ('Sugarrigbi', 'Sugarrigbi@gmail.com', 'Problemas con la aplicación móvil', 2);
 
 INSERT INTO Contactanos (Nombre, Telefono, Correo, Mensaje, Tipo_Formulario_ID)
 VALUES 
@@ -113,9 +125,15 @@ VALUES
     ('Expropiacion', 4),
     ('Hurto', 3);
 
-INSERT INTO Caso (Descripcion, Afectados, Direccion, Caso_Asociado, Usuario_ID, Incidente_ID, Estado_Caso_ID, Prioridad_ID, Barrio_ID) 
+INSERT INTO Caso (Nombre, Descripcion, Afectados, Direccion, Caso_Asociado, Usuario_Creador_ID, Usuario_Asociado_ID, Incidente_ID, Estado_Caso_ID, Prioridad_ID, Barrio_ID) 
 VALUES 
-    ('Desplazamiento forzado en zona rural', 25, 'Calle 10 #15-20', 'NO', 1, 1, 1, 5, 1);
+    ('Caso1','Caso principal con dos asociados', 10, 'Carrera 5 #10-20', 'SI', 1, 1, 1, 1, 1, 1),
+    ('Caso2','Caso asociado 1', 5, 'Calle 8 #12-30', 'NO', 1, 1, 1, 1, 1, 1),
+    ('Caso3','Caso asociado 2', 7, 'Avenida 20 #25-40', 'NO', 1, 1, 1, 1, 1, 1),
+    ('Caso4','Caso del mismo usuario 1', 12, 'Calle 50 #60-70', 'NO', 1, 1, 2, 2, 2, 1),
+    ('Caso5','Caso del mismo usuario 2', 15, 'Carrera 15 #20-25', 'NO', 1, 1, 2, 2, 2, 1),
+    ('Caso6','Caso del mismo usuario 3', 20, 'Diagonal 30 #40-50', 'NO', 1, 1, 2, 2, 2, 1),
+    ('Caso7','Caso independiente sin asociados', 8, 'Transversal 12 #34-56', 'NO', 1, 1, 3, 3, 3, 1);
 
 INSERT INTO Caso_Auditoria (Accion, Modificado_Por, Caso_ID) 
 VALUES 
@@ -139,3 +157,24 @@ VALUES
 INSERT INTO Entidad_Auditoria (Accion, Modificado_Por, Entidad_ID)
 VALUES 
     ('Creacion de entidad', 1, 1);
+
+INSERT INTO Tipo_Relacion (Nombre) 
+VALUES
+    ('Relacionado'),
+    ('Duplicado'),
+    ('Dependiente');
+
+INSERT INTO Casos_a_Casos (Caso_Principal_ID, Caso_Asociado_ID, Tipo_Relacion_ID)
+VALUES
+    (1, 2, 1),
+    (1, 3, 2);
+
+INSERT INTO Caso_Discusion (Caso_ID, Usuario_ID, MENSAJE)
+VALUES
+    (1, 1, 'Este caso requiere seguimiento inmediato.'),
+    (1, 1, 'Se notificó al usuario sobre el cambio de estado.'),
+    (2, 1, 'El afectado reportó más detalles sobre la dirección.'),
+    (3, 1, 'Este caso parece duplicado del principal.'),
+    (4, 1, 'El usuario solicitó actualización del estado.'),
+    (4, 1, 'Se notificó al usuario vía correo.'),
+    (7, 1, 'Este caso no tiene relación con otros, pero requiere validación.');

@@ -20,6 +20,12 @@ def Case_Read_By():
 @Case_Bp.route("/case/update/<int:Case_ID>", methods=["PUT"])
 def Case_Update(Case_ID):
     return Get_Case.Case_Update(Case_ID)
-@Case_Bp.route("/case/delete/<int:Case_ID>", methods=["PUT"])
-def Case_Delete(Case_ID):
-    return Get_Case.Case_Delete(Case_ID)
+@Case_Bp.route("/case/delete/<int:Case_ID>/<int:User_ID>", methods=["PUT"])
+def Case_Delete(Case_ID, User_ID):
+    return Get_Case.Case_Delete(Case_ID, User_ID)
+@Case_Bp.route("/case/delete/relation/<string:Case_ID2>/<string:Case_ID1>/<int:Case_ID3>/<int:User_ID>", methods=["DELETE"])
+def Case_Delete_Relation(Case_ID1, Case_ID2, Case_ID3,User_ID):
+    return Get_Case.Delete_Relacion(Case_ID1, Case_ID2, Case_ID3,User_ID)
+@Case_Bp.route("/case/data", methods=["GET"])
+def Case_Data():
+    return Get_Case.Case_Data()

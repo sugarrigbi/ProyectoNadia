@@ -2,35 +2,48 @@ from flask import Flask, render_template, jsonify, request
 from App.Routes.Forms_Service import Forms_Service_Bp
 from App.Routes.User_Service import User_Service_Bp
 from App.Routes.Auth_Service import Auth_Service_Bp
+from App.Routes.Case_Service import Case_Service_Bp
 from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from App.Rate_Limit import Rate_Limit
 
 def Create_App():
     App = Flask(__name__)
 
-    Rate_Limit = Limiter(
-        get_remote_address,
-        app=App,
-        default_limits=["5 per minute"],
-        storage_uri="redis://localhost:6379"
-    )
+    Rate_Limit.init_app(App)
     @App.errorhandler(429)
     def ratelimit_handler(e):
-        if request.path.startswith("/api/"):
-            return jsonify(error="Demasiadas solicitudes"), 429
-        else:
-            return render_template("Rate_Limit.html", mensaje="Has excedido el número de intentos permitidos"), 429
+        return jsonify(error="Demasiadas solicitudes"), 429
+    
+    @App.before_request
+    def skip_options():
+        if request.method == "OPTIONS":
+            Respuesta = App.make_response("")
+            Respuesta.status_code = 200
+            Respuesta.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+            Respuesta.headers["Access-Control-Allow-Credentials"] = "true"
+            Respuesta.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
+            Respuesta.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, PUT, DELETE"
+            return Respuesta
+    
+    CORS(
+        App,
+        resources={
+            r"/api/*": {
+                "origins": [
+                    "http://localhost:5009",
+                    "https://p8kjdpww-5009.use2.devtunnels.ms"
+                ],
+                "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"]
+            }
+        },
+        supports_credentials=True
+    )
 
-    CORS(App, resources={r"/api/*": {"origins": 
-    [
-        "http://localhost:5009",
-        "https://p8kjdpww-5009.use2.devtunnels.ms"
-    ]
-    }}, supports_credentials=True, allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
 
     App.register_blueprint(Forms_Service_Bp)
     App.register_blueprint(User_Service_Bp)
     App.register_blueprint(Auth_Service_Bp)
+    App.register_blueprint(Case_Service_Bp)
 
     return App 

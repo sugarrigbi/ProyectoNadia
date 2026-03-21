@@ -1,5 +1,6 @@
 from App.Models.Forms_Models import Calificanos, Ayuda, Contactanos
 from App.Utilities.Tables import db
+import requests
 
 class Forms_Service:
     @staticmethod
@@ -8,6 +9,21 @@ class Forms_Service:
         
         db.session.add(Formulario)
         db.session.commit()
+
+        if Tabla_Form == Ayuda:
+            Formulario_Text = "Ayuda"
+        if Tabla_Form == Contactanos:
+            Formulario_Text = "Contactanos"
+
+        if Tabla_Form == Ayuda or Tabla_Form == Contactanos:
+            requests.post("http://127.0.0.1:5007/email",
+                json={
+                    "Template": "Crear_Formulario",
+                    "Datos": {"Nombre": Data["Nombre"], "Formulario": Formulario_Text},
+                    "Correo": Data["Correo"],
+                    "Asunto": "Envio de Formulario"
+                }
+            )
 
         return Formulario  
     @staticmethod

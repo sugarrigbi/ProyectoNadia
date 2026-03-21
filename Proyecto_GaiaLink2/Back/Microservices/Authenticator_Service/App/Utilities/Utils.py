@@ -10,6 +10,7 @@ import random
 from App.Utilities.Redis import redis_client
 import bcrypt
 import re
+import requests
 
 def Crear_Token(User_ID, Remember):
     if Remember:
@@ -29,18 +30,9 @@ def Get_Time(Bloqueado_Hasta, Ahora):
     segundos = total_segundos % 60
 
     return minutos, segundos
-def Get_Device(Usuario_ID, Ultimo_Uso, DeviceToken=None, Client_Payload=None):
-    if DeviceToken:
-        Dispositivo = Tabla_Dispositivos.query.filter_by(Token=DeviceToken).first()
-        if Dispositivo:
-            Dispositivo.Ultimo_Uso = Ultimo_Uso
-            db.session.commit()
-            return None
+def Get_Device(Usuario_ID, Ultimo_Uso, Client_IP, Client_Payload=None):
     Token = secrets.token_hex(32)
-    Ip = request.headers.get("X-Forwarded-For", request.remote_addr)
-    if Ip and "," in Ip:
-        Ip = Ip.split(",")[0].strip()
-
+    Ip = Client_IP
     ua_string = ""
     if Client_Payload and Client_Payload.get("userAgent"):
         ua_string = Client_Payload.get("userAgent") or ""
@@ -76,6 +68,20 @@ def Get_Device(Usuario_ID, Ultimo_Uso, DeviceToken=None, Client_Payload=None):
     }
 
     return Data_D
+def Crear_Dispositivo(Data_D, Usuario_Nombre, Usuario_Correo, Ahora):
+    Dispositivo = Tabla_Dispositivos(**Data_D)
+    Token = Dispositivo.Token
+    db.session.add(Dispositivo)
+    db.session.commit()
+    requests.post("http://127.0.0.1:5007/email",
+        json={
+            "Template": "Nuevo_Dispositivo",
+            "Datos": {"Nombre": Usuario_Nombre, "Fecha": Ahora, "Dispositivo": Data_D["Dispositivo"], "Navegador": Data_D["Navegador"], "IP": Data_D["IP"]},
+            "Correo": Usuario_Correo,
+            "Asunto": "Nuevo inicio de sesión detectado"
+        }
+    )
+    return Token
 def Generar_Codigo():
     Codigo = str(random.randint(100000, 999999))
     return Codigo

@@ -3,6 +3,8 @@ import requests
 
 app = Flask(__name__,template_folder="Templates",static_folder="Statics")
 
+API_URL = "http://127.0.0.1:5000/api"
+
 @app.route("/")
 def Inicio():
     return render_template("homepage/inicio.html")
@@ -47,7 +49,11 @@ def Dashboard_Admin_Inicio():
 @app.route("/dashboard/casos")
 def Dashboard_Admin_Casos():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/casos.html")
+        Response = requests.get(f"{API_URL}/case/read/all")
+        Response2 = requests.get(f"{API_URL}/case/read/data")
+        Casos = Response.json()
+        Data = Response2.json()
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/entidades")
 def Dashboard_Admin_Entidades():
@@ -59,6 +65,14 @@ def Dashboard_Admin_Usuarios():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render_template("dashboard/usuarios.html")
     return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/preferencias")
+def Dashboard_Admin_Preferencias():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/preferencias.html")
+    return render_template("dashboard/dashboard.html")
 
+@app.route("/rate-limit")
+def Rate_Limit():
+    return render_template("homepage/rate_limit.html")
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5009, debug=True)

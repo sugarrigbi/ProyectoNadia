@@ -53,10 +53,10 @@ def get_modificar_buscar_casos_admin():
     if request.method == "POST":
         codigo = request.form["Radicado"]
         session['Caso_Modificar'] = codigo
-        Caso = Caso_Admin(None, None, None, None, None, None, None, None, None, None, codigo)
+        Caso = Caso_Admin(None, None, None, None, None, None, None, None, None, None, codigo, None, None, None, None)
         lista_datos = Caso.Buscar_Caso_Admin()
-        nombres = Autenticador.Obtener_Usuarios()
-        estados = Autenticador.Obtener_Estados()
+        nombres = Autenticador.Obtener_Estados2()
+        estados = Autenticador.Obtener_Estados2()
 
         Estado, tipo = Autenticador.Obtener_Estado_Caso(codigo)
         if Estado:

@@ -1,8 +1,8 @@
 from flask import request, jsonify
 import bcrypt
-from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona
+from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona, Rol as Tabla_Rol
 from App.Utilities.Tables import db
-from App.Utilities.Utils import Crear_Token, Get_Device, Get_Time, Generar_Codigo, Guardar_Codigo, Obtener_Codigo, Hashear_Contraseña, Eliminar_Datos, Validar_Contraseña
+from App.Utilities.Utils import Crear_Token, Get_Device, Get_Time, Generar_Codigo, Guardar_Codigo, Obtener_Codigo, Hashear_Contraseña, Eliminar_Datos, Validar_Contraseña, Crear_Dispositivo
 from datetime import datetime, timedelta
 import pytz
 import requests
@@ -20,14 +20,17 @@ class Get_Auth():
         Remember_Me = Data["Remember_Me"]
         Device = Data["Dispositivo"]
         Client_Payload = Data["Client_Payload"]
+        Client_IP = Data["Client_IP"]
 
         Ahora = datetime.now(bogota_tz).replace(tzinfo=None)
         Ahora_Formated = Ahora.strftime("%d/%m/%Y %H:%M")
 
         Usuario = Tabla_Usuario.query.filter((Tabla_Usuario.Correo == Identificador) | (Tabla_Usuario.Nombre == Identificador)).first()
-
         if not Usuario:
             return jsonify({"Error": "Correo/Nombre o contraseña incorrectos"}), 401
+        Rol = Tabla_Rol.query.filter(Tabla_Rol.ID == Usuario.Rol_ID).first()
+        if not Rol:
+            return jsonify({"Error": "Rol incorrectos"}), 401        
         
         if Usuario.Estado_Usuario_ID == 2:
             return jsonify({"Error": "Tu cuenta está inactiva. Actívala para continuar"}), 403
@@ -65,24 +68,18 @@ class Get_Auth():
         db.session.commit()
         
         Token, Expira = Crear_Token(Usuario.ID, Remember_Me)
-        
-        Data_D = Get_Device(Usuario.ID, Ahora, Device, Client_Payload)
 
-        if not Device:
-            Device = Data_D["Token"]
-            Dispositivo = Tabla_Dispositivos(**Data_D)
-            db.session.add(Dispositivo)
+        Device_Token = Device
+
+        Dev_Existe = Tabla_Dispositivos.query.filter(Tabla_Dispositivos.Token == Device).first()
+        if not Device or not Dev_Existe:
+            Data_D = Get_Device(Usuario.ID, Ahora, Client_IP, Client_Payload)
+            Device_Token = Crear_Dispositivo(Data_D, Usuario.Nombre, Usuario.Correo, Ahora_Formated)
+        if Dev_Existe:
+            Dev_Existe.Ultimo_Uso = Ahora
             db.session.commit()
-            requests.post("http://127.0.0.1:5007/email",
-                json={
-                    "Template": "Nuevo_Dispositivo",
-                    "Datos": {"Nombre": Usuario.Nombre, "Fecha": Ahora_Formated, "Dispositivo": Data_D["Dispositivo"], "Navegador": Data_D["Navegador"], "IP": Data_D["IP"]},
-                    "Correo": Usuario.Correo,
-                    "Asunto": "Nuevo inicio de sesión detectado"
-                }
-            )            
 
-        return jsonify({"Token": Token, "Expires_At": Expira, "User": {"ID": Usuario.ID, "Username": Usuario.Nombre}, "Device": Device  }), 200
+        return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre}, "Device": Device_Token}), 200
     @staticmethod
     def Recuperar():
         Data = request.get_json()

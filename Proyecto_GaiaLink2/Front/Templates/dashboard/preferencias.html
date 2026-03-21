@@ -5,10 +5,10 @@
                 <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
             </a>        
             <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
-                Inicio > Usuario
+                Inicio > Ajustes
             </span>
         </div>
-        <div class="d-flex gap-3 align-items-center justify-content-center d-none d-sm-block">
+        <div class="d-flex gap-3 align-items-center justify-content-center">
             <li class="nav-item dropdown list-unstyled fs-nav-1">
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
@@ -51,56 +51,63 @@
                     </li>                                                                          
                 </ul>
             </li>
-        </div>   
+        </div>    
+    </div>    
+    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
+        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Casos2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+            <div>
+                <h2 class="fsr-12 fw-semibold m-0">
+                    Casos
+                </h2>
+                <p class="fsr-16 text-muted m-0">
+                    Reporta nuevos incidentes y consulta el
+                    estado de los casos que has registrado.
+                </p>
+            </div>
+        </a>
     </div>
     <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a href="/dashboard/casos" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Buscar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Entidades2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0">
-                    Buscar usuarios
+                    Entidades
                 </h2>
                 <p class="fsr-16 text-muted m-0">
-                    Consulta los usuarios registrados y
-                    revisa sus perfiles y estado de cuenta.
+                    Conoce las instituciones y su participación
+                    en la gestión de emergencias.
                 </p>
             </div>
         </a>
-        <a href="/dashboard/entidades" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Crear.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+    </div>
+    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
+        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Usuario2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0">
-                    Crear usuarios
+                    Usuarios
                 </h2>
                 <p class="fsr-16 text-muted m-0">
-                    Agrega un nuevo usuario y
-                    asigna sus permisos y datos de perfil.
+                    Administra la información de los usuarios,
+                    gestiona sus permisos desde este panel.
                 </p>
             </div>
         </a>
-        <a href="/dashboard/usuarios" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Modificar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+    </div>
+    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
+        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Gear.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0">
-                    Modificar usuarios
+                    Configuracion
                 </h2>
                 <p class="fsr-16 text-muted m-0">
-                    Actualiza la información de un usuario y
-                    garantiza que sus datos estén correctos.
+                    Ajusta las preferencias del sistema
+                    y personaliza la experiencia de uso.
                 </p>
             </div>
         </a>
-        <a href="/dashboard/ajustes" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Eliminar.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Eliminar usuarios
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Elimina un usuario del sistema y
-                    mantén la base de datos organizada.
-                </p>
-            </div>
-        </a>
+    </div>
     </div>
 </div>
