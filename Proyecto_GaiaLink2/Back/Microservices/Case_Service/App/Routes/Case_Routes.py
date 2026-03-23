@@ -29,3 +29,6 @@ def Case_Delete_Relation(Case_ID1, Case_ID2, Case_ID3,User_ID):
 @Case_Bp.route("/case/data", methods=["GET"])
 def Case_Data():
     return Get_Case.Case_Data()
+@Case_Bp.route("/case/read/linea/tiempo", methods=["GET"])
+def Case_Read_Linea():
+    return Get_Case.Case_Read_Linea()

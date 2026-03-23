@@ -12,12 +12,12 @@
             <li class="nav-item dropdown list-unstyled fs-nav-1">
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
-                    <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="rounded-circle icono-nav5">
+                    <img class="rounded-circle icono-nav5 imagen_usuario">
                 </a>
                 <ul class="dropdown-menu Bg_Blanco p-2 border-round">
                     <li>
                         <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
-                            <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav6 rounded-circle">
+                            <img class="icono-nav6 rounded-circle imagen_usuario">
                             <span id="User_Name2">
                                 Usuario
                             </span>
@@ -54,6 +54,261 @@
         </div>  
     </div>
     <div id="Casos_Busqueda" class="row justify-content-start align-items-stretch w-100 gap-3 p-0">
+        <div class="p-0">
+            <button data-bs-target="#ModalCreate" data-bs-toggle="modal" type="button" class="btn btn-success fsr-15 boton7 d-flex align-items-center justify-content-center gap-2">
+                <img src="{{ url_for('static', filename='img/PlusWhite.svg') }}" class="icono-nav2">
+                Crear Caso
+            </button>        
+        </div> 
+        <div class="modal w-100 p-0" id="ModalCreate" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
+                <div class="modal-content Bg_Blanco2" style="height:auto; overflow-y:auto;">  
+                    <form id="Caso_Contenedor2" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
+                        <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
+                            <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                                <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                    <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                    CASO NUEVO
+                                </p>
+                                <input required name="CasoNuevo_Nombre" placeholder="Agregue un titulo..." class="border-0 w-auto rounded-1 fsr-13" style="resize: none;">
+                                <div class="w-100 gap-2 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                                    <select required name="CasoNuevo_Usuario_Cargo" class="form-select m-0 py-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-auto">
+                                        <option value="" selected disabled>Seleccione un usuario...</option>
+                                        {% for usuario in Data["Usuarios"] %}
+                                            <option value="{{ usuario['ID'] }}" >                                                
+                                                {{ usuario["Persona"]["Primer_Nombre"] }} {{ usuario["Persona"]["Segundo_Nombre"] }} {{ usuario["Persona"]["Primer_Apellido"] }} {{ usuario["Persona"]["Segundo_Apellido"] }} 
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="m-0 d-flex align-items-center gap-2 fsr-14">
+                                        <img src="{{ url_for('static', filename='img/Mensajes.svg') }}" class="icono-nav8">
+                                        0 Comentarios
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                                <div class="d-none d-md-flex flex-row gap-2">
+                                    <button type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                        Volver
+                                    </button>                
+                                </div>            
+                                <div class="d-flex flex-row gap-3 gap-md-2">
+                                    <button type="button" data-bs-dismiss="modal" class="d-flex d-md-none boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                        Volver
+                                    </button>                                         
+                                    <button type="submit" disabled id="CasoNuevo_Boton_Guardar" class="boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img id="CasoNuevo_Boton_Guardar_Img" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                        <span id="CasoNuevo_Boton_Guardar_Msg">
+                                            Guardar
+                                        </span>
+                                    </button>                                              
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-0 border-4 border-dark w-100 rounded-1">  
+                        <div class="row w-100 h-100 p-2">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div class="h-40">
+                                    <p class="fsr-12 m-0 fw-medium h-auto">
+                                        Descripcion
+                                    </p>
+                                    <hr class="mt-0 mb-3 border-4 rounded-1">
+                                    <textarea required name="CasoNuevo_Descripcion" placeholder="Agregue una descripción..." class="w-100 h-80 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                </div>
+                                <div class="h-60">
+                                    <p class="fsr-12 m-0 fw-medium h-auto">
+                                        Comentarios
+                                    </p>
+                                    <hr class="mt-0 mb-3 border-4 rounded-1">
+                                    <div class="d-flex gap-3 flex-column h-80">
+                                        <div class="d-flex flex-column gap-2 h-50">
+                                            <div class="d-flex flex-row align-items-end gap-2">
+                                                <img class="icono-nav rounded-circle">
+                                                <p id="User_Name" class="m-0 fsr-13">
+                                                    Usuario
+                                                </p>  
+                                                <p class="m-0 fsr-16">
+                                                    Ahora
+                                                </p>                                                
+                                            </div>
+                                            <textarea name="CasoNuevo_Comentario" placeholder="Agregue un comentario..." class="w-100 h-80 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                        </div>               
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                <div class="h-100">
+                                    <p class="fsr-12 m-0 fw-medium h-auto">
+                                        Impacto
+                                    </p>
+                                    <hr class="mt-0 mb-1 border-4 rounded-1">
+                                    <div class="ps-3 d-flex flex-column gap-1">
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Fecha de creacion
+                                            </p>                
+                                            <input required name="CasoNuevo_Fecha_Creacion" type="date" placeholder="Agregue una fecha..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Creado por
+                                            </p>
+                                            <select required name="CasoNuevo_Usuario_Creador" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                <option value="" selected disabled>Seleccione un usuario...</option>
+                                                {% for usuario in Data["Usuarios"] %}
+                                                    <option value="{{ usuario['ID'] }}" >                                                
+                                                        {{ usuario["Persona"]["Primer_Nombre"] }} {{ usuario["Persona"]["Segundo_Nombre"] }} {{ usuario["Persona"]["Primer_Apellido"] }} {{ usuario["Persona"]["Segundo_Apellido"] }} 
+                                                    </option>
+                                                {% endfor %}
+                                            </select>                                                
+                                        </div>   
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Estado
+                                            </p>                
+                                            <select required name="CasoNuevo_Estado" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                <option value="" selected disabled>Seleccione un estado...</option>
+                                                {% for estado in Data['Estados']  %}
+                                                    <option value="{{ estado['ID'] }}">
+                                                        {{ estado['Nombre'] }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Prioridad
+                                            </p>                
+                                            <select required name="CasoNuevo_Prioridad" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                <option value="" selected disabled>Seleccione una prioridad...</option>
+                                                {% for prioridad in Data['Prioridades'] %}
+                                                    <option value="{{ prioridad['ID'] }}">
+                                                        {{ prioridad['Prioridad'] }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Incidente
+                                            </p>                
+                                            <select required name="CasoNuevo_Incidente" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
+                                                <option value="" selected disabled>Seleccione un incidente...</option>
+                                                {% for incidente in Data['Incidentes'] %}
+                                                    <option value="{{ incidente['ID'] }}">
+                                                        {{ incidente['Incidente'] }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>                    
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Afectados
+                                            </p>                
+                                            <input required name="CasoNuevo_Afectados" type="number" placeholder="Agregue un numero..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                        </div>                                  
+                                    </div>
+                                    <p class="fsr-12 m-0 fw-medium h-auto">
+                                        Ubicacion
+                                    </p>
+                                    <hr class="mt-0 mb-1 border-4 rounded-1">
+                                    <div class="ps-3 d-flex flex-column gap-1">
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Direccion
+                                            </p>                
+                                            <input required name="CasoNuevo_Direccion" placeholder="Agregue una direccion..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                        </div>                    
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Barrio
+                                            </p>      
+                                            <input id="barrio_inputNuevo" required  list="Datalist_Barrio" placeholder="Agregue un barrio..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            <input type="hidden" id="CasoNuevo_Barrio_Nombre" name="Caso_Barrio_Nombre" >
+                                            <input type="hidden" id="CasoNuevo_Barrio_ID" name="Caso_Barrio_ID">
+                                        </div> 
+                                        <div class="d-flex flex-column">
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Localidad
+                                            </p>                
+                                            <input id="localidad_inputNuevo" list="Datalist_Localidad" placeholder="Agregue una localidad..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            <input type="hidden" id="CasoNuevo_Localidad_Nombre" name="Caso_Localidad_Nombre">
+                                            <input type="hidden" id="CasoNuevo_Localidad_ID" name="Caso_Localidad_ID">
+                                        </div>  
+                                        <div class="d-flex flex-column">                                              
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Ciudad
+                                            </p>                
+                                            <input id="ciudad_inputNuevo" list="Datalist_Ciudad"  placeholder="Agregue una ciudad..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            <input type="hidden" id="CasoNuevo_Ciudad_Nombre" name="Caso_Ciudad_Nombre" >
+                                            <input type="hidden" id="CasoNuevo_Ciudad_ID" name="Caso_Ciudad_ID">
+                                        </div> 
+                                        <div class="d-flex flex-column">                                              
+                                            <p class="fsr-13 m-0 h-auto">
+                                                Departamento
+                                            </p>                
+                                            <input id="departamento_inputNuevo" list="Datalist_Departamento" placeholder="Agregue un departamento..."class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                            <input type="hidden" id="CasoNuevo_Departamento_Nombre" name="Caso_Departamento_Nombre">
+                                            <input type="hidden" id="CasoNuevo_Departamento_ID" name="Caso_Departamento_ID">
+                                        </div>                                                       
+                                    </div>                            
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                <div class="h-100">
+                                    <p class="fsr-12 m-0 fw-medium h-auto">
+                                        Trabajo relacionado
+                                    </p>
+                                    <hr class="mt-0 mb-3 border-4 rounded-1">
+                                    <button type="button" id="Agregar_Trabajo" class="boton9 mb-2 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img id="Agregar_Trabajo_Imagen" src="{{ url_for('static', filename='img/Plus.svg') }}" class="icono-nav7">
+                                        <span id="Agregar_Trabajo_Mensaje">
+                                            Añadir trabajo
+                                        </span>
+                                    </button>
+                                    <div class="d-flex flex-column gap-3">
+                                        <div id="Crear_Relacion" class="d-flex flex-column align-items-start bg-white rounded-2 p-2 gap-2 d-none">
+                                            <div class="d-flex flex-row gap-2">
+                                                <p class=" m-0 fsr-13">
+                                                    Vinculo:
+                                                </p>
+                                                <select id="Relacion_Tipo" name="CasoNuevo_Relacion_Tipo" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-100">
+                                                    <option value="" selected disabled>Seleccion...</option>                                                        
+                                                    {% for relacion in Data["Relaciones"] %}
+                                                        <option value="{{ relacion['ID'] }}" >                                                
+                                                            {{ relacion["Nombre"] }} 
+                                                    {% endfor %}                                       
+                                                </select>                                                    
+                                            </div>
+                                            <div>
+                                                <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                                    Radicado:
+                                                    <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                                    <select id="Relacion_Radicado" name="CasoNuevo_Relacion_Radicado" class="form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-100">
+                                                        <option value="" selected disabled>Seleccion...</option>
+                                                        {% for caso in Casos %}
+                                                            <option value="{{ caso['ID'] }}">
+                                                                {{ caso["radicados"][0]["Radicado"] }}
+                                                            </option>
+                                                        {% endfor  %}
+                                                    </select>
+                                                </p>                 
+                                            </div>
+                                        </div>                                                           
+                                    </div>
+                                    <p class="fsr-12 m-0 mt-2 fw-medium h-auto">
+                                        Historial
+                                    </p>
+                                    <hr class="mt-0 mb-3 border-4 rounded-1 gap-3">     
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>      
+            </div>
+        </div>
         {% for Caso in Casos %}
             <div class="list-group-item d-flex justify-content-between p-3 Bg_Blanco rounded-3 border-5 border-start Border_Morado2 flex-column gap-3 gap-md-0 flex-md-row">
                 <div class="mx-2">
@@ -102,7 +357,7 @@
             </div>
             <div class="modal w-100 p-0" id="ModalEdit{{ Caso['ID'] }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
-                    <div class="modal-content Bg_Blanco2" style="height:auto; overflow-y:auto;">
+                    <div class="modal-content Bg_Blanco2" style="overflow-y:auto;">
                         <form id="Caso_Contenedor" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
                             <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
                                 <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
@@ -173,7 +428,7 @@
                                         <div class="d-flex gap-3 flex-column h-80">
                                             <div class="d-flex flex-column gap-2 h-50">
                                                 <div class="d-flex flex-row align-items-end gap-2">
-                                                    <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav rounded-circle">
+                                                    <img class="icono-nav rounded-circle">
                                                     <p id="User_Name" class="m-0 fsr-13">
                                                         Usuario
                                                     </p>  
@@ -186,9 +441,12 @@
                                             {% for comentario in Caso['discusiones'] | reverse %}
                                                 <div class="d-flex flex-column h-50">
                                                     <div class="d-flex flex-row align-items-end gap-2">
-                                                        <img src="{{ url_for('static', filename='Textures/Sugarrigbi.png') }}" class="icono-nav rounded-circle">
+                                                        <img class="icono-nav rounded-circle" id="Imagen_Usuario_Comentario_{{ comentario['ID'] }}">
                                                         <p class="d-none d-md-block m-0 fsr-13 text-muted">
                                                             {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Segundo_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }} {{ comentario["Persona"]["Segundo_Apellido"] }} 
+                                                        </p>
+                                                        <p class="d-none" id="Obtener_Usuario_Comentario_{{ comentario['ID'] }}">
+                                                            {{ comentario["Nombre"] }}
                                                         </p>
                                                         <p class="d-block d-md-none m-0 fsr-13 text-muted">
                                                             {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }}
@@ -214,7 +472,7 @@
                                                 <p class="fsr-13 m-0 h-auto">
                                                     Fecha de creacion
                                                 </p>                
-                                                <input required name="Caso_Fecha_Creacion" value="{{ Caso['Creacion'].split('T')[0] }}" type="date" placeholder="Agregue una fecha..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                <input value="{{ Caso['Creacion'] }}" required name="Caso_Fecha_Creacion" type="date" placeholder="Agregue una fecha..." class="border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                             </div>
                                             <div class="d-flex flex-column">
                                                 <p class="fsr-13 m-0 h-auto">
@@ -423,6 +681,12 @@
                                             Historial
                                         </p>
                                         <hr class="mt-0 mb-3 border-4 rounded-1 gap-3"> 
+                                        <button type="button" id="Abrir_Tiempo_{{ Caso['ID'] }}" data-button-id="{{ Caso['ID'] }}" class="boton9 mb-2 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                            <img src="{{ url_for('static', filename='img/Timeline.svg') }}" class="icono-nav7">
+                                            <span>
+                                                Abrir linea del tiempo
+                                            </span>
+                                        </button>                                        
                                         <div class="d-flex flex-column gap-3">
                                             {% for historia in Caso['auditorias'] | reverse %}
                                                 <div class="d-flex flex-column gap-3">
@@ -456,6 +720,106 @@
                         </form>       
                     </div>
                 </div>                          
+                <div id="Timeline_{{ Caso['ID'] }}" class="Fondo_Negro vh-100 w-100 d-none position-absolute top-0 start-0 align-items-center justify-content-center" style="z-index: 1060;">
+                    <div class="Bg_Blanco2 w-50 h-75 rounded-2 p-2 d-flex align-items-center flex-column justify-content-stretch">
+                        <div class="d-flex w-100 justify-content-end p-0 m-0 px-1">
+                            <button type="button" id="Abrir_Tiempo2_{{ Caso['ID'] }}" class="boton9 p-1 border-0 bg-white rounded-1 w-auto">
+                                <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav7">
+                            </button>                                              
+                        </div>
+                        <div class="d-flex w-100 justify-content-center pb-2 p-0 m-0">
+                            <div class="fsr-10">
+                                Linea de Tiempo Estado
+                            </div>
+                        </div>                        
+                        {% set items = Linea_Tiempo | selectattr('Caso_ID', 'equalto', Caso['ID']) | list %}
+                        {% if items|length == 0 %}
+                            <div class="p-4 w-100 h-75 flex-column d-flex align-items-center justify-content-center py-0">
+                                <div class="text-center text-muted py-5">
+                                    <h5 class="mb-2 fsr-7">
+                                        Sin historial
+                                    </h5>
+                                    <p class="m-0 fsr-12">
+                                        Este caso aún no tiene movimientos registrados
+                                    </p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="p-4 w-100 h-100 flex-column d-flex align-items-center py-0" style="overflow-y: auto;">                          
+                                {% for item in Linea_Tiempo if item["Caso_ID"] == Caso['ID'] %}
+                                    <div class="d-none" id="Indentador_{{ Caso['ID'] }}" data-time-card="{{ item['ID'] }}"></div>                      
+                                    {% if loop.first %}
+                                        <div class="d-flex w-50">
+                                            <div class="d-flex flex-column align-items-center me-3">
+                                                <div class="flex-grow-1"></div>
+                                                    <div class="my-2">
+                                                        <div class="rounded-circle" style="width:25px; height:25px;" id="Card_Circulo_{{ item['ID'] }}"></div>
+                                                    </div>                
+                                                <div class="flex-grow-1 border-start border-3" id="Card_Linea_Abajo_{{ item['ID'] }}"></div>
+                                            </div>
+                                            <div class="flex-grow-1 py-2">
+                                                <div class="card" id="Card_Tiempo_{{ item['ID'] }}">
+                                                    <div class="card-body align-items-start justify-content-center d-flex gap-2 flex-column">
+                                                        <div class="w-100 d-flex flex-row justify-content-between">
+                                                            <div class="text-muted m-0">{{ item["Mod_Fecha"] }} | {{ item["Mod_Hora"] }}</div>
+                                                            <div class="text-muted m-0">{{ item["ID"] }}</div>
+                                                        </div>
+                                                        <h5 class="card-title m-0" id="Card_Texto_{{ item['ID'] }}">{{ item["Anterior"]["Estado"] }}</h5>
+                                                        <p class="card-text m-0">{{ item["Modificado_Por"]["Primer_Nombre"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }} {{ item["Modificado_Por"]["Primer_Apellido"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }}</p>
+                                                    </div>
+                                                </div>                
+                                            </div>
+                                        </div>       
+                                    {% elif loop.last %}
+                                        <div class="d-flex w-50">
+                                            <div class="d-flex flex-column align-items-center me-3">
+                                                <div class="flex-grow-1 border-start border-3" id="Card_Linea_Arriba_{{ item['ID'] }}"></div>
+                                                    <div class="my-2">
+                                                        <div class="rounded-circle" id="Card_Circulo_{{ item['ID'] }}" style="width:25px; height:25px;"></div>
+                                                    </div>                
+                                                <div class="flex-grow-1"></div>
+                                            </div>
+                                            <div class="flex-grow-1 py-2">
+                                                <div class="card" id="Card_Tiempo_{{ item['ID'] }}">
+                                                    <div class="card-body align-items-start justify-content-center d-flex gap-2 flex-column">
+                                                        <div class="w-100 d-flex flex-row justify-content-between">
+                                                            <div class="text-muted m-0">{{ item["Mod_Fecha"] }} | {{ item["Mod_Hora"] }}</div>
+                                                            <div class="text-muted m-0">{{ item["ID"] }}</div>
+                                                        </div>
+                                                        <h5 class="card-title m-0" id="Card_Texto_{{ item['ID'] }}">{{ item["Anterior"]["Estado"] }}</h5>
+                                                        <p class="card-text m-0">{{ item["Modificado_Por"]["Primer_Nombre"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }} {{ item["Modificado_Por"]["Primer_Apellido"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }}</p>
+                                                    </div>
+                                                </div>                
+                                            </div>
+                                        </div>                                    
+                                    {% else %}                                    
+                                        <div class="d-flex w-50">
+                                            <div class="d-flex flex-column align-items-center me-3">
+                                                <div class="flex-grow-1 border-start border-3" id="Card_Linea_Arriba_{{ item['ID'] }}"></div>
+                                                    <div class="my-2">
+                                                        <div class="rounded-circle" id="Card_Circulo_{{ item['ID'] }}" style="width:25px; height:25px;"></div>
+                                                    </div>                
+                                                <div class="flex-grow-1 border-start border-3" id="Card_Linea_Abajo_{{ item['ID'] }}"></div>
+                                            </div>
+                                            <div class="flex-grow-1 py-2">
+                                                <div class="card" id="Card_Tiempo_{{ item['ID'] }}">
+                                                    <div class="card-body align-items-start justify-content-center d-flex gap-2 flex-column">
+                                                        <div class="w-100 d-flex flex-row justify-content-between">
+                                                            <div class="text-muted m-0">{{ item["Mod_Fecha"] }} | {{ item["Mod_Hora"] }}</div>
+                                                            <div class="text-muted m-0">{{ item["ID"] }}</div>
+                                                        </div>
+                                                        <h5 class="card-title m-0" id="Card_Texto_{{ item['ID'] }}">{{ item["Anterior"]["Estado"] }}</h5>
+                                                        <p class="card-text m-0">{{ item["Modificado_Por"]["Primer_Nombre"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }} {{ item["Modificado_Por"]["Primer_Apellido"] }} {{ item["Modificado_Por"]["Segundo_Apellido"] }}</p>
+                                                    </div>
+                                                </div>                
+                                            </div>
+                                        </div>
+                                    {% endif %}                                
+                                {% endfor %}
+                            </div>
+                        {% endif %} 
+                    </div>
+                </div>                
             </div> 
             <div class="modal fade" id="ModalDelete{{ Caso['ID'] }}" tabindex="-1" aria-labelledby="ModalDeleteLabel{{ Caso['ID'] }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">

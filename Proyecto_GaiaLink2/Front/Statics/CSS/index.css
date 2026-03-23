@@ -586,39 +586,100 @@ h4{
     color: #1e3a8a!important;
 }
 .estado-pendiente {
-    background-color: #fff3cd !important;
+    background-color: #fff8e1 !important;
     border-color: #ffc107 !important;
-    color: #000 !important;
 }
 .estado-activo {
-    background-color: #d4edda !important;
-    border-color: #28a745 !important;
-    color: #000 !important;
+    background-color: #e6f4ea !important;
+    border-color: #198754 !important;
 }
 .estado-resuelto {
-    background-color: #d1ecf1 !important;
-    border-color: #17a2b8 !important;
-    color: #000 !important;
+    background-color: #e2f3f5 !important;
+    border-color: #0dcaf0 !important;
 }
 .estado-eliminado {
-    background-color: #f8d7da !important;
+    background-color: #fdecea !important;
     border-color: #dc3545 !important;
-    color: #000 !important;
 }
 .estado-espera {
-    background-color: #e2e3e5 !important;
+    background-color: #f1f3f5 !important;
     border-color: #6c757d !important;
-    color: #000 !important;
 }
 .estado-escalado {
-    background-color: #cfe2ff !important;
+    background-color: #e7f1ff !important;
     border-color: #0d6efd !important;
-    color: #000 !important;
 }
 .estado-reabierto {
-    background-color: #f8f9fa !important;
+    background-color: #f3f4f6 !important;
     border-color: #343a40 !important;
-    color: #000 !important;
+}
+.estado-decision {
+    background-color: #ede9fe !important;
+    border-color: #6f42c1 !important;
+}
+.estado-pendiente2 {
+    border-color: #ffc107 !important;
+    background-color: #ffc107 !important;
+}
+.estado-activo2 {
+    border-color: #198754 !important;
+    background-color: #198754 !important;
+}
+.estado-resuelto2 {
+    border-color: #0dcaf0 !important;
+    background-color: #0dcaf0 !important;
+}
+.estado-eliminado2 {
+    border-color: #dc3545 !important;
+    background-color: #dc3545 !important;
+}
+.estado-espera2 {
+    border-color: #6c757d !important;
+    background-color: #6c757d !important;
+}
+.estado-escalado2 {
+    border-color: #0d6efd !important;
+    background-color: #0d6efd !important;
+}
+.estado-reabierto2 {
+    border-color: #343a40 !important;
+    background-color: #343a40 !important;
+}
+.estado-decision2 {
+    border-color: #6f42c1 !important;
+    background-color: #6f42c1 !important;
+}
+.sombra-pendiente{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(255,193,7,0.6);
+}
+.sombra-activo{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(25,135,84,0.6);
+}
+.sombra-resuelto{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(13,202,240,0.6);
+}
+.sombra-eliminado{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(220,53,69,0.6);
+}
+.sombra-espera{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(108,117,125,0.6);
+}
+.sombra-escalado{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(13,110,253,0.6);
+}
+.sombra-reabierto{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(52,58,64,0.6);
+}
+.sombra-decision{
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 10px rgba(111,66,193,0.6);
 }
 .prioridad-muy-baja {
     background-color: #e2e3e5 !important;

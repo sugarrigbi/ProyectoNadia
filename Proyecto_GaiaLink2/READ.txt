@@ -1,8 +1,5 @@
 Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
 
-	Sistema de imagenes de usuario
-	Crear caso
-
 TAREAS PENDIENTES:
 	SEGURIDAD:
 		#Cambiar estado de dispositivos
@@ -11,6 +8,7 @@ TAREAS PENDIENTES:
 		Subida de archivos no debe ir en el mismo backend
 		Sistema de almacenamiento serio, almacen tipo S3, versionado de archivos, registros MIME, url segura
 	DASHBOARD:
+		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
 		sistema de permisos, con tabla Rol_Permisos, con JS(Tipo mostrar o no ese boton, para mantener 1 solo dashboard)
 		Tema Claro/Oscuro
 		Traductor de idiomas
@@ -22,16 +20,7 @@ TAREAS PENDIENTES:
 		descarga de archivos almacenados
 		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
 	CASOS:
-		si el caso lleva mas de 5 dias sin respuesta ponerlo en urgente, escalamiento automatico
-		CRUD casos, hacer q casos tengan etapas(En Gestion, Espera respuesta Cliente/Asesor, resuelto, escalado a superior, decisión)
-		asignacion de casos a analistas en turno, tipo TFS
-		cierre formal de casos con correo
-		Linea del tiempo del caso bonita
-		fecha límite entrega de casos
-		prioridad de casos
-		Relaciones entre casos mejor, tipo TFS
-		busquedas generales tipo google, read one by y all
-		podemos modificar el crud para q parezca tfs y ponemos leer, modificar, y eliminar en 1 sola pantalla, y arriba un boton para crear
+		busquedas generales tipo google, read one by y all(copiarme de busqeuda de Proyecto_Nube)
 	ENTIDADES:
 		CRUD de entidades
 	USUARIOS:

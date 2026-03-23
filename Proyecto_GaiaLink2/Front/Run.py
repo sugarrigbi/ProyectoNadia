@@ -51,9 +51,11 @@ def Dashboard_Admin_Casos():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         Response = requests.get(f"{API_URL}/case/read/all")
         Response2 = requests.get(f"{API_URL}/case/read/data")
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
         Casos = Response.json()
         Data = Response2.json()
-        return render_template("dashboard/casos.html", Casos=Casos, Data=Data)
+        Linea_Tiempo = Response3.json()
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/entidades")
 def Dashboard_Admin_Entidades():

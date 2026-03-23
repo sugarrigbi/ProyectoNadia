@@ -1,5 +1,6 @@
 from App.Utilities.Tables import db, Modelo_Base
 from datetime import datetime
+import json
 
 #CASOS
 class Caso(Modelo_Base):
@@ -54,7 +55,28 @@ class Caso_Auditoria(Modelo_Base):
                 "Segundo_Apellido": self.usuario.persona.Segundo_Apellido                     
             }
         }
-        return resultado    
+        return resultado
+    def to_dict2(self, exclude=None):
+        anterior_dict = json.loads(self.Anterior)
+        resultado = {
+            "Accion": self.Accion,
+            "Anterior": {
+                "Estado": anterior_dict.get("estado", {}).get("Nombre")
+            },
+            "Caso_ID": self.Caso_ID,
+            "Mod_Fecha": self.Fecha_Modificacion.strftime("%Y-%m-%d"),
+            "Mod_Hora": self.Fecha_Modificacion.strftime("%H:%M:%S"),
+            "ID": self.ID,
+            "Modificado_Por": {
+                "ID": self.usuario.persona.ID,
+                "Documento": self.usuario.persona.Documento,
+                "Primer_Nombre": self.usuario.persona.Primer_Nombre,
+                "Segundo_Nombre": self.usuario.persona.Segundo_Nombre,
+                "Primer_Apellido": self.usuario.persona.Primer_Apellido,
+                "Segundo_Apellido": self.usuario.persona.Segundo_Apellido                     
+            }
+        }
+        return resultado        
 class Radicado_Caso(Modelo_Base):
     __tablename__ = "Radicado_Caso"
 
@@ -95,6 +117,7 @@ class Caso_Discusion(Modelo_Base):
             "Creado_En": self.Creado_En,
             "ID": self.ID,
             "Mensaje": self.Mensaje,  
+            "Nombre": self.usuario.Nombre,
             "Persona": {
                 "ID": self.usuario.persona.ID,
                 "Documento": self.usuario.persona.Documento,
