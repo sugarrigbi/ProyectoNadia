@@ -55,6 +55,13 @@ h4{
 .Bg_Oscuro{
     background-color: #424a5d;
 }
+.Bg_Oscuro2{
+    background-color: #bebebe;
+    transition: all 0.3s ease;
+}
+.Bg_Oscuro2:hover{
+    background-color: #888787;
+}
 .Bg_Black{
     background-color: #292929 !important;
     color: white !important;
@@ -239,6 +246,9 @@ h4{
 .h-70{
     height: 70%;
 }
+.vh-60{
+    height: 60vh;
+}
 .vh-88{
     height: auto;
     min-height: 88vh;
@@ -360,6 +370,13 @@ h4{
     transform: scale(1.05)!important;
     background-color: #b5ffb8 !important;
     transition: all 0.3s;
+}
+.boton12{
+    transition: all 0.3s ease;
+}
+.boton12:hover{
+    transform: scale(1.05);
+    background-color: #5877d3 !important;
 }
 .text-info2{
     color: #3a6fd5!important;
@@ -713,6 +730,9 @@ h4{
     height: 60%!important;
 }
 .h-80{
+    height: 80%!important;
+}
+.h-80-2{
     height: 80%!important;
 }
 textarea.nofocus {
@@ -1156,5 +1176,11 @@ textarea.nofocus {
     .vh-88{
         height: auto;
         min-height: 100vh;
-    }    
+    } 
+    .h-80-2{
+        height: 50%!important;
+    }       
+    .h-80 {
+        height: 100% !important;
+    }
 }

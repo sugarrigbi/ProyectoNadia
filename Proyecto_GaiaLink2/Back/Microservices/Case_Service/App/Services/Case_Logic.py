@@ -119,11 +119,22 @@ class Case_Service():
 
         return Caso
     @staticmethod
-    def Read_By(Field, Value):
-        if not hasattr(Tabla_Caso, Field):
-            return False
-        Column = getattr(Tabla_Caso, Field)
-        Casos = Tabla_Caso.query.filter(Column.ilike(f"%{Value}%")).all()
+    def Read_By(Filtros):
+        Casos = Tabla_Caso.query
+
+        if Filtros.get("Estado"):
+            Casos = Casos.filter(Tabla_Caso.Estado_Caso_ID.in_(Filtros["Estado"]))
+        if Filtros.get("Usuario_Encargado"):
+            Casos = Casos.filter(Tabla_Caso.Usuario_Asociado_ID.in_(Filtros["Usuario_Encargado"]))
+        if Filtros.get("Usuario_Creador"):
+            Casos = Casos.filter(Tabla_Caso.Usuario_Creador_ID.in_(Filtros["Usuario_Creador"]))
+        if Filtros.get("Prioridad"):
+            Casos = Casos.filter(Tabla_Caso.Prioridad_ID.in_(Filtros["Prioridad"]))            
+        if Filtros.get("Incidente"):
+            Casos = Casos.filter(Tabla_Caso.Incidente_ID.in_(Filtros["Incidente"]))
+        if Filtros.get("Nombre"):
+            Casos = Casos.filter(Tabla_Caso.Nombre.ilike(f"%{Filtros['Nombre']}%"))                        
+
         return Casos
     @staticmethod
     def Update(Case_ID, Data_C, Data_C_C, Data_L, Data_R):

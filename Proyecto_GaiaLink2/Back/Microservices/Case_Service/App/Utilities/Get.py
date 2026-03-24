@@ -62,17 +62,26 @@ class Get_Case:
     @staticmethod
     def Case_Read_One(Case_ID):
         Caso = Case_Service.Read_One(Case_ID)
-
         if not Caso:
             return jsonify({"Error", "No cases found"}), 404
         
-        return Response(json.dumps(Caso.to_dict(), ensure_ascii=False, indent=2), status=200, mimetype='application/json')
+        Data = Caso.to_dict(include_relationships=True)
+        Data["Creacion"] = Data["Creacion"].split("T")[0]       
+        
+        return Response(json.dumps(Data, ensure_ascii=False, indent=2), status=200, mimetype='application/json')
     @staticmethod
-    def Case_Read_By(Field, Value):
-        Casos = Case_Service.Read_By(Field, Value)
+    def Case_Read_By(Filtros):
+        Casos = Case_Service.Read_By(Filtros)
         if not Casos:
             return jsonify({"Error", "No cases found"}), 404
-        return Response(json.dumps([C.to_dict() for C in Casos], ensure_ascii=False, indent=2), status=200, mimetype='application/json')
+        Casos_Dict = []
+
+        for C in Casos:
+            Data = C.to_dict(include_relationships=True)
+            Data["Creacion"] = Data["Creacion"].split("T")[0]
+            Casos_Dict.append(Data)        
+
+        return Response(json.dumps(Casos_Dict, ensure_ascii=False, indent=2), status=200, mimetype='application/json')
     @staticmethod
     def Case_Update(Case_ID):
         Data = request.get_json()

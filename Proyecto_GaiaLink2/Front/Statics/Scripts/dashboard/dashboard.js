@@ -220,7 +220,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });                
             }
-            if (document.getElementById("contenido")){                
+            if (document.getElementById("contenido")){  
+                if (document.getElementById("Imagen_Usuario_Crear")){
+                    const img2 = document.getElementById("Imagen_Usuario_Crear")
+                    const Nombre_Usuario = User.User_Name;
+                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
+                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';   
+                    
+                    img2.onerror = function(){
+                        if (this.dataset.fallback !== "true"){
+                            this.dataset.fallback = "true";
+                            this.src = DEFAULT;
+                        }
+                    };      
+                    
+                    img2.src = `${GCS_URL}?_=${Date.now()}`;                    
+                }
                 document.querySelectorAll(".imagen_usuario").forEach(img =>{
                     const Nombre_Usuario = User.User_Name;
                     const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
@@ -777,6 +792,87 @@ document.addEventListener("DOMContentLoaded", () => {
                     Circulo?.classList.add(`estado-${estado}2`);
                 });                    
             }
+            if (document.getElementById("Boton_Abrir_Filtro")){
+                const BotonFiltro = document.getElementById("Boton_Abrir_Filtro");
+                const BotonLimpiar = document.getElementById("Boton_Limpiar_Filtro");
+                const BotonEnviar = document.getElementById("Boton_Enviar_Filtro");
+                const Filtros = document.getElementById("Cont_Filtro");
+                BotonFiltro.addEventListener("click", () =>{
+                    if (Filtros.classList.contains("d-none")){
+                        Filtros.classList.remove("d-none")
+                        Filtros.classList.add("d-flex")
+                    }else if (Filtros.classList.contains("d-flex")){
+                        Filtros.classList.remove("d-flex")
+                        Filtros.classList.add("d-none")
+                    }
+                });
+                BotonLimpiar.addEventListener("click", () =>{
+                    document.querySelectorAll("[id^='Check_Estado_']").forEach(CheckEstado => {
+                        CheckEstado.checked = false;
+                    });
+                    document.querySelectorAll("[id^='Check_UsuarioEncargado_']").forEach(CheckUsuarioEncargado => {
+                        CheckUsuarioEncargado.checked = false;
+                    });
+                    document.querySelectorAll("[id^='Check_UsuarioCreador_']").forEach(CheckUsuarioCreador => {
+                        CheckUsuarioCreador.checked = false;
+                    });
+                    document.querySelectorAll("[id^='Check_Prioridad_']").forEach(CheckPrioridad => {
+                        CheckPrioridad.checked = false;
+                    });
+                    document.querySelectorAll("[id^='Check_Incidente_']").forEach(CheckIncidente => {
+                        CheckIncidente.checked = false;
+                    });
+                    document.getElementById("Check_Nombre").value = "";
+                });
+                BotonEnviar.addEventListener("click", () =>{
+                    const Data = {
+                        Estado: [],
+                        Usuario_Encargado: [],
+                        Usuario_Creador: [],
+                        Prioridad: [],
+                        Incidente: [],
+                        Nombre: []
+                    }
+
+                    document.querySelectorAll("[id^='Check_Estado_']").forEach(CheckEstado => {
+                        if (CheckEstado.checked){
+                            Data.Estado.push(CheckEstado.value);
+                        }
+                    });
+                    document.querySelectorAll("[id^='Check_UsuarioEncargado_']").forEach(CheckUsuarioEncargado => {
+                        if (CheckUsuarioEncargado.checked){
+                            Data.Usuario_Encargado.push(CheckUsuarioEncargado.value)
+                        }
+                    });
+                    document.querySelectorAll("[id^='Check_UsuarioCreador_']").forEach(CheckUsuarioCreador => {
+                        if (CheckUsuarioCreador.checked){
+                            Data.Usuario_Creador.push(CheckUsuarioCreador.value)
+                        }
+                    });
+                    document.querySelectorAll("[id^='Check_Prioridad_']").forEach(CheckPrioridad => {
+                        if (CheckPrioridad.checked){
+                            Data.Prioridad.push(CheckPrioridad.value)
+                        }
+                    });
+                    document.querySelectorAll("[id^='Check_Incidente_']").forEach(CheckIncidente => {
+                        if (CheckIncidente.checked){
+                            Data.Incidente.push(CheckIncidente.value)
+                        }
+                    });   
+                    if (document.getElementById("Check_Nombre").value !== ""){
+                        Data.Nombre.push(document.getElementById("Check_Nombre").value)
+                    }
+                    const params = new URLSearchParams();
+                    for (const key in Data) {
+                        if (Array.isArray(Data[key])) {
+                            Data[key].forEach(val => params.append(key, val));
+                        } else {
+                            params.append(key, Data[key]);
+                        }
+                    }
+                    cargarPagina("/dashboard/casos/search?" + params.toString());
+                });
+            }
         });
     }
 
@@ -793,5 +889,5 @@ document.addEventListener("DOMContentLoaded", () => {
         path = "/dashboard/inicio";
     }
 
-    cargarPagina(path);
+    cargarPagina(path + window.location.search);
 });

@@ -15,6 +15,21 @@ def Api_Case_Read_All():
     Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all")
     return jsonify(Respuesta.json()), Respuesta.status_code
 
+
+@Case_Service_Bp.route("/api/case/read/<int:Case_ID>", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Case_Read_One(Case_ID):
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/{Case_ID}")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Case_Service_Bp.route("/api/case/read/search", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Case_Read_By():
+    Filtros = request.args.to_dict(flat=False)
+    print(Filtros)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros)
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
 @Case_Service_Bp.route("/api/case/read/data", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
 def Api_Case_Read_Data():

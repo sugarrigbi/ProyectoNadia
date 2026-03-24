@@ -38,6 +38,8 @@ def Recuperar_Usuario():
 @app.route("/login/recuperar/codigo")
 def Recuperar_Codigo():
     return render_template("homepage/recuperar2.html")
+
+
 @app.route("/dashboard")
 def Dashboard_Admin():
     return render_template("dashboard/dashboard.html")
@@ -57,6 +59,33 @@ def Dashboard_Admin_Casos():
         Linea_Tiempo = Response3.json()
         return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
     return render_template("dashboard/dashboard.html")
+
+
+@app.route("/dashboard/casos/<int:Case_ID>")
+def Dashboard_Admin_Casos_One(Case_ID):
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        Response = requests.get(f"{API_URL}/case/read/{Case_ID}")
+        Response2 = requests.get(f"{API_URL}/case/read/data")
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
+        Casos = Response.json()
+        Data = Response2.json()
+        Linea_Tiempo = Response3.json()
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
+    return render_template("dashboard/dashboard.html")
+
+@app.route("/dashboard/casos/search")
+def Dashboard_Admin_Casos_By():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        Filtros = request.args.to_dict(flat=False)
+        Response = requests.get(f"{API_URL}/case/read/search", params=Filtros)
+        Response2 = requests.get(f"{API_URL}/case/read/data")
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
+        Casos = Response.json()
+        Data = Response2.json()
+        Linea_Tiempo = Response3.json()
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
+    return render_template("dashboard/dashboard.html")
+
 @app.route("/dashboard/entidades")
 def Dashboard_Admin_Entidades():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
@@ -72,6 +101,12 @@ def Dashboard_Admin_Preferencias():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render_template("dashboard/preferencias.html")
     return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/pruebas")
+def Dashboard_Admin_Pruebas():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/asd.html")
+    return render_template("dashboard/dashboard.html")
+
 
 @app.route("/rate-limit")
 def Rate_Limit():

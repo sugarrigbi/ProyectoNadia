@@ -20,7 +20,7 @@ TAREAS PENDIENTES:
 		descarga de archivos almacenados
 		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
 	CASOS:
-		busquedas generales tipo google, read one by y all(copiarme de busqeuda de Proyecto_Nube)
+		Hacer casos usuario (Como Gaialink 1 perrito)
 	ENTIDADES:
 		CRUD de entidades
 	USUARIOS:

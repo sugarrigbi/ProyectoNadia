@@ -14,9 +14,8 @@ def Case_Read_One(Case_ID):
     return Get_Case.Case_Read_One(Case_ID)
 @Case_Bp.route("/case/read/search", methods=["GET"])
 def Case_Read_By():
-    Field = request.args.get("Field")
-    Value = request.args.get("Value")
-    return Get_Case.Case_Read_By(Field, Value)
+    Filtros = request.args.to_dict(flat=False)
+    return Get_Case.Case_Read_By(Filtros)
 @Case_Bp.route("/case/update/<int:Case_ID>", methods=["PUT"])
 def Case_Update(Case_ID):
     return Get_Case.Case_Update(Case_ID)
