@@ -336,9 +336,11 @@ class Usuario_Auditoria(Modelo_Base):
 class Rol(Modelo_Base):
     __tablename__ = "Rol"
 
-    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ID = db.Column(db.Integer, primary_key=True)
     Nombre = db.Column(db.String(50), nullable=False, unique=True)
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Permisos = db.relationship("RolAPermiso", back_populates="Rol_Permiso")
 class Estado_Usuario(Modelo_Base):
     __tablename__ = "Estado_Usuario"
 
@@ -352,3 +354,26 @@ class Tipo_Documento(Modelo_Base):
     Nombre = db.Column(db.String(50), nullable=False, unique=True)
     Abreviatura = db.Column(db.String(10), nullable=False, unique=True)
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())    
+class Permiso(Modelo_Base):
+    __tablename__ = "Permiso"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Permiso = db.Column(db.String(50), unique=True, nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Roles = db.relationship("RolAPermiso", back_populates="Permiso_Rol")
+class RolAPermiso(Modelo_Base):
+    __tablename__ = "Rol_a_Permiso"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Rol_ID = db.Column(db.Integer, db.ForeignKey("Rol.ID", ondelete="RESTRICT", onupdate="CASCADE"), nullable=False)
+    Permiso_ID = db.Column(db.Integer, db.ForeignKey("Permiso.ID", ondelete="RESTRICT", onupdate="CASCADE"), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Rol_Permiso = db.relationship("Rol", back_populates="Permisos")
+    Permiso_Rol = db.relationship("Permiso", back_populates="Roles")
+    def to_dict(self, exclude=None):
+        resultado = {
+            "Nombre": self.Permiso_Rol.Permiso
+        }
+        return resultado   

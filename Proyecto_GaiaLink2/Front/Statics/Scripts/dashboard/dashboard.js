@@ -59,28 +59,141 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }    
     
-    
     const Contenido = document.getElementById("contenido");
     const contenidoOriginal = Contenido.innerHTML;
 
     function cargarPagina(url) {
+        const Token_JWT = localStorage.getItem("Token_JWT");
         Contenido.innerHTML = contenidoOriginal;       
         fetch(url, {
             headers: {
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
+                "Authorization": `Bearer ${Token_JWT}`
             }
         })
         .then(res => res.text())
         .then(html => {
             Contenido.innerHTML = html;
             history.pushState(null, "", url);
-            const User = JSON.parse(localStorage.getItem("User_Data"));
+            const User = JSON.parse(localStorage.getItem("User_Data"));           
+            if (document.getElementById("Nav_Casos_User")){
+                const Nav_User = document.getElementById("Nav_Casos_User");
+                const Nav_Admin = document.getElementById("Nav_Casos_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
+                    Nav_Admin.classList.remove("d-none");
+                    Nav_Admin.classList.add("d-flex");                
+                } else if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver_propio")){
+                    Nav_User.classList.remove("d-none");
+                    Nav_User.classList.add("d-flex");       
+                }                         
+            }
+            if (document.getElementById("Card_Casos_User")){
+                const Card_User = document.getElementById("Card_Casos_User");
+                const Card_Admin = document.getElementById("Card_Casos_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
+                    Card_Admin.classList.remove("d-none");
+                    Card_Admin.classList.add("d-flex");                    
+                } else if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver_propio")){
+                    Card_User.classList.remove("d-none");
+                    Card_User.classList.add("d-flex");             
+                }                         
+            }                
+            if (document.getElementById("contenido")){
+                const URL = window.location.pathname;
+                const Boton_Crear = document.getElementById("Crear_Caso_Admin");
+                const Form = document.getElementById("Caso_Contenedor");
+                if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
+                    if (URL.includes("/user")){
+                        cargarPagina("/dashboard/inicio");
+                    }
+                } else if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver_propio")){                  
+                    if (URL.includes("/staff")){
+                        cargarPagina("/dashboard/inicio");
+                    }
+                }
+                if (Boton_Crear) {
+                    if (User.Permisos.some(Perm => Perm.Nombre === "caso_crear")){
+                        Boton_Crear.classList.remove("d-none");
+                        Boton_Crear.classList.add("d-flex");
+                    }
+                }
+                if(Form){
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_editar")){
+                        Form.querySelectorAll("input, select, textarea").forEach(Input => {
+                            Input.disabled = true;
+                        });
+                    }
+                }
+                document.querySelectorAll("[id^='Eliminar_Caso_Admin_']").forEach(Button => {
+                    if (User.Permisos.some(Perm => Perm.Nombre === "caso_eliminar")){
+                        Button.classList.remove("d-none");
+                        Button.classList.add("d-flex");
+                    }                    
+                });
+                document.querySelectorAll("[id^='Caso_Datos_']").forEach(div => {
+                    const caso_id = div.dataset.caso;
+                    const selectEstado = div.querySelector("select[name='Caso_Estado']");
+                    const Input1 = div.querySelector("input[name='Caso_Direccion']");
+                    const Input2 = div.querySelector("#barrio_input");
+                    const Input3 = div.querySelector("#localidad_input");
+                    const Input4 = div.querySelector("#ciudad_input");
+                    const Input5 = div.querySelector("#departamento_input");
+                    const InputComentario = div.querySelector("textarea[name='Caso_Comentario']");
+                    const selecUserCargo = div.querySelector("select[name='Caso_Usuario_Cargo']");
+                    const selecUserCreador = div.querySelector("select[name='Caso_Usuario_Creador']");
+                    const Boton_Linea = div.querySelector(`button[data-button-id='${caso_id}']`);
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_modificar_estado")){
+                        selectEstado.disabled = true;
+                    }
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_modificar_direccion")){
+                        Input1.disabled = true;
+                        Input2.disabled = true;
+                        Input3.disabled = true;
+                        Input4.disabled = true;
+                        Input5.disabled = true;
+                    }
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_asignar_usuario")){
+                        selecUserCargo.disabled = true;
+                        selecUserCreador.disabled = true;
+                    }                    
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_ver_linea_tiempo")){
+                        Boton_Linea.classList.remove("d-flex");
+                        Boton_Linea.classList.add("d-none");
+                    }  
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "caso_comentar")){
+                        InputComentario.disabled = true;
+                    }                                         
+                })                
+            }            
             if (document.getElementById("User_Name")){
                 document.getElementById("User_Name").textContent = User.User_Name;
             }            
             if (document.getElementById("User_Name2")){
                 document.getElementById("User_Name2").textContent = User.User_Name;
-            }           
+            }      
+            if (document.getElementById("User_Name3")){
+                document.getElementById("User_Name3").textContent = User.User_Name;
+            }
+            if (document.getElementById("contenido")){
+                document.querySelectorAll("[id^='User_Name_']").forEach(Name => {
+                    Name.textContent = User.User_Name;
+                })
+                document.querySelectorAll("[id^='Imagen_Comentarios_']").forEach(Img_Com => {
+                    const id = Img_Com.dataset.caso;
+                    const Nombre_Usuario = document.getElementById(`User_Name_${id}`).textContent.trim();
+                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
+                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';
+
+                    Img_Com.onerror = function(){
+                        if (this.dataset.fallback !== "true"){
+                            this.dataset.fallback = "true";
+                            this.src = DEFAULT;
+                        }
+                    };     
+                    
+                    Img_Com.src = `${GCS_URL}?_=${Date.now()}`;
+                });                
+            }                                   
             if(document.getElementById("Button_Cerrar")){
                 document.getElementById("Button_Cerrar").addEventListener("click", () => {
                     localStorage.removeItem("Auth_Token")
@@ -265,75 +378,115 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     Img_Com.src = `${GCS_URL}?_=${Date.now()}`;
                 });
-            }
-            if (document.getElementById("Agregar_Trabajo")){
-                Boton = document.getElementById("Agregar_Trabajo")
-                Mensaje_Boton = document.getElementById("Agregar_Trabajo_Mensaje")
-                Imagen_Boton = document.getElementById("Agregar_Trabajo_Imagen")
-                Card = document.getElementById("Crear_Relacion")
-                Boton.addEventListener("click", () => {
-                    if (Card.classList.contains("d-none")) {
-                        Card.classList.remove("d-none");
-                        Mensaje_Boton.textContent = "Eliminar trabajo";
-                        Imagen_Boton.src = "/Statics/img/Minus.svg";
-                        document.getElementById("Relacion_Tipo").required = true;
-                        document.getElementById("Relacion_Radicado").required = true;
-                    }else if (!Card.classList.contains("d-none")){
-                        document.getElementById("Relacion_Tipo").selectedIndex = 0;
-                        document.getElementById("Relacion_Radicado").selectedIndex = 0;
-                        document.getElementById("Relacion_Tipo").required = false;
-                        document.getElementById("Relacion_Radicado").required = false;                        
-                        Mensaje_Boton.textContent = "Añadir trabajo";
-                        Imagen_Boton.src = "/Statics/img/Plus.svg";
-                        Card.classList.add("d-none");
-                    }
-                });
-            }
+            }    
             if (document.getElementById("Caso_Contenedor")) {
-                const Contenedor = document.getElementById("Caso_Contenedor");
-                const Boton = document.getElementById("Caso_Boton_Guardar");
-                const Boton2 = document.getElementById("Caso_Boton_Recarga");
-                const Imagen = document.getElementById("Caso_Boton_Guardar_Img");
-                const Campos = Array.from(Contenedor.querySelectorAll("input[name], select[name], textarea[name]"));
-                const inicial = new Map();
+                document.querySelectorAll("[id^='Caso_Botones_']").forEach(div => {
+                    const caso_id = div.dataset.caso;
+                    const Contenedor = document.getElementById(`Caso_Datos_${caso_id}`);
+                    const Boton = document.getElementById(`Caso_Boton_Guardar_${caso_id}`);
+                    const Boton2 = document.getElementById(`Caso_Boton_Recarga_${caso_id}`);
+                    const Imagen = document.getElementById(`Caso_Boton_Guardar_Img_${caso_id}`);
+                    const Campos = Array.from(Contenedor.querySelectorAll("input[name], select[name], textarea[name]"));
+                    const inicial = new Map();
+                    Campos.forEach((Campo, idx) => {
+                        const tag = Campo.tagName.toLowerCase();
+                        const type = (Campo.type || "").toLowerCase();
+                        const key = Campo.name + "|" + idx;
+                        if (type === "checkbox" || type === "radio") {
+                            inicial.set(key, Campo.checked);
+                        } else if (tag === "select" && Campo.multiple) {
+                            inicial.set(key, Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|"));
+                        } else {
+                            inicial.set(key, Campo.value);
+                        }
+                    });
+                    function Hay_Cambios() {
+                        for (let i = 0; i < Campos.length; i++) {
+                        const Campo = Campos[i];
+                        const tag = Campo.tagName.toLowerCase();
+                        const type = (Campo.type || "").toLowerCase();
+                        const key = Campo.name + "|" + i;
 
-                Campos.forEach((Campo, idx) => {
-                    const tag = Campo.tagName.toLowerCase();
-                    const type = (Campo.type || "").toLowerCase();
-                    const key = Campo.name + "|" + idx;
-                    if (type === "checkbox" || type === "radio") {
-                        inicial.set(key, Campo.checked);
-                    } else if (tag === "select" && Campo.multiple) {
-                        inicial.set(key, Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|"));
-                    } else {
-                        inicial.set(key, Campo.value);
-                    }
-                });
-                function Hay_Cambios() {
-                    for (let i = 0; i < Campos.length; i++) {
-                    const Campo = Campos[i];
-                    const tag = Campo.tagName.toLowerCase();
-                    const type = (Campo.type || "").toLowerCase();
-                    const key = Campo.name + "|" + i;
+                        if (type === "checkbox" || type === "radio") {
+                            if (inicial.get(key) !== Campo.checked) {
+                                return true;
+                            }
+                        } else if (tag === "select" && Campo.multiple) {
+                            const cur = Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|");
+                            if (inicial.get(key) !== cur){
+                                return true;
+                            }
+                        } else {
+                            if (inicial.get(key) !== Campo.value){
+                                return true;
+                            }
+                        }
+                        }
+                        return false;
+                    }          
+                    function Si_Cambio() {
+                        Boton.disabled = !Hay_Cambios();
+                        if (Boton.disabled === false){
+                            Boton2.disabled = false;
+                            Boton2.classList.remove("boton9");
+                            Boton2.classList.add("boton11");
+                            Boton.classList.remove("text-black");
+                            Boton.classList.add("text-info2");
+                            Boton.classList.remove("boton9");
+                            Boton.classList.add("boton10");
+                            Imagen.src = "/Statics/img/Save.svg";
+                        } else if (Boton.disabled === true){
+                            Boton2.disabled = true;
+                            Boton2.classList.add("boton9");
+                            Boton2.classList.remove("boton11");                        
+                            Boton.classList.add("text-black");
+                            Boton.classList.remove("text-info2");
+                            Boton.classList.add("boton9");
+                            Boton.classList.remove("boton10");                        
+                            Imagen.src = "/Statics/img/Save_2.svg";
+                        }
+                    } 
+                    function restaurarCamposIniciales() {
+                        if (!Campos || !inicial) return;
+                        Campos.forEach((Campo, idx) => {
+                            const tag = Campo.tagName.toLowerCase();
+                            const type = (Campo.type || "").toLowerCase();
+                            const key = Campo.name + "|" + idx;
+                            const saved = inicial.get(key);
 
-                    if (type === "checkbox" || type === "radio") {
-                        if (inicial.get(key) !== Campo.checked) {
-                            return true;
-                        }
-                    } else if (tag === "select" && Campo.multiple) {
-                        const cur = Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|");
-                        if (inicial.get(key) !== cur){
-                            return true;
-                        }
-                    } else {
-                        if (inicial.get(key) !== Campo.value){
-                            return true;
-                        }
+                            if (type === "checkbox" || type === "radio") {
+                                Campo.checked = !!saved;
+                            } else if (tag === "select" && Campo.multiple) {
+                                const vals = (saved || "").split("|").filter(v => v !== "");
+                                Array.from(Campo.options).forEach(opt => {
+                                    opt.selected = vals.includes(opt.value);
+                                });
+                            } else if (tag === "select") {
+                                if (saved !== undefined && saved !== null) {
+                                    Campo.value = saved;
+                                    if (Campo.value !== saved) Campo.selectedIndex = 0;
+                                } else {
+                                    Campo.selectedIndex = 0;
+                                }
+                            } else if (type === "file") {
+                                Campo.value = null;
+                            } else {
+                                Campo.value = saved !== undefined && saved !== null ? saved : "";
+                            }
+                            Campo.dispatchEvent(new Event("input", { bubbles: true }));
+                            Campo.dispatchEvent(new Event("change", { bubbles: true }));
+                        });
+
+                        if (typeof Si_Cambio === "function") Si_Cambio();
                     }
-                    }
-                    return false;
-                }
-                function Si_Cambio() {
+                    Campos.forEach(el => {
+                        if (el.tagName.toLowerCase() === "select") {
+                            el.addEventListener("change", Si_Cambio);
+                        } else {
+                            el.addEventListener("input", Si_Cambio);
+                            el.addEventListener("change", Si_Cambio);
+                        }
+                    }); 
                     Boton.disabled = !Hay_Cambios();
                     if (Boton.disabled === false){
                         Boton2.disabled = false;
@@ -354,71 +507,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         Boton.classList.remove("boton10");                        
                         Imagen.src = "/Statics/img/Save_2.svg";
                     }
-                }
-                function restaurarCamposIniciales() {
-                    if (!Campos || !inicial) return;
-                    Campos.forEach((Campo, idx) => {
-                        const tag = Campo.tagName.toLowerCase();
-                        const type = (Campo.type || "").toLowerCase();
-                        const key = Campo.name + "|" + idx;
-                        const saved = inicial.get(key);
-
-                        if (type === "checkbox" || type === "radio") {
-                            Campo.checked = !!saved;
-                        } else if (tag === "select" && Campo.multiple) {
-                            const vals = (saved || "").split("|").filter(v => v !== "");
-                            Array.from(Campo.options).forEach(opt => {
-                                opt.selected = vals.includes(opt.value);
-                            });
-                        } else if (tag === "select") {
-                            if (saved !== undefined && saved !== null) {
-                                Campo.value = saved;
-                                if (Campo.value !== saved) Campo.selectedIndex = 0;
-                            } else {
-                                Campo.selectedIndex = 0;
-                            }
-                        } else if (type === "file") {
-                            Campo.value = null;
-                        } else {
-                            Campo.value = saved !== undefined && saved !== null ? saved : "";
-                        }
-                        Campo.dispatchEvent(new Event("input", { bubbles: true }));
-                        Campo.dispatchEvent(new Event("change", { bubbles: true }));
-                    });
-
-                    if (typeof Si_Cambio === "function") Si_Cambio();
-                }
-                Campos.forEach(el => {
-                    if (el.tagName.toLowerCase() === "select") {
-                        el.addEventListener("change", Si_Cambio);
-                    } else {
-                        el.addEventListener("input", Si_Cambio);
-                        el.addEventListener("change", Si_Cambio);
-                    }
-                });
-                Boton.disabled = !Hay_Cambios();
-                if (Boton.disabled === false){
-                    Boton2.disabled = false;
-                    Boton2.classList.remove("boton9");
-                    Boton2.classList.add("boton11");
-                    Boton.classList.remove("text-black");
-                    Boton.classList.add("text-info2");
-                    Boton.classList.remove("boton9");
-                    Boton.classList.add("boton10");
-                    Imagen.src = "/Statics/img/Save.svg";
-                } else if (Boton.disabled === true){
-                    Boton2.disabled = true;
-                    Boton2.classList.add("boton9");
-                    Boton2.classList.remove("boton11");                        
-                    Boton.classList.add("text-black");
-                    Boton.classList.remove("text-info2");
-                    Boton.classList.add("boton9");
-                    Boton.classList.remove("boton10");                        
-                    Imagen.src = "/Statics/img/Save_2.svg";
-                }
-                Boton2.addEventListener("click", () =>{
-                    restaurarCamposIniciales()
-                });
+                    Boton2.addEventListener("click", () =>{
+                        restaurarCamposIniciales()
+                    });                                                                    
+                })
             }
             if (document.getElementById("Caso_Contenedor2")) {
                 const Contenedor = document.getElementById("Caso_Contenedor2");
@@ -592,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.Caso_Departamento = departamento_input_nombre.value;
                     data.Caso_Departamento_ID = departamento_input_id.value;
 
-                    const response = await fetch(`${API_BASE}/api/case/update/${Id}`, {method: "PUT", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+                    const response = await fetch(`${API_BASE}/api/case/update/${Id}`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()      
                     
                     if(response.status === 200){
@@ -609,8 +701,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         Boton.classList.add("boton8")
                         Boton.disabled = false;
                     }        
+                    else if(response.status === 401){
+                        document.body.classList.remove('modal-open');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        cargarPagina("/dashboard/unauthorized");
+                    }                    
                 });
             }   
+            if (document.getElementById("SelectUsuario")) {
+                const Select = document.getElementById("SelectUsuario");
+                [...Select.options].forEach(opt => {
+                if (opt.value !== String(User.User_ID)) {
+                    opt.remove();
+                } else {
+                    opt.selected = true;
+                }
+                });
+            }
             if (document.getElementById("Caso_Contenedor2")){
                 document.getElementById("Caso_Contenedor2").addEventListener("submit", async function(e){
                     e.preventDefault();
@@ -687,10 +794,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     data.Usuario_Id = User.User_ID;
                     
-                    const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+                    const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()
                     
-                    if(response.status === 200){
+                    if(response.status === 201){
                         sessionStorage.setItem('Caso_Creado', User.User_ID);                        
                         location.reload();
                     }
@@ -703,7 +810,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         Boton.classList.remove("boton9")
                         Boton.classList.add("boton8")
                         Boton.disabled = false;
-                    }        
+                    }
+                    else if(response.status === 401){
+                        document.body.classList.remove('modal-open');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        cargarPagina("/dashboard/unauthorized");
+                    }
                 });
             }                    
             if (document.getElementById("Caso_Contenedor")){
@@ -711,7 +823,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const caseId = span.dataset.caseId;
                     span.addEventListener("click", async (e) =>{
                         span.disabled = true;
-                        const response = await fetch(`${API_BASE}/api/case/delete/${caseId}/${User.User_ID}`, {method: "PUT"});
+                        const response = await fetch(`${API_BASE}/api/case/delete/${caseId}/${User.User_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
                         const result = await response.json()     
                         
                         if(response.status === 200){
@@ -724,11 +836,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         else if(response.status === 400){
                             window.scrollTo(0, 0);
                             span.textContent = result.Error;
-                        }                         
+                        }      
+                        else if(response.status === 401){
+                            document.body.classList.remove('modal-open');
+                            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                            cargarPagina("/dashboard/unauthorized");
+                        }                                           
                     });
                 });
                 document.querySelectorAll("[id^='Boton_Relacion_']").forEach(el =>{
-                    
+                    if (User.Permisos.some(Perm => Perm.Nombre === "caso_desrelacionar")){
+                        el.classList.remove("d-none");
+                        el.classList.add("d-flex");
+                    }
                     el.addEventListener("click", async (e) =>{
                         el.disabled = true;
                         Rad_Padre = el.dataset.radPadre;
@@ -870,12 +990,70 @@ document.addEventListener("DOMContentLoaded", () => {
                             params.append(key, Data[key]);
                         }
                     }
-                    cargarPagina("/dashboard/casos/search?" + params.toString());
+                    cargarPagina("/dashboard/staff/casos/search?" + params.toString());
                 });
             }
+            if (document.getElementById("Caso_Contenedor")){
+                const botones = document.querySelectorAll(".Agregar_Trabajo");
+                botones.forEach(boton => {
+                    const Mensaje_Boton = boton.querySelector(".Agregar_Trabajo_Mensaje");
+                    const Imagen_Boton = boton.querySelector(".Agregar_Trabajo_Imagen");
+                    const casoId = boton.dataset.caso; 
+                    const card = document.querySelector(`.Crear_Relacion[data-caso='${casoId}']`);
+                    if (User.Permisos.some(Perm => Perm.Nombre === "caso_relacionar")){
+                        boton.classList.remove("d-none");
+                        boton.classList.add("d-flex");
+                    }                    
+                    boton.addEventListener("click", () => {           
+                        const selectTipo = card.querySelector(".Relacion_Tipo");
+                        const selectRadicado = card.querySelector(".Relacion_Radicado");                           
+                        if (card.classList.contains("d-none")) {
+                            card.classList.remove("d-none");
+                            card.classList.add("d-flex");
+                            Mensaje_Boton.textContent = "Eliminar trabajo";
+                            Imagen_Boton.src = "/Statics/img/Minus.svg";
+                            selectTipo.required = true;
+                            selectRadicado.required = true;
+                        }else if (!card.classList.contains("d-none")){                                                     
+                            selectTipo.selectedIndex = 0;
+                            selectRadicado.selectedIndex = 0;
+                            selectTipo.required = false;
+                            selectRadicado.required = false;                        
+                            Mensaje_Boton.textContent = "Añadir trabajo";
+                            Imagen_Boton.src = "/Statics/img/Plus.svg";
+                            card.classList.remove("d-flex");
+                            card.classList.add("d-none");
+                        }
+                    });
+                });
+            } 
+            if (document.getElementById("Agregar_Trabajo")){
+                const Boton = document.getElementById("Agregar_Trabajo");
+                const Mensaje = document.getElementById("Agregar_Trabajo_Mensaje");
+                const Imagen = document.getElementById("Agregar_Trabajo_Imagen");
+                const Card = document.getElementById("Crear_Relacion");
+                Boton.addEventListener("click", () =>{
+                    if (Card.classList.contains("d-none")){
+                        Card.classList.remove("d-none")
+                        Card.classList.add("d-flex")
+                        Mensaje.textContent = "Eliminar trabajo";
+                        Imagen.src = "/Statics/img/Minus.svg";
+                        document.getElementById("Relacion_Tipo").required = true;
+                        document.getElementById("Relacion_Radicado").required = true;
+                    }else if (Card.classList.contains("d-flex")){
+                        Card.classList.remove("d-flex")
+                        Card.classList.add("d-none")
+                        document.getElementById("Relacion_Radicado").selectedIndex = 0;
+                        document.getElementById("Relacion_Radicado").required = false;                        
+                        document.getElementById("Relacion_Tipo").selectedIndex = 0;
+                        document.getElementById("Relacion_Tipo").required = false;
+                        Mensaje.textContent = "Añadir trabajo";
+                        Imagen.src = "/Statics/img/Plus.svg";                        
+                    }
+                })
+            }                  
         });
     }
-
     document.querySelectorAll(".panel-link").forEach(link => {
         link.addEventListener("click", function(e) {
             e.preventDefault();
@@ -884,7 +1062,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let path = window.location.pathname;
-
     if (path === "/dashboard") {
         path = "/dashboard/inicio";
     }

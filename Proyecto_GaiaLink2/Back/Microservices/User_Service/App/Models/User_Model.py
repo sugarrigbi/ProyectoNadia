@@ -90,7 +90,7 @@ class Usuario(Modelo_Base):
     Autenticador_Secreto = db.Column(db.String(255))
 
     Estado_Usuario_ID = db.Column(db.Integer,db.ForeignKey("Estado_Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=1)
-    Rol_ID = db.Column(db.Integer,db.ForeignKey("Rol.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=2)
+    Rol_ID = db.Column(db.Integer,db.ForeignKey("Rol.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=6)
 
     estado = db.relationship("Estado_Usuario")
     rol = db.relationship("Rol")

@@ -5,16 +5,13 @@ TAREAS PENDIENTES:
 		#Cambiar estado de dispositivos
 		#Autenticador 2FA
 		proteccion contra subida de archivos maliciosos
-		Subida de archivos no debe ir en el mismo backend
-		Sistema de almacenamiento serio, almacen tipo S3, versionado de archivos, registros MIME, url segura
+		Subida de archivos no debe ir en el mismo backend, al buckjet de GSC
 	DASHBOARD:
 		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
-		sistema de permisos, con tabla Rol_Permisos, con JS(Tipo mostrar o no ese boton, para mantener 1 solo dashboard)
 		Tema Claro/Oscuro
 		Traductor de idiomas
 		#apartado para ver Dispositivos vinculados
 		Carga de documentos, evidencia, tipo opcion del clip en TFS
-		Búsqueda avanzada de casos, entidades, personas permite filtrar casos por región, estado, tipo de bien etc
 		Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc, dashboard o estadisticas avanzadas
 		#heal check de microservicios para los devs, en un micro apartado llamado desarollo
 		descarga de archivos almacenados

@@ -1,5 +1,6 @@
 from flask import request, jsonify, Response, json
 from App.Services.Case_Logic import Case_Service
+from App.Utilities.Util import Validar_JWT
 
 class Get_Case:
     @staticmethod
@@ -8,10 +9,15 @@ class Get_Case:
         if not Data:
             return jsonify({"Error": "No data provided"}), 400
         
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"]
+        
         Data_C = {
             "Nombre": Data["CasoNuevo_Nombre"],
             "Descripcion": Data["CasoNuevo_Descripcion"],
-            "Usuario_Creador_ID": Data["CasoNuevo_Usuario_Creador"],
+            "Usuario_Creador_ID": User_ID,
             "Usuario_Asociado_ID": Data["CasoNuevo_Usuario_Cargo"],
             "Creacion": Data["CasoNuevo_Fecha_Creacion"],
             "Estado_Caso_ID": Data["CasoNuevo_Estado"],
@@ -40,25 +46,63 @@ class Get_Case:
                 "Relacion_Tipo": Data['CasoNuevo_Relacion_Tipo']
             }
         else:
-            Data_R = {}        
+            Data_R = {}     
         
-        Caso = Case_Service.Create(Data_C, Data_C_C, Data_L, Data_R)
+        Caso = Case_Service.Create(Data_C, Data_C_C, Data_L, Data_R, User_ID)
+        if Caso == "Auth":
+            return jsonify({"Error": "No Auth"}), 401
         if not Caso:
             return jsonify({"Error": "Case creation failed"}), 400
+        
         return jsonify({"Message": "Case created successfully"}), 201
     @staticmethod
     def Case_Read_All():
-        Casos = Case_Service.Read_All()
-        if not Casos:
-            return jsonify({"Error": "No cases found"}), 404
-        Casos_Dict = []
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"]
 
+        Casos = Case_Service.Read_All(User_ID)
+        if Casos == "Auth":
+            return jsonify({"Error": "No Auth"}), 401     
+        if not Casos:
+            return jsonify({"Error": "No cases found"}), 404     
+
+        Casos_Dict = []
         for C in Casos:
             Data = C.to_dict(include_relationships=True)
             Data["Creacion"] = Data["Creacion"].split("T")[0]
             Casos_Dict.append(Data)
 
         return Response(json.dumps(Casos_Dict, ensure_ascii=False, indent=2), status=200, mimetype='application/json')
+    @staticmethod
+    def Case_Data():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"]
+
+        Data = Case_Service.Obtener_Datos(User_ID)
+        if Data == "Auth":
+            return jsonify({"Error": "No Auth"}), 401         
+        if not Data :
+            return jsonify({"Error": "No cases found"}), 404
+        
+        return jsonify(Data), 200
+    @staticmethod
+    def Case_Read_Linea():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"] 
+
+        Linea = Case_Service.Linea_Tiempo(User_ID)
+        if Linea == "Auth":
+            return jsonify({"Error": "No Auth"}), 401         
+        if not Linea:
+            return jsonify({"Error": "No info found"}), 404
+        
+        return Response(json.dumps([L.to_dict2() for L in Linea], ensure_ascii=False, indent=2), status=200, mimetype='application/json')    
     @staticmethod
     def Case_Read_One(Case_ID):
         Caso = Case_Service.Read_One(Case_ID)
@@ -71,11 +115,18 @@ class Get_Case:
         return Response(json.dumps(Data, ensure_ascii=False, indent=2), status=200, mimetype='application/json')
     @staticmethod
     def Case_Read_By(Filtros):
-        Casos = Case_Service.Read_By(Filtros)
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"]
+
+        Casos = Case_Service.Read_By(Filtros, User_ID)
+        if Casos == "Auth":
+            return jsonify({"Error": "No Auth"}), 401             
         if not Casos:
             return jsonify({"Error", "No cases found"}), 404
+        
         Casos_Dict = []
-
         for C in Casos:
             Data = C.to_dict(include_relationships=True)
             Data["Creacion"] = Data["Creacion"].split("T")[0]
@@ -87,6 +138,11 @@ class Get_Case:
         Data = request.get_json()
         if not Data:
             return jsonify({"Error": "No data provided"}), 400
+        
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID = Auth_Data["user_id"]
         
         Data_C = {
             "ID": Data["Caso_Id"],
@@ -104,7 +160,7 @@ class Get_Case:
         }            
         Data_C_C = {
             "Caso_ID": Data['Caso_Id'], 
-            "Usuario_ID": Data['Usuario_Id'], 
+            "Usuario_ID": User_ID, 
             "Mensaje": Data['Caso_Comentario']       
         }
         Data_L = {
@@ -125,43 +181,30 @@ class Get_Case:
         else:
             Data_R = {}
 
-        Caso = Case_Service.Update(Case_ID, Data_C, Data_C_C, Data_L, Data_R)
+        Caso = Case_Service.Update(Case_ID, Data_C, Data_C_C, Data_L, Data_R, User_ID)
+        if Caso == "Auth":
+            return jsonify({"Error": "No Auth"}), 401   
         if not Caso:
             return jsonify({"Error": "No case found"}), 404
         
         return jsonify({"Message": "Case updated successfully"}), 200
     @staticmethod
     def Case_Delete(Case_ID, User_ID):
-        Caso = Case_Service.Delete(Case_ID, User_ID)
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            return jsonify({"Error": Error}), 401
+        User_ID2 = Auth_Data["user_id"]        
+        
+        Caso = Case_Service.Delete(Case_ID, User_ID, User_ID2)
+        if Caso == "Auth":
+            return jsonify({"Error": "No Auth"}), 401
         if not Caso:
             return jsonify({"Error": "No case found"}), 404
-        return jsonify({"Message": "Case deleted successfully"}), 200
-    @staticmethod
-    def Case_Data():
-        Usuarios, Estados, Prioridades, Incidentes, Barrios, Localidades, Ciudades, Departamentos, Relaciones = Case_Service.Obtener_Datos()
-        Data = {
-            "Usuarios": [u.to_dict() for u in Usuarios],
-            "Estados": [u.to_dict() for u in Estados],
-            "Prioridades": [u.to_dict() for u in Prioridades],
-            "Incidentes": [u.to_dict() for u in Incidentes],
-            "Barrios": [u.to_dict() for u in Barrios],
-            "Localidades": [u.to_dict() for u in Localidades],
-            "Ciudades": [u.to_dict() for u in Ciudades],
-            "Departamentos": [u.to_dict() for u in Departamentos],
-            "Relaciones": [u.to_dict() for u in Relaciones]
-        }
-        if not Usuarios or not Estados or not Prioridades or not Incidentes or not Barrios or not Localidades or not Ciudades or not Departamentos or not Relaciones:
-            return jsonify({"Error": "No cases found"}), 404
-        return jsonify(Data), 200
+
+        return jsonify({"Message": "Case deleted successfully"}), 200      
     @staticmethod
     def Delete_Relacion(CasePadre_Rad, CasoHijo_Rad, Tipo_Relacion, User_ID):
         Caso = Case_Service.Delete_Relacion(CasePadre_Rad, CasoHijo_Rad, Tipo_Relacion, User_ID)
         if not Caso:
             return jsonify({"Error": "No relation found"}), 404
-        return jsonify({"Message": "Relation deleted successfully"}), 200
-    @staticmethod
-    def Case_Read_Linea():
-        Linea = Case_Service.Linea_Tiempo()
-        if not Linea:
-            return jsonify({"Error": "No info found"}), 404
-        return Response(json.dumps([L.to_dict2() for L in Linea], ensure_ascii=False, indent=2), status=200, mimetype='application/json')    
+        return jsonify({"Message": "Relation deleted successfully"}), 200  

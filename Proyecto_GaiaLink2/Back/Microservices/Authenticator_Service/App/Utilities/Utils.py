@@ -12,7 +12,7 @@ import bcrypt
 import re
 import requests
 
-def Crear_Token(User_ID, Remember):
+def Crear_Token(User_ID, Remember, Device_Token):
     if Remember:
         exp = datetime.utcnow() + timedelta(days=7)
     else:
@@ -20,6 +20,7 @@ def Crear_Token(User_ID, Remember):
 
     Payload = {
         "user_id": User_ID,
+        "session_id": Device_Token,
         "exp": int(exp.timestamp())
     }
     return jwt.encode(Payload, SECRET_KEY, algorithm="HS256"), exp

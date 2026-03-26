@@ -48,44 +48,66 @@ def Dashboard_Admin_Inicio():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render_template("dashboard/inicio.html")
     return render_template("dashboard/dashboard.html")
-@app.route("/dashboard/casos")
+@app.route("/dashboard/staff/casos")
 def Dashboard_Admin_Casos():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        Response = requests.get(f"{API_URL}/case/read/all")
-        Response2 = requests.get(f"{API_URL}/case/read/data")
-        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+        
+        Response = requests.get(f"{API_URL}/case/read/all", headers=headers)
+        Response2 = requests.get(f"{API_URL}/case/read/data", headers=headers)
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo", headers=headers)
+        if Response.status_code == 401 and Response2.status_code == 401 and Response3.status_code == 401:
+            return render_template("dashboard/no_auth.html")
+        
         Casos = Response.json()
         Data = Response2.json()
-        Linea_Tiempo = Response3.json()
-        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
+        Linea = Response3.json()
+
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
     return render_template("dashboard/dashboard.html")
-
-
-@app.route("/dashboard/casos/<int:Case_ID>")
+@app.route("/dashboard/staff/casos/<int:Case_ID>")
 def Dashboard_Admin_Casos_One(Case_ID):
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        Response = requests.get(f"{API_URL}/case/read/{Case_ID}")
-        Response2 = requests.get(f"{API_URL}/case/read/data")
-        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+
+        Response = requests.get(f"{API_URL}/case/read/{Case_ID}", headers=headers)
+        Response2 = requests.get(f"{API_URL}/case/read/data", headers=headers)
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo", headers=headers)
+        if Response.status_code == 401 and Response2.status_code == 401 and Response3.status_code == 401:
+            return render_template("dashboard/no_auth.html")        
+
         Casos = Response.json()
         Data = Response2.json()
-        Linea_Tiempo = Response3.json()
-        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
+        Linea = Response3.json()
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
     return render_template("dashboard/dashboard.html")
-
-@app.route("/dashboard/casos/search")
+@app.route("/dashboard/staff/casos/search")
 def Dashboard_Admin_Casos_By():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+
         Filtros = request.args.to_dict(flat=False)
-        Response = requests.get(f"{API_URL}/case/read/search", params=Filtros)
-        Response2 = requests.get(f"{API_URL}/case/read/data")
-        Response3 = requests.get(f"{API_URL}/case/read/tiempo")
+        Response = requests.get(f"{API_URL}/case/read/search", params=Filtros, headers=headers)
+        Response2 = requests.get(f"{API_URL}/case/read/data", headers=headers)
+        Response3 = requests.get(f"{API_URL}/case/read/tiempo", headers=headers)
+        if Response.status_code == 401 and Response2.status_code == 401 and Response3.status_code == 401:
+            return render_template("dashboard/no_auth.html")        
+
         Casos = Response.json()
         Data = Response2.json()
-        Linea_Tiempo = Response3.json()
-        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea_Tiempo)
-    return render_template("dashboard/dashboard.html")
+        Linea = Response3.json()
 
+        return render_template("dashboard/casos.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
+    return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/entidades")
 def Dashboard_Admin_Entidades():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
@@ -107,7 +129,9 @@ def Dashboard_Admin_Pruebas():
         return render_template("dashboard/asd.html")
     return render_template("dashboard/dashboard.html")
 
-
+@app.route("/dashboard/unauthorized")
+def Unauthorized():
+    return render_template("dashboard/no_auth.html")
 @app.route("/rate-limit")
 def Rate_Limit():
     return render_template("homepage/rate_limit.html")

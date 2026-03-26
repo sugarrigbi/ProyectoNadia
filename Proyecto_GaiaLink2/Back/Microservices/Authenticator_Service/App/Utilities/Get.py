@@ -1,6 +1,6 @@
 from flask import request, jsonify
 import bcrypt
-from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona, Rol as Tabla_Rol
+from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona, Rol as Tabla_Rol, RolAPermiso as Tabla_Permiso
 from App.Utilities.Tables import db
 from App.Utilities.Utils import Crear_Token, Get_Device, Get_Time, Generar_Codigo, Guardar_Codigo, Obtener_Codigo, Hashear_Contraseña, Eliminar_Datos, Validar_Contraseña, Crear_Dispositivo
 from datetime import datetime, timedelta
@@ -67,7 +67,6 @@ class Get_Auth():
         Usuario.Intentos_Fallidos = 0
         db.session.commit()
         
-        Token, Expira = Crear_Token(Usuario.ID, Remember_Me)
 
         Device_Token = Device
 
@@ -79,7 +78,12 @@ class Get_Auth():
             Dev_Existe.Ultimo_Uso = Ahora
             db.session.commit()
 
-        return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre}, "Device": Device_Token}), 200
+        Token, Expira = Crear_Token(Usuario.ID, Remember_Me, Device_Token)
+
+        Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Rol.ID).all()
+        Permisos_Json = [p.to_dict() for p in Permisos]
+
+        return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Permisos": Permisos_Json, "Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre}, "Device": Device_Token}), 200
     @staticmethod
     def Recuperar():
         Data = request.get_json()

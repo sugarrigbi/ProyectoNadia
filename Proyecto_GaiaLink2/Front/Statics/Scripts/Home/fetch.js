@@ -301,6 +301,7 @@ if (document.getElementById("Formulario_Login")){
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
             Boton.disabled = true;
             localStorage.setItem("Device_Token", result.Device);
+            localStorage.setItem("Token_JWT", result.Token);
             localStorage.setItem("User_Data", JSON.stringify(result.User));
             if (payload.Remember_Me) {
                 localStorage.setItem("Auth_Token", result.Token);
