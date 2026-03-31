@@ -8,7 +8,7 @@ from datetime import datetime
 from app.models.Entidades import Entidad
 
 def get_buscar_casos_admin():
-    c = Caso_Admin(None, None, None, None, None, None, None, None, None, None, None, None, None, None)
+    c = Caso_Admin(None, None, None, None, None, None, None, None, None, None, None, None, None, None, None)
     lista_casos = c.Buscar_Casos_Admin()
 
     return render_template("dashboard_admin.html", lista_casos=lista_casos, frame_activo="FrameBuscarCasos")

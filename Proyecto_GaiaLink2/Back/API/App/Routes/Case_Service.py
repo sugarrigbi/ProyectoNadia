@@ -1,9 +1,6 @@
 from flask import Blueprint, request, jsonify
 import requests
 from App.Rate_Limit import Rate_Limit, DEFAULT_LIMIT
-import json
-
-Response2 = requests.get("http://127.0.0.1:5003/case/data")
 
 Case_Service_Bp = Blueprint("Case_Service", __name__)
 
@@ -29,22 +26,15 @@ def Api_Case_Read_All():
     Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all", headers=Headers)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Case_Service_Bp.route("/api/case/read/tiempo", methods=["GET"])
+@Case_Service_Bp.route("/api/case/read/search", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_Tiempo():
+def Api_Case_Read_By():
+    Filtros = request.args.to_dict(flat=False)
+
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/linea/tiempo", headers=Header)
-    return jsonify(Respuesta.json()), Respuesta.status_code
-
-@Case_Service_Bp.route("/api/case/read/data", methods=["GET"])
-@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_Data():
-    Auth = request.headers.get("Authorization")
-    Header = {"Authorization": Auth}
-
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/data", headers=Header)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Case_Service_Bp.route("/api/case/update/<int:Case_ID>", methods=["PUT"])
@@ -65,26 +55,6 @@ def Api_Case_Delete(Case_ID, User_ID):
     Header = {"Authorization": Auth}
 
     Respuesta = requests.put(f"{MICROSERVICE_URL}/delete/{Case_ID}/{User_ID}", headers=Header)
-    return jsonify(Respuesta.json()), Respuesta.status_code
-
-@Case_Service_Bp.route("/api/case/read/search", methods=["GET"])
-@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_By():
-    Filtros = request.args.to_dict(flat=False)
-
-    Auth = request.headers.get("Authorization")
-    Header = {"Authorization": Auth}
-
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header)
-    return jsonify(Respuesta.json()), Respuesta.status_code
-
-
-
-
-@Case_Service_Bp.route("/api/case/read/<int:Case_ID>", methods=["GET"])
-@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_One(Case_ID):
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/{Case_ID}")
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Case_Service_Bp.route("/api/case/delete/relation/<string:Case_ID2>/<string:Case_ID1>/<int:Case_ID3>/<int:User_ID>", methods=["DELETE"])

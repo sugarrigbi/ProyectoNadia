@@ -2,17 +2,19 @@ from App.Utilities.Tables import db
 import requests
 import json
 from App.Models.Case_Models import Caso as Tabla_Caso, Usuario as Tabla_Usuario, Estado_Caso as Tabla_Estado, Prioridad as Tabla_Prioridad, Incidente as Tabla_Incidente, Barrio as Tabla_Barrio, Localidad as Tabla_Localidad, Ciudad as Tabla_Ciudad, Departamento as Tabla_Dep, Tipo_Relacion as Tabla_Relacion, Caso_Discusion as Tabla_Discusion, Departamento as T_Departamento, Ciudad as T_Ciudad, Localidad as T_Localidad, Barrio as T_Barrio, Casos_a_Casos as Tabla_Casos_a_Casos, Radicado_Caso as Tabla_Radicado, Caso_Auditoria as Tabla_Auditoria, RolAPermiso as Tabla_Permiso
+from datetime import datetime
 
 class Case_Service():
     @staticmethod
-    def Create(Data_C, Data_C_C, Data_L, Data_R, User_ID):
+    def Create(Data_C, Data_L, User_ID, Data_C_C=None, Data_R=None):
         if not User_ID:
             return "Auth"
         
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
-        if "caso_crear" not in [p.to_dict()["Nombre"] for p in Permisos]:
-            return "Auth"             
+        Nombres = [p.to_dict()["Nombre"] for p in Permisos]
+        if "caso_crear" not in Nombres and "caso_crear_propio" not in Nombres:
+            return "Auth"
 
         if Data_L:
             if Data_L["Departamento_ID"]:
@@ -65,40 +67,62 @@ class Case_Service():
                     else:
                         Barrio = T_Barrio(Nombre=Barrio_Norm, Localidad_ID=Localidad.ID)
                         db.session.add(Barrio)
-                        db.session.flush()  
+                        db.session.flush()             
 
-        if Data_C:
-            Data_C["Barrio_ID"] = Barrio.ID
-            Caso = Tabla_Caso(**Data_C)
-            db.session.add(Caso)
-            db.session.flush()            
+        if "caso_crear_propio" in Nombres:
+            if Data_C:
+                Data_C["Barrio_ID"] = Barrio.ID
+                Data_C["Nombre"] = "Caso No Gestionado"
+                Data_C["Usuario_Creador_ID"] = Usuario_Validar.ID
+                Data_C["Estado_Caso_ID"] = 1
+                Data_C["Prioridad_ID"] = 1
+                Data_C["Usuario_Asociado_ID"] = 1
+                Data_C["Actualizado_En"] = datetime.now()
+                Caso = Tabla_Caso(**Data_C)
+                db.session.add(Caso)
+                db.session.flush()            
 
-            Radicados = Tabla_Radicado.query.order_by(Tabla_Radicado.ID.desc()).first()
-            Radicado_text = int(Radicados.Radicado.rstrip("R"))+1
-            Radicado_com = f"{Radicado_text:06d}R"          
-            Radicado_Final = Tabla_Radicado(Radicado=Radicado_com, Caso_ID=Caso.ID)
-            db.session.add(Radicado_Final)
-            db.session.flush() 
+                Radicados = Tabla_Radicado.query.order_by(Tabla_Radicado.ID.desc()).first()
+                Radicado_text = int(Radicados.Radicado.rstrip("R"))+1
+                Radicado_com = f"{Radicado_text:06d}R"          
+                Radicado_Final = Tabla_Radicado(Radicado=Radicado_com, Caso_ID=Caso.ID)
+                db.session.add(Radicado_Final)
+                db.session.flush()   
 
-        if Data_R.get("Relacion_Radicado"):
-            Caso_a_Relacionar = Tabla_Caso.query.filter_by(ID=Data_R["Relacion_Radicado"]).first()
-            if not Caso_a_Relacionar:
-                return False
-            else:
-                Relacion = Tabla_Casos_a_Casos(Caso_Principal_ID=Caso.ID,Caso_Asociado_ID=int(Data_R["Relacion_Radicado"]), Tipo_Relacion_ID=int(Data_R["Relacion_Tipo"]))
-                db.session.add(Relacion)
+        elif "caso_crear" in Nombres:
+            if Data_C:
+                Data_C["Barrio_ID"] = Barrio.ID
+                Data_C["Actualizado_En"] = datetime.now()
+                Caso = Tabla_Caso(**Data_C)
+                db.session.add(Caso)
+                db.session.flush()            
+
+                Radicados = Tabla_Radicado.query.order_by(Tabla_Radicado.ID.desc()).first()
+                Radicado_text = int(Radicados.Radicado.rstrip("R"))+1
+                Radicado_com = f"{Radicado_text:06d}R"          
+                Radicado_Final = Tabla_Radicado(Radicado=Radicado_com, Caso_ID=Caso.ID)
+                db.session.add(Radicado_Final)
+                db.session.flush() 
+
+            if Data_R.get("Relacion_Radicado"):
+                Caso_a_Relacionar = Tabla_Caso.query.filter_by(ID=Data_R["Relacion_Radicado"]).first()
+                if not Caso_a_Relacionar:
+                    return False
+                else:
+                    Relacion = Tabla_Casos_a_Casos(Caso_Principal_ID=Caso.ID,Caso_Asociado_ID=int(Data_R["Relacion_Radicado"]), Tipo_Relacion_ID=int(Data_R["Relacion_Tipo"]))
+                    db.session.add(Relacion)
+                    db.session.flush()
+
+            if Data_C_C["Mensaje"]:
+                Data_C_C["Caso_ID"] = Caso.ID
+                Caso_Discucion = Tabla_Discusion(**Data_C_C)
+                db.session.add(Caso_Discucion)
                 db.session.flush()
 
         Caso_json = Caso.to_dict(include_relationships=True)
         Caso_json_text = json.dumps(Caso_json, default=str, ensure_ascii=False)
 
-        if Data_C_C["Mensaje"]:
-            Data_C_C["Caso_ID"] = Caso.ID
-            Caso_Discucion = Tabla_Discusion(**Data_C_C)
-            db.session.add(Caso_Discucion)
-            db.session.flush()
-
-        Auditoria = Tabla_Auditoria(Accion="Caso creado", Anterior=Caso_json_text, Modificado_Por=Data_C_C["Usuario_ID"], Caso_ID=Caso.ID)
+        Auditoria = Tabla_Auditoria(Accion="Caso creado", Anterior=Caso_json_text, Modificado_Por=Usuario_Validar.ID, Caso_ID=Caso.ID)
         db.session.add(Auditoria)
         db.session.commit()
 
@@ -121,11 +145,15 @@ class Case_Service():
         
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
-        if "caso_ver" not in [p.to_dict()["Nombre"] for p in Permisos]:
-            return "Auth"             
-        
-        Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.asc()).all()
-        return Casos
+        Nombres = [p.to_dict()["Nombre"] for p in Permisos]          
+        if "caso_ver_propio" in Nombres:
+            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc()).all()
+            return Casos
+        elif "caso_ver" in Nombres:
+            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.asc()).all()
+            return Casos
+        else:
+            return "Auth"           
     @staticmethod
     def Obtener_Datos(User_ID):
         if not User_ID:
@@ -133,30 +161,35 @@ class Case_Service():
         
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
-        if "caso_ver" not in [p.to_dict()["Nombre"] for p in Permisos]:
-            return "Auth"         
-
-        Usuarios = Tabla_Usuario.query.order_by(Tabla_Usuario.ID.asc()).all()
-        Estados = Tabla_Estado.query.filter(Tabla_Estado.ID != 4).order_by(Tabla_Estado.ID.asc()).all()
-        Prioridades = Tabla_Prioridad.query.order_by(Tabla_Prioridad.ID.asc()).all()
-        Incidentes = Tabla_Incidente.query.order_by(Tabla_Incidente.ID.asc()).all()
-        Barrios = Tabla_Barrio.query.order_by(Tabla_Barrio.ID.asc()).all()
-        Localidades = Tabla_Localidad.query.order_by(Tabla_Localidad.ID.asc()).all()
-        Ciudades = Tabla_Ciudad.query.order_by(Tabla_Ciudad.ID.asc()).all()
-        Departamentos = Tabla_Dep.query.order_by(Tabla_Dep.ID.asc()).all()
-        Relaciones = Tabla_Relacion.query.filter(Tabla_Relacion.ID != 4).order_by(Tabla_Relacion.ID.asc()).all()
-
-        Data = {
-            "Usuarios": [u.to_dict() for u in Usuarios],
-            "Estados": [e.to_dict() for e in Estados],
-            "Prioridades": [p.to_dict() for p in Prioridades],
-            "Incidentes": [i.to_dict() for i in Incidentes],
-            "Barrios": [b.to_dict() for b in Barrios],
-            "Localidades": [l.to_dict() for l in Localidades],
-            "Ciudades": [c.to_dict() for c in Ciudades],
-            "Departamentos": [d.to_dict() for d in Departamentos],
-            "Relaciones": [r.to_dict() for r in Relaciones]
-        }        
+        Nombres = [p.to_dict()["Nombre"] for p in Permisos]            
+        if "caso_ver" in Nombres or "caso_ver_propio" in Nombres:
+            Usuarios = Tabla_Usuario.query.order_by(Tabla_Usuario.ID.asc()).all()
+            Estados = Tabla_Estado.query.filter(Tabla_Estado.ID != 4).order_by(Tabla_Estado.ID.asc()).all()
+            Prioridades = Tabla_Prioridad.query.order_by(Tabla_Prioridad.ID.asc()).all()
+            Incidentes = Tabla_Incidente.query.order_by(Tabla_Incidente.ID.asc()).all()
+            Barrios = Tabla_Barrio.query.order_by(Tabla_Barrio.ID.asc()).all()
+            Localidades = Tabla_Localidad.query.order_by(Tabla_Localidad.ID.asc()).all()
+            Ciudades = Tabla_Ciudad.query.order_by(Tabla_Ciudad.ID.asc()).all()
+            Departamentos = Tabla_Dep.query.order_by(Tabla_Dep.ID.asc()).all()
+            Relaciones = Tabla_Relacion.query.filter(Tabla_Relacion.ID != 4).order_by(Tabla_Relacion.ID.asc()).all()          
+            Data = {
+                "Estados": [e.to_dict() for e in Estados],
+                "Prioridades": [p.to_dict() for p in Prioridades],
+                "Incidentes": [i.to_dict() for i in Incidentes],
+                "Barrios": [b.to_dict() for b in Barrios],
+                "Localidades": [l.to_dict() for l in Localidades],
+                "Ciudades": [c.to_dict() for c in Ciudades],
+                "Departamentos": [d.to_dict() for d in Departamentos],
+                "Relaciones": [r.to_dict() for r in Relaciones]
+            }
+            if "caso_ver" in Nombres:
+                Data["Usuarios"] = [u.to_dict() for u in Usuarios]
+            elif "caso_ver_propio" in Nombres:
+                Data["Usuarios"] = [u.to_dict2() for u in Usuarios]
+            else:
+                Data["Usuarios"] = []
+        else:
+            return "Auth"       
         return Data    
     @staticmethod
     def Linea_Tiempo(User_ID):
@@ -165,21 +198,19 @@ class Case_Service():
         
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
-        if "caso_ver_linea_tiempo" not in [p.to_dict()["Nombre"] for p in Permisos]:
+        Nombres = [p.to_dict()["Nombre"] for p in Permisos]
+        if "caso_ver_linea_tiempo" not in Nombres:
             return "Auth"            
-
-        Auditoria = Tabla_Auditoria.query.order_by(Tabla_Auditoria.ID.asc()).all()
-        if not Auditoria:
-            return False
-        return Auditoria    
-    @staticmethod
-    def Read_One(Case_ID):
-        Caso = Tabla_Caso.query.get(Case_ID)
-
-        if not Caso:
-            return False
-
-        return Caso
+        else:
+            if "caso_ver_propio" in Nombres:
+                Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc()).all()
+                Casos_json = {C.ID for C in Casos}
+                Auditoria = Tabla_Auditoria.query.filter(Tabla_Auditoria.Caso_ID.in_(Casos_json)).order_by(Tabla_Auditoria.ID.asc()).all()
+            elif "caso_ver" in Nombres:
+                Auditoria = Tabla_Auditoria.query.order_by(Tabla_Auditoria.ID.asc()).all()
+            if not Auditoria:
+                return False
+            return Auditoria    
     @staticmethod
     def Read_By(Filtros, User_ID):
         if not User_ID:

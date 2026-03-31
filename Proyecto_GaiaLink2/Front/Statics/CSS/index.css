@@ -46,6 +46,10 @@ h4{
     border-color: #522694 !important;
     transition: all 0.3s ease;
 }
+.Border_Morado3{
+    border-color: #a386ce !important;
+    transition: all 0.3s ease;
+}
 .Bg_Blanco{
     background-color: #F8FAFC;
 }
@@ -377,6 +381,13 @@ h4{
 .boton12:hover{
     transform: scale(1.05);
     background-color: #5877d3 !important;
+}
+.boton13{
+    transition: all 0.3s ease;
+}
+.boton13:hover{
+    transform: scale(1.03);
+    background-color: #7530dd !important;
 }
 .text-info2{
     color: #3a6fd5!important;

@@ -418,7 +418,7 @@
                 <p class="text-center text-muted fsr-11">
                     Intenta ajustar o limpiar los filtros para ver más resultados.
                 </p>
-                <a href="/dashboard/casos" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
+                <a href="/dashboard/staff/casos" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
                     Volver a casos
                 </a>          
             </div>
@@ -783,7 +783,43 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    {% endfor %}                
+                                                    {% endfor %}
+                                                    {% for relacion in Caso['casos_principales'] %}
+                                                        <div class="d-flex flex-column align-items-start bg-white rounded-2 p-2">
+                                                            <div class="d-flex justify-content-between flex-row w-100">
+                                                                <p class=" m-0 fsr-13">
+                                                                    {{ relacion['Tipo_Relacion_ID'] }}
+                                                                </p>
+                                                                <button data-rad-tipo="{{ relacion['Tipo_Relacion_ID_ID'] }}" data-rad-hijo="{{ relacion['Caso_Asociado_ID']['Radicado'] }}" data-rad-padre="{{ Caso['radicados'][0]['Radicado'] }}" id="Boton_Relacion_{{Caso['ID']}}_{{relacion['ID']}}" type="button" class="boton9 p-1 border-0 bg-white rounded-1 d-none">
+                                                                    <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav8">
+                                                                </button>  
+                                                            </div>
+                                                            <div class="ps-3">
+                                                                <div>
+                                                                    <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                                                        <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                                                        <b >
+                                                                            {{ relacion['Caso_Principal_Rad'] }}
+                                                                        </b>           
+                                                                        {{ relacion['Caso_Principal_Nom'] }}
+                                                                    </p>
+                                                                </div>                   
+                                                                <div class="d-flex flex-row gap-1">
+                                                                    <p class="m-0 fsr-15 d-flex align-items-center gap-2 px-1">
+                                                                        <span class="d-none d-md-block">
+                                                                            Se actualizó en 
+                                                                        </span>
+                                                                        <span id="Fecha_Relacion_{{ relacion['ID'] }}">
+                                                                            {{ relacion['Caso_Principal_Act'] }}
+                                                                        </span>
+                                                                    </p>
+                                                                    <p id="Estado_Relacion_{{ relacion['ID'] }}" class="m-0 fsr-15 w-auto border-bottom border-3 rounded-1 px-2">
+                                                                        {{ relacion['Caso_Principal_Est'] }}
+                                                                    </p>                      
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}                                                                    
                                                 </div>
                                                 <p class="fsr-12 m-0 mt-2 fw-medium h-auto">
                                                     Historial

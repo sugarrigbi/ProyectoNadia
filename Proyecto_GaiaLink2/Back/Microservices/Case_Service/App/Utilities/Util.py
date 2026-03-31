@@ -1,7 +1,7 @@
 import jwt
 from flask import request
 
-SECRET_KEY = "Gaialink2026!*"
+SECRET_KEY = "Gaialink2026!*ClaveSuperSeguraJWT!!"
 
 def Validar_JWT():
     Auth = request.headers.get("Authorization")

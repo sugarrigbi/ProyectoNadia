@@ -145,6 +145,10 @@ class Casos_a_Casos(Modelo_Base):
         resultado = {
             "ID": self.ID,
             "Caso_Principal_ID": self.Caso_Principal_ID,
+            "Caso_Principal_Rad": self.caso_principal.radicados[0].Radicado,
+            "Caso_Principal_Est": self.caso_principal.estado.Nombre,
+            "Caso_Principal_Act": self.caso_principal.Actualizado_En,
+            "Caso_Principal_Nom": self.caso_principal.Nombre,
             "Creado_En": self.Creado_En,
             "Caso_Asociado_ID": {
                 "ID": self.caso_asociado.ID,
@@ -322,6 +326,18 @@ class Usuario(Modelo_Base):
             }
         }
         return resultado
+    def to_dict2(self, exclude=None):
+        resultado = {
+            "ID": self.ID,
+            "Nombre": self.Nombre,
+            "Persona": {
+                "Primer_Nombre": self.persona.Primer_Nombre,
+                "Segundo_Nombre": self.persona.Segundo_Nombre,
+                "Primer_Apellido": self.persona.Primer_Apellido,
+                "Segundo_Apellido": self.persona.Segundo_Apellido           
+            }
+        }
+        return resultado    
 class Usuario_Auditoria(Modelo_Base):
     __tablename__ = "Usuario_Auditoria"
 

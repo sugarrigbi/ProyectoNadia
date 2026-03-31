@@ -71,7 +71,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Authorization": `Bearer ${Token_JWT}`
             }
         })
-        .then(res => res.text())
+        .then(res => {
+            if (res.status === 401){
+                localStorage.removeItem("Token_JWT");
+                localStorage.removeItem("User_Data"); 
+                localStorage.removeItem("Auth_Token");
+                sessionStorage.removeItem("Auth_Token");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Sesión expirada',
+                    text: 'Debes iniciar sesión nuevamente',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end',
+                    background: '#1e1e2f',
+                    color: '#ffffff',
+                    iconColor: '#f1c40f',
+                    width: '400px',
+                    padding: '1.2rem',
+                    customClass: {
+                        popup: 'shadow-lg rounded-3'
+                    }
+                });              
+                setTimeout(() => {
+                    window.location.href = "/login";
+                }, 2000);
+                throw new Error("No autorizado");               
+            }
+            return res.text();
+        })
         .then(html => {
             Contenido.innerHTML = html;
             history.pushState(null, "", url);
@@ -97,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     Card_User.classList.remove("d-none");
                     Card_User.classList.add("d-flex");             
                 }                         
-            }                
+            }                   
             if (document.getElementById("contenido")){
                 const URL = window.location.pathname;
                 const Boton_Crear = document.getElementById("Crear_Caso_Admin");
@@ -105,12 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
                     if (URL.includes("/user")){
                         cargarPagina("/dashboard/inicio");
-                    }
+                    }               
                 } else if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver_propio")){                  
                     if (URL.includes("/staff")){
                         cargarPagina("/dashboard/inicio");
                     }
                 }
+
                 if (Boton_Crear) {
                     if (User.Permisos.some(Perm => Perm.Nombre === "caso_crear")){
                         Boton_Crear.classList.remove("d-none");
@@ -701,7 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Boton.classList.add("boton8")
                         Boton.disabled = false;
                     }        
-                    else if(response.status === 401){
+                    else if(response.status === 403){
                         document.body.classList.remove('modal-open');
                         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
                         cargarPagina("/dashboard/unauthorized");
@@ -717,6 +747,103 @@ document.addEventListener("DOMContentLoaded", () => {
                     opt.selected = true;
                 }
                 });
+            }
+            if (document.getElementById("Crear_Caso_User")){
+                document.getElementById("Crear_Caso_User").addEventListener("submit", async function(e){
+                    e.preventDefault();
+                    
+                    const Boton = document.getElementById("Crear_Caso_User_Boton");
+                    Boton.disabled = true;
+
+                    const Barrio_Input = document.getElementById("Barrio_Create");
+                    const Barrio_Nombre = document.getElementById("Barrio_Create_Nombre");
+                    const Barrio_ID = document.getElementById("Barrio_Create_ID");
+                    const Barrio_Datalist = document.getElementById("Datalist_Barrio");   
+                    const Update_Barrio = () => {
+                        const Value = Barrio_Input.value.trim()
+                        const Opcion = Array.from(Barrio_Datalist.options).find(opc => opc.value.toLowerCase() === Value.toLowerCase())
+
+                        Barrio_Nombre.value = Opcion ? Opcion.value : Value;
+                        Barrio_ID.value = Opcion ? (Opcion.dataset.id || Opcion.getAttribute('data-id') || '') : '';
+                    }                                   
+
+                    const Localidad_Input = document.getElementById("Localidad_Create");
+                    const Localidad_Nombre = document.getElementById("Localidad_Create_Nombre");
+                    const Localidad_ID = document.getElementById("Localidad_Create_ID");
+                    const Localidad_Datalist = document.getElementById("Datalist_Localidad");
+                    const Update_Localidad = () => {
+                        const Value = Localidad_Input.value.trim();
+                        const Opcion = Array.from(Localidad_Datalist.options).find(opc => opc.value.toLowerCase() === Value.toLowerCase());
+                        Localidad_Nombre.value = Opcion ? Opcion.value : Value;
+                        Localidad_ID.value = Opcion ? (Opcion.dataset.id || Opcion.getAttribute('data-id') || '') : '';
+                    }
+                    
+                    const Ciudad_Input = document.getElementById("Ciudad_Create");
+                    const Ciudad_Nombre = document.getElementById("Ciudad_Create_Nombre");
+                    const Ciudad_ID = document.getElementById("Ciudad_Create_ID");
+                    const Ciudad_Datalist = document.getElementById("Datalist_Ciudad");
+                    const Update_Ciudad = () => {
+                        const Value = Ciudad_Input.value.trim();
+                        const Opcion = Array.from(Ciudad_Datalist.options).find(opc => opc.value.toLowerCase() === Value.toLowerCase());
+                        Ciudad_Nombre.value = Opcion ? Opcion.value : Value;
+                        Ciudad_ID.value = Opcion ? (Opcion.dataset.id || Opcion.getAttribute('data-id') || '') : '';
+                    }                    
+                    
+                    const Departamento_Input = document.getElementById("Departamento_Create");
+                    const Departamento_Nombre = document.getElementById("Departamento_Create_Nombre");
+                    const Departamento_ID = document.getElementById("Departamento_Create_ID");  
+                    const Departamento_Datalist = document.getElementById("Datalist_Departamento");                  
+                    const Update_Departamento = () => {
+                        const Value = Departamento_Input.value.trim();
+                        const Opcion = Array.from(Departamento_Datalist.options).find(opc => opc.value.toLowerCase() === Value.toLowerCase());
+                        Departamento_Nombre.value = Opcion ? Opcion.value : Value;
+                        Departamento_ID.value = Opcion ? (Opcion.dataset.id || Opcion.getAttribute('data-id') || '') : '';
+                    }
+
+                    Barrio_Input.addEventListener("input", Update_Barrio);
+                    Barrio_Input.addEventListener("blur", Update_Barrio);
+                    Update_Barrio()
+
+                    Localidad_Input.addEventListener("input", Update_Localidad);
+                    Localidad_Input.addEventListener("blur", Update_Localidad);
+                    Update_Localidad();
+
+                    Ciudad_Input.addEventListener("input", Update_Ciudad);
+                    Ciudad_Input.addEventListener("blur", Update_Ciudad);
+                    Update_Ciudad();
+
+                    Departamento_Input.addEventListener("input", Update_Departamento);
+                    Departamento_Input.addEventListener("blur", Update_Departamento);
+                    Update_Departamento();
+
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData.entries());
+
+                    data.Rol_User_Create = User.Rol_ID;
+                    
+                    const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
+                    const result = await response.json()
+                    
+                    if(response.status === 201){
+                        sessionStorage.setItem('Caso_Creado', User.User_ID);                        
+                        location.reload();
+                    }
+                    else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    }        
+                    else if(response.status === 400){
+                        window.scrollTo(0, 0);
+                        Boton_Mensaje.textContent = result.Error;
+                        Boton.classList.remove("boton9")
+                        Boton.classList.add("boton8")
+                        Boton.disabled = false;
+                    }
+                    else if(response.status === 403){
+                        document.body.classList.remove('modal-open');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        cargarPagina("/dashboard/unauthorized");
+                    }
+                })
             }
             if (document.getElementById("Caso_Contenedor2")){
                 document.getElementById("Caso_Contenedor2").addEventListener("submit", async function(e){
@@ -811,7 +938,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Boton.classList.add("boton8")
                         Boton.disabled = false;
                     }
-                    else if(response.status === 401){
+                    else if(response.status === 403){
                         document.body.classList.remove('modal-open');
                         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
                         cargarPagina("/dashboard/unauthorized");
@@ -837,7 +964,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             window.scrollTo(0, 0);
                             span.textContent = result.Error;
                         }      
-                        else if(response.status === 401){
+                        else if(response.status === 403){
                             document.body.classList.remove('modal-open');
                             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
                             cargarPagina("/dashboard/unauthorized");
@@ -1051,7 +1178,63 @@ document.addEventListener("DOMContentLoaded", () => {
                         Imagen.src = "/Statics/img/Plus.svg";                        
                     }
                 })
-            }                  
+            }   
+            if (document.getElementById("Casos_User")) {
+                document.querySelectorAll("#Casos_User span[id^='estado-span-']").forEach(span => {
+                    const tipo = span.textContent.trim();
+                    if (tipo === "Pendiente") {
+                        span.classList.add("estado-pendiente");
+                    } else if (tipo === "Activo") {
+                        span.classList.add("estado-activo");
+                    } else if (tipo === "Resuelto") {
+                        span.classList.add("estado-resuelto");
+                    } else if (tipo === "Eliminado") {
+                        span.classList.add("estado-eliminado");
+                    } else if (tipo === "En espera del usuario") {
+                        span.classList.add("estado-espera");
+                    } else if (tipo === "Escalado a supervisor") {
+                        span.classList.add("estado-escalado");
+                    } else if (tipo === "Reabierto") {
+                        span.classList.add("estado-reabierto");
+                    } else if (tipo === "Tomando desicion "){
+                        span.classList.add("estado-decision");
+                    }
+                });
+                document.querySelectorAll("#Casos_User span[id^='estado-span2-']").forEach(span => {
+                    const tipo = span.textContent.trim();
+                    if (tipo === "Pendiente") {
+                        span.classList.add("estado-pendiente");
+                    } else if (tipo === "Activo") {
+                        span.classList.add("estado-activo");
+                    } else if (tipo === "Resuelto") {
+                        span.classList.add("estado-resuelto");
+                    } else if (tipo === "Eliminado") {
+                        span.classList.add("estado-eliminado");
+                    } else if (tipo === "En espera del usuario") {
+                        span.classList.add("estado-espera");
+                    } else if (tipo === "Escalado a supervisor") {
+                        span.classList.add("estado-escalado");
+                    } else if (tipo === "Reabierto") {
+                        span.classList.add("estado-reabierto");
+                    } else if (tipo === "Tomando desicion "){
+                        span.classList.add("estado-decision");
+                    }
+                });                
+                document.querySelectorAll("#Casos_Busqueda span[id^='prioridad-span']").forEach(span => {
+                    const tipo = span.textContent.trim();
+                    if (tipo === "Muy Baja"){
+                        span.classList.add("prioridad-muy-baja");
+                    }else if (tipo === "Baja"){
+                        span.classList.add("prioridad-baja");
+                    }else if (tipo === "Media"){
+                        span.classList.add("prioridad-media");
+                    }else if (tipo === "Alta"){
+                        span.classList.add("prioridad-alta");
+                    }else if (tipo === "Critica"){
+                        span.classList.add("prioridad-critica");
+                    }
+                });               
+            }                           
         });
     }
     document.querySelectorAll(".panel-link").forEach(link => {
