@@ -114,7 +114,6 @@ def Dashboard_User_Casos():
 
         Casos = Datos.get("Casos", [])
         Data = Datos.get("Datos", {})
-        print(Casos)
         Linea = Datos.get("Linea", [])
 
         return render_template("dashboard/casos_user.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)

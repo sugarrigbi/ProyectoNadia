@@ -818,8 +818,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const formData = new FormData(this);
                     const data = Object.fromEntries(formData.entries());
-
-                    data.Rol_User_Create = User.Rol_ID;
                     
                     const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()

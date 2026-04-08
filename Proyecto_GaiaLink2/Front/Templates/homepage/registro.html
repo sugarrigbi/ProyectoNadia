@@ -22,7 +22,7 @@
                     </a>                    
                 </div>
             </div>     
-            <form id="Formulario_Registrar" data-aos="fade-up" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
+            <form novalidate id="Formulario_Registrar" data-aos="fade-up" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
                 <h3 data-lang="registro.Registrarse" class="w-auto d-inline-flex fw-bold mb-3 p-3 text-white text-center Bg_Azul2 rounded-3 text-center fsr-9">
                     Registrarse
                 </h3>                                
@@ -40,15 +40,20 @@
                             <span class="text-danger">*</span>
                         </label>
                         <input name="Primer_Nombre" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Primer_Nombre" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                        
                     </div> 
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Segundo_Nombre">
                                 Segundo nombre 
                             </span>
-                            <span class="text-danger">*</span>
                         </label>
                         <input name="Segundo_Nombre" type="text" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Segundo_Nombre" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                         
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -58,15 +63,20 @@
                             <span class="text-danger">*</span>
                         </label>
                         <input name="Primer_Apellido" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Primer_Apellido" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                             
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Segundo_Apellido">
                                 Segundo apellido 
                             </span>
-                            <span class="text-danger">*</span>
                         </label>
                         <input name="Segundo_Apellido" type="text" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Segundo_Apellido" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                             
                     </div>                   
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
@@ -97,6 +107,9 @@
                                 Registro Civil
                             </option>
                         </select>
+                        <div id="Error_Tipo_Documento_ID" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -105,7 +118,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Documento" type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="6" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Documento" required type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="6" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Documento" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -114,7 +130,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Fecha_Nacimiento" type="date" class="form-control rounded-2 border-3 mt-2">
+                        <input required name="Fecha_Nacimiento" type="date" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Fecha_Nacimiento" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         
@@ -135,7 +154,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Departamento_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Departamento_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.\-]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Departamento_ID" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -144,7 +166,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Ciudad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Ciudad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.\-]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Ciudad_ID" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -152,7 +177,10 @@
                                 Localidad
                             </span>
                         </label>
-                        <input name="Localidad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Localidad_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.\-]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Localidad_ID" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -160,7 +188,10 @@
                                 Barrio
                             </span>
                         </label>
-                        <input name="Barrio_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Barrio_ID" type="text" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.\-]+" title="Solo se permiten letras" minlength="2" maxlength="20" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Barrio_ID" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>                   
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
@@ -172,6 +203,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <input name="Direccion" type="text" required minlength="5" maxlength="40" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Direccion" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
                     </div>
@@ -195,7 +229,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Correo" type="email" minlength="6" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Correo" required type="email" minlength="6" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Correo" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -204,7 +241,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Nombre" type="text" minlength="5" maxlength="50" pattern="^\S+$" title="No se permiten espacios" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Nombre" required type="text" minlength="5" maxlength="50" pattern="^\S+$" title="No se permiten espacios" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Nombre" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -214,11 +254,14 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="d-flex align-items-center justify-content-center flex-row position-relative">
-                            <input oncopy="return false;" autocomplete="new-password" id="Input_Password1" name="Contraseña" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <input name="Contraseña1" oncopy="return false;" required autocomplete="new-password" id="Input_Password1" name="Contraseña" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
                             <button id="Boton_Password1" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
                                 <img id="Imagen_Password1" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
                             </button>
-                        </div>                        
+                        </div>  
+                        <div id="Error_Contraseña1" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                                              
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
@@ -227,11 +270,14 @@
                             </span>
                         </label>
                         <div class="d-flex align-items-center justify-content-center flex-row position-relative">
-                            <input oncopy="return false;" autocomplete="new-password" id="Input_Password2" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
-                            <button id="Boton_Password2" type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
+                            <input required name="Contraseña2" oncopy="return false;" autocomplete="new-password" id="Input_Password2" type="password" minlength="10" class="form-control rounded-2 border-3 mt-2">
+                            <button id="Boton_Password2" required type="button" class="bg-transparent border-0 position-absolute end-0 mt-2 d-flex justify-content-end">
                                 <img id="Imagen_Password2" src="{{ url_for('static', filename='img/NoVer.svg') }}" class="img-fluid w-50 me-2">
                             </button>
-                        </div>                        
+                        </div> 
+                        <div id="Error_Contraseña2" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>                       
                     </div>                                     
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
@@ -242,7 +288,10 @@
                             </span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input name="Telefono" type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="8" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                        <input name="Telefono" required type="text" pattern="[0-9]+" title="Solo se permiten numeros" minlength="8" maxlength="10" class="form-control rounded-2 border-3 mt-2">
+                        <div id="Error_Telefono" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none">
+                            Mensaje Generico
+                        </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
                     </div>
@@ -252,7 +301,7 @@
                     </div>                                       
                 </div>   
                 <div class="d-flex flex-row align-items-center justify-content-center gap-2">
-                    <input required type="checkbox" class="form-check-input m-0">
+                    <input name="Recordar" required type="checkbox" class="form-check-input m-0">
                     <h2 class="fsr-11 m-0">
                         <span data-lang="registro.Acepto">
                             Acepto
@@ -262,6 +311,9 @@
                         </a>                         
                     </h2> 
                 </div>
+                <div id="Error_Recordar" class="text-center fsr-15 d-flex align-items-center justify-content-center mt-2 rounded-3 d-none w-auto">
+                    Mensaje Generico
+                </div>                    
                 <div id="Formulario_Registrar_Mensaje" class="text-center p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
                     Mensaje Generico
                 </div>                

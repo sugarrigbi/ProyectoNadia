@@ -67,10 +67,9 @@ class Get_Auth():
         Usuario.Intentos_Fallidos = 0
         db.session.commit()
         
-
         Device_Token = Device
 
-        Dev_Existe = Tabla_Dispositivos.query.filter(Tabla_Dispositivos.Token == Device).first()
+        Dev_Existe = Tabla_Dispositivos.query.filter(Tabla_Dispositivos.Token == Device, Tabla_Dispositivos.Usuario_ID == Usuario.ID).first()
         if not Device or not Dev_Existe:
             Data_D = Get_Device(Usuario.ID, Ahora, Client_IP, Client_Payload)
             Device_Token = Crear_Dispositivo(Data_D, Usuario.Nombre, Usuario.Correo, Ahora_Formated)

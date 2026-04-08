@@ -71,7 +71,7 @@ class Get_Case:
         Linea_Tiempo = Case_Service.Linea_Tiempo(User_ID)
         if Casos == "Auth":
             return jsonify({"Error": "No Auth"}), 403    
-        if not Casos or not Datos_Obtener:
+        if not Datos_Obtener:
             return jsonify({"Error": "No cases found"}), 404
 
         Casos_json = []

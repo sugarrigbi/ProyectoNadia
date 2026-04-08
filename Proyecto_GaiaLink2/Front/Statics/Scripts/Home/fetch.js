@@ -3,8 +3,13 @@ const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
 if (document.getElementById("Formulario_Ayuda")){
     document.getElementById("Formulario_Ayuda").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Ayuda_Mensaje");
         Boton = document.getElementById("Formulario_Ayuda_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Ayuda_Mensaje");
         Boton.disabled = true;
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -48,8 +53,13 @@ if (document.getElementById("Formulario_Ayuda")){
 if (document.getElementById("Formulario_Calificanos")){
     document.getElementById("Formulario_Calificanos").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Calificanos_Mensaje");
         Boton = document.getElementById("Formulario_Calificanos_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Calificanos_Mensaje");
         Boton.disabled = true;
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -92,8 +102,13 @@ if (document.getElementById("Formulario_Calificanos")){
 if (document.getElementById("Formulario_Contactanos")){
     document.getElementById("Formulario_Contactanos").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Contactanos_Mensaje");
         Boton = document.getElementById("Formulario_Contactanos_Boton");
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Contactanos_Mensaje");
         Boton.disabled = true;
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -136,8 +151,65 @@ if (document.getElementById("Formulario_Contactanos")){
 if (document.getElementById("Formulario_Registrar")){
     document.getElementById("Formulario_Registrar").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Registrar_Mensaje");
         Boton = document.getElementById("Formulario_Registrar_Boton");        
+        document.querySelectorAll("[id^='Error_']").forEach(el => {
+            el.classList.add("d-none");
+        });     
+        if(!this.checkValidity()){
+            const input = this.querySelector(":invalid")
+            if (input.validity.valueMissing) {
+                if (input.name === "Recordar"){
+                    Mensaje_Text = "Acepta los terminos y condiciones";
+                }
+                else {
+                    Mensaje_Text = "Completa este campo";
+                }                
+            }
+            else if (input.validity.typeMismatch) {
+                Mensaje_Text = "Correo inválido";
+            }
+            else if (input.validity.patternMismatch) {
+                if (input.name === "Fecha_Nacimiento" || input.name === "Documento"){
+                    Mensaje_Text = "Solo se permite numeros";
+                }
+                else {
+                    Mensaje_Text = "Solo se permite letras";
+                }
+            }
+            else if (input.validity.tooShort) {
+                Mensaje_Text = `Mínimo ${input.minLength} caracteres`;
+            }
+            else if (input.validity.tooLong) {
+                Mensaje_Text = `Máximo ${input.maxLength} caracteres`;
+            }
+            else if (input.validity.rangeUnderflow) {
+                Mensaje_Text = `Debe ser mayor o igual a ${input.min}`;
+            }
+            else if (input.validity.rangeOverflow) {
+                Mensaje_Text = `Debe ser menor o igual a ${input.max}`;
+            }
+            else if (input.validity.stepMismatch) {
+                Mensaje_Text = "Valor no válido";
+            }
+            else if (input.validity.badInput) {
+                Mensaje_Text = "Dato inválido";
+            }  
+            Mensaje = document.getElementById(`Error_${input.name}`);
+            Mensaje.classList.remove("d-none");
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = Mensaje_Text
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            return; 
+        }        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");                 
+        Mensaje = document.getElementById("Formulario_Registrar_Mensaje");
         Boton.disabled = true;
         
         const Pass1 = document.getElementById("Input_Password1").value;
@@ -185,7 +257,6 @@ if (document.getElementById("Formulario_Registrar")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400){
-            window.scrollTo(0, 0);
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -203,9 +274,14 @@ if (document.getElementById("Formulario_Registrar")){
 }
 if (document.getElementById("Formulario_Codigo")){
     document.getElementById("Formulario_Codigo").addEventListener("submit", async function(e){
-        e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Codigo_Mensaje");
+        e.preventDefault(); 
         Boton = document.getElementById("Formulario_Codigo_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Codigo_Mensaje");
         Boton.disabled = true;
 
         const Inputs = document.querySelectorAll("input[type='text']");
@@ -258,8 +334,13 @@ if (document.getElementById("Formulario_Codigo")){
 if (document.getElementById("Formulario_Login")){
     document.getElementById("Formulario_Login").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Login_Mensaje");
         Boton = document.getElementById("Formulario_Login_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Login_Mensaje");
         Boton.disabled = true;    
 
         const Info = {
@@ -336,8 +417,13 @@ if (document.getElementById("Formulario_Login")){
 if (document.getElementById("Formulario_Recuperar")){
     document.getElementById("Formulario_Recuperar").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Recuperar_Mensaje");
         Boton = document.getElementById("Formulario_Recuperar_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Recuperar_Mensaje");
         Boton.disabled = true;
 
         const formData = new FormData(this);
@@ -386,8 +472,13 @@ if (document.getElementById("Formulario_Recuperar")){
 if (document.getElementById("Formulario_Recuperar2")){
     document.getElementById("Formulario_Recuperar2").addEventListener("submit", async function(e){
         e.preventDefault();
-        Mensaje = document.getElementById("Formulario_Recuperar2_Mensaje");
         Boton = document.getElementById("Formulario_Recuperar2_Boton");        
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Recuperar2_Mensaje");
         Boton.disabled = true;
 
         const Pass1 = document.getElementById("Input_Password4").value;

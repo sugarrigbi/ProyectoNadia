@@ -543,7 +543,7 @@ const Traducciones = {
         },
         inicio:{
             Reporta: "Signalez aujourd'hui, agissez maintenant",
-            Reporta_Nosotros: "Faites votre signalement ; nous le portons à ceux qui doivent agir.",
+            Reporta_Nosotros: "Faites votre signalement nous le portons à ceux qui doivent agir.",
             Empieza_Ya: "Commencez maintenant",
             Restitución: "Restitution des biens avec GaiaLink",
             Victima: "Avez-vous été victime d'expropriation, de vol ou de perte de votre propriété ? Sur GaiaLink, nous vous aidons à enregistrer votre dossier rapidement et en toute sécurité, sans démarches en personne. Notre équipe reçoit votre demande et la transmet à l'entité compétente pour qu'elle engage la procédure légale. Tout depuis notre plateforme, sans files d'attente, sans déplacements, sans complications.",

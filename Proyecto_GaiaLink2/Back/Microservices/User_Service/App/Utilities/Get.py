@@ -9,7 +9,7 @@ class Get_User:
         Data_U = {
             "Correo": Data["Correo"],
             "Nombre": Data["Nombre"],
-            "Contraseña": Data["Contraseña"]
+            "Contraseña": Data["Contraseña1"]
         }
         Data_P = {
             "Primer_Nombre": Data["Primer_Nombre"],
