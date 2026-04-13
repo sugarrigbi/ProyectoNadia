@@ -233,7 +233,8 @@ class Case_Service():
         if Filtros.get("Incidente"):
             Casos = Casos.filter(Tabla_Caso.Incidente_ID.in_(Filtros["Incidente"]))
         if Filtros.get("Nombre"):
-            Casos = Casos.filter(Tabla_Caso.Nombre.ilike(f"%{Filtros['Nombre']}%"))                        
+            nombre = Filtros['Nombre'][0]         
+            Casos = Casos.filter(Tabla_Caso.Nombre.ilike(f"%{nombre}%"))                        
 
         return Casos
     @staticmethod

@@ -1232,7 +1232,335 @@ document.addEventListener("DOMContentLoaded", () => {
                         span.classList.add("prioridad-critica");
                     }
                 });               
-            }                           
+            }   
+            if (document.getElementById("Entidad_Contenedor")) {
+                document.querySelectorAll("span[id^='estado-span-']").forEach(span => {
+                    const tipo = span.textContent.trim();
+                    if (tipo === "Activa") {
+                        span.classList.add("estado-activo");
+                    } else if (tipo === "Inactiva") {
+                        span.classList.add("estado-eliminado");
+                    } else if (tipo === "Suspendida") {
+                        span.classList.add("estado-espera");
+                    } else if (tipo === "Eliminada") {
+                        span.classList.add("estado-escalado");
+                    }
+                });  
+            }          
+            if (document.getElementById("Entidad_Contenedor")) {
+                document.querySelectorAll("span[id^='incidente-span-']").forEach(span => {
+                    const tipo = span.textContent.trim();
+                    if (tipo === "Desplazamiento") {
+                        span.classList.add("estado-pendiente");
+                    } else if (tipo === "Predios Despojados") {
+                        span.classList.add("estado-eliminado");
+                    } else if (tipo === "Expropiacion") {
+                        span.classList.add("estado-decision");
+                    } else if (tipo === "Hurto") {
+                        span.classList.add("estado-escalado");
+                    }
+                });  
+            }          
+            if (document.getElementById("Boton_Abrir_Filtro2")){
+                const BotonFiltro = document.getElementById("Boton_Abrir_Filtro2");
+                const BotonLimpiar = document.getElementById("Boton_Limpiar_Filtro2");
+                const BotonEnviar = document.getElementById("Boton_Enviar_Filtro2");
+                const Filtros = document.getElementById("Cont_Filtro2");
+                BotonFiltro.addEventListener("click", () =>{
+                    if (Filtros.classList.contains("d-none")){
+                        Filtros.classList.remove("d-none")
+                        Filtros.classList.add("d-flex")
+                    }else if (Filtros.classList.contains("d-flex")){
+                        Filtros.classList.remove("d-flex")
+                        Filtros.classList.add("d-none")
+                    }
+                });
+                BotonLimpiar.addEventListener("click", () =>{
+                    document.querySelectorAll("[id^='Check_Estado_']").forEach(CheckEstado => {
+                        CheckEstado.checked = false;
+                    });
+                    document.querySelectorAll("[id^='Check_Incidente_']").forEach(CheckIncidente => {
+                        CheckIncidente.checked = false;
+                    });
+                    document.getElementById("Check_Nombre").value = "";
+                });
+                BotonEnviar.addEventListener("click", () =>{
+                    const Data = {
+                        Estado: [],
+                        Incidente: [],
+                        Nombre: []
+                    }
+
+                    document.querySelectorAll("[id^='Check_Estado_']").forEach(CheckEstado => {
+                        if (CheckEstado.checked){
+                            Data.Estado.push(CheckEstado.value);
+                        }
+                    });
+                    document.querySelectorAll("[id^='Check_Incidente_']").forEach(CheckIncidente => {
+                        if (CheckIncidente.checked){
+                            Data.Incidente.push(CheckIncidente.value)
+                        }
+                    });   
+                    if (document.getElementById("Check_Nombre").value !== ""){
+                        Data.Nombre.push(document.getElementById("Check_Nombre").value)
+                    }
+                    const params = new URLSearchParams();
+                    for (const key in Data) {
+                        if (Array.isArray(Data[key])) {
+                            Data[key].forEach(val => params.append(key, val));
+                        } else {
+                            params.append(key, Data[key]);
+                        }
+                    }
+                    cargarPagina("/dashboard/staff/entidades/search?" + params.toString());
+                });
+            }
+            if (document.getElementById("contenido")){
+                const URL = window.location.pathname;
+                const Boton_Crear = document.getElementById("Crear_Entidad_Admin");
+                const Form = document.getElementById("Entidad_Contenedor");
+                if (!User.Permisos.some(Perm => Perm.Nombre === "entidad_ver")){
+                    if (URL.includes("/entidades")){
+                        cargarPagina("/dashboard/inicio");
+                    }            
+                }
+                if (Boton_Crear) {
+                    if (User.Permisos.some(Perm => Perm.Nombre === "entidad_crear")){
+                        Boton_Crear.classList.remove("d-none");
+                        Boton_Crear.classList.add("d-flex");
+                    }
+                }
+                if(Form){
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "entidad_editar")){
+                        Form.querySelectorAll("input, select, textarea").forEach(Input => {
+                            Input.disabled = true;
+                        });
+                    }
+                }
+                document.querySelectorAll("[id^='Eliminar_Entidad_Admin_']").forEach(Button => {
+                    if (User.Permisos.some(Perm => Perm.Nombre === "entidad_eliminar")){
+                        Button.classList.remove("d-none");
+                        Button.classList.add("d-flex");
+                    }                    
+                });               
+            }   
+            if (document.getElementById("Entidad_Contenedor")) {
+                document.querySelectorAll("[id^='Entidad_Botones_']").forEach(div => {
+                    const entidad_id = div.dataset.entidad;
+                    const Contenedor = document.getElementById(`Entidad_Datos_${entidad_id}`);
+                    const Boton = document.getElementById(`Entidad_Boton_Guardar_${entidad_id}`);
+                    const Boton2 = document.getElementById(`Entidad_Boton_Recarga_${entidad_id}`);
+                    const Imagen = document.getElementById(`Entidad_Boton_Guardar_Img_${entidad_id}`);
+                    const Campos = Array.from(Contenedor.querySelectorAll("input[name], select[name], textarea[name]"));
+                    const inicial = new Map();
+
+                    Campos.forEach((Campo, idx) => {
+                        const key = Campo.name + "|" + idx;
+                        if (Campo.tagName.toLowerCase() === "select" && Campo.multiple) {
+                            inicial.set(key, Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|"));
+                        } else {
+                            inicial.set(key, Campo.value);
+                        }
+                    });
+
+                    function Hay_Cambios() {
+                        for (let i = 0; i < Campos.length; i++) {
+                            const Campo = Campos[i];
+                            const key = Campo.name + "|" + i;
+                            if (Campo.tagName.toLowerCase() === "select" && Campo.multiple) {
+                                const cur = Array.from(Campo.options).filter(o => o.selected).map(o => o.value).join("|");
+                                if (inicial.get(key) !== cur) return true;
+                            } else {
+                                if (inicial.get(key) !== Campo.value) return true;
+                            }
+                        }
+                        return false;
+                    }
+
+                    function Si_Cambio() {
+                        Boton.disabled = !Hay_Cambios();
+                        if (!Boton.disabled) {
+                            Boton2.disabled = false;
+                            Boton2.classList.replace("boton9", "boton11");
+                            Boton.classList.replace("boton9", "boton10");
+                            Boton.classList.replace("text-black", "text-info2");
+                            Imagen.src = "/Statics/img/Save.svg";
+                        } else {
+                            Boton2.disabled = true;
+                            Boton2.classList.replace("boton11", "boton9");
+                            Boton.classList.replace("boton10", "boton9");
+                            Boton.classList.replace("text-info2", "text-black");
+                            Imagen.src = "/Statics/img/Save_2.svg";
+                        }
+                    }
+
+                    function restaurarCamposIniciales() {
+                        Campos.forEach((Campo, idx) => {
+                            const key = Campo.name + "|" + idx;
+                            const saved = inicial.get(key);
+                            if (Campo.tagName.toLowerCase() === "select" && Campo.multiple) {
+                                const vals = (saved || "").split("|").filter(v => v !== "");
+                                Array.from(Campo.options).forEach(opt => { opt.selected = vals.includes(opt.value); });
+                            } else if (Campo.tagName.toLowerCase() === "select") {
+                                Campo.value = saved;
+                                if (Campo.value !== saved) Campo.selectedIndex = 0;
+                            } else {
+                                Campo.value = saved !== undefined && saved !== null ? saved : "";
+                            }
+                            Campo.dispatchEvent(new Event("input", { bubbles: true }));
+                            Campo.dispatchEvent(new Event("change", { bubbles: true }));
+                        });
+                        Si_Cambio();
+                    }
+
+                    Campos.forEach(el => {
+                        el.addEventListener(el.tagName.toLowerCase() === "select" ? "change" : "input", Si_Cambio);
+                        el.addEventListener("change", Si_Cambio);
+                    });
+                    Boton2.addEventListener("click", restaurarCamposIniciales);
+                    Si_Cambio();
+                });
+                document.getElementById("Entidad_Contenedor").addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    const Boton = document.querySelector("[id^='Entidad_Boton_Guardar_']:not(:disabled)") || e.submitter;
+                    const entidad_id = document.querySelector("[id^='Obtener_Entidad_Id_']")?.textContent.trim();
+                    const Boton_Mensaje = document.getElementById(`Entidad_Boton_Guardar_Msg_${entidad_id}`);
+                    if (Boton) Boton.disabled = true;
+
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData.entries());
+                    data.Entidad_Id = entidad_id;
+
+                    const response = await fetch(`${API_BASE}/api/entity/update/${entidad_id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${Token_JWT}` },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+
+                    if (response.status === 200) {
+                        sessionStorage.setItem('entidad_actualizada', entidad_id);
+                        location.reload();
+                    } else if (response.status === 429) {
+                        window.location.href = "/rate-limit";
+                    } else if (response.status === 400) {
+                        window.scrollTo(0, 0);
+                        if (Boton_Mensaje) Boton_Mensaje.textContent = result.Error;
+                        if (Boton) Boton.disabled = false;
+                    } else if (response.status === 403) {
+                        document.body.classList.remove('modal-open');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        cargarPagina("/dashboard/unauthorized");
+                    }
+                });
+                document.querySelectorAll("[id^='Entidad_Boton_Eliminar_']").forEach(span => {
+                    const entidadId = span.dataset.entidadId;
+                    span.addEventListener("click", async () => {
+                        span.disabled = true;
+                        const response = await fetch(`${API_BASE}/api/entity/delete/${entidadId}`, {
+                            method: "PUT",
+                            headers: { "Authorization": `Bearer ${Token_JWT}` }
+                        });
+                        const result = await response.json();
+
+                        if (response.status === 200) {
+                            sessionStorage.setItem('entidad_eliminada', entidadId);
+                            location.reload();
+                        } else if (response.status === 429) {
+                            window.location.href = "/rate-limit";
+                        } else if (response.status === 403) {
+                            document.body.classList.remove('modal-open');
+                            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                            cargarPagina("/dashboard/unauthorized");
+                        } else {
+                            span.disabled = false;
+                        }
+                    });
+                });
+            }
+            if (document.getElementById("Entidad_Contenedor2")) {
+                const Contenedor = document.getElementById("Entidad_Contenedor2");
+                const Boton = document.getElementById("EntidadNueva_Boton_Guardar");
+                const Imagen = document.getElementById("EntidadNueva_Boton_Guardar_Img");
+                const Campos = Array.from(Contenedor.querySelectorAll("input[name], select[name], textarea[name]"));
+                const inicial = new Map();
+
+                Campos.forEach((Campo, idx) => {
+                    inicial.set(Campo.name + "|" + idx, Campo.value);
+                });
+
+                function Hay_Cambios_Nuevo() {
+                    for (let i = 0; i < Campos.length; i++) {
+                        if (inicial.get(Campos[i].name + "|" + i) !== Campos[i].value) return true;
+                    }
+                    return false;
+                }
+
+                function Si_Cambio_Nuevo() {
+                    Boton.disabled = !Hay_Cambios_Nuevo();
+                    if (!Boton.disabled) {
+                        Boton.classList.replace("boton9", "boton10");
+                        Boton.classList.replace("text-black", "text-info2");
+                        Imagen.src = "/Statics/img/Save.svg";
+                    } else {
+                        Boton.classList.replace("boton10", "boton9");
+                        Boton.classList.replace("text-info2", "text-black");
+                        Imagen.src = "/Statics/img/Save_2.svg";
+                    }
+                }
+
+                Campos.forEach(el => {
+                    el.addEventListener(el.tagName.toLowerCase() === "select" ? "change" : "input", Si_Cambio_Nuevo);
+                    el.addEventListener("change", Si_Cambio_Nuevo);
+                });
+                Si_Cambio_Nuevo();
+
+                Contenedor.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    Boton.disabled = true;
+                    const Boton_Mensaje = document.getElementById("EntidadNueva_Boton_Guardar_Msg");
+
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData.entries());
+
+                    const response = await fetch(`${API_BASE}/api/entity/create`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${Token_JWT}` },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+
+                    if (response.status === 201) {
+                        sessionStorage.setItem('entidad_creada', 'true');
+                        location.reload();
+                    } else if (response.status === 429) {
+                        window.location.href = "/rate-limit";
+                    } else if (response.status === 400) {
+                        window.scrollTo(0, 0);
+                        Boton_Mensaje.textContent = result.Error;
+                        Boton.classList.replace("boton9", "boton8");
+                        Boton.disabled = false;
+                    } else if (response.status === 403) {
+                        document.body.classList.remove('modal-open');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        cargarPagina("/dashboard/unauthorized");
+                    }
+                });
+            }
+            if (document.getElementById("Nav_Entidades_Admin")){
+                const Nav_Entidad = document.getElementById("Nav_Entidades_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "entidad_ver")){
+                    Nav_Entidad.classList.remove("d-none");
+                    Nav_Entidad.classList.add("d-flex");                
+                }                         
+            }
+            if (document.getElementById("Card_Entidades_Admin")){
+                const Card_Entidades = document.getElementById("Card_Entidades_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "entidad_ver")){
+                    Card_Entidades.classList.remove("d-none");
+                    Card_Entidades.classList.add("d-flex");                    
+                }                       
+            }      
         });
     }
     document.querySelectorAll(".panel-link").forEach(link => {

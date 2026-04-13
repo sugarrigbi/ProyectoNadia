@@ -248,7 +248,7 @@ class EntidadAuditoria(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     Accion = db.Column(db.String(100), nullable=False)
-
+    Anterior = db.Column(db.Text, nullable=False)
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,index=True)
     Fecha_Modificacion = db.Column(db.DateTime, default=datetime.utcnow)
     Entidad_ID = db.Column(db.Integer,db.ForeignKey("Entidad.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,index=True)

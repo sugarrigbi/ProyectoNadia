@@ -1,0 +1,336 @@
+<div class="container-fluid p-3 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-4">
+    <div class="w-100 d-flex justify-content-between px-0 px-sm-3 mb-2 mb-sm-0">
+        <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
+            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
+                <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
+            </a>        
+            <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
+                Inicio > Entidades
+            </span>
+        </div>
+        <div class="d-flex gap-3 align-items-center justify-content-center">
+            <li class="nav-item dropdown list-unstyled fs-nav-1">
+                <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                    <img class="rounded-circle icono-nav5 imagen_usuario">
+                </a>
+                <ul class="dropdown-menu Bg_Blanco p-2 border-round">
+                    <li>
+                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
+                            <img class="icono-nav6 rounded-circle imagen_usuario">
+                            <span id="User_Name2">
+                                Usuario
+                            </span>
+                        </div>
+                    </li>                    
+                    <div class="dropdown-divider"></div>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
+                            <img src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
+                            Mis datos
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="/dashboard/preferencias">
+                            <img src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
+                            Ajustes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
+                            <img src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
+                            Ayuda
+                        </a>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li>
+                        <button id="Button_Cerrar" class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-danger fw-medium gap-2 px-2">
+                            <img src="{{ url_for('static', filename='img/Log_Out.svg') }}" class="icono-nav7">
+                            Cerrar sesion
+                        </button>
+                    </li>                                                                          
+                </ul>
+            </li>
+        </div>  
+    </div>    
+    <div id="Entidades_Busqueda" class="row justify-content-start align-items-stretch w-100 gap-3 p-0">
+        <div class="p-0 d-flex flex-row gap-2">
+            <button id="Crear_Entidad_Admin" data-bs-target="#ModalCreate" data-bs-toggle="modal" type="button" class="d-none btn btn-success fsr-15 boton7 align-items-center justify-content-center gap-2">
+                <img src="{{ url_for('static', filename='img/PlusWhite.svg') }}" class="icono-nav2">
+                Crear Entidad
+            </button>
+            <button id="Boton_Abrir_Filtro2" type="button" class="btn Bg_Azul4 fsr-15 boton12 d-flex align-items-center justify-content-center gap-2">
+                <img src="{{ url_for('static', filename='img/Filter.svg') }}" class="icono-nav2">
+                Filtrar
+            </button>
+        </div>
+        <div class="p-0 d-none gap-2 flex-column flex-md-row w-100 justify-content-between" id="Cont_Filtro2">
+            <div class="dropdown p-0 w-auto align-items-start align-items-md-center justify-content-center justify-content-md-start d-flex gap-2 flex-column flex-md-row">
+                <button class="Bg_Oscuro2 fsr-15 rounded-2 border-0 p-2 py-1 dropdown-toggle d-flex flex-row gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Estado
+                    <img class="m-0 d-none d-sm-block" style="width: 20px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                </button>
+                <ul class="dropdown-menu p-2">
+                    {% for estado in Data["Estados"] %}
+                        <li class="d-flex flex-row justify-content-start align-items-center p-1">
+                            <div class="form-check">
+                                <input {% if 'Estado' in request.args and estado['ID']|string in request.args.getlist('Estado') %}checked{% endif %} class="form-check-input" type="checkbox" value="{{ estado['ID'] }}" id="Check_Estado_{{ estado['ID'] }}">
+                            </div>
+                            <label class="form-check-label" for="Check_Estado_{{ estado['ID'] }}">
+                                {{ estado['Nombre'] }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button class="Bg_Oscuro2 fsr-15 rounded-2 border-0 p-2 py-1 dropdown-toggle d-flex flex-row gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Incidente
+                    <img class="m-0 d-none d-sm-block" style="width: 20px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                </button>
+                <ul class="dropdown-menu p-2">
+                    {% for incidente in Data["Incidentes"] %}
+                        <li class="d-flex flex-row justify-content-start align-items-center p-1">
+                            <div class="form-check">
+                                <input {% if 'Incidente' in request.args and incidente['ID']|string in request.args.getlist('Incidente') %}checked{% endif %} class="form-check-input" type="checkbox" value="{{ incidente['ID'] }}" id="Check_Incidente_{{ incidente['ID'] }}">
+                            </div>
+                            <label class="form-check-label" for="Check_Incidente_{{ incidente['ID'] }}">
+                                {{ incidente['Incidente'] }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <input value="{{ request.args.get('Nombre', '') }}" type="text" class="form-control form-control-sm fsr-15 rounded-2 border-0 p-2 py-1" placeholder="Nombre..." id="Check_Nombre">
+                </div>
+            </div>
+            <div class="p-0 w-auto align-items-center justify-content-start justify-content-md-end d-flex gap-2">
+                <button id="Boton_Limpiar_Filtro2" type="button" class="btn Bg_Rojo text-white fsr-15 boton8 d-flex align-items-center justify-content-center gap-2">
+                    Limpiar filtros
+                </button>
+                <button id="Boton_Enviar_Filtro2" type="button" class="btn Bg_Azul4 fsr-15 boton12 d-flex align-items-center justify-content-center gap-2">
+                    Buscar
+                </button>
+            </div>
+        </div>
+        <div class="modal w-100 p-0" id="ModalCreate" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
+                <div class="modal-content Bg_Blanco2 h-100" style="height:auto; overflow-y:auto;">
+                    <form id="Entidad_Contenedor2" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
+                        <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
+                            <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                                <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                    <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                    ENTIDAD NUEVA
+                                </p>
+                                <input required name="Nombre" placeholder="Agregue un nombre..." class="border-0 w-auto rounded-1 fsr-13" style="resize: none;">
+                            </div>
+                            <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                                <div class="d-none d-md-flex flex-row gap-2">
+                                    <button type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                        Volver
+                                    </button>
+                                </div>
+                                <div class="d-flex flex-row gap-3 gap-md-2">
+                                    <button type="button" data-bs-dismiss="modal" class="d-flex d-md-none boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                        Volver
+                                    </button>
+                                    <button type="submit" disabled id="EntidadNueva_Boton_Guardar" class="boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <img id="EntidadNueva_Boton_Guardar_Img" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                        <span id="EntidadNueva_Boton_Guardar_Msg">Guardar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-0 border-4 border-dark w-100 rounded-1">
+                        <div class="row w-100 h-100 p-2">
+                            <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                <p class="fsr-12 m-0 fw-medium h-auto">Detalles</p>
+                                <hr class="mt-0 mb-1 border-4 rounded-1">
+                                <div class="ps-3 d-flex flex-column gap-2">
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Estado</p>
+                                        <select required name="Estado_Entidad_ID" class="form-select m-0 py-0 pt-1 ps-1 fsr-14 w-100">
+                                            <option value="" selected disabled>Seleccione un estado...</option>
+                                            {% for estado in Data["Estados"] %}
+                                                <option value="{{ estado['ID'] }}">{{ estado['Nombre'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Incidente</p>
+                                        <select required name="Incidente_ID" class="form-select m-0 py-0 pt-1 ps-1 fsr-14 w-100">
+                                            <option value="" selected disabled>Seleccione un incidente...</option>
+                                            {% for incidente in Data["Incidentes"] %}
+                                                <option value="{{ incidente['ID'] }}">{{ incidente['Incidente'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Dirección</p>
+                                        <input required name="Direccion" placeholder="Agregue una dirección..." class="border-0 w-100 rounded-1 fsr-14 px-2">
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Teléfono</p>
+                                        <input required name="Telefono" placeholder="Agregue un teléfono..." class="border-0 w-100 rounded-1 fsr-14 px-2">
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Website</p>
+                                        <input required name="Website" placeholder="Agregue un website..." class="border-0 w-100 rounded-1 fsr-14 px-2">
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="fsr-13 m-0 h-auto">Descripción</p>
+                                        <textarea required name="Descripcion" placeholder="Agregue una descripción..." class="w-100 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% set items2 = Entidades | list %}
+        {% if items2|length == 0 %}
+            <div class="p-2 vh-60 d-flex align-items-center justify-content-center flex-column">
+                <img src="{{ url_for('static', filename='img/WARNING.png') }}" class="img-fluid mb-4" style="max-width:200px">
+                <h1 class="fsr-9 fw-bold">No se encontraron entidades</h1>
+                <p class="text-center text-muted fsr-11">Intenta ajustar o limpiar los filtros para ver más resultados.</p>
+                <a href="/dashboard/staff/entidades" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
+                    Volver a entidades
+                </a>
+            </div>
+        {% else %}
+            {% for Entidad in Entidades %}
+                <div class="list-group-item d-flex justify-content-between p-3 Bg_Blanco rounded-3 border-5 border-start Border_Morado2 flex-column gap-3 gap-md-0 flex-md-row">
+                    <div class="mx-2">
+                        <h2 class="fsr-13 m-0">Entidad {{ Entidad["ID"] }}</h2>
+                        <p class="fsr-14 m-0 mb-2">{{ Entidad["Nombre"] }}</p>
+                        <p class="fsr-15 m-0 mb-1">
+                            <b>Estado:</b>
+                            <span id="estado-span-{{ Entidad['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1">
+                                {% for estado in Data["Estados"] %}{% if estado["ID"] == Entidad["Estado_Entidad_ID"] %}{{ estado["Nombre"] }}{% endif %}{% endfor %}
+                            </span>
+                        </p>
+                        <p class="fsr-15 m-0 mb-1">
+                            <b>Incidente:</b>
+                            <span id="incidente-span-{{ Entidad['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1">
+                                {% for incidente in Data["Incidentes"] %}{% if incidente["ID"] == Entidad["Incidente_ID"] %}{{ incidente["Incidente"] }}{% endif %}{% endfor %}
+                            </span>                            
+                        </p>
+                        <p class="fsr-15 m-0 mb-1"><b>Teléfono:</b> {{ Entidad["Telefono"] }}</p>
+                        <p class="fsr-15 m-0"><b>Dirección:</b> {{ Entidad["Direccion"] }}</p>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mx-2">
+                        <button type="button" class="btn btn-success fsr-15 boton7" data-bs-target="#ModalEdit{{ Entidad['ID'] }}" data-bs-toggle="modal">
+                            Abrir entidad
+                        </button>
+                    </div>
+                </div>
+                <div class="modal w-100 p-0" id="ModalEdit{{ Entidad['ID'] }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
+                        <div class="modal-content Bg_Blanco2 h-100" style="overflow-y:auto;">
+                            <form id="Entidad_Contenedor" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
+                                <div id="Entidad_Datos_{{ Entidad['ID'] }}" data-entidad="{{ Entidad['ID'] }}" class="w-100">
+                                    <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
+                                        <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                                            <p class="m-0 fsr-15 d-flex align-items-center gap-2">
+                                                <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
+                                                ENTIDAD {{ Entidad["ID"] }}
+                                            </p>
+                                            <p id="Obtener_Entidad_Id_{{ Entidad['ID'] }}" class="d-none">{{ Entidad['ID'] }}</p>
+                                            <input required name="Nombre" value="{{ Entidad['Nombre'] }}" placeholder="Agregue un nombre..." class="border-0 w-auto rounded-1 fsr-13 Entidad_Nombre" style="resize: none;">
+                                        </div>
+                                        <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                                            <div class="d-none d-md-flex flex-row gap-2">
+                                                <button type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                                    <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                                    Volver
+                                                </button>
+                                            </div>
+                                            <div id="Entidad_Botones_{{ Entidad['ID'] }}" data-entidad="{{ Entidad['ID'] }}" class="d-flex flex-row gap-3 gap-md-2">
+                                                <button type="button" data-bs-dismiss="modal" class="d-flex d-md-none boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                                    <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
+                                                    Volver
+                                                </button>
+                                                <button type="submit" disabled id="Entidad_Boton_Guardar_{{ Entidad['ID'] }}" class="boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                                    <img id="Entidad_Boton_Guardar_Img_{{ Entidad['ID'] }}" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                                    <span id="Entidad_Boton_Guardar_Msg_{{ Entidad['ID'] }}">Guardar</span>
+                                                </button>
+                                                <button disabled type="button" id="Entidad_Boton_Recarga_{{ Entidad['ID'] }}" class="boton9 p-1 border-0 bg-white rounded-1">
+                                                    <img src="{{ url_for('static', filename='img/Recarga.svg') }}" class="icono-nav7" style="transform: rotate(45deg);">
+                                                </button>
+                                                <button id="Eliminar_Entidad_Admin_{{ Entidad['ID'] }}" data-bs-target="#ModalDelete{{ Entidad['ID'] }}" data-bs-toggle="modal" type="button" class="d-none boton9 p-1 border-0 bg-white rounded-1">
+                                                    <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav7">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="m-0 border-4 border-dark w-100 rounded-1">
+                                    <div class="row w-100 h-100 p-2 flex-column flex-md-row">
+                                        <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                            <p class="fsr-12 m-0 fw-medium h-auto">Detalles</p>
+                                            <hr class="mt-0 mb-1 border-4 rounded-1">
+                                            <div class="ps-3 d-flex flex-column gap-2">
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Estado</p>
+                                                    <select required name="Estado_Entidad_ID" class="form-select m-0 py-0 pt-1 ps-1 fsr-14 w-100 Entidad_Estado">
+                                                        {% for estado in Data["Estados"] %}
+                                                            <option value="{{ estado['ID'] }}" {% if estado['ID'] == Entidad['Estado_Entidad_ID'] %}selected{% endif %}>{{ estado['Nombre'] }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Incidente</p>
+                                                    <select required name="Incidente_ID" class="form-select m-0 py-0 pt-1 ps-1 fsr-14 w-100 Entidad_Incidente">
+                                                        {% for incidente in Data["Incidentes"] %}
+                                                            <option value="{{ incidente['ID'] }}" {% if incidente['ID'] == Entidad['Incidente_ID'] %}selected{% endif %}>{{ incidente['Incidente'] }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Dirección</p>
+                                                    <input required name="Direccion" value="{{ Entidad['Direccion'] }}" class="border-0 w-100 rounded-1 fsr-14 px-2 Entidad_Direccion">
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Teléfono</p>
+                                                    <input required name="Telefono" value="{{ Entidad['Telefono'] }}" class="border-0 w-100 rounded-1 fsr-14 px-2 Entidad_Telefono">
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Website</p>
+                                                    <input required name="Website" value="{{ Entidad['Website'] }}" class="border-0 w-100 rounded-1 fsr-14 px-2 Entidad_Website">
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <p class="fsr-13 m-0 h-auto">Descripción</p>
+                                                    <textarea required name="Descripcion" class="w-100 rounded-1 fsr-13 Entidad_Descripcion" style="resize: none;">{{ Entidad['Descripcion'] }}</textarea>
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="ModalDelete{{ Entidad['ID'] }}" tabindex="-1" aria-labelledby="ModalDeleteLabel{{ Entidad['ID'] }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header text-danger-emphasis bg-danger">
+                                <h5 class="modal-title" id="ModalDeleteLabel{{ Entidad['ID'] }}">Atención</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p class="fsr-14 m-0">¿Estás seguro que deseas eliminar la entidad <strong>{{ Entidad["Nombre"] }}</strong>?</p>
+                                <p class="fsr-14 m-0">Esta acción no se puede deshacer.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-danger" id="Entidad_Boton_Eliminar_{{ Entidad['ID'] }}" data-entidad-id="{{ Entidad['ID'] }}">
+                                    Sí, eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>    
+</div>

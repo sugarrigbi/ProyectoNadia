@@ -3,6 +3,8 @@ from App.Routes.Forms_Service import Forms_Service_Bp
 from App.Routes.User_Service import User_Service_Bp
 from App.Routes.Auth_Service import Auth_Service_Bp
 from App.Routes.Case_Service import Case_Service_Bp
+from App.Routes.Entity_Service import Entity_Service_Bp
+from App.Routes.Account_Service import Account_Service_Bp
 from flask_cors import CORS
 from App.Rate_Limit import Rate_Limit
 
@@ -45,5 +47,7 @@ def Create_App():
     App.register_blueprint(User_Service_Bp)
     App.register_blueprint(Auth_Service_Bp)
     App.register_blueprint(Case_Service_Bp)
+    App.register_blueprint(Entity_Service_Bp)
+    App.register_blueprint(Account_Service_Bp)
 
     return App 

@@ -1,4 +1,4 @@
-from flask import request, jsonify, Response, json
+from flask import request, jsonify
 from App.Services.Case_Logic import Case_Service
 from App.Utilities.Util import Validar_JWT
 

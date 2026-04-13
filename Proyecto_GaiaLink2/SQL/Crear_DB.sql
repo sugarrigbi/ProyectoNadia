@@ -282,6 +282,7 @@ CREATE TABLE Entidad(
 CREATE TABLE Entidad_Auditoria(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Accion VARCHAR(100) NOT NULL,
+    Anterior TEXT NOT NULL,
     Modificado_Por INT NOT NULL,
     Fecha_Modificacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     Entidad_ID INT NOT NULL,

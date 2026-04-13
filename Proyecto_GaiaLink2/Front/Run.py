@@ -93,9 +93,6 @@ def Dashboard_Admin_Casos_By():
 
         return render_template("dashboard/casos_admin.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
     return render_template("dashboard/dashboard.html")
-
-
-
 @app.route("/dashboard/user/casos")
 def Dashboard_User_Casos():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
@@ -118,14 +115,6 @@ def Dashboard_User_Casos():
 
         return render_template("dashboard/casos_user.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
     return render_template("dashboard/dashboard.html")
-
-
-
-@app.route("/dashboard/entidades")
-def Dashboard_Admin_Entidades():
-    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/entidades.html")
-    return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/usuarios")
 def Dashboard_Admin_Usuarios():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
@@ -136,11 +125,51 @@ def Dashboard_Admin_Preferencias():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render_template("dashboard/preferencias.html")
     return render_template("dashboard/dashboard.html")
-@app.route("/dashboard/pruebas")
-def Dashboard_Admin_Pruebas():
+@app.route("/dashboard/staff/entidades")
+def Dashboard_Admin_Entidades():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/asd.html")
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+        
+        Response = requests.get(f"{API_URL}/entity/read/all", headers=headers)
+        if Response.status_code == 401:
+            return Response.json(), 401
+        elif Response.status_code == 403:
+            return render_template("dashboard/no_auth.html")
+
+        Datos = Response.json()
+        Entidades = Datos.get("Entidades", [])
+        Data = Datos.get("Datos", {})
+
+        print("ENTIDAD", Entidades)
+        print("DATA", Data)
+
+        return render_template("dashboard/entidades_admin.html", Entidades=Entidades, Data=Data)
     return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/staff/entidades/search")
+def Dashboard_Admin_Entidades_By():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+
+        Filtros = request.args.to_dict(flat=False)
+        Response = requests.get(f"{API_URL}/entity/read/search", params=Filtros, headers=headers)
+        if Response.status_code == 401:
+            return Response.json(), 401
+        elif Response.status_code == 403:
+            return render_template("dashboard/no_auth.html")
+
+        Datos = Response.json()
+        Entidades = Datos.get("Entidades", [])
+        Data = Datos.get("Datos", {})
+
+        return render_template("dashboard/entidades_admin.html", Entidades=Entidades, Data=Data)
+    return render_template("dashboard/dashboard.html")
+
 
 @app.route("/dashboard/unauthorized")
 def Unauthorized():

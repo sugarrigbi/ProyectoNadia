@@ -1,29 +1,22 @@
 Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
 
 TAREAS PENDIENTES:
-	SEGURIDAD:
+	DISPOSITIVOS:
 		#Cambiar estado de dispositivos
-		#Autenticador 2FA
-		proteccion contra subida de archivos maliciosos
-		Subida de archivos no debe ir en el mismo backend, al buckjet de GSC
-	DASHBOARD:
-		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
-		Tema Claro/Oscuro
-		Traductor de idiomas
 		#apartado para ver Dispositivos vinculados
-		Carga de documentos, evidencia, tipo opcion del clip en TFS
+	SEGURIDAD:
+		#Autenticador 2FA
+	DASHBOARD:
+		Tema Claro/Oscuro
 		Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc, dashboard o estadisticas avanzadas
 		#heal check de microservicios para los devs, en un micro apartado llamado desarollo
+	ARCHIVOS:
+		proteccion contra subida de archivos maliciosos
+		Subida de archivos no debe ir en el mismo backend, al buckjet de GSC
+		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
+		Carga de documentos, evidencia, tipo opcion del clip en TFS
 		descarga de archivos almacenados
 		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
-	CASOS:
-		Hacer casos usuario (Como Gaialink 1 perrito)
-	ENTIDADES:
-		CRUD de entidades
 	USUARIOS:
 		CRUD Personas
 		desactivar o suspender cuenta
-	NOTIFICACIONES:
-		Notifica a usuarios o funcionarios cuando cambia el estado de un caso o se requiere acción.
-	AUDITORIAS:
-		hacer auditorias de lo q pasa y cuando, y estados anteriores, cambios de datos de usuario(Nombres, Contraseña etc), q TODO quede almacenado
