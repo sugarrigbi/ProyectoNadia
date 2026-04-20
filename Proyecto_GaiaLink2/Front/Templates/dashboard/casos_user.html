@@ -1,22 +1,22 @@
 <div class="container-fluid p-2 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-3">
-    <div class="w-100 d-flex justify-content-between px-0 px-sm-3 mb-2 mb-sm-0">
+    <div class="w-100 d-flex justify-content-between px-0 mb-2 mb-sm-0">
         <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
-            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
+            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra color_morado2">
                 <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
             </a>        
-            <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
+            <span class="m-0 d-flex align-items-center fsr-10 fw-bold color_blanco">
                 Inicio > Casos
             </span>
         </div>
         <div class="d-flex gap-3 align-items-center justify-content-center">
             <li class="nav-item dropdown list-unstyled fs-nav-1">
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                    <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
                 </a>
-                <ul class="dropdown-menu Bg_Blanco p-2 border-round">
+                <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
-                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
+                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
                             <span id="User_Name2">
                                 Usuario
@@ -25,20 +25,20 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="/dashboard/preferencias">
-                            <img src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
+                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
                             Ajustes
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
                     </li>
@@ -70,31 +70,31 @@
                     <form id="Crear_Caso_User" class="Bg_Blanco2 rounded-3 p-3">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
-                                <h1 class="fsr-12 fw-bold m-0">
+                                <h1 class="fsr-12 fw-bold m-0 color_blanco">
                                     Crear Caso
                                 </h1>
-                                <span class="text-muted fsr-14">
+                                <span class="text-muted fsr-14 color_blanco">
                                     Registro de nuevo caso
                                 </span>
                             </div>
                         </div>
-                        <div class="Bg_Blanco rounded-4 p-4 shadow-sm border d-flex flex-column gap-2 mb-3">
-                            <h2 class="fsr-12 fw-bold m-0">
+                        <div class="Bg_Blanco border-0 rounded-4 p-4 shadow-sm border d-flex flex-column gap-2 mb-3">
+                            <h2 class="fsr-12 fw-bold m-0 color_blanco">
                                 Descripción
                             </h2>
-                            <textarea required class="form-control fsr-14" name="CasoNuevo_Descripcion" placeholder="Ingrese la descripción del caso"></textarea>
+                            <textarea required class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14" name="CasoNuevo_Descripcion" placeholder="Ingrese la descripción del caso"></textarea>
                         </div>
                         <div class="row g-2 g-md-4">
                             <div class="col-md-6 flex-grow-1 d-flex flex-column gap-2">
-                                <div class="Bg_Blanco h-100 rounded-4 p-4 shadow-sm border d-flex flex-column gap-2">
-                                    <h3 class="fsr-12 fw-bolder mb-1">
+                                <div class="Bg_Blanco h-100 rounded-4 p-4 shadow-sm border d-flex flex-column gap-2 border-0">
+                                    <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                         Información
                                     </h3>
                                     <div>
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Incidente
                                         </div>
-                                        <select required class="form-select fsr-14 py-1" name="CasoNuevo_Incidente">
+                                        <select required class="color_blanco6 Bg_Blanco3 color_blanco border-0 form-select fsr-14 py-1" name="CasoNuevo_Incidente">
                                             <option value="" selected disabled>Seleccione un incidente...</option>
                                             {% for incidente in Data['Incidentes'] %}
                                                 <option value="{{ incidente['ID'] }}">
@@ -104,26 +104,26 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Afectados
                                         </div>
-                                        <input required type="number" placeholder="Agregue un numero..." class="form-control fsr-14 py-1" name="CasoNuevo_Afectados">
+                                        <input required type="number" placeholder="Agregue un numero..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1" name="CasoNuevo_Afectados">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 flex-grow-1 d-flex flex-column gap-2">
-                                <div class="Bg_Blanco h-100 rounded-4 p-4 shadow-sm border d-flex flex-column gap-2">
-                                    <h3 class="fsr-12 fw-bolder mb-1">
+                                <div class="Bg_Blanco h-100 rounded-4 p-4 shadow-sm border d-flex flex-column gap-2 border-0">
+                                    <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                         Ubicación
                                     </h3>
                                     <div>
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Dirección
                                         </div>
-                                        <input required placeholder="Agregue una direccion..." type="text" class="form-control fsr-14 py-1" name="CasoNuevo_Direccion">
+                                        <input required placeholder="Agregue una direccion..." type="text" class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1" name="CasoNuevo_Direccion">
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Barrio
                                         </div>
                                         <datalist id="Datalist_Barrio">
@@ -131,12 +131,12 @@
                                                 <option value="{{ barrio['Nombre'] }}" data-id="{{ barrio['ID'] }}"></option>
                                             {% endfor %}
                                         </datalist>                                                  
-                                        <input id="Barrio_Create" required list="Datalist_Barrio" placeholder="Agregue un barrio..." class="form-control fsr-14 py-1" style="resize: none;">
+                                        <input id="Barrio_Create" required list="Datalist_Barrio" placeholder="Agregue un barrio..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1" style="resize: none;">
                                         <input type="hidden" id="Barrio_Create_Nombre" name="Caso_Barrio_Nombre" >
                                         <input type="hidden" id="Barrio_Create_ID" name="Caso_Barrio_ID">
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Localidad
                                         </div>
                                         <datalist id="Datalist_Localidad">
@@ -144,12 +144,12 @@
                                                 <option value="{{ loc['Nombre'] }}" data-id="{{ loc['ID'] }}"></option>
                                             {% endfor %}
                                         </datalist>                                                  
-                                        <input id="Localidad_Create" required list="Datalist_Localidad" placeholder="Agregue una localidad..." class="form-control fsr-14 py-1">
+                                        <input id="Localidad_Create" required list="Datalist_Localidad" placeholder="Agregue una localidad..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1">
                                         <input type="hidden" id="Localidad_Create_Nombre" name="Caso_Localidad_Nombre">
                                         <input type="hidden" id="Localidad_Create_ID" name="Caso_Localidad_IDCiudad_Nombre">
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Ciudad
                                         </div>
                                         <datalist id="Datalist_Ciudad">
@@ -157,12 +157,12 @@
                                                 <option value="{{ ciudad['Nombre'] }}" data-id="{{ ciudad['ID'] }}"></option>
                                             {% endfor %}
                                         </datalist>                                                  
-                                        <input id="Ciudad_Create" required list="Datalist_Ciudad" placeholder="Agregue una ciudad..." class="form-control fsr-14 py-1">
+                                        <input id="Ciudad_Create" required list="Datalist_Ciudad" placeholder="Agregue una ciudad..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1">
                                         <input type="hidden" id="Ciudad_Create_Nombre" name="Caso_Ciudad_Nombre">
                                         <input type="hidden" id="Ciudad_Create_ID" name="Caso_Ciudad_ID">
                                     </div>      
                                     <div class="d-flex flex-column">
-                                        <div class="fsr-14 fw-semibold">
+                                        <div class="fsr-14 fw-semibold color_blanco">
                                             Departamento
                                         </div>
                                         <datalist id="Datalist_Departamento">
@@ -170,7 +170,7 @@
                                                 <option value="{{ dep['Nombre'] }}" data-id="{{ dep['ID'] }}"></option>
                                             {% endfor %}
                                         </datalist>                                                  
-                                        <input id="Departamento_Create" required list="Datalist_Departamento" placeholder="Agregue un departamento..." class="form-control fsr-14 py-1">
+                                        <input id="Departamento_Create" required list="Datalist_Departamento" placeholder="Agregue un departamento..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1">
                                         <input type="hidden" id="Departamento_Create_Nombre" name="Caso_Departamento_Nombre">
                                         <input type="hidden" id="Departamento_Create_ID" name="Caso_Departamento_ID">
                                     </div>                                                                                                       
@@ -191,10 +191,10 @@
     {% if items2|length == 0 %}
         <div class="p-2 vh-60 d-flex align-items-center justify-content-center flex-column">
             <img src="{{ url_for('static', filename='img/WARNING.png') }}" class="img-fluid mb-4" style="max-width:200px">
-            <h1 class="fsr-9 fw-bold">
+            <h1 class="fsr-9 fw-bold color_blanco">
                 No se encontraron casos
             </h1>
-            <p class="text-center text-muted fsr-11">
+            <p class="text-center text-muted fsr-11 color_blanco">
                 Crea un caso para encontrar casos.
             </p>
             <a href="/dashboard/user/casos" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
@@ -206,10 +206,10 @@
             {% for caso in Casos %}
                 <div class="col-12 col-sm-3 col-xl-2 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado3 bg-white p-3 d-flex gap-3 Bg_Sombra3 text-decoration-none text-dark">
                     <div>
-                        <h2 class="fsr-12 fw-semibold m-0">
+                        <h2 class="fsr-12 fw-semibold m-0 color_blanco">
                             Caso
                         </h2>
-                        <p class="fsr-13 text-muted m-0">
+                        <p class="fsr-13 text-muted m-0 color_blanco">
                             {{ caso["radicados"][0]["Radicado"] }}
                         </p>
                     </div>
@@ -229,10 +229,10 @@
                             <div id="Casos_User" class="d-flex flex-column w-100 Bg_Blanco2 rounded-3 gap-2">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="ms-1">
-                                        <h1 class="fsr-12 fw-bold m-0">
+                                        <h1 class="fsr-12 fw-bold m-0 color_blanco">
                                             Caso {{ caso["radicados"][0]["Radicado"] }}
                                         </h1>
-                                        <span class="text-muted fsr-14">
+                                        <span class="text-muted fsr-14 color_blanco2">
                                             {{ caso["Nombre"] }} • {{ caso["Creacion"] }}
                                         </span>
                                     </div>
@@ -240,49 +240,49 @@
                                         {{ caso["estado"]["Nombre"] }}
                                     </span>
                                 </div>
-                                <div class="Bg_Blanco rounded-4 p-4 shadow-sm border d-flex gap-2 flex-column">
-                                    <h2 class="fsr-12 fw-bold m-0">
+                                <div class="Bg_Blanco rounded-4 p-4 shadow-sm border d-flex gap-2 flex-column border-0">
+                                    <h2 class="fsr-12 fw-bold m-0 color_blanco">
                                         Descripción
                                     </h2>
-                                    <p class="fsr-14 m-0">
+                                    <p class="fsr-14 m-0 color_blanco2">
                                         {{ caso["Descripcion"] }}
                                     </p>
                                 </div>
                                 <div class="row g-2 g-md-4 ">
                                     <div class="col-md-4 d-flex flex-column gap-2">
-                                        <div class="Bg_Blanco rounded-4 p-4 h-100 shadow-sm border gap-2 d-flex flex-column">
-                                            <h3 class="fsr-12 fw-bolder mb-1">
+                                        <div class="Bg_Blanco rounded-4 p-4 h-100 border-0 shadow-sm border gap-2 d-flex flex-column">
+                                            <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                                 Información
                                             </h3>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Prioridad
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["prioridad"]["Prioridad"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Incidente
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["incidente"]["Incidente"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Afectados
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["Afectados"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Actualizado
                                                 </div>
-                                                <div class="fsr-15 ms-3">
+                                                <div class="fsr-15 ms-3 color_blanco2">
                                                     <p>
                                                         {{ caso["Actualizado_En"].split("T")[1] }}
                                                         • 
@@ -293,71 +293,71 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 d-flex flex-column gap-2">
-                                        <div class="Bg_Blanco rounded-4 p-4 h-100 shadow-sm border gap-2 d-flex flex-column">
-                                            <h3 class="fsr-12 fw-bolder mb-1">
+                                        <div class="Bg_Blanco rounded-4 p-4 h-100 border-0 shadow-sm border gap-2 d-flex flex-column">
+                                            <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                                 Ubicación
                                             </h3>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Dirección
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["Direccion"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Barrio
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["barrio"]["Nombre"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Localidad
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["barrio"]["Localidad"]["Nombre"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Ciudad
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["barrio"]["Localidad"]["Ciudad"]["Nombre"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Departamento
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["barrio"]["Localidad"]["Ciudad"]["Departamento"]["Nombre"] }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 d-flex flex-column gap-2">
-                                        <div class="Bg_Blanco rounded-4 p-4 h-100 shadow-sm border">
-                                            <h3 class="fsr-12 fw-bolder mb-1">
+                                        <div class="Bg_Blanco rounded-4 p-4 h-100 border-0 shadow-sm border">
+                                            <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                                 Usuarios
                                             </h3>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Creador
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["usuario_creador"]["Persona"]["Primer_Nombre"] }}
                                                     {{ caso["usuario_creador"]["Persona"]["Primer_Apellido"] }}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="fsr-14 fw-semibold">
+                                                <div class="fsr-14 fw-semibold color_blanco">
                                                     • Asignado
                                                 </div>
-                                                <div class="fsr-14 ms-3">
+                                                <div class="fsr-14 ms-3 color_blanco2">
                                                     {{ caso["usuario_asociado"]["Persona"]["Primer_Nombre"] }}
                                                     {{ caso["usuario_asociado"]["Persona"]["Primer_Apellido"] }}
                                                 </div>
@@ -365,13 +365,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="Bg_Blanco rounded-4 p-4 shadow-sm border">
-                                    <h3 class="fsr-12 fw-bolder mb-1">
+                                <div class="Bg_Blanco rounded-4 p-4 shadow-sm border-0">
+                                    <h3 class="fsr-12 fw-bolder mb-1 color_blanco">
                                         Casos relacionados
                                     </h3>
                                     {% set items3 = caso['casos_asociados'] | list %}    
                                     {% if items3|length == 0 %}
-                                        <span class="text-muted fsr-14">
+                                        <span class="text-muted fsr-14 color_blanco2">
                                             Sin relaciones
                                         </span>
                                     {% else %}
@@ -379,18 +379,18 @@
                                             {% for relacion in caso['casos_asociados'] %}
                                                 <div class="border rounded-3 p-3 d-flex align-items-start align-items-md-center justify-content-center justify-content-md-between flex-column gap-3 flex-md-row">
                                                     <div class="d-flex flex-row gap-2 justify-content-center align-items-center">
-                                                        <span class="fsr-14 fw-semibold">
+                                                        <span class="fsr-14 fw-semibold color_blanco">
                                                             {{ relacion['Caso_Asociado_ID']['Radicado'] }}
                                                         </span>
-                                                        <span class="fsr-14">
+                                                        <span class="fsr-14 color_blanco2">
                                                             {{ relacion['Caso_Asociado_ID']['Nombre'] }}
                                                         </span>
                                                     </div>
                                                     <div class="d-flex flex-row gap-2 justify-content-center align-items-center">
-                                                        <span id="estado-span2-{{ caso['ID'] }}" class="px-2 border-bottom border-3 w-auto rounded-1 fsr-14 text-black">
+                                                        <span id="estado-span2-{{ caso['ID'] }}" class="color_blanco px-2 border-bottom border-3 w-auto rounded-1 fsr-14 text-black">
                                                             {{ relacion['Caso_Asociado_ID']['Estado'] }}
                                                         </span>
-                                                        <span class="fsr-14">
+                                                        <span class="fsr-14 color_blanco2">
                                                             {{ relacion['Tipo_Relacion_ID'] }}
                                                         </span>                                                            
                                                     </div>
@@ -399,18 +399,18 @@
                                             {% for relacion in caso['casos_principales'] %}
                                                 <div class="border rounded-3 p-3 d-flex align-items-start align-items-md-center justify-content-center justify-content-md-between flex-column gap-3 flex-md-row"> 
                                                     <div class="d-flex flex-row gap-2 justify-content-center align-items-center">                                                    
-                                                        <span class="fsr-14 fw-semibold">
+                                                        <span class="fsr-14 fw-semibold color_blanco">
                                                             {{ relacion['Caso_Principal_Rad'] }}
                                                         </span>
-                                                        <span class="fsr-14">
+                                                        <span class="fsr-14 color_blanco2">
                                                             {{ relacion['Caso_Principal_Nom'] }}
                                                         </span>
                                                     </div>
                                                     <div class="d-flex flex-row gap-2 justify-content-center align-items-center">
-                                                        <span id="estado-span2-{{ caso['ID'] }}" class="px-2 border-bottom border-3 w-auto rounded-1 fsr-14 text-black">
+                                                        <span id="estado-span2-{{ caso['ID'] }}" class="color_blanco px-2 border-bottom border-3 w-auto rounded-1 fsr-14 text-black">
                                                             {{ relacion['Caso_Principal_Est'] }}
                                                         </span>
-                                                        <span class="fsr-14">
+                                                        <span class="fsr-14 color_blanco2">
                                                             {{ relacion['Tipo_Relacion_ID'] }}
                                                         </span>                                                            
                                                     </div>

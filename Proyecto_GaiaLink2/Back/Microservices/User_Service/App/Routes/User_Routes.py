@@ -1,5 +1,5 @@
 from App.Utilities.Get import Get_User
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 User_Service_Bp = Blueprint("User", __name__)
 
@@ -10,3 +10,6 @@ def User_Registro():
 @User_Service_Bp.route("/user/codigo", methods=["POST"])
 def User_Codigo():
     return Get_User.Create()
+@User_Service_Bp.route("/user/health", methods=["GET"])
+def Health():
+    return jsonify({"Status": "OK"}), 200

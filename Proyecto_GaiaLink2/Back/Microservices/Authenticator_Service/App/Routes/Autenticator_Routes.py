@@ -7,6 +7,10 @@ Auth_Service_Bp = Blueprint("Auth", __name__)
 def Auth_Login():
     Mensaje, Status = Get_Auth.Login()
     return jsonify(Mensaje.get_json()), Status
+@Auth_Service_Bp.route("/auth/login/mfa", methods=["POST"])
+def Auth_Login_Codigo():
+    Mensaje, Status = Get_Auth.Login_Codigo()
+    return jsonify(Mensaje.get_json()), Status
 @Auth_Service_Bp.route("/auth/recuperar", methods=["POST"])
 def Auth_Recuperar():
     Mensaje, Status = Get_Auth.Recuperar()
@@ -15,3 +19,6 @@ def Auth_Recuperar():
 def Auth_Recuperar_Codigo():
     Mensaje, Status = Get_Auth.Recuperar_Codigo()
     return jsonify(Mensaje.get_json()), Status
+@Auth_Service_Bp.route("/auth/health", methods=["GET"])
+def Health():
+    return jsonify({"Status": "OK"}), 200

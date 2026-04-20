@@ -23,44 +23,50 @@
                 </div>
             </div>            
             <div class="row w-100 d-flex align-items-center justify-content-center" data-aos="fade-up">
-                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
+                <form id="Formulario_Autenticador" class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
                     <img src="{{ url_for('static', filename='img/Multifa.svg') }}" class="w-25">
                     <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
                         <h2 class="fsr-9 m-0" data-lang="autenticador.Autenticador">
                             Autenticador
                         </h2>
                     </div>
+                    <div id="Formulario_Autenticador_Mensaje" class="text-center p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                        Mensaje Generico
+                    </div>      
+                    <div class="text-center p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-flex Message_Success w-auto">
+                        Te enviamos un correo con tu código 
+                    </div>                                       
                     <div class="col-12 col-md-10 d-flex align-items-center justify-content-center flex-column">
                         <div class="w-67 d-flex align-items-center justify-content-start">
                             <label data-lang="autenticador.Codigo" class="form-label fsr-11 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                                 Codigo
                             </label>
                         </div>
-                        <div class="d-flex gap-1 gap-md-2 align-items-center justify-content-start w-67">
+                        <div id="Input_Container" class="d-flex gap-2 align-items-center justify-content-start w-67">
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-black w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_1" type="text" maxlength="1" class="border rounded-4 border-3 border-black w-100 py-1 fsr-8 text-center">
                             </div>
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_2" type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
                             </div>
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_3" type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
                             </div>
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_4" type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
                             </div>
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_5" type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
                             </div>
                             <div class="col-2-custom p-0">
-                                <input type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
+                                <input required id="Input_6" type="text" maxlength="1" class="border rounded-4 border-3 border-dark w-100 py-1 fsr-8 text-center">
                             </div>
                         </div>
                     </div>
-                    <a data-lang="autenticador.Iniciar_Sesion" href="/" class="Bg_Azul4 d-inline-flex boton2 text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold">
+                    <button id="Formulario_Autenticador_Boton" data-lang="autenticador.Iniciar_Sesion" href="/" class="Bg_Azul4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
                         Iniciar Sesion
-                    </a>                                                      
-                </div>                
+                    </button>                                                   
+                </form>                
             </div>
         </div>
     </section>

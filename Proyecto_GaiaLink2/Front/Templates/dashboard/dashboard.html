@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>      
     <script src="{{ url_for('static', filename='Scripts/dashboard/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>  
     <title>Gaialink</title>
 </head>
 <body>
@@ -65,18 +66,34 @@
                             </h2>
                         </a>                     
                     </li>
+                    <li id="Nav_Health_Admin" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/staff/health" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Health2.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Health Check
+                            </h2>
+                        </a>                
+                    </li>                    
+                    <li id="Nav_Estadisticas" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/estadisticas" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Estadsitica_Blanco.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Estadisticas
+                            </h2>
+                        </a>                
+                    </li>                    
                 </ul>
             </div>
         </nav>
-        <div id="contenido" class="flex-grow-1 d-flex align-items-center justify-content-center vh-88">
-            <div class="d-flex justify-content-center align-items-center position-absolute wh-loading">
-                <div class="w-100 h-100 position-relative rotate-315">
-                    <div class="vi-hi one w-100 h-100 position-absolute Bg_Morado2"></div>
-                    <div class="vi-hi two w-100 h-100 position-absolute Bg_Morado2"></div>
-                    <div class="vi-hi three w-100 h-100 position-absolute Bg_Morado2"></div>
-                    <div class="vi-hi four w-100 h-100 position-absolute Bg_Morado2"></div>
-                    <div class="vi-hi five w-100 h-100 position-absolute Bg_Morado2"></div>
-                    <div class="vi-hi six w-100 h-100 position-absolute Bg_Morado2"></div>                  
+        <div id="contenido" class="flex-grow-1 d-flex align-items-center justify-content-center vh-88 Bg_Blanco2">
+            <div class="d-flex justify-content-center align-items-center position-absolute wh-loading ">
+                <div class="w-100 h-100 position-relative rotate-315 ">
+                    <div class="vi-hi one w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi two w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi three w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi four w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi five w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi six w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>                  
                 </div>
             </div>    
         </div>

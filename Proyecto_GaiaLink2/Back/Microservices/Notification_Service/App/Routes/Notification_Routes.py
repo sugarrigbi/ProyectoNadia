@@ -16,3 +16,6 @@ def Registro_Codigo():
     if "Error" in Respuesta:
         return jsonify(Respuesta), 400
     return jsonify({"Message": "Correo enviado"}), 200
+@Notification_Service_Bp.route("/email/health", methods=["GET"])
+def Health():
+    return jsonify({"Status": "OK"}), 200

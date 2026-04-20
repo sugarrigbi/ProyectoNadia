@@ -1,6 +1,6 @@
 from App.Utilities.Get import Get_Forms
 from App.Models.Forms_Models import Ayuda, Calificanos, Contactanos
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 Forms_Bp = Blueprint("Forms", __name__)
 
@@ -46,3 +46,6 @@ def Forms_Read_By_Contactanos():
     Field = request.args.get("Field")
     Value = request.args.get("Value")    
     return Get_Forms.Get_Read_By(Contactanos,Field,Value)
+@Forms_Bp.route("/forms/health", methods=["GET"])
+def Health():
+    return jsonify({"Status": "OK"}), 200

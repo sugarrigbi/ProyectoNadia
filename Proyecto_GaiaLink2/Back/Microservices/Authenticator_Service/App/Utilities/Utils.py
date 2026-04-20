@@ -11,6 +11,7 @@ from App.Utilities.Redis import redis_client
 import bcrypt
 import re
 import requests
+import json
 
 def Crear_Token(User_ID, Remember, Device_Token):
     if Remember:
@@ -99,6 +100,36 @@ def Obtener_Codigo(Correo):
     if not Codigo:
         return {"Error": "El codigo expiro"}
     return Codigo
+def Guardar_Codigo_Login(Correo, Codigo):
+    redis_client.setex(
+        f"login:{Correo}:codigo",
+        600,
+        Codigo
+    )
+def Obtener_Codigo_Login(Correo):
+    Codigo = redis_client.get(
+        f"login:{Correo}:codigo"
+    )
+    if not Codigo:
+        return {"Error": "El codigo expiro"}
+    return Codigo  
+def Guardar_Data(Correo, Remember_Me, Device, Client_Payload, Client_IP, Ahora):
+    redis_client.setex(
+        f"login:{Correo}:datos",
+        300,
+        json.dumps({
+            "Remember_Me": Remember_Me,
+            "Device": Device,
+            "Client_Payload": Client_Payload,
+            "Client_IP": Client_IP,
+            "Ahora": str(Ahora)
+        })
+    )
+def Obtener_Data_Login(Identificador):
+    Data = redis_client.get(f"login:{Identificador}:datos")
+    if not Data:
+        return None
+    return json.loads(Data)
 def Hashear_Contraseña(Contraseña):
     Pepper = "Gaialink2026*!"
     Salt = bcrypt.gensalt()

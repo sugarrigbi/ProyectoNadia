@@ -192,3 +192,19 @@ class Get_Case:
         if not Caso:
             return jsonify({"Error": "No relation found"}), 404
         return jsonify({"Message": "Relation deleted successfully"}), 200      
+    @staticmethod
+    def Estadisticas():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            if Error in ["Token expirado", "Token inválido"]:
+                return jsonify({"Error": Error}), 401
+            return jsonify({"Error": Error}), 400
+        User_ID = Auth_Data["user_id"]
+
+        Data = Case_Service.Obtener_Estadisticas(User_ID)
+
+        if Data == "Auth":   
+            return jsonify({"Error": "No Auth"}), 403    
+        elif not Data:
+            return jsonify({"Error": "No data found"}), 404
+        return jsonify(Data), 200            

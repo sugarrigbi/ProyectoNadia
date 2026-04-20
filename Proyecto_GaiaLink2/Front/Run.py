@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import requests
+from datetime import datetime
+from requests.exceptions import ConnectionError
 
 app = Flask(__name__,template_folder="Templates",static_folder="Statics")
 
@@ -123,7 +125,20 @@ def Dashboard_Admin_Usuarios():
 @app.route("/dashboard/preferencias")
 def Dashboard_Admin_Preferencias():
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render_template("dashboard/preferencias.html")
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
+
+        Response = requests.get(f"{API_URL}/account/mfa/get", headers=headers)
+        if Response.status_code == 401:
+            return Response.json(), 401
+        elif Response.status_code == 403:
+            return render_template("dashboard/no_auth.html")     
+
+        Datos = Response.json() 
+
+        return render_template("dashboard/preferencias.html", Data=Datos)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/staff/entidades")
 def Dashboard_Admin_Entidades():
@@ -142,9 +157,6 @@ def Dashboard_Admin_Entidades():
         Datos = Response.json()
         Entidades = Datos.get("Entidades", [])
         Data = Datos.get("Datos", {})
-
-        print("ENTIDAD", Entidades)
-        print("DATA", Data)
 
         return render_template("dashboard/entidades_admin.html", Entidades=Entidades, Data=Data)
     return render_template("dashboard/dashboard.html")
@@ -167,9 +179,51 @@ def Dashboard_Admin_Entidades_By():
         Entidades = Datos.get("Entidades", [])
         Data = Datos.get("Datos", {})
 
+
         return render_template("dashboard/entidades_admin.html", Entidades=Entidades, Data=Data)
     return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/staff/health")
+def Dashboard_Admin_Health():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        try:
+            Response = requests.get(f"{API_URL}/health")
+            Data = Response.json()
+        except ConnectionError:
+            Data = {
+                "API": "OFF",
+                "Account": "OFF",
+                "Authenticator": "OFF",
+                "Case": "OFF",
+                "Entity": "OFF",
+                "Forms": "OFF",
+                "Notification": "OFF",
+                "User": "OFF",
+                "ZTime": datetime.now().strftime("%d/%m/%Y %H:%M:%S")            
+            }
+        return render_template("dashboard/health.html", Data=Data)
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/devices")
+def Dashboard_Devices():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return render_template("dashboard/no_auth.html")
+        headers = {"Authorization": auth_header}
 
+        Response = requests.get(f"{API_URL}/device/read/all", headers=headers)
+        if Response.status_code == 401:
+            return Response.json(), 401
+        elif Response.status_code == 403:
+            return render_template("dashboard/no_auth.html")    
+        Data = Response.json()        
+        return render_template("dashboard/devices.html", Device=Data)
+    return render_template("dashboard/das" \
+    "hboard.html")
+@app.route("/dashboard/estadisticas")
+def Dashboard_Estadisticas():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/estadisticas.html")
+    return render_template("dashboard/dashboard.html")
 
 @app.route("/dashboard/unauthorized")
 def Unauthorized():

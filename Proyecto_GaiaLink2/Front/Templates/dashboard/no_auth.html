@@ -1,22 +1,22 @@
 <div class="container-fluid p-3 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-4">
-    <div class="w-100 d-flex justify-content-between px-0 px-sm-3 mb-2 mb-sm-0">
+    <div class="w-100 d-flex justify-content-between px-0 mb-2 mb-sm-0">
         <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
-            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
+            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra color_morado2">
                 <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
             </a>        
-            <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
+            <span class="m-0 d-flex align-items-center fsr-10 fw-bold color_blanco">
                 No autorizado
             </span>
         </div>
-        <div class="d-flex gap-3 align-items-center justify-content-center d-none d-sm-block">
+        <div class="d-flex gap-3 align-items-center justify-content-center">
             <li class="nav-item dropdown list-unstyled fs-nav-1">
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                    <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
                 </a>
-                <ul class="dropdown-menu Bg_Blanco p-2 border-round">
+                <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
-                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
+                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
                             <span id="User_Name2">
                                 Usuario
@@ -25,20 +25,20 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="/dashboard/preferencias">
-                            <img src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
+                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
                             Ajustes
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
                     </li>
@@ -51,17 +51,17 @@
                     </li>                                                                          
                 </ul>
             </li>
-        </div>   
+        </div>  
     </div>
     <div class="h-100 justify-content-center d-flex flex-column align-items-center w-100 gap-3 gap-xl-0">
         <img src="{{ url_for('static', filename='img/WARNING.png') }}" class="img-fluid mb-4" style="max-width:200px">
-        <h1 class="fsr-9 fw-bold">
+        <h1 class="fsr-9 fw-bold color_blanco">
             Acceso no autorizado
         </h1>
-        <p class="text-center text-muted fsr-11">
+        <p class="text-center text-muted fsr-11 color_blanco2">
             No cuentas con los permisos necesarios para acceder a esta sección.
         </p>
-        <p class="text-center text-muted fsr-11">
+        <p class="text-center text-muted fsr-11 color_blanco2">
             Intenta ingresar de nuevo, o contacta con soporte tecnico.
         </p>
         <a href="/dashboard/inicio" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">

@@ -1,11 +1,31 @@
 const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
 
-document.addEventListener("DOMContentLoaded", () => {
+function CambiarTema() {
+    const Oscuro = document.body.classList.toggle("Modo_Oscuro");
+    if (Oscuro) {
+        localStorage.setItem("Tema", "Oscuro");
+        document.getElementById("Cambiar_Tema_Texto").textContent = "Oscuro";
+        document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Moon.svg"
+        if (document.getElementById("Arrow_Usuario")){
+            document.getElementById("Arrow_Usuario").src = "/Statics/img/Arrow_White.svg";           
+            document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";         
+            document.getElementById("Ajustes_Usuario").src = "/Statics/img/Gear_Claro.svg";         
+            document.getElementById("Ayuda_Usuario").src = "/Statics/img/Help_Claro.svg";                        
+        }        
+    } else {
+        localStorage.setItem("Tema", "Claro");
+        document.getElementById("Cambiar_Tema_Texto").textContent = "Claro";
+        document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Sun.svg"            
+    }
+}
+document.addEventListener("DOMContentLoaded", () => { 
+    if (localStorage.getItem("Tema") === "Oscuro") {
+        document.body.classList.add("Modo_Oscuro");
+    }        
     const token = localStorage.getItem("Auth_Token") || sessionStorage.getItem("Auth_Token");
     if (!token) {
         window.location.href = "/login";
     }
-
     if (sessionStorage.getItem('caso_actualizado')) {
         sessionStorage.removeItem('caso_actualizado');
 
@@ -57,7 +77,33 @@ document.addEventListener("DOMContentLoaded", () => {
             toast: true,
             position: 'top-end'
         });
-    }    
+    }
+    if (sessionStorage.getItem('dispositivo_eliminado')) {
+        sessionStorage.removeItem('dispositivo_eliminado');
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Dispositivo eliminado',
+            text: 'El dispositivo se eliminó correctamente',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    } 
+    if (sessionStorage.getItem('MFA')) {
+        sessionStorage.removeItem('MFA');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Autenticacion activada',
+            text: 'Autenticacion activada con éxito',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }
     
     const Contenido = document.getElementById("contenido");
     const contenidoOriginal = Contenido.innerHTML;
@@ -104,7 +150,25 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(html => {
             Contenido.innerHTML = html;
             history.pushState(null, "", url);
-            const User = JSON.parse(localStorage.getItem("User_Data"));           
+            const User = JSON.parse(localStorage.getItem("User_Data"));    
+            if (localStorage.getItem("Tema") === "Oscuro") {
+                document.body.classList.add("Modo_Oscuro");
+                if (document.getElementById("Cambiar_Tema_Boton")){
+                    document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Moon.svg";                    
+                    document.getElementById("Cambiar_Tema_Texto").textContent = "Oscuro";
+                }
+                if (document.getElementById("Arrow_Usuario")){
+                    document.getElementById("Arrow_Usuario").src = "/Statics/img/Arrow_White.svg";           
+                    document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";         
+                    document.getElementById("Ajustes_Usuario").src = "/Statics/img/Gear_Claro.svg";         
+                    document.getElementById("Ayuda_Usuario").src = "/Statics/img/Help_Claro.svg";                        
+                }        
+            } else {
+                if (document.getElementById("Cambiar_Tema_Boton")){
+                    document.getElementById("Cambiar_Tema_Texto").textContent = "Claro";
+                    document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Sun.svg";
+                }              
+            }          
             if (document.getElementById("Nav_Casos_User")){
                 const Nav_User = document.getElementById("Nav_Casos_User");
                 const Nav_Admin = document.getElementById("Nav_Casos_Admin");
@@ -1560,7 +1624,541 @@ document.addEventListener("DOMContentLoaded", () => {
                     Card_Entidades.classList.remove("d-none");
                     Card_Entidades.classList.add("d-flex");                    
                 }                       
-            }      
+            }
+            if (document.getElementById("Health_Cards")){
+                if (document.getElementById("Card_Estado_API")){
+                    const Card = document.getElementById("Card_Estado_API");
+                    const Imagen = document.getElementById("Fondo_Imagen_API");
+                    const Estado = document.getElementById("Dato_Estado_API").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/API_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/API_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Account")){
+                    const Card = document.getElementById("Card_Estado_Account");
+                    const Imagen = document.getElementById("Fondo_Imagen_Account");
+                    const Estado = document.getElementById("Dato_Estado_Account").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Account_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Account_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Authenticator")){
+                    const Card = document.getElementById("Card_Estado_Authenticator");
+                    const Imagen = document.getElementById("Fondo_Imagen_Authenticator");
+                    const Estado = document.getElementById("Dato_Estado_Authenticator").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Authenticator_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Authenticator_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Case")){
+                    const Card = document.getElementById("Card_Estado_Case");
+                    const Imagen = document.getElementById("Fondo_Imagen_Case");
+                    const Estado = document.getElementById("Dato_Estado_Case").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Case_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Case_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Entity")){
+                    const Card = document.getElementById("Card_Estado_Entity");
+                    const Imagen = document.getElementById("Fondo_Imagen_Entity");
+                    const Estado = document.getElementById("Dato_Estado_Entity").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Entity_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Entity_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Forms")){
+                    const Card = document.getElementById("Card_Estado_Forms");
+                    const Imagen = document.getElementById("Fondo_Imagen_Forms");
+                    const Estado = document.getElementById("Dato_Estado_Forms").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Forms_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Forms_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_Notification")){
+                    const Card = document.getElementById("Card_Estado_Notification");
+                    const Imagen = document.getElementById("Fondo_Imagen_Notification");
+                    const Estado = document.getElementById("Dato_Estado_Notification").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/Notification_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/Notification_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }
+                if (document.getElementById("Card_Estado_User")){
+                    const Card = document.getElementById("Card_Estado_User");
+                    const Imagen = document.getElementById("Fondo_Imagen_User");
+                    const Estado = document.getElementById("Dato_Estado_User").textContent.trim();
+                    if (Estado === "OK"){
+                        Imagen.classList.add("Bg_OK");
+                        Imagen.src = "/Statics/img/User_OK.svg";
+                        Card.classList.add("Bg_OK2")
+                        Card.classList.add("Border_OK")
+                    } else if (Estado === "OFF"){
+                        Imagen.classList.add("Bg_OFF");
+                        Imagen.src = "/Statics/img/User_OFF.svg";
+                        Card.classList.add("Bg_OFF2")
+                        Card.classList.add("Border_OFF")
+                    }
+                }                
+            }     
+            if (document.getElementById("Health_Cards")){
+                const URL = window.location.pathname;
+                if (!User.Permisos.some(Perm => Perm.Nombre === "health_check")){
+                    if (URL.includes("/staff")){
+                        cargarPagina("/dashboard/inicio");
+                    }
+                }
+            }
+            if (document.getElementById("Card_Health_Admin")){
+                const Card_Health = document.getElementById("Card_Health_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "health_check")){
+                    Card_Health.classList.remove("d-none");
+                    Card_Health.classList.add("d-flex");                    
+                }                       
+            }        
+            if (document.getElementById("Nav_Health_Admin")){
+                const Nav_Entidad = document.getElementById("Nav_Health_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "health_check")){
+                    Nav_Entidad.classList.remove("d-none");
+                    Nav_Entidad.classList.add("d-flex");                
+                }                         
+            }    
+            if (document.getElementById("Ultimo_Uso_Device")){
+                document.querySelectorAll("#Ultimo_Uso_Device").forEach(el => {
+                    const raw = el.textContent.trim();
+                    const date = new Date(raw);
+                    const now = new Date();
+                    const diff = Math.floor((now - date) / 1000);
+
+                    let texto;
+
+                    if (diff < 60) {
+                        texto = "hace un momento";
+                    } else if (diff < 3600) {
+                        const mins = Math.floor(diff / 60);
+                        texto = `hace ${mins} min${mins > 1 ? "s" : ""}`;
+                    } else if (diff < 86400) {
+                        const horas = Math.floor(diff / 3600);
+                        texto = `hace ${horas} hora${horas > 1 ? "s" : ""}`;
+                    } else if (diff < 2592000) { // 30 días
+                        const dias = Math.floor(diff / 86400);
+                        texto = `hace ${dias} día${dias > 1 ? "s" : ""}`;
+                    } else {
+                        texto = date.toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric" });
+                    }
+
+                    el.textContent = texto;
+                });
+            } 
+            if (document.getElementById("Devices_Cards")){
+                document.querySelectorAll(".Imagen_Device").forEach(Imagen => {
+                    const Valor = Imagen.getAttribute("data-type");
+                    if (Valor === "Computador"){
+                        Imagen.src = "/Statics/img/Computador_Device.svg";
+                    } else if (Valor === "Móvil"){
+                        Imagen.src = "/Statics/img/Celular_Device.svg";
+                    } else if (Valor === "Tablet"){
+                        Imagen.src = "/Statics/img/Tablet_Device.svg";
+                    } else if (Valor === "Desconocido"){
+                        Imagen.src = "/Statics/img/Desconocido_Device.svg";
+                    }
+                })
+            }   
+            if (document.getElementById("Devices_Cards")){
+                document.querySelectorAll(".Boton_Eliminar_Device").forEach(Button =>{
+                    const Device_ID = Button.getAttribute("data-delete");
+                    const Token = Button.getAttribute("data-token");
+                    if (!User.Permisos.some(Perm => Perm.Nombre === "dispositivo_eliminar")){
+                        Button.classList.add("d-none");
+                    }
+                    Button.addEventListener("click", async (e) =>{
+                        Button.disabled = true;
+                        const response = await fetch(`${API_BASE}/api/device/delete/${Device_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                        const result = await response.json()
+                        if(response.status === 200){
+                            if(localStorage.getItem("Device_Token") === Token){
+                                localStorage.removeItem("Auth_Token")
+                                localStorage.removeItem("Device_Token")
+                                sessionStorage.removeItem("Auth_Token")
+                                window.location.href = "/login";
+                            }
+                            sessionStorage.setItem('dispositivo_eliminado', Device_ID);
+                            location.reload();
+                        } else if(response.status === 429){
+                            window.location.href = "/rate-limit"
+                        } else if(response.status === 400){
+                            Button.disabled = false;
+                            Button.textContent = result.Error;
+                        } else if(response.status === 403){
+                            cargarPagina("/dashboard/unauthorized");
+                        }                                                               
+                    })
+                })
+            }
+            if (document.getElementById("Cambiar_Mfa")){
+                const Boton = document.getElementById("Cambiar_Mfa");
+                const Imagen = document.getElementById("Imagen_Shield");
+                const Mensaje = document.getElementById("Mensaje_Mfa2");
+                const Dato = document.getElementById("Mensaje_Mfa");
+                if (Dato.textContent.trim() === "False"){
+                    Mensaje.textContent = "Desactivada"
+                    Imagen.src = "/Statics/img/Shield_Break.svg"
+                } else if (Dato.textContent.trim() === "True"){
+                    Mensaje.textContent = "Activada"
+                    Imagen.src = "/Statics/img/Shield.svg"
+                }
+
+                Boton.addEventListener("click", async (e) =>{
+                    e.preventDefault()
+                    Boton.disabled = true;
+                    const response = await fetch(`${API_BASE}/api/account/mfa`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                    const result = await response.json()
+                    if (response.status === 200){
+                        sessionStorage.setItem('MFA', "1");
+                        location.reload();   
+                    }
+                    else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    }        
+                    else if(response.status === 400){
+                        window.scrollTo(0, 0);
+                        Boton.textContent = result.Error;
+                    }      
+                    else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    }                      
+                })
+            }
+            if (document.getElementById("Estadisticas")){
+                fetch(`${API_BASE}/api/case/estadisticas`, {method: "GET", headers:{"Authorization": `Bearer ${Token_JWT}`}})
+                .then(respuesta =>{
+                    if (respuesta.status === 401){
+                        localStorage.removeItem("Token_JWT");
+                        localStorage.removeItem("User_Data"); 
+                        localStorage.removeItem("Auth_Token");
+                        sessionStorage.removeItem("Auth_Token");
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Sesión expirada',
+                            text: 'Debes iniciar sesión nuevamente',
+                            timer: 2000,
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end',
+                            background: '#1e1e2f',
+                            color: '#ffffff',
+                            iconColor: '#f1c40f',
+                            width: '400px',
+                            padding: '1.2rem',
+                            customClass: {
+                                popup: 'shadow-lg rounded-3'
+                            }
+                        });              
+                        setTimeout(() => {
+                            window.location.href = "/login";
+                        }, 2000);
+                        throw new Error("No autorizado");               
+                    } else if (respuesta.status === 403) {
+                        cargarPagina("/dashboard/unauthorized");
+                    } else {
+                        return respuesta.json();                    
+                    }              
+                })
+                .then(Estadisticas => {
+                    console.log(Estadisticas);
+                    const Modo = document.body.classList.contains("Modo_Oscuro");
+                    if (Modo) {
+                        Color_Cuadricula = "rgba(255,255,255,0.07)"
+                        Color_Marcas = "#999"
+                        Paleta = [
+                            "#534AB7",
+                            "#1D9E75",
+                            "#E24B4A",
+                            "#BA7517",
+                            "#378ADD",
+                            "#888780",
+                            "#A32D2D",
+                            "#0F6E56"
+                        ];                        
+                    } else {
+                        Color_Cuadricula = "rgba(0,0,0,0.06)"
+                        Color_Marcas = "#667"
+                        Paleta = [
+                            "#7C6FE0",
+                            "#2DC08A",
+                            "#F07070",
+                            "#E8A020",
+                            "#5BA8F5",
+                            "#A8A89A",
+                            "#E05555",
+                            "#1DC49A"
+                        ];                          
+                    }
+                    function Crear_Leyenda(id, labels, valores, colores){
+                        const Contenedor = document.getElementById(id);
+                        let Total = 0;
+                        for (let i = 0; i < valores.length; i++) {
+                            Total = Total + valores[i];
+                        };
+                        labels.forEach((label, i) => {
+                            const Item = document.createElement("span");
+                            Item.className = "fsr-15 color_blanco2 d-flex align-items-center gap-1";
+
+                            const Cuadro = document.createElement("span");
+                            Cuadro.style.width = "9px";
+                            Cuadro.style.height = "9px";
+                            Cuadro.style.borderRadius = "2px";
+                            Cuadro.style.display = "inline-block";                            
+                            Cuadro.style.background = colores[i];
+
+                            const Texto = document.createElement("span");
+                            const Porcentaje = Math.round((valores[i] * 100) / Total);
+                            if (label === "En espera del usuario"){
+                                label = "En espera";
+                            } else if (label === "Escalado a supervisor"){
+                                label = "Escalado";
+                            }
+                            Texto.textContent = `${label}: ${Porcentaje}%`;
+
+                            Item.appendChild(Cuadro);
+                            Item.appendChild(Texto);
+                            Contenedor.appendChild(Item);
+                        })
+                    }
+                    const Opciones_Dona = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: "62%",
+                        plugins: { 
+                            legend: { display: false } 
+                        }
+                    };
+                    const Opciones_Bar = {
+                        responsive: true,
+                        maintainAspectRatio: false,                        
+                        plugins: { 
+                            legend: { display: false } 
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: Color_Cuadricula }, 
+                                ticks: { 
+                                    color: Color_Marcas, 
+                                    font: { size: 11 } 
+                                } 
+                            },
+                            y: { 
+                                grid: { color: Color_Cuadricula }, 
+                                ticks: { 
+                                    color: Color_Marcas, 
+                                    stepSize: 1 
+                                }, 
+                                beginAtZero: true 
+                            }                            
+                        }                       
+                    }
+                    const Opciones_Linea = {
+                        responsive: true,
+                        maintainAspectRatio: false,                        
+                        plugins: { 
+                            legend: { display: false } 
+                        },
+                        scales: {
+                            x: {
+                                offset: false,
+                                grid: { color: Color_Cuadricula }, 
+                                ticks: { 
+                                    color: Color_Marcas, 
+                                    font: { size: 14 } 
+                                } 
+                            },
+                            y: { 
+                                grid: { color: Color_Cuadricula }, 
+                                ticks: { 
+                                    color: Color_Marcas, 
+                                    stepSize: 1,
+                                    font: { size: 14 } 
+                                }, 
+                                beginAtZero: true 
+                            }                            
+                        }                       
+                    }                    
+                    if (document.getElementById("Grafica_Estados")){
+                        Crear_Leyenda("Leyenda_Estado", Object.keys(Estadisticas.Estados), Object.values(Estadisticas.Estados), Paleta);
+                        new Chart(document.getElementById("Grafica_Estados"),{
+                            type: "doughnut",
+                            data: {
+                                labels: Object.keys(Estadisticas.Estados),
+                                datasets: [{
+                                    data: Object.values(Estadisticas.Estados),
+                                    backgroundColor: Paleta,
+                                    borderWidth: 0,
+                                    hoverOffset: 5
+                                }]                       
+                            },
+                            options: Opciones_Dona
+                        })
+                    }
+                    if (document.getElementById("Grafica_Incidente")){
+                        Crear_Leyenda("Leyenda_Incidente", Object.keys(Estadisticas.Incidentes), Object.values(Estadisticas.Incidentes), Paleta);
+                        new Chart(document.getElementById("Grafica_Incidente"),{
+                            type: 'doughnut',
+                            data: {
+                                labels: Object.keys(Estadisticas.Incidentes),
+                                datasets: [{
+                                    data: Object.values(Estadisticas.Incidentes),
+                                    backgroundColor: Paleta,
+                                    borderWidth: 0,
+                                    hoverOffset: 5
+                                }]
+                            },
+                            options: Opciones_Dona
+                        })
+                    }
+                    if (document.getElementById("Grafica_Prioridad")){
+                        Crear_Leyenda("Leyenda_Prioridad", Object.keys(Estadisticas.Prioridades), Object.values(Estadisticas.Prioridades), Paleta);
+                        new Chart(document.getElementById("Grafica_Prioridad"),{
+                            type: 'bar',
+                            data: {
+                                labels: Object.keys(Estadisticas.Prioridades),
+                                datasets:[{
+                                    data: Object.values(Estadisticas.Prioridades),
+                                    backgroundColor: Paleta,
+                                    borderWidth: 0,
+                                    hoverOffset: 5
+                                }]
+                            },
+                            options: Opciones_Bar
+                        })
+                    }
+                    if (document.getElementById("Grafica_Usuario")){
+                        Crear_Leyenda("Leyenda_Usuario", Object.keys(Estadisticas.Usuarios), Object.values(Estadisticas.Usuarios), Paleta)
+                        new Chart(document.getElementById("Grafica_Usuario"), {
+                            type: 'bar',
+                            data:{
+                                labels: Object.keys(Estadisticas.Usuarios),
+                                datasets:[{
+                                    data: Object.values(Estadisticas.Usuarios),
+                                    backgroundColor: Paleta,
+                                    borderWidth: 0,
+                                    hoverOffset: 5
+                                }]
+                            },
+                            options: Opciones_Bar
+                        })
+                    }
+                    if (document.getElementById("Grafica_Tendencia")){
+                        const Meses = Object.keys(Estadisticas.Tendencia_Final);
+                        new Chart(document.getElementById("Grafica_Tendencia"),{
+                            type: 'line',
+                            data: {
+                                labels: Meses,
+                                datasets:[
+                                    {
+                                        label: "Creados",
+                                        data: Meses.map(Mes => Estadisticas.Tendencia_Final[Mes].Creados),
+                                        backgroundColor: "rgba(83,74,183,0.1)",
+                                        borderColor: "#534AB7",
+                                        pointBackgroundColor: "#534AB7",
+                                        pointRadius: 4,
+                                        fill: true,
+                                        tension: 0.4,
+                                        borderDash: []
+                                    },
+                                    {
+                                        label: "Resueltos",
+                                        data: Meses.map(Mes => Estadisticas.Tendencia_Final[Mes].Resueltos),
+                                        backgroundColor: "rgba(83,74,183,0.1)",
+                                        borderColor: "#1d9e75",
+                                        pointBackgroundColor: "#1d9e75",
+                                        fill: true,
+                                        pointRadius: 4,
+                                        tension: 0.4,
+                                        borderDash: [5, 3]                                        
+                                    }
+                                ]
+                            },
+                            options: Opciones_Linea
+                        })
+                    }
+                })
+            }
+            if (document.getElementById("Card_Estadistica_Admin")){
+                const Card_Estadistica = document.getElementById("Card_Estadistica_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "estadisticas_ver")){
+                    Card_Estadistica.classList.remove("d-none");
+                    Card_Estadistica.classList.add("d-flex");                    
+                }                       
+            }        
+            if (document.getElementById("Nav_Estadisticas")){
+                const Nav_Estadistica = document.getElementById("Nav_Estadisticas");
+                if (User.Permisos.some(Perm => Perm.Nombre === "estadisticas_ver")){
+                    Nav_Estadistica.classList.remove("d-none");
+                    Nav_Estadistica.classList.add("d-flex");                
+                }                         
+            }    
+            if (document.getElementById("Estadisticas")){
+                const URL = window.location.pathname;
+                if (!User.Permisos.some(Perm => Perm.Nombre === "estadisticas_ver")){
+                    if (URL.includes("/estadisticas")){
+                        cargarPagina("/dashboard/inicio");
+                    }
+                }
+            }            
         });
     }
     document.querySelectorAll(".panel-link").forEach(link => {

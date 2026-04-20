@@ -3,6 +3,7 @@ import requests
 import json
 from App.Models.Case_Models import Caso as Tabla_Caso, Usuario as Tabla_Usuario, Estado_Caso as Tabla_Estado, Prioridad as Tabla_Prioridad, Incidente as Tabla_Incidente, Barrio as Tabla_Barrio, Localidad as Tabla_Localidad, Ciudad as Tabla_Ciudad, Departamento as Tabla_Dep, Tipo_Relacion as Tabla_Relacion, Caso_Discusion as Tabla_Discusion, Departamento as T_Departamento, Ciudad as T_Ciudad, Localidad as T_Localidad, Barrio as T_Barrio, Casos_a_Casos as Tabla_Casos_a_Casos, Radicado_Caso as Tabla_Radicado, Caso_Auditoria as Tabla_Auditoria, RolAPermiso as Tabla_Permiso
 from datetime import datetime
+from sqlalchemy import func
 
 class Case_Service():
     @staticmethod
@@ -196,6 +197,7 @@ class Case_Service():
         if not User_ID:
             return "Auth"
         
+        Auditoria = {}
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
         Nombres = [p.to_dict()["Nombre"] for p in Permisos]
@@ -410,3 +412,35 @@ class Case_Service():
 
         db.session.commit()        
         return Caso_Padre
+    @staticmethod
+    def Obtener_Estadisticas(User_ID):
+        if not User_ID:
+            return "Auth"
+        
+        Usuario_Validar = Tabla_Usuario.query.get(User_ID)
+        Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
+        Nombres = [p.to_dict()["Nombre"] for p in Permisos]          
+        if "estadisticas_ver" in Nombres:
+            Estados = db.session.query(Tabla_Estado.Nombre, func.count(Tabla_Caso.ID)).join(Tabla_Caso, Tabla_Caso.Estado_Caso_ID == Tabla_Estado.ID).group_by(Tabla_Estado.Nombre).all()
+            Prioridades = db.session.query(Tabla_Prioridad.Prioridad, func.count(Tabla_Caso.ID)).join(Tabla_Caso, Tabla_Caso.Prioridad_ID == Tabla_Prioridad.ID).group_by(Tabla_Prioridad.ID, Tabla_Prioridad.Prioridad).order_by(Tabla_Prioridad.ID).all()
+            Incidentes = db.session.query(Tabla_Incidente.Incidente, func.count(Tabla_Caso.ID)).join(Tabla_Caso, Tabla_Caso.Incidente_ID == Tabla_Incidente.ID).group_by(Tabla_Incidente.Incidente).all()
+            Usuarios = db.session.query(Tabla_Usuario.Nombre, func.count(Tabla_Caso.ID)).join(Tabla_Caso, Tabla_Caso.Usuario_Asociado_ID == Tabla_Usuario.ID).group_by(Tabla_Usuario.Nombre).order_by(func.count(Tabla_Caso.ID).desc()).limit(9).all()
+            Tendencia_Total = db.session.query(func.date_format(Tabla_Caso.Creacion, "%Y-%m"), func.count(Tabla_Caso.ID)).group_by(func.date_format(Tabla_Caso.Creacion, "%Y-%m")).order_by(func.date_format(Tabla_Caso.Creacion, "%Y-%m")).all()
+            Tendencia_Resuelto = db.session.query(func.date_format(Tabla_Caso.Creacion, "%Y-%m"), func.count(Tabla_Caso.ID)).filter(Tabla_Caso.Estado_Caso_ID == 3).group_by(func.date_format(Tabla_Caso.Creacion, "%Y-%m")).order_by(func.date_format(Tabla_Caso.Creacion, "%Y-%m")).all()
+            Tendencia_Final = {}
+            for Mes, Conteo in Tendencia_Total:
+                Tendencia_Final[Mes] = {"Creados": Conteo, "Resueltos": 0}
+            for Mes, Conteo in Tendencia_Resuelto:
+                if Mes in Tendencia_Final:
+                    Tendencia_Final[Mes]["Resueltos"] = Conteo
+
+            Data = {
+                "Estados": {Nombre: Conteo for Nombre, Conteo in Estados},
+                "Prioridades": {Nombre: Conteo for Nombre, Conteo in Prioridades},
+                "Incidentes": {Nombre: Conteo for Nombre, Conteo in Incidentes},
+                "Usuarios": {Nombre: Conteo for Nombre, Conteo in Usuarios},
+                "Tendencia_Final": Tendencia_Final
+            }
+            return Data
+        else:
+            return "Auth"

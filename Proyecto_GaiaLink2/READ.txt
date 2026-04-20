@@ -1,22 +1,13 @@
 Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
-
-TAREAS PENDIENTES:
-	DISPOSITIVOS:
-		#Cambiar estado de dispositivos
-		#apartado para ver Dispositivos vinculados
-	SEGURIDAD:
-		#Autenticador 2FA
-	DASHBOARD:
-		Tema Claro/Oscuro
-		Panel de estadísticas dashboard de casos activos pendientes resueltos al mes año etc, dashboard o estadisticas avanzadas
-		#heal check de microservicios para los devs, en un micro apartado llamado desarollo
 	ARCHIVOS:
-		proteccion contra subida de archivos maliciosos
 		Subida de archivos no debe ir en el mismo backend, al buckjet de GSC
 		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
-		Carga de documentos, evidencia, tipo opcion del clip en TFS
-		descarga de archivos almacenados
 		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
 	USUARIOS:
 		CRUD Personas
-		desactivar o suspender cuenta
+		desactivar o suspender cuenta/ gestion de cuentas
+
+{
+  "2026-03": { "Creados": 5, "Resueltos": 2 },
+  "2026-04": { "Creados": 8, "Resueltos": 3 }
+}

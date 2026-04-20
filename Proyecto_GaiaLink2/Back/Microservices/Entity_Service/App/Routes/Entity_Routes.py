@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from App.Utilities.Get import Get_Entity
 
 Entity_Bp = Blueprint("Entity", __name__)
@@ -19,3 +19,6 @@ def Entity_Update(Entity_ID):
 @Entity_Bp.route("/entity/delete/<int:Entity_ID>", methods=["PUT"])
 def Entity_Delete(Entity_ID):
     return Get_Entity.Get_Delete(Entity_ID)
+@Entity_Bp.route("/entity/health", methods=["GET"])
+def Health():
+    return jsonify({"Status": "OK"}), 200

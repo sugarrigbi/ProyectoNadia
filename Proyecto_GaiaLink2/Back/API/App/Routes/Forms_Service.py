@@ -10,19 +10,19 @@ MICROSERVICE_URL = "http://localhost:5005/forms"
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_Forms_Ayuda_Create():
     Data = request.get_json()
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/ayuda/create", json=Data)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/ayuda/create", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Forms_Service_Bp.route("/api/forms/calificanos/create", methods=["POST"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_Forms_Calificanos_Create():
     Data = request.get_json()
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/calificanos/create", json=Data)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/calificanos/create", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Forms_Service_Bp.route("/api/forms/contactanos/create", methods=["POST"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_Forms_Contactanos_Create():
     Data = request.get_json()
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/contactanos/create", json=Data)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/contactanos/create", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code

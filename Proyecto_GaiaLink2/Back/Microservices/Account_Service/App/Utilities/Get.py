@@ -34,3 +34,28 @@ class Get_Account:
             return jsonify({"Error": "No device found"}), 404
         
         return jsonify({"Message": "Device deleted successfully"}), 200
+    @staticmethod
+    def Cambiar_Mfa():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            if Error in ["Token expirado", "Token invalido"]:
+                return jsonify({"Error": Error}), 401
+            return jsonify({"Error": Error}), 400
+        User_ID = Auth_Data["user_id"]
+
+        Mfa = Account_Service.Cambiar_Mfa(User_ID) 
+        if Mfa == "Auth":
+            return jsonify({"Error": "No auth"}), 403  
+        return jsonify({"Status": Mfa}), 200            
+    @staticmethod
+    def Obtener_Mfa():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            if Error in ["Token expirado", "Token invalido"]:
+                return jsonify({"Error": Error}), 401
+            return jsonify({"Error": Error}), 400
+        User_ID = Auth_Data["user_id"] 
+        Mfa = Account_Service.Obtener_Mfa(User_ID) 
+        if Mfa == "Auth":
+            return jsonify({"Error": "No auth"}), 403  
+        return jsonify({"Status": Mfa}), 200                        

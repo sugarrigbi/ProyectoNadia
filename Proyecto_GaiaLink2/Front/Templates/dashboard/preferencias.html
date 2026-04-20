@@ -1,22 +1,22 @@
 <div class="container-fluid p-3 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-4">
-    <div class="w-100 d-flex justify-content-between px-0 px-sm-3 mb-2 mb-sm-0">
+    <div class="w-100 d-flex justify-content-between px-0 mb-2 mb-sm-0">
         <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
-            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra">
+            <a href="{{ url_for('Dashboard_Admin_Inicio') }}" class="d-none d-sm-block Bg_Morado d-inline-flex boton4 text-white p-2 text-decoration-none fw-light gap-2 align-items-center justify-content-center Bg_Sombra color_morado2">
                 <img class="icono-nav4 m-1" src="{{ url_for('static', filename='img/Home.svg') }}">
             </a>        
-            <span class="m-0 d-flex align-items-center fsr-10 fw-bold">
+            <span class="m-0 d-flex align-items-center fsr-10 fw-bold color_blanco">
                 Inicio > Ajustes
             </span>
         </div>
         <div class="d-flex gap-3 align-items-center justify-content-center">
             <li class="nav-item dropdown list-unstyled fs-nav-1">
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
+                    <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
                 </a>
-                <ul class="dropdown-menu Bg_Blanco p-2 border-round">
+                <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
-                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2" href="#">
+                        <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
                             <span id="User_Name2">
                                 Usuario
@@ -25,20 +25,20 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="/dashboard/preferencias">
-                            <img src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
+                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
                             Ajustes
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2" href="#">
-                            <img src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                            <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
                     </li>
@@ -51,63 +51,54 @@
                     </li>                                                                          
                 </ul>
             </li>
-        </div>    
+        </div>  
     </div>    
     <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Casos2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Casos
+        <a href="/dashboard/devices" class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Config_Device.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+            <div class="d-flex align-items-start justify-content-center flex-column">
+                <h2 class="fsr-12 fw-semibold m-0 color_blanco">
+                    Dispositivos
                 </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Reporta nuevos incidentes y consulta el
-                    estado de los casos que has registrado.
+                <p class="fsr-16 text-muted m-0 color_blanco2">
+                    Consulta y administra los dispositivos vinculados a tu cuenta.
                 </p>
             </div>
         </a>
     </div>
     <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Entidades2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Entidades
+        <button id="Cambiar_Tema_Boton" onclick="CambiarTema()" class="col-12 col-lg-11 Bg_Blanco rounded-3 border-0 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img id="Cambiar_Tema_Imagen" src="{{ url_for('static', filename='img/Config_Device.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+            <div class="d-flex align-items-start justify-content-center flex-column">
+                <h2 class="fsr-12 fw-semibold m-0 text-start color_blanco">
+                    Tema
                 </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Conoce las instituciones y su participación
-                    en la gestión de emergencias.
+                <p class="fsr-16 text-muted m-0 color_blanco2">
+                    Tema actual: 
+                    <span id="Cambiar_Tema_Texto">
+                        Texto
+                    </span>
                 </p>
             </div>
-        </a>
+        </button>
     </div>
     <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Usuario2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Usuarios
+        <button id="Cambiar_Mfa" class="col-12 col-lg-11 Bg_Blanco rounded-3 border-0 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img id="Imagen_Shield" src="{{ url_for('static', filename='img/Shield.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
+            <div class="d-flex align-items-start justify-content-center flex-column">
+                <h2 class="fsr-12 fw-semibold m-0 text-start color_blanco">
+                    Autenticación: 
+                    <span id="Mensaje_Mfa2" class="color_blanco2">
+                        Ola
+                    </span>
                 </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Administra la información de los usuarios,
-                    gestiona sus permisos desde este panel.
+                <p class="fsr-16 text-muted m-0 color_blanco2 text-start">
+                    Activa y gestiona tu autenticación en dos pasos.
                 </p>
+                <span id="Mensaje_Mfa" class="d-none">
+                    {{ Data["Status"] }}
+                </span>                
             </div>
-        </a>
-    </div>
-    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Gear.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div>
-                <h2 class="fsr-12 fw-semibold m-0">
-                    Configuracion
-                </h2>
-                <p class="fsr-16 text-muted m-0">
-                    Ajusta las preferencias del sistema
-                    y personaliza la experiencia de uso.
-                </p>
-            </div>
-        </a>
-    </div>
-    </div>
+        </button>
+    </div>        
 </div>

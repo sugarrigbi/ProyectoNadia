@@ -42,6 +42,26 @@ h4{
 .Bg_Rojo{
     background-color: #c52222 !important;
 }
+.Bg_OK{
+    background-color: #96dba0  !important;
+}
+.Bg_OK2{
+    background-color: #c1ffca !important;
+}
+.Bg_OFF{
+    background-color: #ffc1c1 !important;
+}
+.Bg_OFF2{
+    background-color: #f09898  !important;
+}
+.Border_OFF{
+    border-color: #a00000 !important;
+    transition: all 0.3s ease;
+}
+.Border_OK{
+    border-color: #00a028 !important;
+    transition: all 0.3s ease;
+}
 .Border_Morado2{
     border-color: #522694 !important;
     transition: all 0.3s ease;
@@ -49,6 +69,9 @@ h4{
 .Border_Morado3{
     border-color: #a386ce !important;
     transition: all 0.3s ease;
+}
+.h-82{
+    height: 78% !important;
 }
 .Bg_Blanco{
     background-color: #F8FAFC;
@@ -317,6 +340,14 @@ h4{
     background-color: #7530dd !important;
     transition: all 0.3s ease;
 }
+.boton42{
+    transition: all 0.3s ease;
+}
+.boton42:hover{
+    transform: scale(1.08);
+    background-color: #7530dd !important;
+    transition: all 0.3s ease;
+}
 .boton5{
     border-radius: 100px;
     transition: all 0.3s ease;
@@ -568,7 +599,15 @@ h4{
     height: 25px;
     object-fit: contain;
 }
-
+.icono-nav9{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+.icono-nav10{
+    width: 10px;
+    height: 10px;
+}
 .rotate-315 {
     transform: rotate(315deg);
 }
@@ -745,6 +784,12 @@ h4{
 }
 .h-80-2{
     height: 80%!important;
+}
+.grid-custom{
+    grid-template-columns: 1fr 1fr 1fr
+}
+.grid-custom2{
+    grid-template-columns: 1fr 1fr
 }
 textarea.nofocus {
     background-color: #fff;
@@ -988,6 +1033,9 @@ textarea.nofocus {
     .fs-nav-1{
         font-size: 1.3rem;
     }
+    .grid-custom{
+        grid-template-columns: 1fr 1fr
+    }            
     .fs-nav-2{
         font-size: 1.1rem;
     }    
@@ -1000,6 +1048,12 @@ textarea.nofocus {
         width: 47px;
         height: 40px;
     }
+    .grid-custom{
+        grid-template-columns: 1fr
+    }        
+    .h-82{
+        height: 60% !important;
+    }      
 }
 @media (min-width: 1200px) {
     .col-xl2-3 {
@@ -1016,7 +1070,13 @@ textarea.nofocus {
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
+    }    
+    .h-82{
+        height: 45% !important;
     }      
+    .grid-custom2{
+        grid-template-columns: 1fr
+    }         
     .vh-88{
         height: 100vh;
     }      
@@ -1086,6 +1146,11 @@ textarea.nofocus {
     .w-67{
         width: 100%;
     }
+}
+@media (max-width: 720px) {
+    .h-82 {
+        height: 61% !important;
+    }    
 }
 @media (max-width: 600px) {
     section{
@@ -1194,4 +1259,137 @@ textarea.nofocus {
     .h-80 {
         height: 100% !important;
     }
+}
+.Modo_Oscuro { 
+    .Bg_Blanco2 {
+        background-color: #2d2b38 !important;
+    }
+    .Bg_Blanco {
+        background-color: #1e1c2a !important;
+    }
+    .Bg_Blanco0 {
+        background-color: #343434 !important;
+    }    
+    .Bg_Blanco3{
+        background-color: #4e4d4d !important;
+    }    
+    .Bg_Blanco4{
+        background-color: #939393 !important;
+    }    
+    .color_blanco{
+        color: #e6e6f0 !important;
+    }
+    .color_blanco2{
+        color: #9090a8 !important;
+    }    
+    .color_blanco5{
+        background-color: #909090 !important;
+    }    
+    .color_blanco3{
+        background-color: #c5c4c4 !important;
+    }    
+    .Bg_hr{
+        border-color: #c5c4c4 !important;
+    }    
+    .color_blanco6::placeholder {
+        color: #c1c1c6;
+        opacity: 1;
+    }        
+    .color_morado{
+        background-color: #c084fc !important;
+    }
+    .color_morado2{
+        background-color: #624085 !important;
+    }
+    .estado-pendiente {
+        background-color: #3a2e00 !important;
+        border-color: #ffc107 !important;
+        color: #ccc !important;
+    }
+    .estado-activo {
+        background-color: #0a2e1a !important;
+        border-color: #198754 !important;
+        color: #ccc !important;
+    }
+    .estado-resuelto {
+        background-color: #0a2a30 !important;
+        border-color: #0dcaf0 !important;
+        color: #ccc !important;
+    }
+    .estado-eliminado {
+        background-color: #2e0a0a !important;
+        border-color: #dc3545 !important;
+        color: #ccc !important;        
+    }
+    .estado-espera {
+        background-color: #1e2124 !important;
+        border-color: #6c757d !important;
+        color: #ccc !important;
+    }
+    .estado-escalado {
+        background-color: #0a1a3a !important;
+        border-color: #0d6efd !important;
+        color: #ccc !important;
+    }
+    .estado-reabierto {
+        background-color: #1a1d20 !important;
+        border-color: #adb5bd !important;
+        color: #ccc !important;
+    }
+    .estado-decision {
+        background-color: #1e0a3a !important;
+        border-color: #6f42c1 !important;
+        color: #ccc !important;
+    }
+    .prioridad-muy-baja {
+        background-color: #2a2d30 !important;
+        border-color: #6c757d !important;
+        color: #ccc !important;
+    }
+    .prioridad-baja {
+        background-color: #0a2530 !important;
+        border-color: #17a2b8 !important;
+        color: #ccc !important;
+    }
+    .prioridad-media {
+        background-color: #3a2e00 !important;
+        border-color: #ffc107 !important;
+        color: #ccc !important;
+    }
+    .prioridad-alta {
+        background-color: #2e0a0a !important;
+        border-color: #dc3545 !important;
+        color: #ccc !important;
+    }
+    .prioridad-critica {
+        background-color: #3a0a0e !important;
+        border-color: #bd2130 !important;
+        color: #ccc !important;
+    }    
+    .boton8 {
+        background-color: #7f1d1d !important;
+        color: #fca5a5 !important;
+    }
+    .boton8:hover {
+        background-color: #991b1b !important;
+        color: #fecaca !important;
+    }   
+    .Bg_OK {
+        background-color: #47a559 !important;
+    }
+    .Bg_OK2 {
+        background-color: #0f3318 !important;
+    }
+    .Bg_OFF {
+        background-color: #a94848 !important;
+    }
+    .Bg_OFF2 {
+        background-color: #3a0f0f !important;
+    }
+    .Border_OFF {
+        border-color: #ff4d4d !important;
+    }
+    .Border_OK {
+        border-color: #4dff7c !important;
+    }     
 }

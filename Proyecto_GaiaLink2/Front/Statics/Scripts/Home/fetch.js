@@ -272,6 +272,74 @@ if (document.getElementById("Formulario_Registrar")){
         }
     });
 }
+if (document.getElementById("Formulario_Autenticador")){
+    document.getElementById("Formulario_Autenticador").addEventListener("submit", async function(e){
+        e.preventDefault();
+        Boton = document.getElementById("Formulario_Autenticador_Boton"); 
+        Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.classList.remove("Bg_Rojo");
+        Boton.classList.remove("boton6");        
+        Boton.classList.add("Bg_Azul4");
+        Boton.classList.add("boton2");          
+        Mensaje = document.getElementById("Formulario_Autenticador_Mensaje");
+        Boton.disabled = true; 
+
+        const Inputs = document.querySelectorAll("input[type='text']");
+        const codigo = Array.from(Inputs).map(input => input.value).join("");        
+        
+        const payload = {
+            Identificador: localStorage.getItem("Identificador_Login"),
+            Codigo_User: codigo
+        };        
+
+        const response = await fetch(`${API_BASE}/api/login/mfa`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const result = await response.json() 
+        const expiresAtStr = result.Expires_At
+        const expiresAtMs = Date.parse(expiresAtStr);
+        const expiresAt = Math.floor(expiresAtMs / 1000);
+
+        if(response.status === 200){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton5");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Verde");
+            Boton.setAttribute("data-lang", "formularios.Enviado");
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Success"); 
+            Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+            Boton.disabled = true;
+            localStorage.setItem("Device_Token", result.Device);
+            localStorage.setItem("Token_JWT", result.Token);
+            localStorage.setItem("User_Data", JSON.stringify(result.User));
+            if (result.Remember_Me) {
+                localStorage.setItem("Auth_Token", result.Token);
+                localStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+            } else {
+                sessionStorage.setItem("Auth_Token", result.Token);
+                sessionStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+            }
+            window.location.href = "/dashboard"
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }
+        else if(response.status === 429){
+            window.location.href = "/rate-limit"
+        }        
+        else if(response.status === 400 || response.status === 401 || response.status === 403){
+            Boton.classList.remove("boton2");
+            Boton.classList.add("boton6");
+            Boton.classList.remove("Bg_Azul4");
+            Boton.classList.add("Bg_Rojo");
+            Boton.setAttribute("data-lang", "formularios.Error");
+            Mensaje.classList.remove("d-none");
+            Mensaje.style.display = 'block';
+            Mensaje.classList.add("Message_Error"); 
+            Mensaje.textContent = result.Error;
+            Boton.disabled = false;
+            CambiarIdioma(localStorage.getItem("idioma") || "es");
+        }                       
+    })
+}
 if (document.getElementById("Formulario_Codigo")){
     document.getElementById("Formulario_Codigo").addEventListener("submit", async function(e){
         e.preventDefault(); 
@@ -353,7 +421,6 @@ if (document.getElementById("Formulario_Login")){
             screen: { width: screen.width, height: screen.height }
         };
 
-        
         const payload = {
             Identificador: document.getElementById("Identificacion").value,
             Contraseña: document.getElementById("Input_Password3").value,
@@ -368,50 +435,65 @@ if (document.getElementById("Formulario_Login")){
         const expiresAtStr = result.Expires_At
         const expiresAtMs = Date.parse(expiresAtStr);
         const expiresAt = Math.floor(expiresAtMs / 1000);
-
-        if(response.status === 200){
+        
+        if(result.MFA){
             Boton.classList.remove("boton2");
             Boton.classList.add("boton5");
             Boton.classList.remove("Bg_Azul4");
             Boton.classList.add("Bg_Verde");
             Boton.setAttribute("data-lang", "formularios.Enviado");
-
             Mensaje.classList.remove("d-none");
             Mensaje.style.display = 'block';
             Mensaje.classList.add("Message_Success"); 
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
             Boton.disabled = true;
-            localStorage.setItem("Device_Token", result.Device);
-            localStorage.setItem("Token_JWT", result.Token);
-            localStorage.setItem("User_Data", JSON.stringify(result.User));
-            if (payload.Remember_Me) {
-                localStorage.setItem("Auth_Token", result.Token);
-                localStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+            localStorage.setItem("Identificador_Login", payload.Identificador);
+            window.location.href = "/login/autenticador"
+        } else {
+            if(response.status === 200){
+                Boton.classList.remove("boton2");
+                Boton.classList.add("boton5");
+                Boton.classList.remove("Bg_Azul4");
+                Boton.classList.add("Bg_Verde");
+                Boton.setAttribute("data-lang", "formularios.Enviado");
 
-            } else {
-                sessionStorage.setItem("Auth_Token", result.Token);
-                sessionStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+                Mensaje.classList.remove("d-none");
+                Mensaje.style.display = 'block';
+                Mensaje.classList.add("Message_Success"); 
+                Mensaje.setAttribute("data-lang", "formularios.Enviar_Exito");
+                Boton.disabled = true;
+                localStorage.setItem("Device_Token", result.Device);
+                localStorage.setItem("Token_JWT", result.Token);
+                localStorage.setItem("User_Data", JSON.stringify(result.User));
+                if (payload.Remember_Me) {
+                    localStorage.setItem("Auth_Token", result.Token);
+                    localStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+
+                } else {
+                    sessionStorage.setItem("Auth_Token", result.Token);
+                    sessionStorage.setItem("Auth_ExpiresAt", String(expiresAt));
+                }
+                window.location.href = "/dashboard"
+                CambiarIdioma(localStorage.getItem("idioma") || "es");
             }
-            window.location.href = "/dashboard"
-            CambiarIdioma(localStorage.getItem("idioma") || "es");
-        }
-        else if(response.status === 429){
-            window.location.href = "/rate-limit"
-        }        
-        else if(response.status === 400 || response.status === 401 || response.status === 403){
-            Boton.classList.remove("boton2");
-            Boton.classList.add("boton6");
-            Boton.classList.remove("Bg_Azul4");
-            Boton.classList.add("Bg_Rojo");
-            Boton.setAttribute("data-lang", "formularios.Error");
+            else if(response.status === 429){
+                window.location.href = "/rate-limit"
+            }        
+            else if(response.status === 400 || response.status === 401 || response.status === 403){
+                Boton.classList.remove("boton2");
+                Boton.classList.add("boton6");
+                Boton.classList.remove("Bg_Azul4");
+                Boton.classList.add("Bg_Rojo");
+                Boton.setAttribute("data-lang", "formularios.Error");
 
-            Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
-            Mensaje.classList.add("Message_Error"); 
-            Mensaje.textContent = result.Error;
-            Boton.disabled = false;
-            CambiarIdioma(localStorage.getItem("idioma") || "es");
-        }        
+                Mensaje.classList.remove("d-none");
+                Mensaje.style.display = 'block';
+                Mensaje.classList.add("Message_Error"); 
+                Mensaje.textContent = result.Error;
+                Boton.disabled = false;
+                CambiarIdioma(localStorage.getItem("idioma") || "es");
+            } 
+        }       
     });
 }
 if (document.getElementById("Formulario_Recuperar")){

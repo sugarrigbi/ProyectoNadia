@@ -14,7 +14,7 @@ def Api_Entity_Create():
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/create", json=Data, headers=Header)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/create", json=Data, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Entity_Service_Bp.route("/api/entity/read/all", methods=["GET"])
@@ -23,7 +23,7 @@ def Api_Entity_Read_All():
     Auth = request.headers.get("Authorization")
     Headers = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all", headers=Headers)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all", headers=Headers, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Entity_Service_Bp.route("/api/entity/read/search", methods=["GET"])
@@ -34,7 +34,7 @@ def Api_Entity_Read_By():
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Entity_Service_Bp.route("/api/entity/update/<int:Entity_ID>", methods=["PUT"])
@@ -45,7 +45,7 @@ def Api_Entity_Update(Entity_ID):
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.put(f"{MICROSERVICE_URL}/update/{Entity_ID}", json=Data, headers=Header)
+    Respuesta = requests.put(f"{MICROSERVICE_URL}/update/{Entity_ID}", json=Data, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Entity_Service_Bp.route("/api/entity/delete/<int:Entity_ID>", methods=["PUT"])
@@ -54,5 +54,5 @@ def Api_Entity_Delete(Entity_ID):
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.put(f"{MICROSERVICE_URL}/delete/{Entity_ID}", headers=Header)
+    Respuesta = requests.put(f"{MICROSERVICE_URL}/delete/{Entity_ID}", headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code

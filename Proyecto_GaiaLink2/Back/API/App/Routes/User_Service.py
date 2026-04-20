@@ -10,12 +10,12 @@ MICROSERVICE_URL = "http://localhost:5006/user"
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_User_Registro():
     Data = request.get_json()
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/registro", json=Data)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/registro", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @User_Service_Bp.route("/api/registro/codigo", methods=["POST"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_User_Codigo():
     Data = request.get_json()
-    Respuesta = requests.post(f"{MICROSERVICE_URL}/codigo", json=Data)
+    Respuesta = requests.post(f"{MICROSERVICE_URL}/codigo", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code

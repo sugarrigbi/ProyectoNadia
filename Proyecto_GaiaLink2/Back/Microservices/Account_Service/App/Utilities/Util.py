@@ -9,9 +9,10 @@ def Validar_JWT():
         return None, "Token requerido"
     try:
         Token = Auth.split(" ")[1]
-        Payload = jwt.decode(Token, SECRET_KEY, algorithms=["H256"])
+        Payload = jwt.decode(Token, SECRET_KEY, algorithms=["HS256"])
         return Payload, None
     except jwt.ExpiredSignatureError:
+        print("HI")
         return None, "Token expirado"
     except:
         return None, "Token invalido"

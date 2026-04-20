@@ -12,7 +12,7 @@ def Api_Device_Read_All():
     Auth = request.headers.get("Authorization")
     Headers = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/device/read/all", headers=Headers)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/device/read/all", headers=Headers, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Account_Service_Bp.route("/api/device/delete/<int:Device_ID>", methods=["PUT"])
@@ -21,5 +21,23 @@ def Api_Device_Delete(Device_ID):
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.put(f"{MICROSERVICE_URL}/device/delete/{Device_ID}", headers=Header)
+    Respuesta = requests.put(f"{MICROSERVICE_URL}/device/delete/{Device_ID}", headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Account_Service_Bp.route("/api/account/mfa", methods=["PUT"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["PUT"])
+def Api_Change_Mfa():
+    Auth = request.headers.get("Authorization")
+    Header = {"Authorization": Auth}
+
+    Respuesta = requests.put(f"{MICROSERVICE_URL}/account/mfa", headers=Header, timeout=10)
+    return jsonify(Respuesta.json()), Respuesta.status_code 
+
+@Account_Service_Bp.route("/api/account/mfa/get", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Obtain_Mfa():
+    Auth = request.headers.get("Authorization")
+    Header = {"Authorization": Auth}
+
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/account/mfa/get", headers=Header, timeout=10)
+    return jsonify(Respuesta.json()), Respuesta.status_code    

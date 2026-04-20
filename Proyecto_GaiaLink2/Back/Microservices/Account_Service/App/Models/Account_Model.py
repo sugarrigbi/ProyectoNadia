@@ -2,12 +2,77 @@ from App.Utilities.Tables import Modelo_Base, db
 from datetime import datetime
 import json
 
+class Pais(Modelo_Base):
+    __tablename__ = "Pais"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nombre = db.Column(db.String(70), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    departamentos = db.relationship("Departamento", backref="pais")
+class Departamento(Modelo_Base):
+    __tablename__ = "Departamento"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nombre = db.Column(db.String(70), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Pais_ID = db.Column(db.Integer,db.ForeignKey("Pais.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
+    ciudades = db.relationship("Ciudad", backref="departamento")
+class Ciudad(Modelo_Base):
+    __tablename__ = "Ciudad"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nombre = db.Column(db.String(70), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Departamento_ID = db.Column(db.Integer,db.ForeignKey("Departamento.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
+    localidades = db.relationship("Localidad", backref="ciudad")
+class Localidad(Modelo_Base):
+    __tablename__ = "Localidad"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nombre = db.Column(db.String(70), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Ciudad_ID = db.Column(db.Integer,db.ForeignKey("Ciudad.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
+    barrios = db.relationship("Barrio", backref="localidad")
+class Barrio(Modelo_Base):
+    __tablename__ = "Barrio"
+
+    ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nombre = db.Column(db.String(70), nullable=False)
+    Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Localidad_ID = db.Column(db.Integer,db.ForeignKey("Localidad.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
+
+    def to_dict(self, exclude=None):
+        resultado = {
+            "ID": self.ID,
+            "Nombre": self.Nombre, 
+            "Localidad": {
+                "ID": self.localidad.ID,
+                "Nombre": self.localidad.Nombre,
+                "Ciudad": {
+                    "ID": self.localidad.ciudad.ID,
+                    "Nombre": self.localidad.ciudad.Nombre,
+                    "Departamento": {
+                        "ID": self.localidad.ciudad.departamento.ID,
+                        "Nombre": self.localidad.ciudad.departamento.Nombre                        
+                    }                    
+                }       
+            }
+        }
+
+        return resultado
 class Rol(Modelo_Base):
     __tablename__ = "Rol"
 
     ID = db.Column(db.Integer, primary_key=True)
     Nombre = db.Column(db.String(50), nullable=False, unique=True)
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+
+    Permisos = db.relationship("RolAPermiso", back_populates="Rol_Permiso")
 class Estado_Usuario(Modelo_Base):
     __tablename__ = "Estado_Usuario"
 
