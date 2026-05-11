@@ -1,0 +1,291 @@
+/* =========================
+   BASE GENERAL
+========================= */
+body {
+    padding-top: 70px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Transiciones suaves */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+    background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: white !important;
+}
+
+.nav-link {
+    position: relative;
+    margin-right: 10px;
+    font-weight: 500;
+    color: white !important;
+}
+
+/* Línea animada */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #ffffff;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: #dbeafe !important;
+    transform: translateY(-1px);
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   BOTONES
+========================= */
+.btn-primary {
+    border-radius: 25px;
+    padding: 8px 18px;
+    font-weight: 500;
+}
+
+.btn-outline-primary {
+    border-radius: 25px;
+    font-weight: 500;
+}
+
+.btn-pro {
+    border-radius: 25px;
+    padding: 10px 18px;
+    font-weight: bold;
+}
+
+.btn-pro:hover {
+    transform: scale(1.03);
+}
+
+.btn-light {
+    transition: 0.3s;
+}
+
+.btn-light:hover {
+    background-color: #e0ecff;
+    color: #0d6efd !important;
+}
+
+/* =========================
+   TARJETAS
+========================= */
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-pro {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+}
+
+.card-pro:hover {
+    transform: translateY(-6px);
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+.login-card {
+    border-radius: 15px;
+}
+
+.input-pro {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.input-pro:focus,
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.25);
+}
+
+/* =========================
+   TEXTO
+========================= */
+.texto-pro {
+    text-align: justify;
+    line-height: 1.9;
+    font-size: 1.05rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.texto-justificado {
+    text-align: justify;
+}
+
+/* =========================
+   IMÁGENES
+========================= */
+.logo-renova {
+    max-width: 180px;
+}
+
+.logo-renova-pequeno {
+    max-width: 120px;
+    opacity: 0.95;
+    margin-bottom: 15px;
+}
+
+.logo-renova-pequeno:hover {
+    transform: scale(1.08);
+}
+
+.img-mision {
+    max-height: 250px;
+    width: auto;
+}
+
+/* =========================
+   TABLAS
+========================= */
+.tabla-pro {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabla-pro th {
+    font-weight: bold;
+}
+
+.tabla-pro td {
+    text-align: justify;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   ALERTAS
+========================= */
+.alert {
+    border-radius: 12px;
+}
+
+/* =========================
+   SLIDER
+========================= */
+.carousel-item {
+    position: relative;
+}
+
+.carousel-item img {
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.carousel-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.carousel-caption {
+    z-index: 2;
+}
+
+/* =========================
+   ICONOS DE SERVICIOS
+========================= */
+.icono-servicio {
+    width: 80px;
+    height: 80px;
+    background: #eaf3ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d6efd;
+    font-size: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 300px;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .nav-link {
+        margin-right: 0;
+    }
+}
+/* =========================
+   PILARES RENOVA
+========================= */
+
+.pilares-card {
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.pilares-card:hover {
+    transform: translateY(-5px);
+    background: #f2f7ff;
+}
+
+.icono-pilar {
+    width: 70px;
+    height: 70px;
+    background: #eaf3ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 1.8rem;
+    color: #0d6efd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}

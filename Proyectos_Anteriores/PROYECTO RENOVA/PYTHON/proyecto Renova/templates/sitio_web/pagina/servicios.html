@@ -1,0 +1,107 @@
+{% extends 'sitio_web/layout.html' %}
+
+{% block titulo %} SERVICIOS {% endblock %}
+
+{% block contenido %}
+
+<div class="container my-5">
+
+    <!--  BOTÓN PARA VOLVER -->
+    <div class="mb-4">
+        <a href="{{ url_for('inicio') }}" class="btn btn-outline-primary btn-sm">
+            ← Volver al inicio
+        </a>
+    </div>
+
+    <!--TÍTULO -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">Nuestros Servicios</h2>
+        <p class="text-muted">Soluciones tecnológicas para la reinserción social</p>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="row g-4">
+
+        <!-- SERVICIO 1 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-people-fill text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Gestión de Internos</h4>
+                <p class="texto-pro">
+                    Registro y administración de la información de los internos de manera organizada y segura.
+                </p>
+            </div>
+        </div>
+
+        <!-- SERVICIO 2 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-graph-up-arrow text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Seguimiento de Progreso</h4>
+                <p class="texto-pro">
+                    Monitoreo continuo del avance en procesos de resocialización y cumplimiento de objetivos.
+                </p>
+            </div>
+        </div>
+
+        <!-- SERVICIO 3 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-file-earmark-bar-graph text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Generación de Reportes</h4>
+                <p class="texto-pro">
+                    Creación de informes detallados que facilitan la toma de decisiones institucionales.
+                </p>
+            </div>
+        </div>
+
+        <!-- SERVICIO 4 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-shield-lock-fill text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Seguridad de Datos</h4>
+                <p class="texto-pro">
+                    Protección de la información mediante sistemas seguros y confiables.
+                </p>
+            </div>
+        </div>
+
+        <!-- SERVICIO 5 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-person-check-fill text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Evaluación de Perfil</h4>
+                <p class="texto-pro">
+                    Análisis del comportamiento y evolución de los internos para procesos de reinserción.
+                </p>
+            </div>
+        </div>
+
+        <!-- SERVICIO 6 -->
+        <div class="col-md-4">
+            <div class="card card-pro h-100 text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-globe text-primary" style="font-size: 40px;"></i>
+                </div>
+                <h4 class="fw-bold">Plataforma Web</h4>
+                <p class="texto-pro">
+                    Acceso en línea desde cualquier lugar para facilitar la gestión y consulta de información.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
