@@ -13,11 +13,13 @@
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
+                    <div class="icono-nav5 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                 </a>
                 <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
                         <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
+                            <div class="icono-nav6 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                             <span id="User_Name2">
                                 Usuario
                             </span>
@@ -25,15 +27,9 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/cuenta">
                             <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
-                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
-                            Ajustes
                         </a>
                     </li>
                     <li>
@@ -82,7 +78,7 @@
                             <h2 class="fsr-12 fw-bold m-0 color_blanco">
                                 Descripción
                             </h2>
-                            <textarea required class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14" name="CasoNuevo_Descripcion" placeholder="Ingrese la descripción del caso"></textarea>
+                            <textarea required minlength="15" class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14" name="CasoNuevo_Descripcion" placeholder="Ingrese la descripción del caso"></textarea>
                         </div>
                         <div class="row g-2 g-md-4">
                             <div class="col-md-6 flex-grow-1 d-flex flex-column gap-2">
@@ -107,7 +103,7 @@
                                         <div class="fsr-14 fw-semibold color_blanco">
                                             Afectados
                                         </div>
-                                        <input required type="number" placeholder="Agregue un numero..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1" name="CasoNuevo_Afectados">
+                                        <input required type="number" min="0" placeholder="Agregue un numero..." class="color_blanco6 Bg_Blanco3 border-0 color_blanco form-control fsr-14 py-1" name="CasoNuevo_Afectados">
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +198,7 @@
             </a>          
         </div>    
     {% else %}
-        <div class="row justify-content-start w-100 gap-2">
+        <div class="row justify-content-start w-100 gap-3">
             {% for caso in Casos %}
                 <div class="col-12 col-sm-3 col-xl-2 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado3 bg-white p-3 d-flex gap-3 Bg_Sombra3 text-decoration-none text-dark">
                     <div>

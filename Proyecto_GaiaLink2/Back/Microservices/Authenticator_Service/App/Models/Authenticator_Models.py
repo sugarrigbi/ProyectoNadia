@@ -1,5 +1,4 @@
 from App.Utilities.Tables import db, Modelo_Base
-from datetime import datetime
 
 class Pais(Modelo_Base):
     __tablename__ = "Pais"
@@ -84,10 +83,11 @@ class Usuario(Modelo_Base):
     Bloqueado_Hasta = db.Column(db.DateTime)
 
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+    Ultimo_Ingreso = db.Column(db.DateTime, server_default=db.func.now())
     Actualizado_En = db.Column(db.DateTime, onupdate=db.func.now())
 
     Autenticador = db.Column(db.Boolean, default=False)
-    Autenticador_Secreto = db.Column(db.String(255))
+    Nombre_Imagen = db.Column(db.String(60), nullable=True)
 
     Estado_Usuario_ID = db.Column(db.Integer,db.ForeignKey("Estado_Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=1)
     Rol_ID = db.Column(db.Integer,db.ForeignKey("Rol.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=2)
@@ -100,6 +100,7 @@ class Usuario_Auditoria(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True)
 
     Accion = db.Column(db.String(100), nullable=False)
+    Anterior = db.Column(db.Text, nullable=False)
     Fecha_Modificacion = db.Column(db.DateTime, server_default=db.func.now())
 
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
@@ -130,10 +131,11 @@ class Dispositivos_Auditoria(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True)
 
     Accion = db.Column(db.String(100), nullable=False)
+    Anterior = db.Column(db.Text, nullable=False)
     Fecha_Modificacion = db.Column(db.DateTime, server_default=db.func.now())
 
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
-    Dispositivos_ID = db.Column(db.Integer,db.ForeignKey("Dispositivos.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)  
+    Dispositivos_ID = db.Column(db.Integer,db.ForeignKey("Dispositivos.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
 class Persona(Modelo_Base):
     __tablename__ = "Persona"
 

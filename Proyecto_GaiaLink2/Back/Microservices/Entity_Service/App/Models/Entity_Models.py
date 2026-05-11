@@ -1,7 +1,6 @@
 from App.Utilities.Tables import db, Modelo_Base
 from datetime import datetime
 
-#UBICACION
 class Pais(Modelo_Base):
     __tablename__ = "Pais"
 
@@ -65,7 +64,6 @@ class Barrio(Modelo_Base):
         }
 
         return resultado
-#USUARIOS
 class Persona(Modelo_Base):
     __tablename__ = "Persona"
 
@@ -116,8 +114,8 @@ class Usuario(Modelo_Base):
     Intentos_Fallidos = db.Column(db.Integer, nullable=False, default=0)
     Bloqueado_Hasta = db.Column(db.DateTime, nullable=True)
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+    Ultimo_Ingreso = db.Column(db.DateTime, server_default=db.func.now())
     Autenticador = db.Column(db.Boolean, nullable=False, default=False)
-    Autenticador_Secreto = db.Column(db.String(255), nullable=True)
 
     Estado_Usuario_ID = db.Column(db.Integer,db.ForeignKey("Estado_Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
     estado_usuario = db.relationship("Estado_Usuario")
@@ -211,7 +209,6 @@ class RolAPermiso(Modelo_Base):
             "Nombre": self.Permiso_Rol.Permiso
         }
         return resultado  
-#ENTIDAD
 class EstadoEntidad(Modelo_Base):
     __tablename__ = "Estado_Entidad"
 

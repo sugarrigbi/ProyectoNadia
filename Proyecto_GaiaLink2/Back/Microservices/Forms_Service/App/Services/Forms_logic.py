@@ -1,6 +1,7 @@
-from App.Models.Forms_Models import Calificanos, Ayuda, Contactanos
+from App.Models.Forms_Models import Ayuda, Contactanos
 from App.Utilities.Tables import db
 import requests
+import os
 
 class Forms_Service:
     @staticmethod
@@ -16,7 +17,7 @@ class Forms_Service:
             Formulario_Text = "Contactanos"
 
         if Tabla_Form == Ayuda or Tabla_Form == Contactanos:
-            requests.post("http://127.0.0.1:5007/email",
+            requests.post(os.getenv("EMAIL_SERVICE"),
                 json={
                     "Template": "Crear_Formulario",
                     "Datos": {"Nombre": Data["Nombre"], "Formulario": Formulario_Text},

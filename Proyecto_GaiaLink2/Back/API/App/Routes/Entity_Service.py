@@ -1,12 +1,14 @@
 from flask import Blueprint, request, jsonify
+from App.Rate_Limit import Rate_Limit
 import requests
-from App.Rate_Limit import Rate_Limit, DEFAULT_LIMIT
+import os
 
 Entity_Service_Bp = Blueprint("Entity_Service", __name__)
 
-MICROSERVICE_URL = "http://localhost:5004/entity"
+MICROSERVICE_URL = os.getenv("ENTITY_URL")
+DEFAULT_LIMIT = os.getenv("DEFAULT_LIMIT")
 
-@Entity_Service_Bp.route("/api/entity/create", methods=["POST"])
+@Entity_Service_Bp.route("/entity/create", methods=["POST"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_Entity_Create():
     Data = request.get_json()
@@ -17,7 +19,7 @@ def Api_Entity_Create():
     Respuesta = requests.post(f"{MICROSERVICE_URL}/create", json=Data, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Entity_Service_Bp.route("/api/entity/read/all", methods=["GET"])
+@Entity_Service_Bp.route("/entity/read/all", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
 def Api_Entity_Read_All():
     Auth = request.headers.get("Authorization")
@@ -26,7 +28,7 @@ def Api_Entity_Read_All():
     Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all", headers=Headers, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Entity_Service_Bp.route("/api/entity/read/search", methods=["GET"])
+@Entity_Service_Bp.route("/entity/read/search", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
 def Api_Entity_Read_By():
     Filtros = request.args.to_dict(flat=False)
@@ -37,7 +39,7 @@ def Api_Entity_Read_By():
     Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Entity_Service_Bp.route("/api/entity/update/<int:Entity_ID>", methods=["PUT"])
+@Entity_Service_Bp.route("/entity/update/<int:Entity_ID>", methods=["PUT"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["PUT"])
 def Api_Entity_Update(Entity_ID):
     Data = request.get_json()
@@ -48,7 +50,7 @@ def Api_Entity_Update(Entity_ID):
     Respuesta = requests.put(f"{MICROSERVICE_URL}/update/{Entity_ID}", json=Data, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Entity_Service_Bp.route("/api/entity/delete/<int:Entity_ID>", methods=["PUT"])
+@Entity_Service_Bp.route("/entity/delete/<int:Entity_ID>", methods=["PUT"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["PUT"])
 def Api_Entity_Delete(Entity_ID):
     Auth = request.headers.get("Authorization")

@@ -1,11 +1,14 @@
-from datetime import datetime
-from App.Models.User_Model import Persona as Tabla_Persona, Usuario as Tabla_Usuario, Departamento as T_Departamento, Ciudad as T_Ciudad, Localidad as T_Localidad, Barrio as T_Barrio
-import re
-import random
-import requests
+from App.Models.User_Model import (
+    Persona as Tabla_Persona, 
+    Usuario as Tabla_Usuario
+) 
 from App.Utilities.Redis import redis_client
+from datetime import datetime
 from flask import json
 import bcrypt
+import random
+import re
+import os
 
 def Validar_Datos(Data_U, Data_P):
     Fecha_Nacimiento = datetime.strptime(Data_P["Fecha_Nacimiento"], "%Y-%m-%d").date()
@@ -26,9 +29,15 @@ def Validar_Datos(Data_U, Data_P):
     Nombre_Existe = Tabla_Usuario.query.filter_by(Nombre=Data_U["Nombre"]).first()
     if Nombre_Existe:
         return {"Error": "El nombre de usuario ya existe"}
+    
+    if len(Data_U["Contraseña"]) < 10:
+        return "La contraseña debe tener 10 caracteres"    
 
     if not any(c.isupper() for c in Data_U["Contraseña"]):
         return {"Error": "La contraseña debe contener una mayuscula"}
+    
+    if not any(c.islower() for c in Data_U["Contraseña"]):
+        return {"Error": "La contraseña debe contener una minuscula"}
     
     if not any(c.isdigit() for c in Data_U["Contraseña"]):
         return {"Error": "La contraseña debe contener un numero"}
@@ -93,7 +102,6 @@ def Obtener_Codigo(Correo):
         return {"Error": "El codigo expiro"}
     return Codigo
 def Obtener_Datos(Correo):
-
     Datos = redis_client.get(
         f"registro:{Correo}:datos"
     )
@@ -108,10 +116,9 @@ def Eliminar_Datos(Correo):
     redis_client.delete(f"registro:{Correo}:codigo")
     redis_client.delete(f"registro:{Correo}:datos")
 def Hashear_Contraseña(Contraseña):
-    Pepper = "Gaialink2026*!"
     Salt = bcrypt.gensalt()
 
-    Contraseña_Pepper = (Contraseña + Pepper)
+    Contraseña_Pepper = (Contraseña + os.getenv("PEPPER"))
     Hash = bcrypt.hashpw(Contraseña_Pepper.encode("utf-8"), Salt)
 
     return Hash.decode("utf-8")

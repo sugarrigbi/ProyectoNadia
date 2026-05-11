@@ -1,14 +1,36 @@
-from flask import request, jsonify
-import bcrypt
-from App.Models.Authenticator_Models import Usuario as Tabla_Usuario, Dispositivos as Tabla_Dispositivos, Persona as Tabla_Persona, Rol as Tabla_Rol, RolAPermiso as Tabla_Permiso
-from App.Utilities.Tables import db
-from App.Utilities.Utils import Obtener_Codigo_Login,  Guardar_Codigo_Login, Obtener_Data_Login, Guardar_Data, Crear_Token, Get_Device, Get_Time, Generar_Codigo, Guardar_Codigo, Obtener_Codigo, Hashear_Contraseña, Eliminar_Datos, Validar_Contraseña, Crear_Dispositivo
+from App.Models.Authenticator_Models import (
+    Usuario as Tabla_Usuario, 
+    Dispositivos as Tabla_Dispositivos, 
+    Persona as Tabla_Persona, 
+    Rol as Tabla_Rol, 
+    RolAPermiso as Tabla_Permiso,
+    Usuario_Auditoria as Tabla_U_Auditoria
+) 
+from App.Utilities.Utils import (
+    Obtener_Codigo_Login,  
+    Guardar_Codigo_Login, 
+    Obtener_Data_Login, 
+    Hashear_Contraseña, 
+    Validar_Contraseña, 
+    Crear_Dispositivo,
+    Generar_Codigo, 
+    Guardar_Codigo, 
+    Obtener_Codigo, 
+    Eliminar_Datos, 
+    Guardar_Data, 
+    Crear_Token, 
+    Get_Device, 
+    Get_Time
+)
 from datetime import datetime, timedelta
-import pytz
+from App.Utilities.Tables import db
+from flask import request, jsonify
 import requests
+import bcrypt
+import pytz
+import os
 
-bogota_tz = pytz.timezone("America/Bogota")
-Pepper = "Gaialink2026*!"
+timezone = pytz.timezone(os.getenv("TIMEZONE"))
 
 class Get_Auth():
     @staticmethod
@@ -22,7 +44,7 @@ class Get_Auth():
         Client_Payload = Data["Client_Payload"]
         Client_IP = Data["Client_IP"]
 
-        Ahora = datetime.now(bogota_tz).replace(tzinfo=None)
+        Ahora = datetime.now(timezone).replace(tzinfo=None)
         Ahora_Formated = Ahora.strftime("%d/%m/%Y %H:%M")
 
         Usuario = Tabla_Usuario.query.filter((Tabla_Usuario.Correo == Identificador) | (Tabla_Usuario.Nombre == Identificador)).first()
@@ -49,16 +71,15 @@ class Get_Auth():
             Minutos, Segundos = Get_Time(Usuario.Bloqueado_Hasta, Ahora)
             return jsonify({"Error": f"Demasiados intentos Fallidos, Intenta de nuevo en {Minutos:02d}:{Segundos:02d}"}), 401
 
-        if not bcrypt.checkpw((Contraseña + Pepper).encode("utf-8"),Usuario.Contraseña.encode("utf-8")):
+        if not bcrypt.checkpw((Contraseña + os.getenv("PEPPER")).encode("utf-8"),Usuario.Contraseña.encode("utf-8")):
             Usuario.Intentos_Fallidos = Usuario.Intentos_Fallidos+1
             if Usuario.Intentos_Fallidos == 3:
-                Usuario.Bloqueado_Hasta = (Ahora + timedelta(minutes=15)).replace(tzinfo=bogota_tz)
+                Usuario.Bloqueado_Hasta = (Ahora + timedelta(minutes=15)).replace(tzinfo=timezone)
                 db.session.commit()
                 Minutos, Segundos = Get_Time(Usuario.Bloqueado_Hasta, Ahora)
                 return jsonify({"Error": f"Demasiados intentos Fallidos, Intenta de nuevo en {Minutos:02d}:{Segundos:02d}"}), 401
             if Usuario.Intentos_Fallidos < 3:
                 db.session.commit()
-                Restantes = 3 - Usuario.Intentos_Fallidos
                 return jsonify({"Error": f"Correo/Nombre o contraseña incorrectos"}), 401
 
         Usuario.Intentos_Fallidos = 0
@@ -66,7 +87,7 @@ class Get_Auth():
 
         if Usuario.Autenticador == 1:
             Codigo = Generar_Codigo()
-            requests.post("http://127.0.0.1:5007/email",
+            requests.post(os.getenv("EMAIL_SERVICE"),
                 json={
                     "Template": "MFA",
                     "Datos": {"Nombre": Usuario.Nombre, "Codigo": Codigo},
@@ -82,17 +103,20 @@ class Get_Auth():
             Dev_Existe = Tabla_Dispositivos.query.filter(Tabla_Dispositivos.Token == Device, Tabla_Dispositivos.Usuario_ID == Usuario.ID, Tabla_Dispositivos.Estado_Dispositivo_ID != 3).first()
             if not Device or not Dev_Existe:
                 Data_D = Get_Device(Usuario.ID, Ahora, Client_IP, Client_Payload)
-                Device_Token = Crear_Dispositivo(Data_D, Usuario.Nombre, Usuario.Correo, Ahora_Formated)
+                Device_Token = Crear_Dispositivo(Data_D, Usuario.Nombre, Usuario.Correo, Ahora_Formated, Usuario.ID)
             if Dev_Existe:
                 Dev_Existe.Ultimo_Uso = Ahora
                 db.session.commit()
 
             Token, Expira = Crear_Token(Usuario.ID, Remember_Me, Device_Token)
 
+            Usuario.Ultimo_Ingreso = Ahora
+            db.session.commit()                
+
             Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Rol.ID).all()
             Permisos_Json = [p.to_dict() for p in Permisos]   
 
-            return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Permisos": Permisos_Json, "Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre}, "Device": Device_Token}), 200
+            return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Permisos": Permisos_Json, "Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre, "Nombre_Imagen": Usuario.Nombre_Imagen}, "Device": Device_Token}), 200
     @staticmethod
     def Login_Codigo():
         Data = request.get_json()
@@ -128,11 +152,13 @@ class Get_Auth():
                 db.session.commit()
 
             Token, Expira = Crear_Token(Usuario.ID, Remember_Me, Device_Token)
+            Usuario.Ultimo_Ingreso = Ahora
+            db.session.commit()            
 
             Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Rol.ID).all()
             Permisos_Json = [p.to_dict() for p in Permisos]   
 
-            return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Permisos": Permisos_Json, "Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre}, "Device": Device_Token}), 200            
+            return jsonify({"Token": Token, "Expires_At": Expira, "User": {"Permisos": Permisos_Json, "Rol_ID": Usuario.Rol_ID, "Rol_Name": Rol.Nombre,"User_ID": Usuario.ID, "User_Name": Usuario.Nombre, "Nombre_Imagen": Usuario.Nombre_Imagen}, "Device": Device_Token}), 200            
     @staticmethod
     def Recuperar():
         Data = request.get_json()
@@ -145,7 +171,7 @@ class Get_Auth():
         
         Codigo = Generar_Codigo()
 
-        requests.post("http://127.0.0.1:5007/email",
+        requests.post(os.getenv("EMAIL_SERVICE"),
             json={
                 "Template": "Recuperar_Contraseña",
                 "Datos": {"Nombre": Usuario.Nombre, "Codigo": Codigo},
@@ -184,13 +210,15 @@ class Get_Auth():
         if not Hash:
             return jsonify({"Error": "Error al Hashear"}), 401
 
-        if bcrypt.checkpw((Contraseña + Pepper).encode("utf-8"), Usuario.Contraseña.encode("utf-8")):
+        if bcrypt.checkpw((Contraseña + os.getenv("PEPPER")).encode("utf-8"), Usuario.Contraseña.encode("utf-8")):
             return jsonify({"Error": "No se permite reutilizar contraseñas anteriores"}), 401
         
         Usuario.Contraseña = Hash
+        Auditoria = Tabla_U_Auditoria(Accion="Cambio de contraseña",Anterior="None",Modificado_Por=Usuario.ID,Usuario_ID=Usuario.ID)
+        db.session.add(Auditoria)           
         db.session.commit()
 
-        requests.post("http://127.0.0.1:5007/email",
+        requests.post(os.getenv("EMAIL_SERVICE"),
             json={
                 "Template": "Cambio_Contraseña",
                 "Datos": {"Nombre": Usuario.Nombre},

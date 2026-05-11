@@ -1,5 +1,5 @@
-from flask import request, jsonify, Response, json
 from App.Services.Entity_Logic import Entity_Service
+from flask import request, jsonify, Response, json
 from App.Utilities.Util import Validar_JWT
 
 class Get_Entity:

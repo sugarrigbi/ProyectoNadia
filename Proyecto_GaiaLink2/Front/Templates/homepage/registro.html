@@ -2,38 +2,38 @@
 {% block contenido %}
     <!--Registro-->
     <section id="Registro" class="Fondo1 Largo-Pantalla-auto">
-        <div class="container-fluid justify-content-start align-items-center d-flex h-100 flex-column gap-3 gap-md-5 pb-5">
+        <div class="container-fluid justify-content-start align-items-center d-flex h-100 flex-column gap-3 gap-md-2 pb-5">
             <div class="row w-100 mt-3">
-                <div data-aos="fade-right" class="col-2 d-flex align-items-stretch justify-content-start">
-                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
                         <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
-                        <span data-lang="registro.Ayuda">
+                        <span data-lang="login.Ayuda">
                             Ayuda
                         </span>
                     </a> 
                 </div>
                 <div class="col-8"></div>
-                <div data-aos="fade-left" class="col-2 d-flex align-items-stretch justify-content-end">
-                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
                         <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
-                        <span data-lang="registro.Volver2">
+                        <span data-lang="login.Volver">
                             Volver
                         </span>
                     </a>                    
                 </div>
             </div>     
-            <form novalidate id="Formulario_Registrar" data-aos="fade-up" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
-                <h3 data-lang="registro.Registrarse" class="w-auto d-inline-flex fw-bold mb-3 p-3 text-white text-center Bg_Azul2 rounded-3 text-center fsr-9">
+            <form novalidate id="Formulario_Registrar" class="col-md-10 col-xxl-8 Bg_Blanco row gap-3 rounded-3 justify-content-center p-4 d-flex flex-column align-items-center" method="POST">
+                <h3 data-lang="registro.Registrarse" class="w-auto d-inline-flex fw-bold mb-3 p-3 text-white text-center Bg_Azul2 rounded-3 text-center fsr-10">
                     Registrarse
                 </h3>                                
                 <div class="row">
-                    <h3 data-lang="registro.Personales" class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                    <h3 data-lang="registro.Personales" class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-11">
                         Datos Personales
                     </h3>
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Primer_Nombre">
                                 Primer nombre 
                             </span>
@@ -45,7 +45,7 @@
                         </div>                        
                     </div> 
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Segundo_Nombre">
                                 Segundo nombre 
                             </span>
@@ -56,7 +56,7 @@
                         </div>                         
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Primer_Apellido">
                                 Primer apellido 
                             </span>
@@ -68,7 +68,7 @@
                         </div>                             
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Segundo_Apellido">
                                 Segundo apellido 
                             </span>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Tipo">
                                 Tipo de documento 
                             </span>
@@ -112,7 +112,7 @@
                         </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Documento">
                                 Documento 
                             </span>
@@ -140,7 +140,7 @@
                     </div>                   
                 </div> 
                 <div class="row">
-                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-11">
                         <span data-lang="registro.Direccion">
                             Direccion
                         </span>
@@ -148,7 +148,7 @@
                 </div> 
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Departamento">
                                 Departamento 
                             </span>
@@ -160,7 +160,7 @@
                         </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Ciudad">
                                 Ciudad 
                             </span>
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Localidad">
                                 Localidad
                             </span>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Barrio">
                                 Barrio
                             </span>
@@ -196,7 +196,7 @@
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Direccion">
                                 Direccion 
                             </span>
@@ -215,7 +215,7 @@
                     </div>                   
                 </div>   
                 <div class="row">
-                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-9">
+                    <h3 class="col-12 rounded-3 border_azul2 border-bottom border-5 fsr-11">
                         <span data-lang="registro.Cuenta">
                             Datos de la cuenta
                         </span>
@@ -223,7 +223,7 @@
                 </div> 
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Correo">
                                 Correo 
                             </span>
@@ -235,7 +235,7 @@
                         </div>
                     </div> 
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Nombre">
                                 Nombre de usuario 
                             </span>
@@ -247,7 +247,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Contraseña">
                                 Contraseña 
                             </span>
@@ -264,7 +264,7 @@
                         </div>                                              
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Confirmar">
                                 Confirma Contraseña  
                             </span>
@@ -282,7 +282,7 @@
                 </div>
                 <div class="row flex-column flex-sm-row gap-3 gap-md-0">
                     <div class="col-sm-12 col-md-3">
-                        <label class="form-label fsr-12 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
                             <span data-lang="registro.Telefono">
                                 Telefono 
                             </span>

@@ -4,27 +4,27 @@
     <section id="Login" class="Fondo1">
         <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5">
             <div class="row w-100 mt-3">
-                <div data-aos="fade-right" class="col-2 d-flex align-items-stretch justify-content-start">
-                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
                         <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
-                        <span data-lang="autenticador.Ayuda">
+                        <span data-lang="login.Ayuda">
                             Ayuda
                         </span>
                     </a> 
                 </div>
                 <div class="col-8"></div>
-                <div data-aos="fade-left" class="col-2 d-flex align-items-stretch justify-content-end">
-                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-10 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
                         <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
-                        <span data-lang="autenticador.Volver">
+                        <span data-lang="login.Volver">
                             Volver
                         </span>
                     </a>                    
                 </div>
             </div>            
-            <div class="row w-100 d-flex align-items-center justify-content-center" data-aos="fade-up">
+            <div class="row w-100 d-flex align-items-center justify-content-center">
                 <form id="Formulario_Autenticador" class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
-                    <img src="{{ url_for('static', filename='img/Multifa.svg') }}" class="w-25">
+                    <img src="{{ url_for('static', filename='img/Multifa.svg') }}" class="w-20">
                     <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
                         <h2 class="fsr-9 m-0" data-lang="autenticador.Autenticador">
                             Autenticador

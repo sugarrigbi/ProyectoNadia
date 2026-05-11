@@ -1,22 +1,25 @@
-from App.Routes.Account_Service import MICROSERVICE_URL as ACCOUNT_URL
-from App.Routes.Authenticator_Service import MICROSERVICE_URL as AUTHENTICATOR_URL
-from App.Routes.Case_Service import MICROSERVICE_URL as CASE_URL
-from App.Routes.Entity_Service import MICROSERVICE_URL as ENTITY_URL
-from App.Routes.Forms_Service import MICROSERVICE_URL as FORMS_URL
-from App.Routes.Notification_Service import MICROSERVICE_URL as NOTIFICATION_URL
-from App.Routes.User_Service import MICROSERVICE_URL as USER_URL
+from App.Rate_Limit import Rate_Limit
 from flask import Blueprint, jsonify
-import requests
 from datetime import datetime
-from App.Rate_Limit import Rate_Limit, DEFAULT_LIMIT
+import requests
+import os
 
 Health_Service_Bp = Blueprint("Health_Service", __name__)
 
-@Health_Service_Bp.route("/api/health", methods=["GET"])
+USER_URL = os.getenv("USER_URL")
+NOTIFICATION_URL = os.getenv("NOTIFICATION_URL")
+FORMS_URL = os.getenv("FORMS_URL")
+ENTITY_URL = os.getenv("ENTITY_URL")
+AUTHENTICATOR_URL = os.getenv("AUTHENTICATOR_URL")
+CASE_URL = os.getenv("CASE_URL")
+ACCOUNT_URL = os.getenv("ACCOUNT_URL")
+DEFAULT_LIMIT = os.getenv("DEFAULT_LIMIT")
+
+@Health_Service_Bp.route("/health", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
 def Health_Check():
     try:
-        Account = requests.get(f"{ACCOUNT_URL}/account/health", timeout=3)
+        Account = requests.get(f"{ACCOUNT_URL}/health", timeout=3)
         Account_Status = "OK" if Account.status_code == 200 else "OFF"
     except:
         Account_Status = "OFF"

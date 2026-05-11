@@ -1,9 +1,34 @@
+from App.Models.Case_Models import (
+    Caso as Tabla_Caso, 
+    Usuario as Tabla_Usuario, 
+    Estado_Caso as Tabla_Estado, 
+    Prioridad as Tabla_Prioridad, 
+    Incidente as Tabla_Incidente, 
+    Barrio as Tabla_Barrio, 
+    Localidad as Tabla_Localidad, 
+    Ciudad as Tabla_Ciudad, 
+    Departamento as Tabla_Dep, 
+    Tipo_Relacion as Tabla_Relacion, 
+    Caso_Discusion as Tabla_Discusion, 
+    Departamento as T_Departamento, 
+    Ciudad as T_Ciudad, 
+    Localidad as T_Localidad, 
+    Barrio as T_Barrio, 
+    Casos_a_Casos as Tabla_Casos_a_Casos, 
+    Radicado_Caso as Tabla_Radicado, 
+    Caso_Auditoria as Tabla_Auditoria, 
+    RolAPermiso as Tabla_Permiso
+)
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
 from App.Utilities.Tables import db
-import requests
-import json
-from App.Models.Case_Models import Caso as Tabla_Caso, Usuario as Tabla_Usuario, Estado_Caso as Tabla_Estado, Prioridad as Tabla_Prioridad, Incidente as Tabla_Incidente, Barrio as Tabla_Barrio, Localidad as Tabla_Localidad, Ciudad as Tabla_Ciudad, Departamento as Tabla_Dep, Tipo_Relacion as Tabla_Relacion, Caso_Discusion as Tabla_Discusion, Departamento as T_Departamento, Ciudad as T_Ciudad, Localidad as T_Localidad, Barrio as T_Barrio, Casos_a_Casos as Tabla_Casos_a_Casos, Radicado_Caso as Tabla_Radicado, Caso_Auditoria as Tabla_Auditoria, RolAPermiso as Tabla_Permiso
+from openpyxl import Workbook
 from datetime import datetime
 from sqlalchemy import func
+import requests
+import json
+import os
+import io
 
 class Case_Service():
     @staticmethod
@@ -40,7 +65,7 @@ class Case_Service():
                     else:
                         Ciudad = T_Ciudad(Nombre=Ciudad_Norm, Departamento_ID=Departamento.ID)
                         db.session.add(Ciudad)
-                        db.session.flush() 
+                        db.session.flush()
             if Data_L["Localidad_ID"]:
                 Localidad = T_Localidad.query.get(int(Data_L["Localidad_ID"]))       
             else:
@@ -84,9 +109,12 @@ class Case_Service():
                 db.session.flush()            
 
                 Radicados = Tabla_Radicado.query.order_by(Tabla_Radicado.ID.desc()).first()
-                Radicado_text = int(Radicados.Radicado.rstrip("R"))+1
-                Radicado_com = f"{Radicado_text:06d}R"          
-                Radicado_Final = Tabla_Radicado(Radicado=Radicado_com, Caso_ID=Caso.ID)
+                if not Radicados:
+                    Radicado_Final = Tabla_Radicado(Radicado="000001R", Caso_ID=Caso.ID)
+                else:
+                    Radicado_text = int(Radicados.Radicado.rstrip("R"))+1
+                    Radicado_com = f"{Radicado_text:06d}R"          
+                    Radicado_Final = Tabla_Radicado(Radicado=Radicado_com, Caso_ID=Caso.ID)
                 db.session.add(Radicado_Final)
                 db.session.flush()   
 
@@ -127,7 +155,7 @@ class Case_Service():
         db.session.add(Auditoria)
         db.session.commit()
 
-        requests.post("http://127.0.0.1:5007/email",
+        requests.post(os.getenv("EMAIL_SERVICE"),
             json={
                 "Template": "Caso_Creado",
                 "Datos": {
@@ -151,7 +179,7 @@ class Case_Service():
             Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc()).all()
             return Casos
         elif "caso_ver" in Nombres:
-            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.asc()).all()
+            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.desc()).all()
             return Casos
         else:
             return "Auth"           
@@ -256,57 +284,33 @@ class Case_Service():
             return False
         
         if Data_L:
-            if Data_L["Departamento_ID"]:
-                Departamento = T_Departamento.query.get(int(Data_L["Departamento_ID"]))
-            else:
-                Departamento_Norm = Data_L["Departamento"].capitalize().strip()
-                Departamento = T_Departamento.query.filter_by(Nombre=Departamento_Norm).first()
-                if not Departamento:
-                    Departamento = T_Departamento(Nombre=Departamento_Norm, Pais_ID=1)
-                    db.session.add(Departamento)
-                    db.session.flush()
-            if Data_L["Ciudad_ID"]:
-                Ciudad = T_Ciudad.query.get(int(Data_L["Ciudad_ID"]))
-            else:
-                Ciudad_Norm = Data_L["Ciudad"].capitalize().strip()
-                Ciudad = T_Ciudad.query.filter_by(Nombre=Ciudad_Norm).first()
-                if not Ciudad:
-                    if Data_L["Departamento_ID"]:
-                        Ciudad = T_Ciudad(Nombre=Ciudad_Norm, Departamento_ID=int(Data_L["Departamento_ID"]))
-                        db.session.add(Ciudad)
-                        db.session.flush()
-                    else:
-                        Ciudad = T_Ciudad(Nombre=Ciudad_Norm, Departamento_ID=Departamento.ID)
-                        db.session.add(Ciudad)
-                        db.session.flush() 
-            if Data_L["Localidad_ID"]:
-                Localidad = T_Localidad.query.get(int(Data_L["Localidad_ID"]))       
-            else:
-                Localidad_Norm = Data_L["Localidad"].capitalize().strip()
-                Localidad = T_Localidad.query.filter_by(Nombre=Localidad_Norm).first()
-                if not Localidad:
-                    if Data_L["Ciudad_ID"]:
-                        Localidad = T_Localidad(Nombre=Localidad_Norm, Ciudad_ID=int(Data_L["Ciudad_ID"]))
-                        db.session.add(Localidad)
-                        db.session.flush()                        
-                    else:
-                        Localidad = T_Localidad(Nombre=Localidad_Norm, Ciudad_ID=Ciudad.ID)  
-                        db.session.add(Localidad)
-                        db.session.flush()   
-            if Data_L["Barrio_ID"]:
-                Barrio = T_Barrio.query.get(int(Data_L["Barrio_ID"]))
-            else:
-                Barrio_Norm = Data_L["Barrio"].capitalize().strip()
-                Barrio = T_Barrio.query.filter_by(Nombre=Barrio_Norm).first()
-                if not Barrio:
-                    if Data_L["Localidad_ID"]:
-                        Barrio = T_Barrio(Nombre=Barrio_Norm, Localidad_ID=int(Data_L["Localidad_ID"]))
-                        db.session.add(Barrio)
-                        db.session.flush()
-                    else:
-                        Barrio = T_Barrio(Nombre=Barrio_Norm, Localidad_ID=Localidad.ID)
-                        db.session.add(Barrio)
-                        db.session.flush()        
+            Departamento = Data_L["Departamento"].capitalize().strip()
+            Dep_Exi = T_Departamento.query.filter(T_Departamento.Nombre == Departamento, T_Departamento.Pais_ID == 1).first()
+            if not Dep_Exi:
+                Dep_Exi = T_Departamento(Nombre=Departamento, Pais_ID=1)
+                db.session.add(Dep_Exi)
+                db.session.flush()
+
+            Ciudad = Data_L["Ciudad"].capitalize().strip()
+            Ciu_Exi = T_Ciudad.query.filter(T_Ciudad.Nombre == Ciudad, T_Ciudad.Departamento_ID == Dep_Exi.ID).first()
+            if not Ciu_Exi:
+                Ciu_Exi = T_Ciudad(Nombre=Ciudad, Departamento_ID=Dep_Exi.ID)
+                db.session.add(Ciu_Exi)
+                db.session.flush()                
+
+            Localidad = Data_L["Localidad"].capitalize().strip()
+            Loc_Exi = T_Localidad.query.filter(T_Localidad.Nombre == Localidad, T_Localidad.Ciudad_ID == Ciu_Exi.ID).first()
+            if not Loc_Exi:
+                Loc_Exi = T_Localidad(Nombre=Localidad, Ciudad_ID=Ciu_Exi.ID)
+                db.session.add(Loc_Exi)
+                db.session.flush()
+
+            Barrio = Data_L["Barrio"].capitalize().strip()
+            Bar_Exi = T_Barrio.query.filter(T_Barrio.Nombre == Barrio, T_Barrio.Localidad_ID == Loc_Exi.ID).first()
+            if not Bar_Exi:
+                Bar_Exi = T_Barrio(Nombre=Barrio, Localidad_ID=Loc_Exi.ID)
+                db.session.add(Bar_Exi)
+                db.session.flush()
 
         Estado_Correo = Tabla_Estado.query.get(int(Data_C['Estado_Caso_ID']))
         if not Estado_Correo:
@@ -327,7 +331,7 @@ class Case_Service():
             Caso.Estado_Caso_ID = int(Data_C['Estado_Caso_ID'])
             Caso.Prioridad_ID = int(Data_C['Prioridad_ID'])
             Caso.Creacion = Data_C['Creacion']
-            Caso.Barrio_ID = Barrio.ID
+            Caso.Barrio_ID = Bar_Exi.ID
             db.session.flush()
 
         if Data_C_C["Mensaje"]:
@@ -349,7 +353,7 @@ class Case_Service():
         db.session.commit()
 
         if nuevo_estado == 3 and nuevo_estado != anterior_estado:
-            requests.post("http://127.0.0.1:5007/email",
+            requests.post(os.getenv("EMAIL_SERVICE"),
                 json={
                     "Template": "Caso_Resuelto",
                     "Datos": {
@@ -362,7 +366,7 @@ class Case_Service():
             )    
         elif nuevo_estado != 3:
             if nuevo_estado != anterior_estado:
-                requests.post("http://127.0.0.1:5007/email",
+                requests.post(os.getenv("EMAIL_SERVICE"),
                     json={
                         "Template": "Caso_Cambio",
                         "Datos": {
@@ -442,5 +446,194 @@ class Case_Service():
                 "Tendencia_Final": Tendencia_Final
             }
             return Data
+        else:
+            return "Auth"
+    @staticmethod
+    def Exportar_Exel(User_ID):
+        if not User_ID:
+            return "Auth"
+        
+        Usuario_Validar = Tabla_Usuario.query.get(User_ID)
+        Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
+        Nombres = [P.to_dict()["Nombre"] for P in Permisos]
+        if "exportar_excel" in Nombres:
+            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.asc()).all()
+            if not Casos:
+                return None
+
+            Libro = Workbook()
+            Hoja = Libro.active
+            Hoja.title = "Reporte de casos"
+            Hoja.row_dimensions[1].height = 25
+            Hoja.freeze_panes = "A2"
+
+            Color_Principal = "5B2D8E"
+            Color_Filas = "F4EEFF"
+            Color_Bordes = "DDDDDD"
+            
+            Estado_Colores = {
+                "Pendiente": "FFF1B8",
+                "Activo": "CFF5D2",
+                "Resuelto": "BFE9F2",
+                "Eliminado": "F8C7C7",
+                "En espera del usuario": "E6E6E6",
+                "Escalado a supervisor": "CFE0FF",
+                "Reabierto": "D9D9D9",
+                "Tomando desicion": "E3D6FF",
+                "En espera del asesor": "EAEAEA"
+            }
+            Prioridad_Colores = {
+                "Muy Baja": "DDE1E6",
+                "Baja": "BFE9F2",
+                "Media": "FFE08A",
+                "Alta": "FF9E9E",
+                "Critica": "C62828"
+            }
+            Incidente_Colores = {
+                "Desplazamiento": "CFE0FF",
+                "Predios Despojados": "E3D6FF",
+                "Expropiacion": "FFE6A7",
+                "Hurto": "FFB3B3"
+            }
+
+            Fuente_Header = Font(bold=True, color="FFFFFF", size=12)
+            Fondo_Header = PatternFill(fill_type="solid", fgColor=Color_Principal)
+            Fondo_Filas = PatternFill(fill_type="solid", fgColor=Color_Filas)
+            Alineacion_Central = Alignment(horizontal="center", vertical="center")
+            Alineacion_Start = Alignment(horizontal="left", vertical="center")
+            Bordes = Border(
+                left = Side(style="thin", color=Color_Bordes),
+                right = Side(style="thin", color=Color_Bordes),
+                top = Side(style="thin", color=Color_Bordes),
+                bottom = Side(style="thin", color=Color_Bordes)
+            )
+
+            Columnas_Archivo = [
+                {
+                    "Titulo": "Radicado", 
+                    "Ancho": 14,
+                    "Valor": lambda Caso: Caso.radicados[0].Radicado
+                },
+                {
+                    "Titulo": "Nombre", 
+                    "Ancho": 35,
+                    "Valor": lambda Caso: Caso.Nombre
+                },
+                {
+                    "Titulo": "Descripcion", 
+                    "Ancho": 45,
+                    "Valor": lambda Caso: Caso.Descripcion
+                },
+                {
+                    "Titulo": "Estado", 
+                    "Ancho": 22,
+                    "Valor": lambda Caso: Caso.estado.Nombre
+                },
+                {
+                    "Titulo": "Prioridad", 
+                    "Ancho": 14,
+                    "Valor": lambda Caso: Caso.prioridad.Prioridad
+                },                
+                {
+                    "Titulo": "Incidente", 
+                    "Ancho": 20,
+                    "Valor": lambda Caso: Caso.incidente.Incidente
+                },                                
+                {
+                    "Titulo": "Afectados", 
+                    "Ancho": 14,
+                    "Valor": lambda Caso: Caso.Afectados
+                },
+                {
+                    "Titulo": "Direccion", 
+                    "Ancho": 25,
+                    "Valor": lambda Caso: Caso.Direccion
+                },
+                {
+                    "Titulo": "Fecha_Creacion", 
+                    "Ancho": 22,
+                    "Valor": lambda Caso: Caso.Creacion
+                },
+                {
+                    "Titulo": "Usuario_Creador_ID", 
+                    "Ancho": 22,
+                    "Valor": lambda Caso: Caso.usuario_creador.ID
+                },
+                {
+                    "Titulo": "Usuario_Creador_Nombre", 
+                    "Ancho": 30,
+                    "Valor": lambda Caso: Caso.usuario_creador.Nombre
+                },
+                {
+                    "Titulo": "Usuario_Encargado_ID", 
+                    "Ancho": 25,
+                    "Valor": lambda Caso: Caso.usuario_asociado.ID
+                },
+                {
+                    "Titulo": "Usuario_Encargado_Nombre", 
+                    "Ancho": 32,
+                    "Valor": lambda Caso: Caso.usuario_asociado.Nombre
+                },
+                {
+                    "Titulo": "Barrio",
+                    "Ancho": 20,
+                    "Valor": lambda Caso: Caso.barrio.Nombre
+                },
+                {
+                    "Titulo": "Localidad",
+                    "Ancho": 20,
+                    "Valor": lambda Caso: Caso.barrio.localidad.Nombre
+                },
+                {
+                    "Titulo": "Ciudad",
+                    "Ancho": 20,
+                    "Valor": lambda Caso: Caso.barrio.localidad.ciudad.Nombre
+                },
+                {
+                    "Titulo": "Departamento",
+                    "Ancho": 22,
+                    "Valor": lambda Caso: Caso.barrio.localidad.ciudad.departamento.Nombre
+                }
+            ]
+
+            for Numero_Columna, Columna in enumerate(Columnas_Archivo, start=1):
+                Celda = Hoja.cell(row=1, column=Numero_Columna, value=Columna["Titulo"])
+                Celda.font = Fuente_Header
+                Celda.fill = Fondo_Header
+                Celda.alignment = Alineacion_Central
+                Celda.border = Bordes   
+
+                Letra_de_Columna = get_column_letter(Numero_Columna)
+                Hoja.column_dimensions[Letra_de_Columna].width = Columna["Ancho"]
+
+            for Numero_Fila, Caso in enumerate(Casos, start=2):
+                Hoja.row_dimensions[Numero_Fila].height = 22
+                for Numero_Columna, Columna in enumerate(Columnas_Archivo, start=1):
+                    Valor = Columna["Valor"](Caso)
+                    Celda = Hoja.cell(row=Numero_Fila, column=Numero_Columna, value=Valor)
+                    Celda.border = Bordes
+                    if Columna["Titulo"] == "Radicado":
+                        Celda.alignment = Alineacion_Central
+                        Celda.font = Font(bold=True)
+                    elif Columna["Titulo"] in ["Estado", "Prioridad", "Incidente", "Afectados", "Fecha_Creacion", "Usuario_Creador_ID", "Usuario_Creador_Nombre", "Usuario_Encargado_ID", "Usuario_Encargado_Nombre"]:
+                        Celda.alignment = Alineacion_Central
+                    else:
+                        Celda.alignment = Alineacion_Start
+                    if Numero_Fila % 2 != 0:
+                        Celda.fill = Fondo_Filas
+
+                    if Columna["Titulo"] == "Estado":
+                        Celda.fill = PatternFill(fill_type="solid", fgColor=Estado_Colores.get(Celda.value, "FFFFFF"))
+                    elif Columna["Titulo"] == "Prioridad":
+                        Celda.fill = PatternFill(fill_type="solid", fgColor=Prioridad_Colores.get(Celda.value, "FFFFFF"))
+                    elif Columna["Titulo"] == "Incidente":
+                        Celda.fill = PatternFill(fill_type="solid", fgColor=Incidente_Colores.get(Celda.value, "FFFFFF"))
+
+            Hoja.auto_filter.ref = f"A1:{get_column_letter(Hoja.max_column)}1"
+            Archivo = io.BytesIO()
+            Libro.save(Archivo)
+            Archivo.seek(0)
+
+            return Archivo     
         else:
             return "Auth"

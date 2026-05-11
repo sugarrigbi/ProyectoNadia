@@ -1,7 +1,6 @@
 from App.Utilities.Tables import db, Modelo_Base
 from datetime import datetime
 
-#FORMULARIOS
 class Tipo_Formulario(Modelo_Base):
     __tablename__ = "Tipo_Formulario"
 

@@ -14,7 +14,7 @@ if (document.getElementById("Formulario_Ayuda")){
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        const response = await fetch(`${API_BASE}/api/forms/ayuda/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const response = await fetch(`${API_BASE}/forms/ayuda/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
 
         if(response.status === 201){
             Boton.classList.remove("boton2");
@@ -64,7 +64,7 @@ if (document.getElementById("Formulario_Calificanos")){
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        const response = await fetch(`${API_BASE}/api/forms/calificanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const response = await fetch(`${API_BASE}/forms/calificanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
 
         if(response.status === 201){
             Boton.classList.remove("boton2");
@@ -113,7 +113,7 @@ if (document.getElementById("Formulario_Contactanos")){
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        const response = await fetch(`${API_BASE}/api/forms/contactanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const response = await fetch(`${API_BASE}/forms/contactanos/create`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
 
         if(response.status === 201){
             Boton.classList.remove("boton2");
@@ -234,7 +234,7 @@ if (document.getElementById("Formulario_Registrar")){
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        const response = await fetch(`${API_BASE}/api/registro`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const response = await fetch(`${API_BASE}/registro`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
         const result = await response.json()
 
         if(response.status === 200){
@@ -292,7 +292,7 @@ if (document.getElementById("Formulario_Autenticador")){
             Codigo_User: codigo
         };        
 
-        const response = await fetch(`${API_BASE}/api/login/mfa`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const response = await fetch(`${API_BASE}/login/mfa`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
         const result = await response.json() 
         const expiresAtStr = result.Expires_At
         const expiresAtMs = Date.parse(expiresAtStr);
@@ -361,7 +361,7 @@ if (document.getElementById("Formulario_Codigo")){
             Codigo: codigo
         };
 
-        const response = await fetch(`${API_BASE}/api/registro/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const response = await fetch(`${API_BASE}/registro/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
         const result = await response.json()        
 
         if(response.status === 200){
@@ -429,7 +429,7 @@ if (document.getElementById("Formulario_Login")){
             Client_Payload: Info
         }; 
         
-        const response = await fetch(`${API_BASE}/api/login`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const response = await fetch(`${API_BASE}/login`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
         const result = await response.json()
 
         const expiresAtStr = result.Expires_At
@@ -510,7 +510,7 @@ if (document.getElementById("Formulario_Recuperar")){
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        const response = await fetch(`${API_BASE}/api/recuperar`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
+        const response = await fetch(`${API_BASE}/recuperar`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(data)});
         const result = await response.json()
 
         if (response.status === 200) {
@@ -600,7 +600,7 @@ if (document.getElementById("Formulario_Recuperar2")){
             Contraseña: document.getElementById("Input_Password5").value
         };
 
-        const response = await fetch(`${API_BASE}/api/recuperar/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+        const response = await fetch(`${API_BASE}/recuperar/codigo`, {method: "POST", headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
         const result = await response.json()        
 
         if(response.status === 200){

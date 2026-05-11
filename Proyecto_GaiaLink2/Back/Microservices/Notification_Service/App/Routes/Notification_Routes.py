@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify
 from App.Services.Notification_Logic import Email_Service
+from flask import Blueprint, request, jsonify
 
 Notification_Service_Bp = Blueprint("Notification", __name__)
 
@@ -16,6 +16,6 @@ def Registro_Codigo():
     if "Error" in Respuesta:
         return jsonify(Respuesta), 400
     return jsonify({"Message": "Correo enviado"}), 200
-@Notification_Service_Bp.route("/email/health", methods=["GET"])
+@Notification_Service_Bp.route("/health", methods=["GET"])
 def Health():
     return jsonify({"Status": "OK"}), 200

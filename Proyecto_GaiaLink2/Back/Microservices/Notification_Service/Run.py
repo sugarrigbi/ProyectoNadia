@@ -1,9 +1,9 @@
-from flask import Flask
-from App.Routes.Notification_Routes import Notification_Service_Bp
+from dotenv import load_dotenv
+load_dotenv()
 
-app = Flask(__name__)
+from App import Create_App
 
-app.register_blueprint(Notification_Service_Bp)
+App = Create_App()
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5007)
+    App.run(debug=True, port=5007)  

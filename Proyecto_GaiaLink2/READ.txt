@@ -1,13 +1,41 @@
 Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
-	ARCHIVOS:
-		Subida de archivos no debe ir en el mismo backend, al buckjet de GSC
-		Sistema de subir imagenes en png y con el nombre del usuario en backend account service
-		exportacion a xls de datos de casos entidades personas a tablas de exel de reportes etc para auditorias internas
 	USUARIOS:
-		CRUD Personas
-		desactivar o suspender cuenta/ gestion de cuentas
+		CRUD Personas admin
+	BASE DE DATOS:
+		Modelo Entidad Relacion Actualizado
+		Diccionario de datos
+		4 Roles en MySQL de la DB con permisos
+		contraseñas seguras en la DB
+		respaldo y recuperaciones(politica de backup, automatica etc)
+	FORMULARIOS:
+		Poder ver los 3 tipos de forms desde el admin
+	CUENTA SETTINGS:
+		seccion de ayuda
 
-{
-  "2026-03": { "Creados": 5, "Resueltos": 2 },
-  "2026-04": { "Creados": 8, "Resueltos": 3 }
-}
+	TAN:
+	 	revisar visual del home y del dash en celuco y en pc
+		autenticador.html
+		base.html
+		formularios.html
+		inicio.html
+		login.html
+		mision.html
+		rate_limit.html
+		recuperar1.html
+		recuperar2.html
+		registro.html
+		registro2.html
+		soporte.html
+		terminos.html
+
+		casos_admin.html
+		casos_user.html
+		cuenta.html
+		dashboard.html
+		entidades_admin.html
+		estadisticas.html
+		health.html
+		inicio.html
+		no_auth.html
+		usuarios.html	
+	

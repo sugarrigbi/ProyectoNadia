@@ -13,11 +13,13 @@
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
+                    <div class="icono-nav5 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                 </a>
                 <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
                         <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
+                            <div class="icono-nav6 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                             <span id="User_Name2">
                                 Usuario
                             </span>
@@ -25,15 +27,9 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/cuenta">
                             <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
-                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
-                            Ajustes
                         </a>
                     </li>
                     <li>
@@ -102,11 +98,11 @@
                 </p>
             </div>
         </a>
-        <a href="/dashboard/ajustes" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+        <a href="/dashboard/cuenta" class="col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 d-flex flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
             <img src="{{ url_for('static', filename='img/Gear.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3 color_morado">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0 color_blanco">
-                    Configuracion
+                    Cuenta
                 </h2>
                 <p class="fsr-16 text-muted m-0 color_blanco2">
                     Ajusta las preferencias del sistema

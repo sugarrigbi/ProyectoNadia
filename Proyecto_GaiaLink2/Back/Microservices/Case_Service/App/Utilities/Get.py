@@ -1,6 +1,7 @@
-from flask import request, jsonify
 from App.Services.Case_Logic import Case_Service
+from flask import request, jsonify, send_file
 from App.Utilities.Util import Validar_JWT
+from datetime import date
 
 class Get_Case:
     @staticmethod
@@ -207,4 +208,23 @@ class Get_Case:
             return jsonify({"Error": "No Auth"}), 403    
         elif not Data:
             return jsonify({"Error": "No data found"}), 404
-        return jsonify(Data), 200            
+        return jsonify(Data), 200  
+    @staticmethod
+    def Exportar_Excel():
+        Auth_Data, Error = Validar_JWT()
+        if Error:
+            if Error in ["Token expirado", "Token inválido"]:
+                return jsonify({"Error": Error}), 401
+            return jsonify({"Error": Error}), 400
+        User_ID = Auth_Data["user_id"]
+
+        Excel  = Case_Service.Exportar_Exel(User_ID)
+
+        if Excel == "Auth":
+            return jsonify({"Error": "No Auth"}), 403
+        elif not Excel:
+            return jsonify({"Error": "No data found"}), 404
+        
+        Hoy = date.today().strftime("%d-%m-%Y")
+
+        return send_file(Excel, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", as_attachment=True, download_name=f"Reporte_Casos_{Hoy}.xlsx")

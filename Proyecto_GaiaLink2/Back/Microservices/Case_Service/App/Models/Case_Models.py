@@ -2,7 +2,6 @@ from App.Utilities.Tables import db, Modelo_Base
 from datetime import datetime
 import json
 
-#CASOS
 class Caso(Modelo_Base):
     __tablename__ = "Caso"
 
@@ -12,7 +11,6 @@ class Caso(Modelo_Base):
     Descripcion = db.Column(db.String(255), nullable=False)
     Afectados = db.Column(db.Integer, nullable=False)
     Direccion = db.Column(db.String(60), nullable=False)
-    Caso_Asociado = db.Column(db.String(10), nullable=False, default="SI")
     Actualizado_En = db.Column(db.DateTime, onupdate=db.func.now())
     Usuario_Creador_ID = db.Column(db.Integer, db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"), nullable=False)
     Usuario_Asociado_ID = db.Column(db.Integer, db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"), nullable=False)
@@ -183,7 +181,6 @@ class Estado_Caso(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Nombre = db.Column(db.String(50), unique=True, nullable=False)
     Creado_En = db.Column(db.DateTime, default=datetime.utcnow)
-#UBICACION
 class Pais(Modelo_Base):
     __tablename__ = "Pais"
 
@@ -247,7 +244,6 @@ class Barrio(Modelo_Base):
         }
 
         return resultado
-#USUARIOS
 class Persona(Modelo_Base):
     __tablename__ = "Persona"
 
@@ -298,8 +294,8 @@ class Usuario(Modelo_Base):
     Intentos_Fallidos = db.Column(db.Integer, nullable=False, default=0)
     Bloqueado_Hasta = db.Column(db.DateTime, nullable=True)
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+    Ultimo_Ingreso = db.Column(db.DateTime, server_default=db.func.now())
     Autenticador = db.Column(db.Boolean, nullable=False, default=False)
-    Autenticador_Secreto = db.Column(db.String(255), nullable=True)
 
     Estado_Usuario_ID = db.Column(db.Integer,db.ForeignKey("Estado_Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
     estado_usuario = db.relationship("Estado_Usuario")

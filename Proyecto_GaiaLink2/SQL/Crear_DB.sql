@@ -74,10 +74,11 @@ CREATE TABLE Usuario(
     Intentos_Fallidos INT NOT NULL DEFAULT 0,
     Bloqueado_Hasta DATETIME NULL, 
     Creado_En DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Ultimo_Ingreso DATETIME DEFAULT CURRENT_TIMESTAMP,
     Actualizado_En DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     Autenticador TINYINT NOT NULL DEFAULT 0,
-	Autenticador_Secreto VARCHAR(255) NULL,
     Estado_Usuario_ID INT NOT NULL,
+    Nombre_Imagen VARCHAR(60),
     Rol_ID INT NOT NULL,
 	INDEX (Rol_ID),
 	INDEX (Estado_Usuario_ID),
@@ -87,6 +88,7 @@ CREATE TABLE Usuario(
 CREATE TABLE Usuario_Auditoria(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Accion VARCHAR(100) NOT NULL,
+    Anterior TEXT NOT NULL,
     Modificado_Por INT NOT NULL,
     Fecha_Modificacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     Usuario_ID INT NOT NULL,
@@ -95,6 +97,13 @@ CREATE TABLE Usuario_Auditoria(
     CONSTRAINT Fk_Usuario_Auditoria_ID FOREIGN KEY (Usuario_ID) REFERENCES Usuario(ID) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT Fk_Usuario_Modificado_Por FOREIGN KEY (Modificado_Por) REFERENCES Usuario(ID) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+CREATE TABLE Correo_Auditoria(
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Accion VARCHAR(100) NOT NULL,
+    Template VARCHAR(100) NOT NULL,
+    Correo VARCHAR(100) NOT NULL,
+    Fecha_Modificacion DATETIME DEFAULT CURRENT_TIMESTAMP  
+)
 CREATE TABLE Persona(
 	ID INT AUTO_INCREMENT PRIMARY KEY,
     Tipo_Documento_ID INT NOT NULL,
@@ -122,6 +131,7 @@ CREATE TABLE Persona(
 CREATE TABLE Persona_Auditoria(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Accion VARCHAR(100) NOT NULL,
+    Anterior TEXT NOT NULL,
     Modificado_Por INT NOT NULL,
     Fecha_Modificacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     Persona_ID INT NOT NULL,
@@ -149,6 +159,7 @@ CREATE TABLE Dispositivos(
 CREATE TABLE Dispositivos_Auditoria(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Accion VARCHAR(100) NOT NULL,
+    Anterior TEXT NOT NULL,
     Modificado_Por INT NOT NULL,
     Fecha_Modificacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     Dispositivos_ID INT NOT NULL,
@@ -219,7 +230,6 @@ CREATE TABLE Caso(
     Descripcion VARCHAR(255) NOT NULL,
     Afectados INT NOT NULL,
     Direccion VARCHAR(60) NOT NULL,
-    Caso_Asociado VARCHAR(10) NOT NULL DEFAULT 'SI',
     Actualizado_En DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Usuario_Creador_ID INT NOT NULL,
     Usuario_Asociado_ID INT NOT NULL,

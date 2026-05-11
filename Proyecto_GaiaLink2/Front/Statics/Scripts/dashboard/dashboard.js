@@ -1,4 +1,5 @@
 const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
+const BUCKET = 'https://gaialink.s3.us-east-1.amazonaws.com/';
 
 function CambiarTema() {
     const Oscuro = document.body.classList.toggle("Modo_Oscuro");
@@ -8,8 +9,7 @@ function CambiarTema() {
         document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Moon.svg"
         if (document.getElementById("Arrow_Usuario")){
             document.getElementById("Arrow_Usuario").src = "/Statics/img/Arrow_White.svg";           
-            document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";         
-            document.getElementById("Ajustes_Usuario").src = "/Statics/img/Gear_Claro.svg";         
+            document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";                 
             document.getElementById("Ayuda_Usuario").src = "/Statics/img/Help_Claro.svg";                        
         }        
     } else {
@@ -18,6 +18,16 @@ function CambiarTema() {
         document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Sun.svg"            
     }
 }
+function Validar_Campos(Campos, Datos, Boton) {
+    let Cambios = false;
+    Campos.forEach(Campo =>{
+        if (Campo.value !== Datos[Campo.name]){
+            Cambios = true
+        }
+    });
+    Boton.disabled = !Cambios
+}
+
 document.addEventListener("DOMContentLoaded", () => { 
     if (localStorage.getItem("Tema") === "Oscuro") {
         document.body.classList.add("Modo_Oscuro");
@@ -78,6 +88,32 @@ document.addEventListener("DOMContentLoaded", () => {
             position: 'top-end'
         });
     }
+    if (sessionStorage.getItem('Excel')) {
+        sessionStorage.removeItem('Excel');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Archivo descargado',
+            text: 'Archivo descargado con éxito',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }
+    if (sessionStorage.getItem('Personal_Actualizado')) {
+        sessionStorage.removeItem('Personal_Actualizado');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Datos modificados',
+            text: 'Datos modificados con éxito',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }
     if (sessionStorage.getItem('dispositivo_eliminado')) {
         sessionStorage.removeItem('dispositivo_eliminado');
 
@@ -91,8 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
             position: 'top-end'
         });
     } 
-    if (sessionStorage.getItem('MFA')) {
-        sessionStorage.removeItem('MFA');
+    if (sessionStorage.getItem('MFA1')) {
+        sessionStorage.removeItem('MFA1');
 
         Swal.fire({
             icon: 'success',
@@ -104,9 +140,26 @@ document.addEventListener("DOMContentLoaded", () => {
             position: 'top-end'
         });
     }
+    if (sessionStorage.getItem('MFA2')) {
+        sessionStorage.removeItem('MFA2');
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Autenticacion desactivada',
+            text: 'Autenticacion desactivada con éxito',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }    
     
+    window.addEventListener("popstate", () => {
+        cargarPagina(window.location.pathname);
+    });
+
     const Contenido = document.getElementById("contenido");
-    const contenidoOriginal = Contenido.innerHTML;
+    const contenidoOriginal = Contenido.innerHTML; 
 
     function cargarPagina(url) {
         const Token_JWT = localStorage.getItem("Token_JWT");
@@ -159,8 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 if (document.getElementById("Arrow_Usuario")){
                     document.getElementById("Arrow_Usuario").src = "/Statics/img/Arrow_White.svg";           
-                    document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";         
-                    document.getElementById("Ajustes_Usuario").src = "/Statics/img/Gear_Claro.svg";         
+                    document.getElementById("Datos_Usuario").src = "/Statics/img/User_Claro.svg";                
                     document.getElementById("Ayuda_Usuario").src = "/Statics/img/Help_Claro.svg";                        
                 }        
             } else {
@@ -274,14 +326,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 document.querySelectorAll("[id^='Imagen_Comentarios_']").forEach(Img_Com => {
                     const id = Img_Com.dataset.caso;
+                    const Img_Error = document.getElementById(`Imagen_Error_${id}`);
                     const Nombre_Usuario = document.getElementById(`User_Name_${id}`).textContent.trim();
-                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
-                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';
+                    const GCS_URL = `${BUCKET}${User.Nombre_Imagen}`;
 
                     Img_Com.onerror = function(){
                         if (this.dataset.fallback !== "true"){
                             this.dataset.fallback = "true";
-                            this.src = DEFAULT;
+                            this.classList.add("d-none");
+                            Img_Error.classList.remove("d-none");
+                            Iniciales = Nombre_Usuario.slice(0, 2);
+                            Img_Error.textContent = Iniciales;
                         }
                     };     
                     
@@ -430,14 +485,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.getElementById("contenido")){  
                 if (document.getElementById("Imagen_Usuario_Crear")){
                     const img2 = document.getElementById("Imagen_Usuario_Crear")
+                    const Img_Error = document.getElementById("Imagen_Error_Usuario_Crear");
                     const Nombre_Usuario = User.User_Name;
-                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
-                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';   
+                    const GCS_URL = `${BUCKET}${User.Nombre_Imagen}`; 
                     
                     img2.onerror = function(){
                         if (this.dataset.fallback !== "true"){
                             this.dataset.fallback = "true";
-                            this.src = DEFAULT;
+                            this.classList.add("d-none");
+                            Img_Error.classList.remove("d-none");
+                            Iniciales = Nombre_Usuario.slice(0, 2);
+                            Img_Error.textContent = Iniciales;                            
                         }
                     };      
                     
@@ -445,13 +503,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 document.querySelectorAll(".imagen_usuario").forEach(img =>{
                     const Nombre_Usuario = User.User_Name;
-                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
-                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';
+                    const Img_Error = img.nextElementSibling
+                    const GCS_URL = `${BUCKET}${User.Nombre_Imagen}`;
 
                     img.onerror = function(){
                         if (this.dataset.fallback !== "true"){
                             this.dataset.fallback = "true";
-                            this.src = DEFAULT;
+                            this.classList.add("d-none");
+                            Img_Error.classList.remove("d-none");
+                            Iniciales = Nombre_Usuario.slice(0, 2);
+                            Img_Error.textContent = Iniciales;
                         }
                     };      
                     
@@ -459,14 +520,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 document.querySelectorAll("[id^='Imagen_Usuario_Comentario_']").forEach(Img_Com => {
                     const id = Img_Com.id.split("_").pop();
+                    const Img_Error = Img_Com.nextElementSibling
                     const Nombre_Usuario = document.getElementById(`Obtener_Usuario_Comentario_${id}`).textContent.trim();
-                    const GCS_URL = `https://storage.googleapis.com/gaialink/${Nombre_Usuario}.png`;
-                    const DEFAULT = '/Statics/img/USER_DEFAULT.svg';
+                    const GCS_URL = `${BUCKET}${User.Nombre_Imagen}`;
 
                     Img_Com.onerror = function(){
                         if (this.dataset.fallback !== "true"){
                             this.dataset.fallback = "true";
-                            this.src = DEFAULT;
+                            this.classList.add("d-none");
+                            Img_Error.classList.remove("d-none");
+                            Iniciales = Nombre_Usuario.slice(0, 2);
+                            Img_Error.textContent = Iniciales;
                         }
                     };     
                     
@@ -691,10 +755,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.getElementById("Caso_Contenedor")){
                 document.getElementById("Caso_Contenedor").addEventListener("submit", async function(e){
                     e.preventDefault();
-                    Boton = document.getElementById("Caso_Boton_Guardar");
-                    Boton_Mensaje = document.getElementById("Caso_Boton_Guardar_Msg");
-                    Boton.disabled = true;
                     Id = document.getElementById("Obtener_Caso_Id").textContent.trim();
+                    Boton = document.getElementById(`Caso_Boton_Guardar_${Id}`);
+                    Boton_Mensaje = document.getElementById(`Caso_Boton_Guardar_Msg_${Id}`);
+                    Boton.disabled = true;
+                    Boton_Mensaje.textContent = "Guardando..."
+                    document.getElementById(`div_Caso_Boton_Guardar_Img_${Id}`).innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#4674cb" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>'                    
+                    document.getElementById("Caso_Boton_Volver").disabled = true
+                    document.getElementById(`Caso_Boton_Recarga_${Id}`).disabled = true
+                    document.getElementById(`Eliminar_Caso_Admin_${Id}`).disabled = true                      
 
                     const barrio_input = document.getElementById("barrio_input");
                     const barrio_input_nombre = document.getElementById("Caso_Barrio_Nombre");
@@ -778,7 +847,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.Caso_Departamento = departamento_input_nombre.value;
                     data.Caso_Departamento_ID = departamento_input_id.value;
 
-                    const response = await fetch(`${API_BASE}/api/case/update/${Id}`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
+                    const response = await fetch(`${API_BASE}/case/update/${Id}`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()      
                     
                     if(response.status === 200){
@@ -883,7 +952,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const formData = new FormData(this);
                     const data = Object.fromEntries(formData.entries());
                     
-                    const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
+                    const response = await fetch(`${API_BASE}/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()
                     
                     if(response.status === 201){
@@ -913,6 +982,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     Boton = document.getElementById("CasoNuevo_Boton_Guardar");
                     Boton_Mensaje = document.getElementById("CasoNuevo_Boton_Guardar_Msg");
                     Boton.disabled = true;
+                    Boton_Mensaje.textContent = "Guardando..."
+                    document.getElementById("div_CasoNuevo_Boton_Guardar_Img").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#dfdfdf" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>'
+                    document.getElementById("CasoNuevo_Boton_Volver").disabled = true                  
 
                     const barrio_input = document.getElementById("barrio_inputNuevo");
                     const barrio_input_nombre = document.getElementById("CasoNuevo_Barrio_Nombre");
@@ -983,7 +1055,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     data.Usuario_Id = User.User_ID;
                     
-                    const response = await fetch(`${API_BASE}/api/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
+                    const response = await fetch(`${API_BASE}/case/create`, {method: "POST", headers:{"Content-Type":"application/json", "Authorization": `Bearer ${Token_JWT}`},body: JSON.stringify(data)});
                     const result = await response.json()
                     
                     if(response.status === 201){
@@ -1012,7 +1084,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const caseId = span.dataset.caseId;
                     span.addEventListener("click", async (e) =>{
                         span.disabled = true;
-                        const response = await fetch(`${API_BASE}/api/case/delete/${caseId}/${User.User_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                        const response = await fetch(`${API_BASE}/case/delete/${caseId}/${User.User_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
                         const result = await response.json()     
                         
                         if(response.status === 200){
@@ -1043,7 +1115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Rad_Padre = el.dataset.radPadre;
                         Rad_Hijo = el.dataset.radHijo;
                         Tipo_Relacion = el.dataset.radTipo;                        
-                        const response = await fetch(`${API_BASE}/api/case/delete/relation/${Rad_Padre}/${Rad_Hijo}/${Tipo_Relacion}/${User.User_ID}`, {method: "DELETE"});
+                        const response = await fetch(`${API_BASE}/case/delete/relation/${Rad_Padre}/${Rad_Hijo}/${Tipo_Relacion}/${User.User_ID}`, {method: "DELETE"});
                         const result = await response.json()  
 
                         if(response.status === 200){
@@ -1495,7 +1567,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const data = Object.fromEntries(formData.entries());
                     data.Entidad_Id = entidad_id;
 
-                    const response = await fetch(`${API_BASE}/api/entity/update/${entidad_id}`, {
+                    const response = await fetch(`${API_BASE}/entity/update/${entidad_id}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${Token_JWT}` },
                         body: JSON.stringify(data)
@@ -1521,7 +1593,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const entidadId = span.dataset.entidadId;
                     span.addEventListener("click", async () => {
                         span.disabled = true;
-                        const response = await fetch(`${API_BASE}/api/entity/delete/${entidadId}`, {
+                        const response = await fetch(`${API_BASE}/entity/delete/${entidadId}`, {
                             method: "PUT",
                             headers: { "Authorization": `Bearer ${Token_JWT}` }
                         });
@@ -1587,7 +1659,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const formData = new FormData(this);
                     const data = Object.fromEntries(formData.entries());
 
-                    const response = await fetch(`${API_BASE}/api/entity/create`, {
+                    const response = await fetch(`${API_BASE}/entity/create`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${Token_JWT}` },
                         body: JSON.stringify(data)
@@ -1637,7 +1709,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Card.classList.add("Border_OK")
                     } else if (Estado === "OFF"){
                         Imagen.classList.add("Bg_OFF");
-                        Imagen.src = "/Statics/img/API_OFF.svg";
+                        Imagen.src = "/Statics/img/API_OK.svg";
                         Card.classList.add("Bg_OFF2")
                         Card.classList.add("Border_OFF")
                     }
@@ -1790,11 +1862,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         texto = "hace un momento";
                     } else if (diff < 3600) {
                         const mins = Math.floor(diff / 60);
-                        texto = `hace ${mins} min${mins > 1 ? "s" : ""}`;
+                        texto = `hace ${mins} minuto${mins > 1 ? "s" : ""}`;
                     } else if (diff < 86400) {
                         const horas = Math.floor(diff / 3600);
                         texto = `hace ${horas} hora${horas > 1 ? "s" : ""}`;
-                    } else if (diff < 2592000) { // 30 días
+                    } else if (diff < 2592000) {
                         const dias = Math.floor(diff / 86400);
                         texto = `hace ${dias} día${dias > 1 ? "s" : ""}`;
                     } else {
@@ -1818,7 +1890,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
             }   
-            if (document.getElementById("Devices_Cards")){
+            if (document.getElementById("Cont_Cuenta")){
                 document.querySelectorAll(".Boton_Eliminar_Device").forEach(Button =>{
                     const Device_ID = Button.getAttribute("data-delete");
                     const Token = Button.getAttribute("data-token");
@@ -1827,7 +1899,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     Button.addEventListener("click", async (e) =>{
                         Button.disabled = true;
-                        const response = await fetch(`${API_BASE}/api/device/delete/${Device_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                        const response = await fetch(`${API_BASE}/device/delete/${Device_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
                         const result = await response.json()
                         if(response.status === 200){
                             if(localStorage.getItem("Device_Token") === Token){
@@ -1851,25 +1923,32 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (document.getElementById("Cambiar_Mfa")){
                 const Boton = document.getElementById("Cambiar_Mfa");
-                const Imagen = document.getElementById("Imagen_Shield");
                 const Mensaje = document.getElementById("Mensaje_Mfa2");
                 const Dato = document.getElementById("Mensaje_Mfa");
                 if (Dato.textContent.trim() === "False"){
+                    Boton.textContent = "Activar"
+                    Boton.classList.add("Bg_OK3")
                     Mensaje.textContent = "Desactivada"
-                    Imagen.src = "/Statics/img/Shield_Break.svg"
                 } else if (Dato.textContent.trim() === "True"){
+                    Boton.textContent = "Desactivar"
+                    Boton.classList.add("Bg_OFF3")
                     Mensaje.textContent = "Activada"
-                    Imagen.src = "/Statics/img/Shield.svg"
-                }
+                }                
 
                 Boton.addEventListener("click", async (e) =>{
                     e.preventDefault()
                     Boton.disabled = true;
-                    const response = await fetch(`${API_BASE}/api/account/mfa`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                    const response = await fetch(`${API_BASE}/account/mfa`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
                     const result = await response.json()
                     if (response.status === 200){
-                        sessionStorage.setItem('MFA', "1");
-                        location.reload();   
+                        const Dato = document.getElementById("Mensaje_Mfa");
+                        if (Dato.textContent.trim() === "False"){
+                            sessionStorage.setItem('MFA1', "1");
+                            location.reload();   
+                        } else if (Dato.textContent.trim() === "True"){
+                            sessionStorage.setItem('MFA2', "1");
+                            location.reload();   
+                        }
                     }
                     else if(response.status === 429){
                         window.location.href = "/rate-limit"
@@ -1884,7 +1963,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
             }
             if (document.getElementById("Estadisticas")){
-                fetch(`${API_BASE}/api/case/estadisticas`, {method: "GET", headers:{"Authorization": `Bearer ${Token_JWT}`}})
+                fetch(`${API_BASE}/case/estadisticas`, {method: "GET", headers:{"Authorization": `Bearer ${Token_JWT}`}})
                 .then(respuesta =>{
                     if (respuesta.status === 401){
                         localStorage.removeItem("Token_JWT");
@@ -1919,33 +1998,40 @@ document.addEventListener("DOMContentLoaded", () => {
                     }              
                 })
                 .then(Estadisticas => {
-                    console.log(Estadisticas);
                     const Modo = document.body.classList.contains("Modo_Oscuro");
                     if (Modo) {
                         Color_Cuadricula = "rgba(255,255,255,0.07)"
                         Color_Marcas = "#999"
                         Paleta = [
-                            "#534AB7",
-                            "#1D9E75",
-                            "#E24B4A",
-                            "#BA7517",
                             "#378ADD",
+                            "#E24B4A",
+                            "#1D9E75",
+                            "#F28E2B",
+                            "#534AB7",
                             "#888780",
-                            "#A32D2D",
-                            "#0F6E56"
+                            "#7A9E3A",
+                            "#00A6A6",
+                            "#BA7517",
+                            "#C45D9A",
+                            "#8C564B",
+                            "#bd9801"
                         ];                        
                     } else {
                         Color_Cuadricula = "rgba(0,0,0,0.06)"
                         Color_Marcas = "#667"
                         Paleta = [
-                            "#7C6FE0",
-                            "#2DC08A",
-                            "#F07070",
-                            "#E8A020",
                             "#5BA8F5",
+                            "#F07070",
+                            "#2DC08A",
+                            "#F5A14A",
+                            "#7C6FE0",
                             "#A8A89A",
-                            "#E05555",
-                            "#1DC49A"
+                            "#93B84A",
+                            "#22C7C7",
+                            "#E8A020",
+                            "#D97AB5",
+                            "#A8735F",
+                            "#F0C93D"   
                         ];                          
                     }
                     function Crear_Leyenda(id, labels, valores, colores){
@@ -1971,6 +2057,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 label = "En espera";
                             } else if (label === "Escalado a supervisor"){
                                 label = "Escalado";
+                            } else if (label === "En espera del asesor"){
+                                label = "Espera asesor";
+                            } else if (label === "Tomando desicion"){
+                                label = "Desicion";
                             }
                             Texto.textContent = `${label}: ${Porcentaje}%`;
 
@@ -2158,7 +2248,396 @@ document.addEventListener("DOMContentLoaded", () => {
                         cargarPagina("/dashboard/inicio");
                     }
                 }
-            }            
+            }           
+            if (document.getElementById("Cont_Cuenta")) {
+                const rol = document.getElementById("Rol_Cuenta");
+                const estado = document.getElementById("Estado_Cuenta");
+                const texto_rol = rol.textContent.trim()
+                const texto_estado = estado.textContent.trim()
+                if (texto_rol === "Administrador"){
+                    rol.classList.add("badge-administrador")
+                } else if (texto_rol === "Lider"){
+                    rol.classList.add("badge-lider")
+                } else if (texto_rol === "Analista"){
+                    rol.classList.add("badge-analista")
+                } else if (texto_rol === "Auxiliar"){
+                    rol.classList.add("badge-auxiliar")
+                } else if (texto_rol === "Revisor"){
+                    rol.classList.add("badge-revisor")
+                } else if (texto_rol === "Usuario"){
+                    rol.classList.add("badge-usuario")
+                }
+                if (texto_estado === "Activo"){
+                    estado.classList.add("badge-activo")
+                } else if (texto_estado === "Inactivo"){
+                    estado.classList.add("badge-inactivo")
+                } else if (texto_estado === "Suspendido"){
+                    estado.classList.add("badge-suspendido")
+                } else if (texto_estado === "Bloqueado"){
+                    estado.classList.add("badge-bloqueado")
+                } else if (texto_estado === "Eliminado"){
+                    estado.classList.add("badge-eliminado")
+                }
+            }
+            if (document.getElementById("Cont_Cuenta")){
+                const Botones = document.querySelectorAll(".Boton_Cuenta_Seccion");
+                const Secciones = document.querySelectorAll(".Seccion_Cuenta");
+                const List = document.querySelectorAll(".List_Cuenta");
+                Botones.forEach(Boton =>{
+                    Boton.addEventListener("click", () =>{
+                        const Target = Boton.getAttribute("data-target");
+                        
+                        List.forEach(Boton =>{
+                            Boton.classList.remove("background_active")
+                            Boton.classList.remove("background_active2")
+                        });
+                        if (Boton.textContent.trim() === "Eliminacion"){
+                            document.getElementById(`list_${Target}`).classList.add("background_active2")
+                        } else {
+                            document.getElementById(`list_${Target}`).classList.add("background_active")
+                        }
+                        
+                        Secciones.forEach(Seccion =>{
+                            Seccion.classList.remove("d-flex")
+                            Seccion.classList.add("d-none")
+                        })
+                        document.getElementById(`seccion_${Target}`).classList.add("d-flex")
+                        document.getElementById(`seccion_${Target}`).classList.remove("d-none")
+                    });
+                });
+            }
+            if (document.getElementById("seccion_1")){
+                const Campos1 = document.querySelectorAll('#seccion_1 input, #seccion_1 select');
+                const Boton1 = document.getElementById("seccion_1_boton");
+                const Data1 = Object.fromEntries(Array.from(Campos1).map(Campo => [Campo.name, Campo.value]));
+                const BotonE1 = document.getElementById("seccion_1_eliminar");
+                Validar_Campos(Campos1, Data1, Boton1)
+                Campos1.forEach(Campo =>{
+                    Campo.addEventListener("input", () => Validar_Campos(Campos1, Data1, Boton1))
+                });
+                BotonE1.addEventListener("click", () =>{
+                    Campos1.forEach(Campo =>{
+                        Campo.value = Data1[Campo.name]
+                    })
+                    Validar_Campos(Campos1, Data1, Boton1)
+                });
+                Boton1.addEventListener("click", async function(e){
+                    if (!Array.from(Campos1).every(Campo => Campo.checkValidity() || Campo.reportValidity())) return;
+                    Boton1.disabled = true;
+                    BotonE1.disabled = true;
+                    const Boton_Antiguo = Boton1.innerHTML;
+                    Boton1.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Guardando...'
+                    const Data1_Envio = Object.fromEntries(Array.from(Campos1).map(Campo => [Campo.name, Campo.value]));
+                    const response = await fetch(`${API_BASE}/account/update`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization":`Bearer ${Token_JWT}`}, body: JSON.stringify(Data1_Envio)});
+                    const result = await response.json()   
+                    
+                    if(response.status === 200){
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID)
+                        location.reload()             
+                    } else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    } else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        const Mensaje = document.getElementById("Error_Generico");
+                        Mensaje.classList.add("Message_Error")
+                        Mensaje.classList.add("d-inline-flex")
+                        Mensaje.classList.remove("d-none")
+                        Mensaje.textContent = result.Error
+
+                        Boton1.disabled = false;
+                        Boton1.innerHTML = Boton_Antiguo
+                    }
+                });
+            }
+            if (document.getElementById("seccion_2")){
+                const Campos2 = document.querySelectorAll('#Barrio_Input, #Localidad_Input, #Ciudad_Input, #Departamento_Input');
+                const Boton2 = document.getElementById("seccion_2_boton");
+                const Data2 = Object.fromEntries(Array.from(Campos2).map(Campo => [Campo.name, Campo.value]));
+                const BotonE2 = document.getElementById("seccion_2_eliminar");
+                Validar_Campos(Campos2, Data2, Boton2)
+                Campos2.forEach(Campo =>{
+                    Campo.addEventListener("input", () => Validar_Campos(Campos2, Data2, Boton2))
+                })
+                BotonE2.addEventListener("click", () =>{
+                    Campos2.forEach(Campo =>{
+                        Campo.value = Data2[Campo.name]
+                    })
+                    Validar_Campos(Campos2, Data2, Boton2)
+                })
+                Boton2.addEventListener("click", async function(e){
+                    if (!Array.from(Campos2).every(Campo => Campo.checkValidity() || Campo.reportValidity())) return;                    
+                    Boton2.disabled = true;
+                    BotonE2.disabled = true;
+                    Boton2.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Guardando...'
+                    const Data2_Envio = Object.fromEntries(Array.from(Campos2).map(Campo => [Campo.name, Campo.value]));
+                    const response = await fetch(`${API_BASE}/account/update/place`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization":`Bearer ${Token_JWT}`}, body: JSON.stringify(Data2_Envio)});
+                    if(response.status === 200){
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID)
+                        location.reload()             
+                    } else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    } else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    }                    
+                })
+            }
+            if (document.getElementById("seccion_3")){
+                const Campos3 = document.querySelectorAll("#seccion_3 input");
+                const Boton3 = document.getElementById("seccion_3_boton");
+                const Boton_Ant3 = Boton3.innerHTML;
+                const BotonE3 = document.getElementById("seccion_3_eliminar");
+                const Data3 = Object.fromEntries(Array.from(Campos3).map(Campo => [Campo.name, Campo.value]));                
+                Boton3.disabled = true;
+                Campos3.forEach(Campo => {
+                    Campo.addEventListener("input", () => {
+                        Boton3.disabled = Array.from(Campos3).some(Campo => Campo.value.trim() === "");
+                    });
+                });                
+                BotonE3.addEventListener("click", () =>{
+                    Campos3.forEach(Campo =>{
+                        Campo.value = Data3[Campo.name]
+                    })
+                    Validar_Campos(Campos3, Data3, Boton3)
+                })
+                Boton3.addEventListener("click", async function(e) {
+                    if (!Array.from(Campos3).every(Campo => Campo.checkValidity() || Campo.reportValidity())) return;
+                    const Mensaje = document.getElementById("Error_Generico3");
+                    Mensaje.classList.remove("d-inline-flex");
+                    Mensaje.classList.remove("Message_Error");
+                    Mensaje.classList.add("d-none");                    
+                    Boton3.disabled = true;
+                    BotonE3.disabled = true;
+                    Boton3.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Guardando...'
+                    const Data3_Envio = Object.fromEntries(Array.from(Campos3).map(Campo => [Campo.name, Campo.value]));
+                    const Contraseña_Nueva1 = document.getElementById("Contraseña_Nueva");
+                    const Contraseña_Nueva2 = document.getElementById("Contraseña_Nueva2");       
+                    if (Contraseña_Nueva1.value !== Contraseña_Nueva2.value){
+                        Boton3.disabled = false;
+                        Boton3.innerHTML = Boton_Ant3;
+                        BotonE3.disabled = false;
+                        Mensaje.classList.add("d-inline-flex");
+                        Mensaje.classList.add("Message_Error");
+                        Mensaje.classList.remove("d-none");
+                        Mensaje.textContent = "Las contraseñas no coinciden"
+                        return;
+                    }
+                    
+                    const response = await fetch(`${API_BASE}/account/update/password`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization":`Bearer ${Token_JWT}`}, body: JSON.stringify(Data3_Envio)});
+                    const result = await response.json()   
+
+                    if(response.status === 200){
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID)
+                        location.reload()             
+                    } else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    } else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        Mensaje.classList.add("Message_Error")
+                        Mensaje.classList.add("d-inline-flex")
+                        Mensaje.classList.remove("d-none")
+                        Mensaje.textContent = result.Error
+
+                        Boton3.disabled = false;
+                        Boton3.innerHTML = Boton_Ant3;
+                        BotonE3.disabled = false;
+                    }                    
+                })
+            }
+            if (document.getElementById("seccion_4")){
+                const Boton4 = document.getElementById("Boton_Subir_Imagen");
+                const BotonE4 = document.getElementById("Boton_Eliminar_Imagen");
+                const Input_Image = document.getElementById("image_input");
+
+                const Modal_Cropper = document.getElementById("Modal_Cropper");
+                const Imagen_Cropper = document.getElementById("Imagen_Cropper");   
+                const Modal_Boton_Cancelar = document.getElementById("Btn_Cancelar_Crop");
+                const Modal_Boton_Confirmar = document.getElementById("Btn_Confirmar_Crop");
+                let cropper; 
+
+                async function SubirImagen(Imagen) {
+                    const Mensaje = document.getElementById("Error_Generico4");
+                    const Boton4_Ant = Boton4.innerHTML;
+
+                    Mensaje.classList.remove("Message_Error");
+                    Mensaje.classList.remove("d-inline-flex");
+                    Mensaje.classList.add("d-none");
+
+                    Boton4.disabled = true;
+                    BotonE4.disabled = true;
+                    Boton4.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Guardando...';
+
+                    const formData = new FormData();
+                    formData.append("imagen_usuario", Imagen);
+
+                    const response = await fetch(`${API_BASE}/account/update/image`, {method: "PUT", headers:{"Authorization":`Bearer ${Token_JWT}`}, body: formData});
+                    const result = await response.json();
+                    
+                    if (response.status === 200){
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID);
+                        User.Nombre_Imagen = result.Nombre_Nuevo;
+                        localStorage.setItem("User_Data", JSON.stringify(User));
+                        location.reload();
+                    } else if (response.status === 429){
+                        window.location.href = "/rate-limit";
+                    } else if (response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        Mensaje.classList.add("Message_Error");
+                        Mensaje.classList.add("d-inline-flex");
+                        Mensaje.classList.remove("d-none");
+                        Mensaje.textContent = result.Error;
+                        BotonE4.disabled = false;
+                        Boton4.disabled = false;
+                        Boton4.innerHTML = Boton4_Ant;
+                        Input_Image.value = "";
+                    }
+                }                
+                Input_Image.addEventListener("change", function() {
+                    const Imagen = this.files[0];
+                    if (!Imagen) return;
+                    const Extension = Imagen.name.split(".").pop().toLowerCase();
+                    if (!["jpg", "jpeg", "png"].includes(Extension)) {
+                        Input_Image.value = "";
+                        return;
+                    }                    
+                    Imagen_Cropper.src = URL.createObjectURL(Imagen);
+                    Modal_Cropper.classList.replace("d-none", "d-flex");
+                    Imagen_Cropper.onload = () => {
+                        if (cropper) cropper.destroy();
+                        cropper = new Cropper(Imagen_Cropper, { aspectRatio: 1, viewMode: 1 });
+                    };
+                });                
+                Modal_Boton_Cancelar.addEventListener("click", function() {
+                    Modal_Cropper.classList.replace("d-flex", "d-none");
+                    Input_Image.value = "";
+                    if (cropper) cropper.destroy();
+                })
+                Modal_Boton_Confirmar.addEventListener("click", function() {
+                    cropper.getCroppedCanvas({ width: 300, height: 300 }).toBlob((blob) => {
+                        const Archivo = new File([blob], "imagen.jpg", { type: "image/jpeg" });
+                        Modal_Cropper.classList.replace("d-flex", "d-none");
+                        SubirImagen(Archivo);
+                    }, "image/jpeg");
+                })
+                BotonE4.addEventListener("click", async function(e) {
+                    const BotonE4_Ant = BotonE4.innerHTML
+                    BotonE4.disabled = true
+                    Boton4.disabled = true
+                    BotonE4.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Eliminando...'
+                    const response = await fetch(`${API_BASE}/account/delete/image`, {method: "PUT", headers:{"Content-Type":"application/json", "Authorization":`Bearer ${Token_JWT}`}});
+                    const result = await response.json()   
+                    if(response.status === 200){
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID)
+                        location.reload()             
+                    } else if(response.status === 429){
+                        window.location.href = "/rate-limit"
+                    } else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        const Mensaje = document.getElementById("Error_Generico4")
+                        Mensaje.classList.add("Message_Error")
+                        Mensaje.classList.add("d-inline-flex")
+                        Mensaje.classList.remove("d-none")
+                        Mensaje.textContent = result.Error
+
+                        BotonE4.disabled = false;
+                        Boton4.disabled = false;
+                        BotonE4.innerHTML = BotonE4_Ant;
+                    }                                       
+                })                
+            }
+            if (document.getElementById("seccion_6")){
+                const Devices_Buton = document.getElementById("Delete_Devices");
+                const Account_Buton = document.getElementById("Delete_Account");
+                Devices_Buton.addEventListener("click", async function (e) {
+                    if (!confirm("¿Seguro que quieres cerrar todos los dispositivos?")) return;
+                    Devices_Buton.disabled = true;
+                    const Devices_Buton_Ant = Devices_Buton.innerHTML
+                    Devices_Buton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Eliminando...'
+
+                    const response = await fetch(`${API_BASE}/account/delete/devices`, {method: "PUT", headers:{"Authorization":`Bearer ${Token_JWT}`}});
+                    const result = await response.json();
+                    
+                    if (response.status === 200){
+                        localStorage.removeItem("Auth_Token")
+                        localStorage.removeItem("Device_Token")
+                        sessionStorage.removeItem("Auth_Token")
+                        window.location.href = "/login";                    
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID);
+                        location.reload();
+                    } else if (response.status === 429){
+                        window.location.href = "/rate-limit";
+                    } else if (response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        Devices_Buton.disabled = false;
+                        Devices_Buton.innerHTML = Devices_Buton_Ant;
+                    }                    
+                })
+                Account_Buton.addEventListener("click", async function (e) {
+                    if (!confirm("¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.")) return;
+                    Account_Buton.disabled = true;
+                    const Account_Buton_Ant = Account_Buton.innerHTML
+                    Account_Buton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Eliminando...'
+
+                    const response = await fetch(`${API_BASE}/account/delete/account`, {method: "PUT", headers:{"Authorization":`Bearer ${Token_JWT}`}});
+                    const result = await response.json();
+                    
+                    if (response.status === 200){
+                        localStorage.removeItem("Auth_Token")
+                        localStorage.removeItem("Device_Token")
+                        sessionStorage.removeItem("Auth_Token")
+                        window.location.href = "/login";                                       
+                        sessionStorage.setItem("Personal_Actualizado", User.User_ID);
+                        location.reload();
+                    } else if (response.status === 429){
+                        window.location.href = "/rate-limit";
+                    } else if (response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    } else if (response.status === 400){
+                        Account_Buton.disabled = false;
+                        Account_Buton.innerHTML = Account_Buton_Ant;
+                    }                    
+                })
+            }
+            if (document.getElementById("Excel_Button")){
+                const Boton = document.getElementById("Excel_Button");
+                if (User.Permisos.some(Perm => Perm.Nombre === "exportar_excel")){
+                    Boton.classList.remove("d-none");
+                    Boton.classList.add("d-flex")
+                }             
+                Boton.addEventListener("click", async function(e) {
+                    Boton.disabled = true
+                    Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Descargando...'
+
+                    const response = await fetch(`${API_BASE}/case/excel`, {method: "GET", headers:{"Authorization": `Bearer ${Token_JWT}`}});
+                    
+                    if (response.status === 200){
+                        const Blob = await response.blob();
+                        const Url = window.URL.createObjectURL(Blob);
+                        const Disposition = response.headers.get("Content-Disposition");
+                        let filename = "Reporte_Casos.xlsx";
+                        if (Disposition && Disposition.includes("filename=")){
+                            filename = Disposition.split("filename=")[1].replace(/"/g, "")
+                        }
+                        const a = document.createElement("a");
+                        a.href = Url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(Url)
+                        sessionStorage.setItem("Excel", User.User_ID)
+                        location.reload()
+                    } else if (response.status === 429){
+                        window.location.href = "/rate-limit"
+                    } else if(response.status === 403){
+                        cargarPagina("/dashboard/unauthorized");
+                    }
+                })
+            }
         });
     }
     document.querySelectorAll(".panel-link").forEach(link => {

@@ -1,7 +1,7 @@
-from flask import Flask
 from App.Routes.Entity_Routes import Entity_Bp
 from App.Utilities.Tables import db
 from App.Config import Config
+from flask import Flask
 
 def Create_App():
     App = Flask(__name__)

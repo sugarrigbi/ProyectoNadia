@@ -1,11 +1,8 @@
-import smtplib
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 import os
 import re
-
-EMAIL = "bot.gaialink@gmail.com"
-PASSWORD = "sizv jqee ojco ixqc"
 
 def Cargar_Template(Ruta, **Variables):
 
@@ -18,7 +15,7 @@ def Cargar_Template(Ruta, **Variables):
 def Enviar_Correo(Template, Data, Correo, Asunto):
     Msg = MIMEMultipart("alternative")
 
-    Msg["From"] = EMAIL
+    Msg["From"] = os.getenv("BOT_EMAIL")
     Msg["To"] = Correo
     Msg["Subject"] = Asunto
 
@@ -27,8 +24,8 @@ def Enviar_Correo(Template, Data, Correo, Asunto):
 
     Server = smtplib.SMTP("smtp.gmail.com", 587)
     Server.starttls()
+    
+    Server.login(os.getenv("BOT_EMAIL"), os.getenv("BOT_PASSWORD"))
 
-    Server.login(EMAIL, PASSWORD)
-
-    Server.sendmail(EMAIL, Correo, Msg.as_string())
+    Server.sendmail(os.getenv("BOT_EMAIL"), Correo, Msg.as_string())
     Server.quit()

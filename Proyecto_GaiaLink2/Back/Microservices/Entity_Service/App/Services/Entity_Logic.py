@@ -1,7 +1,15 @@
+from App.Models.Entity_Models import (
+    Entidad as Tabla_Entidad, 
+    Usuario as Tabla_Usuario, 
+    RolAPermiso as Tabla_Permiso, 
+    EntidadAuditoria as Tabla_Auditoria, 
+    EstadoEntidad as Tabla_Estado, 
+    Incidente as Tabla_Incidente
+)
 from App.Utilities.Tables import db
-import json
 import requests
-from App.Models.Entity_Models import Entidad as Tabla_Entidad, Usuario as Tabla_Usuario, RolAPermiso as Tabla_Permiso, EntidadAuditoria as Tabla_Auditoria, EstadoEntidad as Tabla_Estado, Incidente as Tabla_Incidente
+import json
+import os
 
 class Entity_Service:
     @staticmethod
@@ -28,7 +36,7 @@ class Entity_Service:
         db.session.add(Auditoria)
         db.session.commit()   
 
-        requests.post("http://127.0.0.1:5007/email",
+        requests.post(os.getenv("EMAIL_SERVICE"),
             json={
                 "Template": "Entidad_Creada",
                 "Datos": {
@@ -151,7 +159,7 @@ class Entity_Service:
 
         db.session.commit()
 
-        requests.post("http://127.0.0.1:5007/email",
+        requests.post(os.getenv("EMAIL_SERVICE"),
             json={
                 "Template": "Entidad_Eliminada",
                 "Datos": {

@@ -1,17 +1,17 @@
-from flask import request
-import jwt
-from datetime import datetime, timedelta
-from App.Models.Authenticator_Models import Dispositivos as Tabla_Dispositivos
-from App.Utilities.Tables import db
-from App.Config import SECRET_KEY
-import secrets
-from user_agents import parse as ua_parse
-import random
+from App.Models.Authenticator_Models import Dispositivos as Tabla_Dispositivos, Dispositivos_Auditoria as Tabla_Auditoria
 from App.Utilities.Redis import redis_client
-import bcrypt
-import re
+from user_agents import parse as ua_parse
+from datetime import datetime, timedelta
+from App.Utilities.Tables import db
+from flask import request
 import requests
+import secrets
+import random
+import bcrypt
 import json
+import jwt
+import re
+import os
 
 def Crear_Token(User_ID, Remember, Device_Token):
     if Remember:
@@ -24,7 +24,7 @@ def Crear_Token(User_ID, Remember, Device_Token):
         "session_id": Device_Token,
         "exp": int(exp.timestamp())
     }
-    return jwt.encode(Payload, SECRET_KEY, algorithm="HS256"), exp
+    return jwt.encode(Payload, os.getenv("SECRET_KEY"), algorithm="HS256"), exp
 def Get_Time(Bloqueado_Hasta, Ahora):
     restante = Bloqueado_Hasta-Ahora
     total_segundos = int(restante.total_seconds())
@@ -70,12 +70,17 @@ def Get_Device(Usuario_ID, Ultimo_Uso, Client_IP, Client_Payload=None):
     }
 
     return Data_D
-def Crear_Dispositivo(Data_D, Usuario_Nombre, Usuario_Correo, Ahora):
+def Crear_Dispositivo(Data_D, Usuario_Nombre, Usuario_Correo, Ahora, User_ID):
     Dispositivo = Tabla_Dispositivos(**Data_D)
-    Token = Dispositivo.Token
     db.session.add(Dispositivo)
+    db.session.flush()
+    Dispositivo_json = json.dumps(Dispositivo.to_dict(), default=str, ensure_ascii=False)
+
+    Auditoria = Tabla_Auditoria(Accion="Dispositivo Creado", Anterior=Dispositivo_json, Modificado_Por=User_ID, Dispositivos_ID=Dispositivo.ID)
+    db.session.add(Auditoria)
     db.session.commit()
-    requests.post("http://127.0.0.1:5007/email",
+    Token = Dispositivo.Token
+    requests.post(os.getenv("EMAIL_SERVICE"),
         json={
             "Template": "Nuevo_Dispositivo",
             "Datos": {"Nombre": Usuario_Nombre, "Fecha": Ahora, "Dispositivo": Data_D["Dispositivo"], "Navegador": Data_D["Navegador"], "IP": Data_D["IP"]},
@@ -131,18 +136,23 @@ def Obtener_Data_Login(Identificador):
         return None
     return json.loads(Data)
 def Hashear_Contraseña(Contraseña):
-    Pepper = "Gaialink2026*!"
     Salt = bcrypt.gensalt()
 
-    Contraseña_Pepper = (Contraseña + Pepper)
+    Contraseña_Pepper = (Contraseña + os.getenv("PEPPER"))
     Hash = bcrypt.hashpw(Contraseña_Pepper.encode("utf-8"), Salt)
 
     return Hash.decode("utf-8")
 def Eliminar_Datos(Correo):
     redis_client.delete(f"recuperar:{Correo}:codigo")
 def Validar_Contraseña(Contraseña, Documento):
+    if len(Contraseña) < 10:
+        return "La contraseña debe tener 10 caracteres"
+
     if not any(c.isupper() for c in Contraseña):
         return "La contraseña debe contener una mayuscula"
+    
+    if not any(c.islower() for c in Contraseña):
+        return "La contraseña debe contener una minuscula"    
     
     if not any(c.isdigit() for c in Contraseña):
         return "La contraseña debe contener un numero"

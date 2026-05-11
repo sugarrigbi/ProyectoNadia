@@ -1,6 +1,4 @@
 from App.Utilities.Tables import Modelo_Base, db
-from datetime import datetime
-import json
 
 class Pais(Modelo_Base):
     __tablename__ = "Pais"
@@ -105,10 +103,11 @@ class Usuario(Modelo_Base):
     Bloqueado_Hasta = db.Column(db.DateTime)
 
     Creado_En = db.Column(db.DateTime, server_default=db.func.now())
+    Ultimo_Ingreso = db.Column(db.DateTime, server_default=db.func.now())
     Actualizado_En = db.Column(db.DateTime, onupdate=db.func.now())
 
     Autenticador = db.Column(db.Boolean, default=False)
-    Autenticador_Secreto = db.Column(db.String(255))
+    Nombre_Imagen = db.Column(db.String(50), nullable=True)
 
     Estado_Usuario_ID = db.Column(db.Integer,db.ForeignKey("Estado_Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=1)
     Rol_ID = db.Column(db.Integer,db.ForeignKey("Rol.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False,default=6)
@@ -121,6 +120,7 @@ class Usuario_Auditoria(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True)
 
     Accion = db.Column(db.String(100), nullable=False)
+    Anterior = db.Column(db.Text, nullable=False)
     Fecha_Modificacion = db.Column(db.DateTime, server_default=db.func.now())
 
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
@@ -156,12 +156,39 @@ class Persona(Modelo_Base):
     usuario = db.relationship("Usuario")
     barrio = db.relationship("Barrio")
     tipo_documento = db.relationship("Tipo_Documento")
+
+    def to_dict2(self):
+        resultado = {
+            "Nombre": self.usuario.Nombre,
+            "Correo": self.usuario.Correo,
+            "Rol": self.usuario.rol.Nombre,
+            "Estado": self.usuario.estado.Nombre,
+            "Creado_En": self.usuario.Creado_En.isoformat(),
+            "Primer_Nombre": self.Primer_Nombre,
+            "Segundo_Nombre": self.Segundo_Nombre,
+            "Primer_Apellido": self.Primer_Apellido,
+            "Segundo_Apellido": self.Segundo_Apellido,
+            "Tipo_Documento": self.tipo_documento.Abreviatura,
+            "Documento": self.Documento,
+            "Telefono": self.Telefono,
+            "Fecha_Nacimiento": self.Fecha_Nacimiento.isoformat(),
+            "Direccion": self.Direccion,
+            "Barrio": self.barrio.Nombre,
+            "Localidad": self.barrio.localidad.Nombre,
+            "Ciudad": self.barrio.localidad.ciudad.Nombre,
+            "Departamento": self.barrio.localidad.ciudad.departamento.Nombre,
+            "Mfa": self.usuario.Autenticador,
+            "Ultimo_Ingreso": self.usuario.Ultimo_Ingreso.isoformat(),
+            "Ultima_Act": self.usuario.Actualizado_En.isoformat()
+        }
+        return resultado    
 class Persona_Auditoria(Modelo_Base):
     __tablename__ = "Persona_Auditoria"
 
     ID = db.Column(db.Integer, primary_key=True)
 
     Accion = db.Column(db.String(100), nullable=False)
+    Anterior = db.Column(db.Text, nullable=False)
     Fecha_Modificacion = db.Column(db.DateTime, server_default=db.func.now())
 
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)
@@ -192,6 +219,7 @@ class Dispositivos_Auditoria(Modelo_Base):
     ID = db.Column(db.Integer, primary_key=True)
 
     Accion = db.Column(db.String(100), nullable=False)
+    Anterior = db.Column(db.Text, nullable=False)
     Fecha_Modificacion = db.Column(db.DateTime, server_default=db.func.now())
 
     Modificado_Por = db.Column(db.Integer,db.ForeignKey("Usuario.ID", ondelete="RESTRICT", onupdate="CASCADE"),nullable=False)

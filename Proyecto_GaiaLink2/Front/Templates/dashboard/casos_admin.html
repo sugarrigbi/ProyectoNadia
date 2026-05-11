@@ -13,11 +13,13 @@
                 <a class="dropdown-toggle d-flex justify-content-center align-items-center text-decoration-none text-dark fsr-11 fw-bold align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img id="Arrow_Usuario" class="m-0 d-none d-sm-block" style="width: 25px" src="{{ url_for('static', filename='img/Arrow_Dark.svg') }}">
                     <img class="rounded-circle icono-nav5 imagen_usuario">
+                    <div class="icono-nav5 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                 </a>
                 <ul class="dropdown-menu Bg_Blanco Bg_Blanco0 p-2 border-round">
                     <li>
                         <div class="d-flex align-items-center fs-5 justify-content-start text-black gap-2 px-2 color_blanco" href="#">
                             <img class="icono-nav6 rounded-circle imagen_usuario">
+                            <div class="icono-nav6 rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis fw-normal"></div>
                             <span id="User_Name2">
                                 Usuario
                             </span>
@@ -25,15 +27,9 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/cuenta">
                             <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
-                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
-                            Ajustes
                         </a>
                     </li>
                     <li>
@@ -54,16 +50,22 @@
         </div>  
     </div>
     <div id="Casos_Busqueda" class="row justify-content-start align-items-stretch w-100 gap-3 p-0">
-        <div class="p-0 d-flex flex-row gap-2">
+        <div class="w-100 d-flex flex-column flex-md-row justify-content-between p-0 gap-2">
+            <div class="p-0 d-flex flex-row gap-2 justify-content-between">
+                <button id="Excel_Button" type="button" class="btn d-none border-0 Bg_Verde2 fsr-15 boton17 d-flex align-items-center justify-content-center gap-2 text-white">
+                    <img src="{{ url_for('static', filename='img/Excel.svg') }}" class="icono-nav2">
+                    Exportar reporte
+                </button>                               
+                <button id="Boton_Abrir_Filtro" type="button" class="btn Bg_Azul4 fsr-15 boton12 d-flex align-items-center justify-content-center gap-2">
+                    <img src="{{ url_for('static', filename='img/Filter.svg') }}" class="icono-nav2">
+                    Filtar
+                </button>                            
+            </div> 
             <button id="Crear_Caso_Admin" data-bs-target="#ModalCreate" data-bs-toggle="modal" type="button" class="d-none btn btn-success fsr-15 boton7 align-items-center justify-content-center gap-2">
                 <img src="{{ url_for('static', filename='img/PlusWhite.svg') }}" class="icono-nav2">
                 Crear Caso
-            </button>               
-            <button id="Boton_Abrir_Filtro" type="button" class="btn Bg_Azul4 fsr-15 boton12 d-flex align-items-center justify-content-center gap-2">
-                <img src="{{ url_for('static', filename='img/Filter.svg') }}" class="icono-nav2">
-                Filtar
-            </button>               
-        </div> 
+            </button>
+        </div>
         <div class="p-0 d-none gap-2 flex-column flex-md-row w-100 justify-content-between" id="Cont_Filtro">   
             <div class="dropdown p-0 w-auto align-items-start align-items-md-center justify-content-center justify-content-md-start d-flex gap-2 flex-column flex-md-row">
                 <button class="Bg_Oscuro2 fsr-15 rounded-2 border-0 p-2 py-1 dropdown-toggle d-flex flex-row gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -163,7 +165,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
                 <div class="modal-content Bg_Blanco2" style="height:auto; overflow-y:auto;">  
                     <form id="Caso_Contenedor2" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
-                        <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
+                        <div class="row justify-content-between align-items-center w-100 border-start border-5 border-warning flex-column flex-md-row">
                             <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
                                 <p class="m-0 fsr-15 d-flex align-items-center gap-2 color_blanco">
                                     <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
@@ -187,7 +189,7 @@
                             </div>
                             <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
                                 <div class="d-none d-md-flex flex-row gap-2">
-                                    <button type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                    <button id="CasoNuevo_Boton_Volver" type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
                                         <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
                                         Volver
                                     </button>                
@@ -197,8 +199,10 @@
                                         <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
                                         Volver
                                     </button>                                         
-                                    <button type="submit" disabled id="CasoNuevo_Boton_Guardar" class="boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
-                                        <img id="CasoNuevo_Boton_Guardar_Img" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                    <button type="submit" disabled id="CasoNuevo_Boton_Guardar" class="boton9 p-1 border-0 fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                        <div id="div_CasoNuevo_Boton_Guardar_Img">
+                                            <img id="CasoNuevo_Boton_Guardar_Img" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                        </div>
                                         <span id="CasoNuevo_Boton_Guardar_Msg">
                                             Guardar
                                         </span>
@@ -214,7 +218,7 @@
                                         Descripcion
                                     </p>
                                     <hr class="mt-0 mb-3 border-4 rounded-1 Bg_hr">
-                                    <textarea required name="CasoNuevo_Descripcion" placeholder="Agregue una descripción..." class="Bg_Blanco3 color_blanco6 border-0 Bg_ w-100 h-80-2 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                    <textarea required name="CasoNuevo_Descripcion" placeholder="Agregue una descripción..." class="Bg_Blanco3 color_blanco6 border-0 Bg_ w-100 h-80-2 rounded-1 fsr-13 color_blanco" style="resize: none;"></textarea>
                                 </div>
                                 <div class="h-60">
                                     <p class="fsr-12 m-0 fw-medium h-auto color_blanco">
@@ -225,6 +229,7 @@
                                         <div class="d-flex flex-column gap-2 h-50">
                                             <div class="d-flex flex-row align-items-end gap-2">
                                                 <img class="icono-nav rounded-circle" id="Imagen_Usuario_Crear">
+                                                <div class="icono-nav rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis" id="Imagen_Error_Usuario_Crear"></div>
                                                 <p id="User_Name" class="m-0 fsr-13 color_blanco">
                                                     Usuario
                                                 </p>  
@@ -232,7 +237,7 @@
                                                     Ahora
                                                 </p>                                                
                                             </div>
-                                            <textarea name="CasoNuevo_Comentario" placeholder="Agregue un comentario..." class="Bg_Blanco3 color_blanco6 border-0 w-100 h-80 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                            <textarea name="CasoNuevo_Comentario" placeholder="Agregue un comentario..." class="Bg_Blanco3 color_blanco6 border-0 w-100 h-80 rounded-1 fsr-13 color_blanco" style="resize: none;"></textarea>
                                         </div>               
                                     </div>
                                 </div>
@@ -473,12 +478,12 @@
                 </div>
                 <div class="modal w-100 p-0" id="ModalEdit{{ Caso['ID'] }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable w-100 h-100 m-0" style="max-width:100% !important;">
-                        <div class="modal-content Bg_Blanco2" style="overflow-y:auto;">
+                        <div class="modal-content Bg_Blanco2" style="overflow-y:auto; min-height: 100vh;">
                             <form id="Caso_Contenedor" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
                                 <div id="Caso_Datos_{{ Caso['ID'] }}" data-caso="{{ Caso['ID'] }}" class="w-100">
                                     <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
                                         <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
-                                            <p class="m-0 fsr-15 d-flex align-items-center gap-2 color_blanco">
+                                            <p class="m-0 fsr-14 d-flex align-items-center gap-2 color_blanco">
                                                 <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
                                                 CASO {{ Caso["radicados"][0]["Radicado"] }}
                                             </p>
@@ -502,7 +507,7 @@
                                         </div>
                                         <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
                                             <div class="d-none d-md-flex flex-row gap-2">
-                                                <button type="button" data-bs-dismiss="modal" class=" boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
+                                                <button id="Caso_Boton_Volver" type="button" data-bs-dismiss="modal" class=" boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
                                                     <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
                                                     Volver
                                                 </button>                
@@ -513,8 +518,10 @@
                                                     Volver
                                                 </button>                                         
                                                 <button type="submit" disabled id="Caso_Boton_Guardar_{{ Caso['ID'] }}" class="color_blanco5 boton9 p-1 border-0 bg-white fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
-                                                    <img id="Caso_Boton_Guardar_Img_{{ Caso['ID'] }}" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
-                                                    <span id="Caso_Boton_Guardar_Msg">
+                                                    <div id="div_Caso_Boton_Guardar_Img_{{ Caso['ID'] }}">
+                                                        <img id="Caso_Boton_Guardar_Img_{{ Caso['ID'] }}" src="{{ url_for('static', filename='img/Save_2.svg') }}" class="icono-nav7">
+                                                    </div>
+                                                    <span id="Caso_Boton_Guardar_Msg_{{ Caso['ID'] }}">
                                                         Guardar
                                                     </span>
                                                 </button>                
@@ -546,6 +553,7 @@
                                                     <div class="d-flex flex-column gap-2 h-50">
                                                         <div class="d-flex flex-row align-items-end gap-2">
                                                             <img class="icono-nav rounded-circle" id="Imagen_Comentarios_{{ Caso['ID'] }}" data-caso="{{ Caso['ID'] }}">
+                                                            <div class="icono-nav rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis" id="Imagen_Error_{{ Caso['ID'] }}"></div>
                                                             <p id="User_Name_{{ Caso['ID'] }}" class="m-0 fsr-13 color_blanco">
                                                                 Usuario
                                                             </p>  
@@ -559,6 +567,7 @@
                                                         <div class="d-flex flex-column h-50">
                                                             <div class="d-flex flex-row align-items-end gap-2">
                                                                 <img class="icono-nav rounded-circle" id="Imagen_Usuario_Comentario_{{ comentario['ID'] }}">
+                                                                <div class="icono-nav rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis" id="Imagen_Error_Usuario_Crear"></div>
                                                                 <p class="d-none d-md-block m-0 fsr-13 text-muted color_blanco">
                                                                     {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Segundo_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }} {{ comentario["Persona"]["Segundo_Apellido"] }} 
                                                                 </p>
@@ -597,7 +606,7 @@
                                                         </p>
                                                         <select required name="Caso_Usuario_Creador" class="color_blanco6 Bg_Blanco3 color_blanco border-0 form-select m-0 py-0 pt-1 ps-1 d-flex align-items-center gap-2 fsr-14 w-75-2">
                                                             {% for usuario in Data["Usuarios"] %}
-                                                                <option value="{{ usuario['ID'] }}" {% if usuario['ID'] == Caso['usuario_asociado']['ID'] %}selected{% endif %}>                                                
+                                                                <option value="{{ usuario['ID'] }}" {% if usuario['ID'] == Caso['Usuario_Creador_ID'] %}selected{% endif %}>                                                
                                                                     {{ usuario["Persona"]["Primer_Nombre"] }} {{ usuario["Persona"]["Segundo_Nombre"] }} {{ usuario["Persona"]["Primer_Apellido"] }} {{ usuario["Persona"]["Segundo_Apellido"] }} 
                                                                 </option>
                                                             {% endfor %}
@@ -666,7 +675,7 @@
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Barrio
                                                         </p>      
-                                                        <input id="barrio_input" required value="{{ Caso['barrio']['Nombre'] }}" list="Datalist_Barrio" placeholder="Agregue un barrio..." class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                        <input id="barrio_input" name="barrio_input" required value="{{ Caso['barrio']['Nombre'] }}" list="Datalist_Barrio" placeholder="Agregue un barrio..." class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Barrio_Nombre" name="Caso_Barrio_Nombre" value="{{ Caso['barrio']['Nombre'] }}">
                                                         <input type="hidden" id="Caso_Barrio_ID" name="Caso_Barrio_ID" value="{{ Caso['barrio']['ID'] }}">
                                                     </div> 
@@ -679,7 +688,7 @@
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Localidad
                                                         </p>                
-                                                        <input id="localidad_input" list="Datalist_Localidad" value="{{ Caso['barrio']['Localidad']['Nombre'] }}" placeholder="Agregue una localidad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                        <input id="localidad_input" name="localidad_input" list="Datalist_Localidad" value="{{ Caso['barrio']['Localidad']['Nombre'] }}" placeholder="Agregue una localidad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Localidad_Nombre" name="Caso_Localidad_Nombre" value="{{ Caso['barrio']['Localidad']['Nombre'] }}">
                                                         <input type="hidden" id="Caso_Localidad_ID" name="Caso_Localidad_ID" value="">
                                                     </div>  
@@ -692,7 +701,7 @@
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Ciudad
                                                         </p>                
-                                                        <input id="ciudad_input" list="Datalist_Ciudad" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}" placeholder="Agregue una ciudad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                        <input id="ciudad_input" name="ciudad_input" list="Datalist_Ciudad" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}" placeholder="Agregue una ciudad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Ciudad_Nombre" name="Caso_Ciudad_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}">
                                                         <input type="hidden" id="Caso_Ciudad_ID" name="Caso_Ciudad_ID" value="">
                                                     </div> 
@@ -705,7 +714,7 @@
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Departamento
                                                         </p>                
-                                                        <input id="departamento_input" list="Datalist_Departamento" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}" placeholder="Agregue un departamento..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
+                                                        <input id="departamento_input" name="departamento_input" list="Datalist_Departamento" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}" placeholder="Agregue un departamento..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Departamento_Nombre" name="Caso_Departamento_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}">
                                                         <input type="hidden" id="Caso_Departamento_ID" name="Caso_Departamento_ID" value="">
                                                     </div>                                                       

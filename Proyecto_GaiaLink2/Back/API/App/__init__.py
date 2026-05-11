@@ -1,13 +1,14 @@
-from flask import Flask, render_template, jsonify, request
+from App.Routes.Authenticator_Service import Auth_Service_Bp
+from App.Routes.Account_Service import Account_Service_Bp
+from App.Routes.Entity_Service import Entity_Service_Bp
+from App.Routes.Health_Service import Health_Service_Bp
 from App.Routes.Forms_Service import Forms_Service_Bp
 from App.Routes.User_Service import User_Service_Bp
-from App.Routes.Authenticator_Service import Auth_Service_Bp
 from App.Routes.Case_Service import Case_Service_Bp
-from App.Routes.Entity_Service import Entity_Service_Bp
-from App.Routes.Account_Service import Account_Service_Bp
-from App.Routes.Health_Service import Health_Service_Bp
-from flask_cors import CORS
+from flask import Flask, jsonify, request
 from App.Rate_Limit import Rate_Limit
+from flask_cors import CORS
+import os
 
 def Create_App():
     App = Flask(__name__)
@@ -31,18 +32,15 @@ def Create_App():
     CORS(
         App,
         resources={
-            r"/api/*": {
-                "origins": [
-                    "http://localhost:5009",
-                    "https://p8kjdpww-5009.use2.devtunnels.ms"
-                ],
+            r"/*": {
+                "origins": os.getenv("CORS_ORIGINS").split(","),
                 "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
                 "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"]
             }
         },
-        supports_credentials=True
+        supports_credentials=True,
+        expose_headers=["Content-Disposition"]
     )
-
 
     App.register_blueprint(Forms_Service_Bp)
     App.register_blueprint(User_Service_Bp)

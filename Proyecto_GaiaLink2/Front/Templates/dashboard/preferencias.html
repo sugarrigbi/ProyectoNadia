@@ -25,15 +25,9 @@
                     </li>                    
                     <div class="dropdown-divider"></div>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/cuenta">
                             <img id="Datos_Usuario" src="{{ url_for('static', filename='img/User_Black.svg') }}" class="icono-nav4">
                             Mis datos
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/preferencias">
-                            <img id="Ajustes_Usuario" src="{{ url_for('static', filename='img/Gear_Black.svg') }}" class="icono-nav4">
-                            Ajustes
                         </a>
                     </li>
                     <li>
@@ -51,21 +45,8 @@
                     </li>                                                                          
                 </ul>
             </li>
-        </div>  
+        </div>
     </div>    
-    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <a href="/dashboard/devices" class="col-12 col-lg-11 Bg_Blanco rounded-3 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img src="{{ url_for('static', filename='img/Config_Device.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div class="d-flex align-items-start justify-content-center flex-column">
-                <h2 class="fsr-12 fw-semibold m-0 color_blanco">
-                    Dispositivos
-                </h2>
-                <p class="fsr-16 text-muted m-0 color_blanco2">
-                    Consulta y administra los dispositivos vinculados a tu cuenta.
-                </p>
-            </div>
-        </a>
-    </div>
     <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
         <button id="Cambiar_Tema_Boton" onclick="CambiarTema()" class="col-12 col-lg-11 Bg_Blanco rounded-3 border-0 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
             <img id="Cambiar_Tema_Imagen" src="{{ url_for('static', filename='img/Config_Device.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
@@ -82,23 +63,4 @@
             </div>
         </button>
     </div>
-    <div class="row justify-content-around align-items-stretch w-100 gap-3 gap-xl-0">
-        <button id="Cambiar_Mfa" class="col-12 col-lg-11 Bg_Blanco rounded-3 border-0 d-flex flex-row border-5 border-bottom Border_Morado2 bg-white p-4 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
-            <img id="Imagen_Shield" src="{{ url_for('static', filename='img/Shield.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3">
-            <div class="d-flex align-items-start justify-content-center flex-column">
-                <h2 class="fsr-12 fw-semibold m-0 text-start color_blanco">
-                    Autenticación: 
-                    <span id="Mensaje_Mfa2" class="color_blanco2">
-                        Ola
-                    </span>
-                </h2>
-                <p class="fsr-16 text-muted m-0 color_blanco2 text-start">
-                    Activa y gestiona tu autenticación en dos pasos.
-                </p>
-                <span id="Mensaje_Mfa" class="d-none">
-                    {{ Data["Status"] }}
-                </span>                
-            </div>
-        </button>
-    </div>        
 </div>
