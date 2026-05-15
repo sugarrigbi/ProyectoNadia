@@ -28,3 +28,39 @@ def Api_Forms_Contactanos_Create():
     Data = request.get_json()
     Respuesta = requests.post(f"{MICROSERVICE_URL}/contactanos/create", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/ayuda/read/all", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Forms_Ayuda_Read():
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/ayuda/read/all")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/calificanos/read/all", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Forms_Calificanos_Read():
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/calificanos/read/all")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/contactanos/read/all", methods=["GET"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
+def Api_Forms_Contactanos_Read():
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/contactanos/read/all")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/ayuda/delete/<int:ID>", methods=["DELETE"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["DELETE"])
+def Api_Forms_Ayuda_Delete(ID):
+    Respuesta = requests.delete(f"{MICROSERVICE_URL}/ayuda/delete/{ID}")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/calificanos/delete/<int:ID>", methods=["DELETE"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["DELETE"])
+def Api_Forms_Calificanos_Delete(ID):
+    Respuesta = requests.delete(f"{MICROSERVICE_URL}/calificanos/delete/{ID}")
+    return jsonify(Respuesta.json()), Respuesta.status_code
+
+@Forms_Service_Bp.route("/forms/contactanos/delete/<int:ID>", methods=["DELETE"])
+@Rate_Limit.limit(DEFAULT_LIMIT, methods=["DELETE"])
+def Api_Forms_Contactanos_Delete(ID):
+    Respuesta = requests.delete(f"{MICROSERVICE_URL}/contactanos/delete/{ID}")
+    return jsonify(Respuesta.json()), Respuesta.status_code

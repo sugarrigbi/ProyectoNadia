@@ -26,7 +26,13 @@ class Forms_Service:
                 }
             )
 
-        return Formulario  
+        return Formulario 
+    @staticmethod
+    def Form_Delete(Tabla_Form, ID):
+        Formulario = Tabla_Form.query.get(ID)
+        db.session.delete(Formulario)
+        db.session.commit()
+        return Formulario
     @staticmethod
     def Form_Read_All(Tabla_Form):
         Formularios = Tabla_Form.query.order_by(Tabla_Form.ID.asc()).all()

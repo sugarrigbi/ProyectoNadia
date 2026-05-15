@@ -3,13 +3,18 @@ const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
 if (document.getElementById("Formulario_Ayuda")){
     document.getElementById("Formulario_Ayuda").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Ayuda_Boton");        
+        Boton = document.getElementById("Formulario_Ayuda_Boton");  
         Boton.setAttribute("data-lang", "formularios.Enviar");
+        const Boton_Ant = Boton.innerHTML      
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Ayuda_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");         
         Boton.disabled = true;
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -35,6 +40,7 @@ if (document.getElementById("Formulario_Ayuda")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -42,7 +48,7 @@ if (document.getElementById("Formulario_Ayuda")){
             Boton.setAttribute("data-lang", "formularios.Error");
             Boton.disabled = false;
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Error");
 
@@ -53,13 +59,18 @@ if (document.getElementById("Formulario_Ayuda")){
 if (document.getElementById("Formulario_Calificanos")){
     document.getElementById("Formulario_Calificanos").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Calificanos_Boton");        
+        Boton = document.getElementById("Formulario_Calificanos_Boton");
+        const Boton_Ant = Boton.innerHTML      
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'                
         Boton.setAttribute("data-lang", "formularios.Enviar");
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Calificanos_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");           
         Boton.disabled = true;
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
@@ -84,6 +95,7 @@ if (document.getElementById("Formulario_Calificanos")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -91,7 +103,7 @@ if (document.getElementById("Formulario_Calificanos")){
             Boton.setAttribute("data-lang", "formularios.Error");
             Boton.disabled = false;
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
             Mensaje.setAttribute("data-lang", "formularios.Enviar_Error");
 
@@ -103,7 +115,9 @@ if (document.getElementById("Formulario_Contactanos")){
     document.getElementById("Formulario_Contactanos").addEventListener("submit", async function(e){
         e.preventDefault();
         Boton = document.getElementById("Formulario_Contactanos_Boton");
+        const Boton_Ant = Boton.innerHTML
         Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
@@ -133,6 +147,7 @@ if (document.getElementById("Formulario_Contactanos")){
             window.location.href = "/rate-limit"
         }
         else if(response.status === 400){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -151,7 +166,9 @@ if (document.getElementById("Formulario_Contactanos")){
 if (document.getElementById("Formulario_Registrar")){
     document.getElementById("Formulario_Registrar").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Registrar_Boton");        
+        Boton = document.getElementById("Formulario_Registrar_Boton");  
+        const Boton_Ant = Boton.innerHTML
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'     
         document.querySelectorAll("[id^='Error_']").forEach(el => {
             el.classList.add("d-none");
         });     
@@ -202,6 +219,8 @@ if (document.getElementById("Formulario_Registrar")){
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
             Boton.classList.add("Bg_Rojo");
+            Boton.innerHTML = Boton_Ant
+            Boton.textContent = "Error"
             return; 
         }        
         Boton.setAttribute("data-lang", "formularios.Enviar");
@@ -210,6 +229,9 @@ if (document.getElementById("Formulario_Registrar")){
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");                 
         Mensaje = document.getElementById("Formulario_Registrar_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");         
         Boton.disabled = true;
         
         const Pass1 = document.getElementById("Input_Password1").value;
@@ -257,6 +279,7 @@ if (document.getElementById("Formulario_Registrar")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -264,7 +287,7 @@ if (document.getElementById("Formulario_Registrar")){
             Boton.setAttribute("data-lang", "formularios.Error");
 
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
             Mensaje.textContent = result.Error;
             Boton.disabled = false;
@@ -280,8 +303,16 @@ if (document.getElementById("Formulario_Autenticador")){
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
-        Boton.classList.add("boton2");          
+        Boton.classList.add("boton2");
+        const Boton_Ant = Boton.innerHTML
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Mensaje = document.getElementById("Formulario_Autenticador_Mensaje");
+        Mensaje2 = document.getElementById("Formulario_Autenticador_Mensaje2");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");
+        Mensaje2.classList.add("d-none");
+        Mensaje2.classList.remove("d-block");      
         Boton.disabled = true; 
 
         const Inputs = document.querySelectorAll("input[type='text']");
@@ -326,15 +357,16 @@ if (document.getElementById("Formulario_Autenticador")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400 || response.status === 401 || response.status === 403){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
             Boton.classList.add("Bg_Rojo");
             Boton.setAttribute("data-lang", "formularios.Error");
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
-            Mensaje.textContent = result.Error;
+            Mensaje.textContent = result.Error;             
             Boton.disabled = false;
             CambiarIdioma(localStorage.getItem("idioma") || "es");
         }                       
@@ -343,13 +375,18 @@ if (document.getElementById("Formulario_Autenticador")){
 if (document.getElementById("Formulario_Codigo")){
     document.getElementById("Formulario_Codigo").addEventListener("submit", async function(e){
         e.preventDefault(); 
-        Boton = document.getElementById("Formulario_Codigo_Boton");        
+        Boton = document.getElementById("Formulario_Codigo_Boton");       
+        const Boton_Ant = Boton.innerHTML
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'         
         Boton.setAttribute("data-lang", "formularios.Enviar");
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Codigo_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");          
         Boton.disabled = true;
 
         const Inputs = document.querySelectorAll("input[type='text']");
@@ -384,6 +421,7 @@ if (document.getElementById("Formulario_Codigo")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -402,13 +440,18 @@ if (document.getElementById("Formulario_Codigo")){
 if (document.getElementById("Formulario_Login")){
     document.getElementById("Formulario_Login").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Login_Boton");        
+        Boton = document.getElementById("Formulario_Login_Boton");   
+        const Boton_Ant = Boton.innerHTML     
         Boton.setAttribute("data-lang", "formularios.Enviar");
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Login_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");         
         Boton.disabled = true;    
 
         const Info = {
@@ -480,6 +523,7 @@ if (document.getElementById("Formulario_Login")){
                 window.location.href = "/rate-limit"
             }        
             else if(response.status === 400 || response.status === 401 || response.status === 403){
+                Boton.innerHTML = Boton_Ant
                 Boton.classList.remove("boton2");
                 Boton.classList.add("boton6");
                 Boton.classList.remove("Bg_Azul4");
@@ -487,7 +531,7 @@ if (document.getElementById("Formulario_Login")){
                 Boton.setAttribute("data-lang", "formularios.Error");
 
                 Mensaje.classList.remove("d-none");
-                Mensaje.style.display = 'block';
+                Mensaje.classList.add("d-block");
                 Mensaje.classList.add("Message_Error"); 
                 Mensaje.textContent = result.Error;
                 Boton.disabled = false;
@@ -499,13 +543,18 @@ if (document.getElementById("Formulario_Login")){
 if (document.getElementById("Formulario_Recuperar")){
     document.getElementById("Formulario_Recuperar").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Recuperar_Boton");        
+        Boton = document.getElementById("Formulario_Recuperar_Boton"); 
+        const Boton_Ant = Boton.innerHTML       
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Boton.setAttribute("data-lang", "formularios.Enviar");
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Recuperar_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");        
         Boton.disabled = true;
 
         const formData = new FormData(this);
@@ -535,6 +584,7 @@ if (document.getElementById("Formulario_Recuperar")){
         }        
         else if (response.status === 400 || response.status === 401) {
             window.scrollTo(0, 0);
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -543,7 +593,7 @@ if (document.getElementById("Formulario_Recuperar")){
             Boton.disabled = false;
 
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
             Mensaje.textContent = result.Error;
             
@@ -554,13 +604,18 @@ if (document.getElementById("Formulario_Recuperar")){
 if (document.getElementById("Formulario_Recuperar2")){
     document.getElementById("Formulario_Recuperar2").addEventListener("submit", async function(e){
         e.preventDefault();
-        Boton = document.getElementById("Formulario_Recuperar2_Boton");        
+        Boton = document.getElementById("Formulario_Recuperar2_Boton"); 
+        const Boton_Ant = Boton.innerHTML      
+        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Enviando...'          
         Boton.setAttribute("data-lang", "formularios.Enviar");
         Boton.classList.remove("Bg_Rojo");
         Boton.classList.remove("boton6");        
         Boton.classList.add("Bg_Azul4");
         Boton.classList.add("boton2");          
         Mensaje = document.getElementById("Formulario_Recuperar2_Mensaje");
+        Mensaje.classList.add("d-none");
+        Mensaje.classList.remove("d-block");
+        Mensaje.classList.remove("Message_Error");        
         Boton.disabled = true;
 
         const Pass1 = document.getElementById("Input_Password4").value;
@@ -624,6 +679,7 @@ if (document.getElementById("Formulario_Recuperar2")){
             window.location.href = "/rate-limit"
         }        
         else if(response.status === 400 || response.status === 401){
+            Boton.innerHTML = Boton_Ant
             Boton.classList.remove("boton2");
             Boton.classList.add("boton6");
             Boton.classList.remove("Bg_Azul4");
@@ -631,7 +687,7 @@ if (document.getElementById("Formulario_Recuperar2")){
             Boton.setAttribute("data-lang", "formularios.Error");
             Boton.disabled = false;
             Mensaje.classList.remove("d-none");
-            Mensaje.style.display = 'block';
+            Mensaje.classList.add("d-block");
             Mensaje.classList.add("Message_Error"); 
             Mensaje.textContent = result.Error;
             CambiarIdioma(localStorage.getItem("idioma") || "es");

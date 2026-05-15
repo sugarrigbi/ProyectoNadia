@@ -59,7 +59,7 @@ class Get_Case:
         
         return jsonify({"Message": "Case created successfully"}), 201
     @staticmethod
-    def Case_Read_All():
+    def Case_Read_All(Pagina):
         Auth_Data, Error = Validar_JWT()
         if Error:
             if Error in ["Token expirado", "Token inválido"]:
@@ -67,27 +67,21 @@ class Get_Case:
             return jsonify({"Error": Error}), 400
         User_ID = Auth_Data["user_id"]
 
-        Casos = Case_Service.Read_All(User_ID)
+        Casos = Case_Service.Read_All(User_ID, Pagina)
         Datos_Obtener = Case_Service.Obtener_Datos(User_ID)
-        Linea_Tiempo = Case_Service.Linea_Tiempo(User_ID)
+        Linea_Tiempo = Case_Service.Linea_Tiempo(User_ID, Casos)
         if Casos == "Auth":
             return jsonify({"Error": "No Auth"}), 403    
         if not Datos_Obtener:
             return jsonify({"Error": "No cases found"}), 404
-
-        Casos_json = []
-        for C in Casos:
-            Caso = C.to_dict(include_relationships=True)
-            Caso["Creacion"] = Caso["Creacion"].split("T")[0]
-            Casos_json.append(Caso)
         if not Linea_Tiempo or Linea_Tiempo == "Auth":
             Tiempo_Dict = []
         else:        
             Tiempo_Dict = [T.to_dict2() for T in Linea_Tiempo]            
 
-        return jsonify({"Casos": Casos_json, "Datos": Datos_Obtener, "Linea": Tiempo_Dict}), 200
+        return jsonify({"Casos": [C.to_dict2() for C in Casos.items], "Datos": Datos_Obtener, "Linea": Tiempo_Dict, "Paginas_Validas": Casos.pages, "Pagina": Casos.page}), 200
     @staticmethod
-    def Case_Read_By(Filtros):
+    def Case_Read_By(Filtros, Pagina):
         Auth_Data, Error = Validar_JWT()
         if Error:
             if Error in ["Token expirado", "Token inválido"]:
@@ -95,25 +89,19 @@ class Get_Case:
             return jsonify({"Error": Error}), 400
         User_ID = Auth_Data["user_id"]
 
-        Casos = Case_Service.Read_By(Filtros, User_ID)
+        Casos = Case_Service.Read_By(Filtros, User_ID, Pagina)
         Datos_Obtener = Case_Service.Obtener_Datos(User_ID)
-        Linea_Tiempo = Case_Service.Linea_Tiempo(User_ID)        
+        Linea_Tiempo = Case_Service.Linea_Tiempo(User_ID, Casos)        
         if Casos == "Auth":
             return jsonify({"Error": "No Auth"}), 403             
         if not Casos or not Datos_Obtener or not Linea_Tiempo:
-            return jsonify({"Error", "No cases found"}), 404
-        
-        Casos_json = []
-        for C in Casos:
-            Caso = C.to_dict(include_relationships=True)
-            Caso["Creacion"] = Caso["Creacion"].split("T")[0]
-            Casos_json.append(Caso)   
-        if Linea_Tiempo == "Auth":
-            Tiempo_Dict = Linea_Tiempo
+            return jsonify({"Error": "No cases found"}), 404
+        if not Linea_Tiempo or Linea_Tiempo == "Auth":
+            Tiempo_Dict = []
         else:        
-            Tiempo_Dict = [T.to_dict2() for T in Linea_Tiempo]      
+            Tiempo_Dict = [T.to_dict2() for T in Linea_Tiempo]    
 
-        return jsonify({"Casos": Casos_json, "Datos": Datos_Obtener, "Linea": Tiempo_Dict}), 200
+        return jsonify({"Casos": [C.to_dict2() for C in Casos.items], "Datos": Datos_Obtener, "Linea": Tiempo_Dict, "Paginas_Validas": Casos.pages, "Pagina": Casos.page}), 200
     @staticmethod
     def Case_Update(Case_ID):
         Data = request.get_json()

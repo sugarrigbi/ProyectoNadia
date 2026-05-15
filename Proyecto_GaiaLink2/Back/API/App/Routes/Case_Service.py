@@ -19,24 +19,24 @@ def Api_Case_Create():
     Respuesta = requests.post(f"{MICROSERVICE_URL}/create", json=Data, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Case_Service_Bp.route("/case/read/all", methods=["GET"])
+@Case_Service_Bp.route("/case/read/all/<int:Pagina>", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_All():
+def Api_Case_Read_All(Pagina):
     Auth = request.headers.get("Authorization")
     Headers = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all", headers=Headers, timeout=10)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/all/{Pagina}", headers=Headers, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
-@Case_Service_Bp.route("/case/read/search", methods=["GET"])
+@Case_Service_Bp.route("/case/read/search/<int:Pagina>", methods=["GET"])
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["GET"])
-def Api_Case_Read_By():
+def Api_Case_Read_By(Pagina):
     Filtros = request.args.to_dict(flat=False)
 
     Auth = request.headers.get("Authorization")
     Header = {"Authorization": Auth}
 
-    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search", params=Filtros, headers=Header, timeout=10)
+    Respuesta = requests.get(f"{MICROSERVICE_URL}/read/search/{Pagina}", params=Filtros, headers=Header, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code
 
 @Case_Service_Bp.route("/case/update/<int:Case_ID>", methods=["PUT"])

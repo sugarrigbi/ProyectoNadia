@@ -2,7 +2,7 @@
 {% block contenido %}
     <!--Recuperar Usuario-->
     <section id="Login" class="Fondo1">
-        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5">
+        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-xxl-5 pb-5">
             <div class="row w-100 mt-3">
                 <div class="col-2 d-flex align-items-stretch justify-content-start">
                     <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
@@ -23,10 +23,10 @@
                 </div>
             </div>    
             <div class="row w-100 d-flex align-items-center justify-content-center">
-                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-4 p-4">
+                <div class="col-12 col-lg-6 col-xl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-3 p-4">
                     <img src="{{ url_for('static', filename='img/Recuperar.svg') }}" class="w-25">
-                    <div class="Bg_Oscuro text-white p-3 d-flex align-items-center justify-content-center rounded-3">
-                        <h2 data-lang="recuperar1.Recuperar_Contraseña" class="fsr-9 m-0">
+                    <div class="Bg_Oscuro text-white p-2 p-xxl-3 d-flex align-items-center justify-content-center rounded-3">
+                        <h2 data-lang="recuperar1.Recuperar_Contraseña" class="fsr-11 m-0">
                             Recuperar Contraseña
                         </h2>
                     </div>
@@ -40,7 +40,7 @@
                             </label>
                             <input name="Identificador" type="text" class="form-control rounded-2 border-3 mt-2"placeholder="">
                         </div>
-                        <button id="Formulario_Recuperar_Boton" data-lang="recuperar1.Codigo" class="Bg_Azul4 mt-4 d-inline-flex boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
+                        <button id="Formulario_Recuperar_Boton" data-lang="recuperar1.Codigo" class="Bg_Azul4 mt-4 d-inline-flex justify-content-center align-items-center gap-2 boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
                             Iniciar Sesion
                         </button>                        
                     </form>                                                      

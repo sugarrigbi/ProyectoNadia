@@ -25,6 +25,110 @@ class Caso(Modelo_Base):
     estado = db.relationship("Estado_Caso", backref="casos")
     prioridad = db.relationship("Prioridad", backref="casos")
     barrio = db.relationship("Barrio", backref="casos")
+
+    def to_dict2(self, exclude=None):
+        resultado = {
+            "Actualizado_En": self.Actualizado_En.isoformat(),
+            "Afectados": self.Afectados,
+            "Barrio_ID": self.Barrio_ID,
+            "Creacion": self.Creacion.strftime("%Y-%m-%d") if self.Creacion else None,
+            "Descripcion": self.Descripcion,
+            "Direccion": self.Direccion,
+            "Estado_Caso_ID": self.Estado_Caso_ID,
+            "ID": self.ID,
+            "Incidente_ID": self.Incidente_ID,
+            "Nombre": self.Nombre,
+            "Prioridad_ID": self.Prioridad_ID,
+            "auditorias": [
+                {
+                    "Accion": auditoria.Accion,
+                    "Fecha_Modificacion": auditoria.Fecha_Modificacion.strftime("%Y-%m-%d %H:%M:%S"),
+                    "Modificado_Por": {
+                        "Primer_Apellido": auditoria.usuario.persona.Primer_Apellido,
+                        "Primer_Nombre": auditoria.usuario.persona.Primer_Nombre
+                    }
+                }
+                for auditoria in self.auditorias
+            ],
+            "barrio": {
+                "ID": self.barrio.ID,
+                "Nombre": self.barrio.Nombre,
+                "Localidad": {
+                    "ID": self.barrio.localidad.ID,
+                    "Nombre": self.barrio.localidad.Nombre,
+                    "Ciudad": {
+                        "ID": self.barrio.localidad.ciudad.ID,
+                        "Nombre": self.barrio.localidad.ciudad.Nombre,
+                        "Departamento": {
+                            "ID": self.barrio.localidad.ciudad.departamento.ID,
+                            "Nombre": self.barrio.localidad.ciudad.departamento.Nombre
+                        }
+                    }
+                }
+            },
+            "casos_asociados": [
+                {
+                    "ID": relacion.ID,
+                    "Tipo_Relacion_ID": relacion.tipo_relacion.Nombre,
+                    "Tipo_Relacion_ID_ID": relacion.tipo_relacion.ID,
+                    "Caso_Asociado_ID": {
+                        "Actualizado": relacion.caso_asociado.Actualizado_En,
+                        "Estado": relacion.caso_asociado.estado.Nombre,
+                        "Nombre": relacion.caso_asociado.Nombre,
+                        "Radicado": relacion.caso_asociado.radicados[0].Radicado if relacion.caso_asociado.radicados else None
+                    }
+                }
+                for relacion in self.casos_asociados
+            ],
+            "casos_principales": [
+                {
+                    "Caso_Principal_Act": relacion.caso_principal.Actualizado_En,
+                    "Caso_Principal_Est": relacion.caso_principal.estado.Nombre,
+                    "Caso_Principal_Nom": relacion.caso_principal.Nombre,
+                    "Caso_Principal_Rad": relacion.caso_principal.radicados[0].Radicado if relacion.caso_principal.radicados else None,
+                    "ID": relacion.ID,
+                    "Tipo_Relacion_ID": relacion.tipo_relacion.Nombre,
+                    "Tipo_Relacion_ID_ID": relacion.tipo_relacion.ID,
+                    "Caso_Asociado_ID": {
+                        "Radicado": relacion.caso_asociado.radicados[0].Radicado if relacion.caso_asociado.radicados else None
+                    }
+                }
+                for relacion in self.casos_principales
+            ],
+            "discusiones": [
+                {
+                    "Creado_En": discusion.Creado_En,
+                    "ID": discusion.ID,
+                    "Mensaje": discusion.Mensaje,
+                    "Nombre": discusion.usuario.Nombre,
+                    "Persona": {
+                        "Primer_Apellido": discusion.usuario.persona.Primer_Apellido,
+                        "Primer_Nombre": discusion.usuario.persona.Primer_Nombre
+                    }
+                }
+                for discusion in self.discusiones
+            ],
+            "estado": {
+                "Nombre": self.estado.Nombre
+            },
+            "prioridad": {
+                "Prioridad": self.prioridad.Prioridad
+            },
+            "radicados": [
+                {
+                    "Radicado": radicado.Radicado
+                }
+                for radicado in self.radicados
+            ],
+            "usuario_asociado": {
+                "ID": self.usuario_asociado.ID,
+                "Persona": {
+                    "Primer_Apellido": self.usuario_asociado.persona.Primer_Apellido,
+                    "Primer_Nombre": self.usuario_asociado.persona.Primer_Nombre
+                }
+            }
+        }
+        return resultado
 class Caso_Auditoria(Modelo_Base):
     __tablename__ = "Caso_Auditoria"
 

@@ -168,7 +168,7 @@ class Case_Service():
         )
         return Caso
     @staticmethod
-    def Read_All(User_ID):
+    def Read_All(User_ID, Pagina):
         if not User_ID:
             return "Auth"
         
@@ -176,10 +176,18 @@ class Case_Service():
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
         Nombres = [p.to_dict()["Nombre"] for p in Permisos]          
         if "caso_ver_propio" in Nombres:
-            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc()).all()
+            Querry = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc())
+            Casos = Querry.paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)
+            if Pagina < 1 or Pagina > Casos.pages:
+                Pagina = Casos.pages
+                Casos = Querry.paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)
             return Casos
-        elif "caso_ver" in Nombres:
-            Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.desc()).all()
+        elif "caso_ver" in Nombres:   
+            Querry = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4).order_by(Tabla_Caso.ID.desc())
+            Casos = Querry.paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)        
+            if Pagina < 1 or Pagina > Casos.pages:
+                Pagina = Casos.pages
+                Casos = Querry.paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)
             return Casos
         else:
             return "Auth"           
@@ -217,11 +225,11 @@ class Case_Service():
                 Data["Usuarios"] = [u.to_dict2() for u in Usuarios]
             else:
                 Data["Usuarios"] = []
+            return Data    
         else:
             return "Auth"       
-        return Data    
     @staticmethod
-    def Linea_Tiempo(User_ID):
+    def Linea_Tiempo(User_ID, Casos):
         if not User_ID:
             return "Auth"
         
@@ -229,20 +237,16 @@ class Case_Service():
         Usuario_Validar = Tabla_Usuario.query.get(User_ID)
         Permisos = Tabla_Permiso.query.filter(Tabla_Permiso.Rol_ID == Usuario_Validar.Rol_ID).all()
         Nombres = [p.to_dict()["Nombre"] for p in Permisos]
-        if "caso_ver_linea_tiempo" not in Nombres:
-            return "Auth"            
-        else:
-            if "caso_ver_propio" in Nombres:
-                Casos = Tabla_Caso.query.filter(Tabla_Caso.Estado_Caso_ID != 4, Tabla_Caso.Usuario_Creador_ID == Usuario_Validar.ID).order_by(Tabla_Caso.ID.asc()).all()
-                Casos_json = {C.ID for C in Casos}
-                Auditoria = Tabla_Auditoria.query.filter(Tabla_Auditoria.Caso_ID.in_(Casos_json)).order_by(Tabla_Auditoria.ID.asc()).all()
-            elif "caso_ver" in Nombres:
-                Auditoria = Tabla_Auditoria.query.order_by(Tabla_Auditoria.ID.asc()).all()
+        if "caso_ver_propio" in Nombres or "caso_ver" in Nombres:
+            Casos_json = {C.ID for C in Casos.items}
+            Auditoria = Tabla_Auditoria.query.filter(Tabla_Auditoria.Caso_ID.in_(Casos_json)).order_by(Tabla_Auditoria.ID.asc()).all() 
             if not Auditoria:
-                return False
-            return Auditoria    
+                return False  
+            return Auditoria                    
+        else:
+            return "Auth"  
     @staticmethod
-    def Read_By(Filtros, User_ID):
+    def Read_By(Filtros, User_ID, Pagina):
         if not User_ID:
             return "Auth"
         
@@ -264,9 +268,14 @@ class Case_Service():
             Casos = Casos.filter(Tabla_Caso.Incidente_ID.in_(Filtros["Incidente"]))
         if Filtros.get("Nombre"):
             nombre = Filtros['Nombre'][0]         
-            Casos = Casos.filter(Tabla_Caso.Nombre.ilike(f"%{nombre}%"))                        
+            Casos = Casos.filter(Tabla_Caso.Nombre.ilike(f"%{nombre}%"))
 
-        return Casos
+        Paginacion = Casos.order_by(Tabla_Caso.ID.asc()).paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)
+        if Pagina < 1 or Pagina > Paginacion.pages:
+            Pagina = Paginacion.pages
+            Paginacion = Casos.order_by(Tabla_Caso.ID.asc()).paginate(page=Pagina, per_page=int(os.getenv("CASE_PER_PAGE")),error_out=False)
+
+        return Paginacion
     @staticmethod
     def Update(Case_ID, Data_C, Data_C_C, Data_L, Data_R, User_ID):
         if not User_ID:

@@ -46,6 +46,16 @@ def Forms_Read_By_Contactanos():
     Field = request.args.get("Field")
     Value = request.args.get("Value")    
     return Get_Forms.Get_Read_By(Contactanos,Field,Value)
+@Forms_Bp.route("/ayuda/delete/<int:ID>", methods=["DELETE"])
+def Forms_Delete_Ayuda(ID):
+    return Get_Forms.Get_Delete(Ayuda, ID)
+@Forms_Bp.route("/calificanos/delete/<int:ID>", methods=["DELETE"])
+def Forms_Delete_Calificanos(ID):
+    return Get_Forms.Get_Delete(Calificanos, ID)
+@Forms_Bp.route("/contactanos/delete/<int:ID>", methods=["DELETE"])
+def Forms_Delete_Contactanos(ID):
+    return Get_Forms.Get_Delete(Contactanos, ID)
+
 @Forms_Bp.route("/health", methods=["GET"])
 def Health():
     return jsonify({"Status": "OK"}), 200

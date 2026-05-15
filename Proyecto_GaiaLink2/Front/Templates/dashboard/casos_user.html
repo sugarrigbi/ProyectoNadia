@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/help">
                             <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
@@ -49,6 +49,37 @@
             </li>
         </div>  
     </div>
+    <div class="w-100 d-flex flex-column flex-md-row justify-content-start p-0 gap-2">
+        <div id="paginacion" class="pagination-container d-flex flex-row gap-1 justify-content-center align-items-center" data-validas="{{ Paginas_Validas }}" data-actual="{{ Pagina_Actual }}">
+            <button id="btn-prev" class="btn boton13 text-white Bg_Morado2 rounded-4 border-0 p-2 py-1">
+                ◀
+            </button>                
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted" id="Pag_Ant2">
+                1
+            </a>                
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted" id="Pag_Ant1">
+                2
+            </a>                
+            <p class="color_blanco fsr-13 m-0" id="Pag_Act">
+                {{ Pagina_Actual }}
+            </p>
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted" id="Pag_Sig1">
+                4
+            </a>
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted" id="Pag_Sig2">
+                5
+            </a>
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted d-none" id="Pag_Sig3">
+                6
+            </a>
+            <a class="color_blanco2 text-decoration-none fsr-13 text-black text-muted d-none" id="Pag_Sig4">
+                7
+            </a>                                
+            <button id="btn-next" class="btn boton13 text-white Bg_Morado2 rounded-4 border-0 p-2 py-1">
+                ▶
+            </button>                       
+        </div>                        
+    </div>    
     <div class="d-flex gap-3 align-items-center justify-content-start w-100">
         <button data-bs-target="#ModalCreate" data-bs-toggle="modal" type="button" class="btn btn-success fsr-13 boton7 d-flex align-items-center justify-content-center gap-2">
             <img src="{{ url_for('static', filename='img/PlusWhite.svg') }}" class="icono-nav2">
@@ -263,7 +294,7 @@
                                                     • Incidente
                                                 </div>
                                                 <div class="fsr-14 ms-3 color_blanco2">
-                                                    {{ caso["incidente"]["Incidente"] }}
+                                                    {% for i in Data['Incidentes'] %}{% if i['ID'] == caso['Incidente_ID'] %}{{ i['Incidente'] }}{% endif %}{% endfor %}
                                                 </div>
                                             </div>
                                             <div>
@@ -345,8 +376,7 @@
                                                     • Creador
                                                 </div>
                                                 <div class="fsr-14 ms-3 color_blanco2">
-                                                    {{ caso["usuario_creador"]["Persona"]["Primer_Nombre"] }}
-                                                    {{ caso["usuario_creador"]["Persona"]["Primer_Apellido"] }}
+                                                    {% for u in Data['Usuarios'] %}{% if u['ID'] == caso['Usuario_Creador_ID'] %}{{ u['Persona']['Primer_Nombre'] }} {{ u['Persona']['Primer_Apellido'] }}{% endif %}{% endfor %}
                                                 </div>
                                             </div>
                                             <div>

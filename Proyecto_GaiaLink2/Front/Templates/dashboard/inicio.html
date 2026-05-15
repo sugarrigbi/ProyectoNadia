@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/help">
                             <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
@@ -50,7 +50,7 @@
         </div>  
     </div>  
     <div class="row justify-content-around align-items-stretch w-100 gap-3">
-        <a id="Card_Casos_User" href="/dashboard/user/casos" class="d-none col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+        <a id="Card_Casos_User" href="/dashboard/user/casos?page=1" class="d-none col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
             <img src="{{ url_for('static', filename='img/Casos2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3 color_morado">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0 color_blanco">
@@ -62,7 +62,7 @@
                 </p>
             </div>
         </a>
-        <a id="Card_Casos_Admin" href="/dashboard/staff/casos" class="d-none col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+        <a id="Card_Casos_Admin" href="/dashboard/staff/casos?page=1" class="d-none col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
             <img src="{{ url_for('static', filename='img/Gear_Admin2.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3 color_morado">
             <div>
                 <h2 class="fsr-12 fw-semibold m-0 color_blanco">
@@ -134,7 +134,18 @@
                 </p>
             </div>
         </a>
-        <div class="col-3-custom col-12 col-md-11" style="visibility:hidden;pointer-events:none;"></div>
+        <a id="Card_Forms_Admin" href="/dashboard/forms" class="d-none col-3-custom col-12 col-md-11 Bg_Blanco rounded-3 flex-column border-5 border-bottom Border_Morado2 bg-white p-3 gap-3 Bg_Sombra3 Card_Hover text-decoration-none text-dark">
+            <img src="{{ url_for('static', filename='img/Form_Morado.svg') }}" class="icono-nav3 p-2 Bg_Morado3 rounded-3 color_morado">
+            <div>
+                <h2 class="fsr-12 fw-semibold m-0 color_blanco">
+                    Formularios
+                </h2>
+                <p class="fsr-16 text-muted m-0 color_blanco2">
+                    Visualiza y gestiona los formularios de ayuda, 
+                    calificanos y contactanos.
+                </p>
+            </div>
+        </a>
         <div class="col-3-custom col-12 col-md-11" style="visibility:hidden;pointer-events:none;"></div>                
     </div>
 </div>

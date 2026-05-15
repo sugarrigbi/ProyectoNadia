@@ -30,4 +30,10 @@ class Get_Forms:
         Formularios = Forms_Service.Form_Read_By(Tabla_Form, Field, Value)
         if not Formularios:
             return jsonify({"Error": "No forms found"}), 404
-        return Response(json.dumps([F.to_dict() for F in Formularios], ensure_ascii=False, indent=2), status=200, mimetype='application/json')                        
+        return Response(json.dumps([F.to_dict() for F in Formularios], ensure_ascii=False, indent=2), status=200, mimetype='application/json')
+    @staticmethod
+    def Get_Delete(Tabla_Form, ID):
+        Formulario = Forms_Service.Form_Delete(Tabla_Form, ID)
+        if not Formulario:
+            return jsonify({"Error": "No forms found"}), 404
+        return jsonify({"Message": "Form deleted successfully"}), 200        

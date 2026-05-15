@@ -1,3 +1,4 @@
+
 <div class="container-fluid p-3 p-md-4 align-items-center d-flex w-100 h-100 flex-column Bg_Blanco2 gap-2 gap-md-4">
     <div class="w-100 d-flex justify-content-between px-0 mb-2 mb-sm-0">
         <div class="d-flex gap-1 gap-sm-3 my-0 my-sm-2">
@@ -33,7 +34,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="#">
+                        <a class="dropdown-item d-flex align-items-center fs-5 hover-item justify-content-start text-black gap-3 px-2 color_blanco" href="/dashboard/help">
                             <img id="Ayuda_Usuario" src="{{ url_for('static', filename='img/Help_Black.svg') }}" class="icono-nav4">
                             Ayuda
                         </a>
@@ -65,6 +66,37 @@
                 <img src="{{ url_for('static', filename='img/PlusWhite.svg') }}" class="icono-nav2">
                 Crear Caso
             </button>
+        </div>
+        <div class="w-100 d-flex flex-column flex-md-row justify-content-start p-0 gap-2">
+            <div id="paginacion" class="pagination-container d-flex flex-row gap-1 justify-content-center align-items-center" data-validas="{{ Paginas_Validas }}" data-actual="{{ Pagina_Actual }}">
+                <button id="btn-prev" class="btn boton13 text-white Bg_Morado2 rounded-4 border-0 p-2 py-1">
+                    ◀
+                </button>                
+                <a class="color_blanco2 text-decoration-none fsr-13" id="Pag_Ant2">
+                    1
+                </a>                
+                <a class="color_blanco2 text-decoration-none fsr-13" id="Pag_Ant1">
+                    2
+                </a>                
+                <p class="color_blanco fsr-13 m-0" id="Pag_Act">
+                    {{ Pagina_Actual }}
+                </p>
+                <a class="color_blanco2 text-decoration-none fsr-13" id="Pag_Sig1">
+                    4
+                </a>
+                <a class="color_blanco2 text-decoration-none fsr-13" id="Pag_Sig2">
+                    5
+                </a>
+                <a class="color_blanco2 text-decoration-none fsr-13 d-none" id="Pag_Sig3">
+                    6
+                </a>
+                <a class="color_blanco2 text-decoration-none fsr-13 d-none" id="Pag_Sig4">
+                    7
+                </a>                                
+                <button id="btn-next" class="btn boton13 text-white Bg_Morado2 rounded-4 border-0 p-2 py-1">
+                    ▶
+                </button>                       
+            </div>                        
         </div>
         <div class="p-0 d-none gap-2 flex-column flex-md-row w-100 justify-content-between" id="Cont_Filtro">   
             <div class="dropdown p-0 w-auto align-items-start align-items-md-center justify-content-center justify-content-md-start d-flex gap-2 flex-column flex-md-row">
@@ -166,7 +198,7 @@
                 <div class="modal-content Bg_Blanco2" style="height:auto; overflow-y:auto;">  
                     <form id="Caso_Contenedor2" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
                         <div class="row justify-content-between align-items-center w-100 border-start border-5 border-warning flex-column flex-md-row">
-                            <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                            <div class="col-12 col-md-5 col-xxl-4 d-flex flex-column gap-2 p-2">
                                 <p class="m-0 fsr-15 d-flex align-items-center gap-2 color_blanco">
                                     <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
                                     CASO NUEVO
@@ -187,7 +219,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                            <div class="col-12 col-md-7 col-xxl-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
                                 <div class="d-none d-md-flex flex-row gap-2">
                                     <button id="CasoNuevo_Boton_Volver" type="button" data-bs-dismiss="modal" class="boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
                                         <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
@@ -248,7 +280,7 @@
                                         Impacto
                                     </p>
                                     <hr class="mt-0 mb-1 border-4 rounded-1 Bg_hr">
-                                    <div class="ps-3 d-flex flex-column gap-1">
+                                    <div class="ps-0 ps-xxl-3 d-flex flex-column gap-1">
                                         <div class="d-flex flex-column">
                                             <p class="fsr-13 m-0 h-auto color_blanco">
                                                 Fecha de creacion
@@ -318,7 +350,7 @@
                                         Ubicacion
                                     </p>
                                     <hr class="mt-0 mb-1 border-4 rounded-1 Bg_hr">
-                                    <div class="ps-3 d-flex flex-column gap-1">
+                                    <div class="ps-0 ps-xxl-3 d-flex flex-column gap-1">
                                         <div class="d-flex flex-column">
                                             <p class="fsr-13 m-0 h-auto color_blanco">
                                                 Direccion
@@ -423,7 +455,7 @@
                 <p class="text-center text-muted fsr-11 color_blanco">
                     Intenta ajustar o limpiar los filtros para ver más resultados.
                 </p>
-                <a href="/dashboard/staff/casos" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
+                <a href="/dashboard/staff/casos?page=1" class="btn Bg_Azul4 fsr-12 boton12 d-flex align-items-center justify-content-center gap-2">
                     Volver a casos
                 </a>          
             </div>
@@ -442,7 +474,7 @@
                                 Estado:
                             </b>                         
                             <span id="estado-span-{{ Caso['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1">
-                                {{ Caso["estado"]["Nombre"] }}
+                                {{ Caso['estado']['Nombre'] }}
                             </span>
                         </p>
                         <p class="fsr-15 m-0 mb-1">
@@ -450,7 +482,7 @@
                                 Prioridad:
                             </b> 
                             <span id="prioridad-span-{{ Caso['ID'] }}" class="border-bottom border-3 w-auto rounded-1 px-1">
-                                {{ Caso["prioridad"]["Prioridad"] }}    
+                                {{ Caso['prioridad']['Prioridad'] }}    
                             </span>                        
                         </p>                    
                         <p class="fsr-15 m-0 mb-1">
@@ -458,7 +490,7 @@
                                 Encargado:
                             </b>
                             <span class="color_blanco2">
-                                {{ Caso["usuario_asociado"]["Persona"]["Primer_Nombre"] }} {{ Caso["usuario_asociado"]["Persona"]["Primer_Apellido"] }}
+                                {{ Caso['usuario_asociado']['Persona']["Primer_Nombre"] }} {{ Caso["usuario_asociado"]["Persona"]["Primer_Apellido"] }}
                             </span> 
                         </p>
                         <p class="fsr-15 m-0">
@@ -482,7 +514,7 @@
                             <form id="Caso_Contenedor" class="container-fluid p-0 align-items-center d-flex w-100 flex-column Bg_Blanco2" style="min-height:100%;">
                                 <div id="Caso_Datos_{{ Caso['ID'] }}" data-caso="{{ Caso['ID'] }}" class="w-100">
                                     <div class="row justify-content-between align-items-center w-100 border-start border-6 border-warning flex-column flex-md-row">
-                                        <div class="col-12 col-md-4 d-flex flex-column gap-2 p-2">
+                                        <div class="col-12 col-md-5 col-xxl-4 d-flex flex-column gap-2 p-2">
                                             <p class="m-0 fsr-14 d-flex align-items-center gap-2 color_blanco">
                                                 <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
                                                 CASO {{ Caso["radicados"][0]["Radicado"] }}
@@ -505,7 +537,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
+                                        <div class="col-12 col-md-7 col-xxl-8 d-flex flex-column align-items-center align-items-md-end justify-content-between gap-2 p-3 h-100">
                                             <div class="d-none d-md-flex flex-row gap-2">
                                                 <button id="Caso_Boton_Volver" type="button" data-bs-dismiss="modal" class=" boton8 p-1 border-0 bg-danger-subtle fw-medium d-flex align-items-center justify-content-center gap-1 rounded-1">
                                                     <img src="{{ url_for('static', filename='img/Volver_Red.svg') }}" class="icono-nav7">
@@ -561,20 +593,17 @@
                                                                 Ahora
                                                             </p>                                                
                                                         </div>
-                                                        <textarea name="Caso_Comentario" placeholder="Agregue un comentario..." class="color_blanco6 Bg_Blanco3 color_blanco w-100 h-80 rounded-1 fsr-13" style="resize: none;"></textarea>
+                                                        <textarea name="Caso_Comentario" placeholder="Agregue un comentario..." class="color_blanco6 Bg_Blanco3 color_blanco w-100 h-100 rounded-1 fsr-13" style="resize: none;"></textarea>
                                                     </div>
                                                     {% for comentario in Caso['discusiones'] | reverse %}
                                                         <div class="d-flex flex-column h-50">
                                                             <div class="d-flex flex-row align-items-end gap-2">
                                                                 <img class="icono-nav rounded-circle" id="Imagen_Usuario_Comentario_{{ comentario['ID'] }}">
                                                                 <div class="icono-nav rounded-circle d-none bg-info-subtle text-center d-flex justify-content-center align-items-center text-info-emphasis" id="Imagen_Error_Usuario_Crear"></div>
-                                                                <p class="d-none d-md-block m-0 fsr-13 text-muted color_blanco">
-                                                                    {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Segundo_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }} {{ comentario["Persona"]["Segundo_Apellido"] }} 
-                                                                </p>
                                                                 <p class="d-none color_blanco" id="Obtener_Usuario_Comentario_{{ comentario['ID'] }}">
                                                                     {{ comentario["Nombre"] }}
                                                                 </p>
-                                                                <p class="d-block d-md-none m-0 fsr-13 text-muted color_blanco">
+                                                                <p class="d-block m-0 fsr-13 text-muted color_blanco">
                                                                     {{ comentario["Persona"]["Primer_Nombre"] }} {{ comentario["Persona"]["Primer_Apellido"] }}
                                                                 </p>
                                                                 <p id="Fecha_Comentario_{{Caso['ID']}}_{{comentario['ID']}}" class="m-0 fsr-16 color_blanco">
@@ -593,7 +622,7 @@
                                                     Impacto
                                                 </p>
                                                 <hr class="mt-0 mb-1 border-4 rounded-1 Bg_hr">
-                                                <div class="ps-3 d-flex flex-column gap-1">
+                                                <div class="ps-0 ps-xxl-3 d-flex flex-column gap-1">
                                                     <div class="d-flex flex-column">
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Fecha de creacion
@@ -659,7 +688,7 @@
                                                     Ubicacion
                                                 </p>
                                                 <hr class="mt-0 mb-1 border-4 rounded-1 Bg_hr">
-                                                <div class="ps-3 d-flex flex-column gap-1">
+                                                <div class="ps-0 ps-xxl-3 d-flex flex-column gap-1">
                                                     <div class="d-flex flex-column">
                                                         <p class="fsr-13 m-0 h-auto color_blanco">
                                                             Direccion
@@ -690,7 +719,7 @@
                                                         </p>                
                                                         <input id="localidad_input" name="localidad_input" list="Datalist_Localidad" value="{{ Caso['barrio']['Localidad']['Nombre'] }}" placeholder="Agregue una localidad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Localidad_Nombre" name="Caso_Localidad_Nombre" value="{{ Caso['barrio']['Localidad']['Nombre'] }}">
-                                                        <input type="hidden" id="Caso_Localidad_ID" name="Caso_Localidad_ID" value="">
+                                                        <input type="hidden" id="Caso_Localidad_ID" name="Caso_Localidad_ID" value="{{ Caso['barrio']['Localidad']['ID'] }}">
                                                     </div>  
                                                     <div class="d-flex flex-column">
                                                         <datalist id="Datalist_Ciudad">
@@ -703,7 +732,7 @@
                                                         </p>                
                                                         <input id="ciudad_input" name="ciudad_input" list="Datalist_Ciudad" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}" placeholder="Agregue una ciudad..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Ciudad_Nombre" name="Caso_Ciudad_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Nombre'] }}">
-                                                        <input type="hidden" id="Caso_Ciudad_ID" name="Caso_Ciudad_ID" value="">
+                                                        <input type="hidden" id="Caso_Ciudad_ID" name="Caso_Ciudad_ID" value="{{ Caso['barrio']['Localidad']['Ciudad']['ID'] }}">
                                                     </div> 
                                                     <div class="d-flex flex-column">
                                                         <datalist id="Datalist_Departamento">
@@ -716,7 +745,7 @@
                                                         </p>                
                                                         <input id="departamento_input" name="departamento_input" list="Datalist_Departamento" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}" placeholder="Agregue un departamento..."class="color_blanco6 Bg_Blanco3 color_blanco border-0 w-75-2 rounded-1 fsr-14 px-2" style="resize: none;">
                                                         <input type="hidden" id="Caso_Departamento_Nombre" name="Caso_Departamento_Nombre" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['Nombre'] }}">
-                                                        <input type="hidden" id="Caso_Departamento_ID" name="Caso_Departamento_ID" value="">
+                                                        <input type="hidden" id="Caso_Departamento_ID" name="Caso_Departamento_ID" value="{{ Caso['barrio']['Localidad']['Ciudad']['Departamento']['ID'] }}">
                                                     </div>                                                       
                                                 </div>                            
                                             </div>
@@ -805,7 +834,7 @@
                                                                     <img src="{{ url_for('static', filename='img/Dots.svg') }}" class="icono-nav8">
                                                                 </button>  
                                                             </div>
-                                                            <div class="ps-3">
+                                                            <div class="ps-0 ps-xxl-3">
                                                                 <div>
                                                                     <p class="m-0 fsr-15 d-flex align-items-center gap-2 color_blanco">
                                                                         <img src="{{ url_for('static', filename='img/Maletin.svg') }}" class="icono-nav8">
@@ -817,7 +846,7 @@
                                                                 </div>                   
                                                                 <div class="d-flex flex-row gap-1">
                                                                     <p class="m-0 fsr-15 d-flex align-items-center gap-2 px-1 color_blanco">
-                                                                        <span class="d-none d-md-block">
+                                                                        <span class="d-none d-xxl-block">
                                                                             Se actualizó en 
                                                                         </span>
                                                                         <span id="Fecha_Relacion_{{ relacion['ID'] }}">

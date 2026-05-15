@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from requests.exceptions import ConnectionError
 from datetime import datetime
 import requests
@@ -62,7 +62,8 @@ def Dashboard_Admin_Casos():
             return render_template("dashboard/no_auth.html")
         headers = {"Authorization": auth_header}
         
-        Response = requests.get(f"{API_URL}/case/read/all", headers=headers)
+        Pagina = request.args.get("page", 1, type=int)       
+        Response = requests.get(f"{API_URL}/case/read/all/{Pagina}", headers=headers)
         if Response.status_code == 401:
             return Response.json(), 401
         elif Response.status_code == 403:
@@ -73,8 +74,10 @@ def Dashboard_Admin_Casos():
         Casos = Datos.get("Casos", [])
         Data = Datos.get("Datos", {})
         Linea = Datos.get("Linea", [])
+        Paginas_Validas = int(Datos.get("Paginas_Validas", 1))
+        Pagina_Actual = int(Datos.get("Pagina", 1))
 
-        return render_template("dashboard/casos_admin.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
+        return render_template("dashboard/casos_admin.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea, Paginas_Validas=Paginas_Validas, Pagina_Actual=Pagina_Actual)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/staff/casos/search")
 def Dashboard_Admin_Casos_By():
@@ -85,7 +88,8 @@ def Dashboard_Admin_Casos_By():
         headers = {"Authorization": auth_header}
 
         Filtros = request.args.to_dict(flat=False)
-        Response = requests.get(f"{API_URL}/case/read/search", params=Filtros, headers=headers)
+        Pagina = request.args.get("page", 1, type=int)         
+        Response = requests.get(f"{API_URL}/case/read/search/{Pagina}", params=Filtros, headers=headers)
         if Response.status_code == 401:
             return Response.json(), 401
         elif Response.status_code == 403:
@@ -96,8 +100,10 @@ def Dashboard_Admin_Casos_By():
         Casos = Datos.get("Casos", [])
         Data = Datos.get("Datos", {})
         Linea = Datos.get("Linea", [])
+        Paginas_Validas = int(Datos.get("Paginas_Validas", 1))
+        Pagina_Actual = int(Datos.get("Pagina", 1))        
 
-        return render_template("dashboard/casos_admin.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
+        return render_template("dashboard/casos_admin.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea, Paginas_Validas=Paginas_Validas, Pagina_Actual=Pagina_Actual)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/user/casos")
 def Dashboard_User_Casos():
@@ -107,7 +113,8 @@ def Dashboard_User_Casos():
             return render_template("dashboard/no_auth.html")
         headers = {"Authorization": auth_header}
         
-        Response = requests.get(f"{API_URL}/case/read/all", headers=headers)
+        Pagina = request.args.get("page", 1, type=int)              
+        Response = requests.get(f"{API_URL}/case/read/all/{Pagina}", headers=headers)
         if Response.status_code == 401:
             return Response.json(), 401
         elif Response.status_code == 403:
@@ -118,8 +125,10 @@ def Dashboard_User_Casos():
         Casos = Datos.get("Casos", [])
         Data = Datos.get("Datos", {})
         Linea = Datos.get("Linea", [])
+        Paginas_Validas = int(Datos.get("Paginas_Validas", 1))
+        Pagina_Actual = int(Datos.get("Pagina", 1))          
 
-        return render_template("dashboard/casos_user.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea)
+        return render_template("dashboard/casos_user.html", Casos=Casos, Data=Data, Linea_Tiempo=Linea, Paginas_Validas=Paginas_Validas, Pagina_Actual=Pagina_Actual)
     return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/usuarios")
 def Dashboard_Admin_Usuarios():
@@ -209,11 +218,46 @@ def Dashboard_Cuenta():
         return render_template("dashboard/cuenta.html", Usuario=Datos["usuario"], Dispositivos=Datos["dispositivos"], Datos=Datos["datos"])
     return render_template("dashboard/dashboard.html")
 
+@app.route("/dashboard/forms")
+def Dashboard_Forms():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/forms.html")
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/forms/ayuda")
+def Dashboard_Forms_Ayuda():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        Response = requests.get(f"{API_URL}/forms/ayuda/read/all")
+        Data = Response.json()        
+        return render_template("dashboard/forms_ayuda.html", Data=Data)
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/forms/calificanos")
+def Dashboard_Forms_Calificanos():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        Response = requests.get(f"{API_URL}/forms/calificanos/read/all")
+        Data = Response.json()        
+        return render_template("dashboard/forms_calificanos.html", Data=Data)
+    return render_template("dashboard/dashboard.html")
+@app.route("/dashboard/forms/contactanos")
+def Dashboard_Forms_Contactanos():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        Response = requests.get(f"{API_URL}/forms/contactanos/read/all")
+        Data = Response.json()
+        return render_template("dashboard/forms_contactanos.html", Data=Data)
+    return render_template("dashboard/dashboard.html")
+
+
+@app.route("/dashboard/help")
+def Help():
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/ayuda.html")
+    return render_template("dashboard/dashboard.html")
 @app.route("/dashboard/unauthorized")
 def Unauthorized():
-    return render_template("dashboard/no_auth.html")
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("dashboard/no_auth.html")
+    return render_template("dashboard/dashboard.html")
 @app.route("/rate-limit")
 def Rate_Limit():
     return render_template("homepage/rate_limit.html")
 if __name__ == "__main__":
-    app.run(port=5009, debug=True)
+    app.run(port=5009)

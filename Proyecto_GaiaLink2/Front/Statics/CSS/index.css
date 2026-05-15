@@ -282,6 +282,9 @@ h4{
 .w-70{
     width: 70%;
 }
+.w-70-2{
+    width: 70%;
+}
 .w-90{
     width: 90%
 }
@@ -718,6 +721,9 @@ h4{
 .w-86{
     width: 86%!important;
 }
+.w-86-2{
+    width: 86%!important;
+}
 .five {
     animation: five_move 3.5s 0.725s infinite;
 }
@@ -877,6 +883,9 @@ h4{
 .h-80-2{
     height: 80%!important;
 }
+.pt-10 {
+    padding-top: 6rem !important;
+}
 .grid-custom{
     grid-template-columns: 1fr 1fr 1fr
 }
@@ -886,6 +895,9 @@ h4{
 .List_Cuenta{
     transition: all 0.3s ease;
 }
+.rate-limit{
+    max-width:200px
+}
 textarea.nofocus {
     background-color: #fff;
     color: #000;
@@ -893,6 +905,10 @@ textarea.nofocus {
 }
 .w-75-2{
     width: 75%;
+}
+.col-xl2-3 {
+    flex: 0 0 auto;
+    width: 23%;
 }
 @keyframes one_move {
     0% {
@@ -1107,7 +1123,7 @@ textarea.nofocus {
 @media (max-width: 1500px) {
     .Logo_Gaia{
         width: 29%;
-    }
+    }     
     .Español{
         width: 50px;
         height: 20px;
@@ -1138,26 +1154,66 @@ textarea.nofocus {
         font-size: 2.2rem;
     }            
 }
+@media (min-width: 1400px) {
+    .p-xxl-2-5 {
+        padding: 0.4rem !important;
+    }
+}
+@media (max-width: 1380px){
+    .w-2{
+        width: 3.3%;
+    }
+    .col-xl2-3 {
+        flex: 0 0 auto;
+        width: 30%;
+    }      
+    .w-67{
+        width: 80%;
+    }   
+    .gap-20{
+        gap: 8rem;
+    }
+    .Fondo_Diagonal {
+        position: relative;
+        background: linear-gradient(
+            90deg,
+            #f8fafc 50%,
+            #22356a 50%
+        );
+        overflow: hidden;
+    }
+    .rate-limit{
+        max-width:125px
+    } 
+    .w-15{
+        width: 10%;
+    } 
+    .w-75-2{
+        width: 100%;
+    } 
+    .w-86-2{
+        width: 100%!important;
+    }
+    .w-70-2{
+        width: 60%;
+    }                          
+}
 @media (max-width: 1250px){
     .quote-box{
         width: 47px;
         height: 40px;
-    }
+    }    
     .grid-custom{
         grid-template-columns: 1fr
     }        
     .h-82{
         height: 60% !important;
-    }      
+    }        
 }
 @media (min-width: 1200px) {
-    .col-xl2-3 {
-        flex: 0 0 auto;
-        width: 30%;
-    }
     .col-3-custom{
         width: 23%;
-    }    
+    }      
 }
 @media (max-width: 991px) {
     .Fondo{
@@ -1165,7 +1221,7 @@ textarea.nofocus {
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
-    }    
+    }       
     .h-82{
         height: 45% !important;
     }      
@@ -1285,14 +1341,14 @@ textarea.nofocus {
         height: 32px;
     }
     .gap-20{
-        gap: 4rem;
+        gap: 2rem;
     }
     .Fondo_Diagonal {
         position: relative;
         background: linear-gradient(
             180deg,
-            #f8fafc 50%,
-            #22356a 50%
+            #f8fafc 51.5%,
+            #22356a 48.5%
         );
         overflow: hidden;
     }    
@@ -1354,6 +1410,12 @@ textarea.nofocus {
     .h-80 {
         height: 100% !important;
     }
+    .gap-10{
+        gap: 5rem;
+    } 
+    .gap-15{
+        gap: 4rem
+    }       
 }
 .Modo_Oscuro { 
     .Bg_Blanco2 {
@@ -1395,9 +1457,6 @@ textarea.nofocus {
     }        
     .color_morado{
         background-color: #c084fc !important;
-    }
-    .color_morado2{
-        background-color: #624085 !important;
     }
     .estado-pendiente {
         background-color: #3a2e00 !important;

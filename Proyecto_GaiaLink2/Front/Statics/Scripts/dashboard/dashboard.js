@@ -152,7 +152,20 @@ document.addEventListener("DOMContentLoaded", () => {
             toast: true,
             position: 'top-end'
         });
-    }    
+    }
+    if (sessionStorage.getItem('form_eliminado')) {
+        sessionStorage.removeItem('form_eliminado');
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Formulario eliminado',
+            text: 'El formulario se eliminó correctamente',
+            timer: 2500,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }                
     
     window.addEventListener("popstate", () => {
         cargarPagina(window.location.pathname);
@@ -203,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(html => {
             Contenido.innerHTML = html;
             history.pushState(null, "", url);
-            const User = JSON.parse(localStorage.getItem("User_Data"));    
+            const User = JSON.parse(localStorage.getItem("User_Data"));   
             if (localStorage.getItem("Tema") === "Oscuro") {
                 document.body.classList.add("Modo_Oscuro");
                 if (document.getElementById("Cambiar_Tema_Boton")){
@@ -220,7 +233,76 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("Cambiar_Tema_Texto").textContent = "Claro";
                     document.getElementById("Cambiar_Tema_Imagen").src = "/Statics/img/Sun.svg";
                 }              
-            }          
+            }            
+            if (document.getElementById("paginacion")){
+                const paginacion = document.getElementById("paginacion")
+
+                const Pag_Actual = Number(paginacion.dataset.actual)
+                const Pag_Valida = Number(paginacion.dataset.validas)                
+
+                const Pag_Ant2 = document.getElementById("Pag_Ant2");
+                const Pag_Ant1 = document.getElementById("Pag_Ant1");
+                const Pag_Act = document.getElementById("Pag_Act");
+                const Pag_Sig1 = document.getElementById("Pag_Sig1");
+                const Pag_Sig2 = document.getElementById("Pag_Sig2");
+                const Pag_Sig3 = document.getElementById("Pag_Sig3");
+                const Pag_Sig4 = document.getElementById("Pag_Sig4");
+
+                const btn_prev = document.getElementById("btn-prev");
+                const btn_next = document.getElementById("btn-next");
+
+                if (Pag_Actual <= 1){
+                    btn_prev.disabled = true
+                }
+                if (Pag_Actual >= Pag_Valida){
+                    btn_next.disabled = true
+                }
+                
+                btn_prev.addEventListener("click", () =>{
+                    window.location = `?page=${Pag_Actual-1}`
+                });
+                btn_next.addEventListener("click", () =>{
+                    window.location = `?page=${Pag_Actual+1}`
+                });                
+
+                if (Pag_Actual - 2 < 1){
+                    Pag_Ant2.classList.add("d-none")
+                    if (Pag_Actual + 3 <= Pag_Valida){
+                        Pag_Sig3.classList.add("d-block")
+                        Pag_Sig3.classList.remove("d-none")
+                        Pag_Sig3.textContent = Pag_Actual + 3;
+                        Pag_Sig3.href = `?page=${Pag_Actual + 3}`;                     
+                    }
+                } else {
+                    Pag_Ant2.textContent = Pag_Actual - 2;
+                    Pag_Ant2.href = `?page=${Pag_Actual - 2}`;
+                }
+                if (Pag_Actual - 1 < 1){
+                    Pag_Ant1.classList.add("d-none");
+                    if (Pag_Actual + 4 <= Pag_Valida){
+                        Pag_Sig4.classList.add("d-block")
+                        Pag_Sig4.classList.remove("d-none")
+                        Pag_Sig4.textContent = Pag_Actual + 4;
+                        Pag_Sig4.href = `?page=${Pag_Actual + 4}`;                  
+                    }
+                } else {
+                    Pag_Ant1.textContent = Pag_Actual - 1;
+                    Pag_Ant1.href = `?page=${Pag_Actual - 1}`;                
+                } 
+                
+                if (Pag_Actual + 1 > Pag_Valida){
+                    Pag_Sig1.classList.add("d-none")
+                } else {
+                    Pag_Sig1.textContent = Pag_Actual + 1
+                    Pag_Sig1.href = `?page=${Pag_Actual + 1}`
+                }
+                if (Pag_Actual + 2 > Pag_Valida){
+                    Pag_Sig2.classList.add("d-none")
+                } else {
+                    Pag_Sig2.textContent = Pag_Actual + 2
+                    Pag_Sig2.href = `?page=${Pag_Actual + 2}`            
+                }
+            }                      
             if (document.getElementById("Nav_Casos_User")){
                 const Nav_User = document.getElementById("Nav_Casos_User");
                 const Nav_Admin = document.getElementById("Nav_Casos_Admin");
@@ -1892,6 +1974,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }   
             if (document.getElementById("Cont_Cuenta")){
                 document.querySelectorAll(".Boton_Eliminar_Device").forEach(Button =>{
+                    const Ant = Button.innerHTML
                     const Device_ID = Button.getAttribute("data-delete");
                     const Token = Button.getAttribute("data-token");
                     if (!User.Permisos.some(Perm => Perm.Nombre === "dispositivo_eliminar")){
@@ -1899,6 +1982,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     Button.addEventListener("click", async (e) =>{
                         Button.disabled = true;
+                        Button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Eliminando...'
                         const response = await fetch(`${API_BASE}/device/delete/${Device_ID}`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
                         const result = await response.json()
                         if(response.status === 200){
@@ -1913,6 +1997,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         } else if(response.status === 429){
                             window.location.href = "/rate-limit"
                         } else if(response.status === 400){
+                            Button.innerHTML = Ant
                             Button.disabled = false;
                             Button.textContent = result.Error;
                         } else if(response.status === 403){
@@ -1923,19 +2008,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (document.getElementById("Cambiar_Mfa")){
                 const Boton = document.getElementById("Cambiar_Mfa");
+                const Ant = Boton.innerHTML
                 const Mensaje = document.getElementById("Mensaje_Mfa2");
                 const Dato = document.getElementById("Mensaje_Mfa");
                 if (Dato.textContent.trim() === "False"){
                     Boton.textContent = "Activar"
                     Boton.classList.add("Bg_OK3")
+                    Boton.classList.add("boton17")
                     Mensaje.textContent = "Desactivada"
                 } else if (Dato.textContent.trim() === "True"){
                     Boton.textContent = "Desactivar"
                     Boton.classList.add("Bg_OFF3")
+                    Boton.classList.add("boton8")
                     Mensaje.textContent = "Activada"
                 }                
 
                 Boton.addEventListener("click", async (e) =>{
+                    if (Dato.textContent.trim() === "False"){
+                        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Activando...'
+                    } else if (Dato.textContent.trim() === "True"){
+                        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Desactivando...'
+                    }
                     e.preventDefault()
                     Boton.disabled = true;
                     const response = await fetch(`${API_BASE}/account/mfa`, {method: "PUT", headers:{"Authorization": `Bearer ${Token_JWT}`}});
@@ -1956,6 +2049,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     else if(response.status === 400){
                         window.scrollTo(0, 0);
                         Boton.textContent = result.Error;
+                        Boton.innerHTML = Ant
                     }      
                     else if(response.status === 403){
                         cargarPagina("/dashboard/unauthorized");
@@ -2466,7 +2560,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     Boton4.disabled = true;
                     BotonE4.disabled = true;
-                    Boton4.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Guardando...';
+                    Boton4.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>Subiendo...';
 
                     const formData = new FormData();
                     formData.append("imagen_usuario", Imagen);
@@ -2638,6 +2732,62 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
             }
+            if (document.getElementById("Form_Ayuda_For")){
+                const Botones = document.querySelectorAll(".Boton_Ayuda_Eliminar");
+                Botones.forEach(Boton => {
+                    Boton.addEventListener("click", async function (e) {
+                        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#dd9898" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>'
+                        const btn_id = Boton.dataset.id
+                        const response = await fetch(`${API_BASE}/forms/ayuda/delete/${btn_id}`, {method: "DELETE"});
+                        if(response.status === 200){
+                            sessionStorage.setItem('form_eliminado', btn_id);                        
+                            location.reload();
+                        }
+                    })
+                });
+            }
+            if (document.getElementById("Form_Calificanos_For")){
+                const Botones = document.querySelectorAll(".Boton_Calificanos_Eliminar");
+                Botones.forEach(Boton => {
+                    Boton.addEventListener("click", async function (e) {
+                        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#dd9898" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>'
+                        const btn_id = Boton.dataset.id
+                        const response = await fetch(`${API_BASE}/forms/calificanos/delete/${btn_id}`, {method: "DELETE"});
+                        if(response.status === 200){
+                            sessionStorage.setItem('form_eliminado', btn_id);                        
+                            location.reload();
+                        }
+                    })
+                });
+            } 
+            if (document.getElementById("Form_Contactanos_For")){
+                const Botones = document.querySelectorAll(".Boton_Contactanos_Eliminar");
+                Botones.forEach(Boton => {
+                    Boton.addEventListener("click", async function (e) {
+                        Boton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="none" stroke="#dd9898" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 3c4.97 0 9 4.03 9 9"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>'
+                        const btn_id = Boton.dataset.id
+                        const response = await fetch(`${API_BASE}/forms/contactanos/delete/${btn_id}`, {method: "DELETE"});
+                        if(response.status === 200){
+                            sessionStorage.setItem('form_eliminado', btn_id);                        
+                            location.reload();
+                        }
+                    })
+                });
+            } 
+            if (document.getElementById("Nav_Forms_Admin")){
+                const Nav = document.getElementById("Nav_Forms_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
+                    Nav.classList.remove("d-none");
+                    Nav.classList.add("d-flex");                
+                }                        
+            }
+            if (document.getElementById("Card_Forms_Admin")){
+                const Card = document.getElementById("Card_Forms_Admin");
+                if (User.Permisos.some(Perm => Perm.Nombre === "caso_ver")){
+                    Card.classList.remove("d-none");
+                    Card.classList.add("d-flex");                    
+                }               
+            }                                   
         });
     }
     document.querySelectorAll(".panel-link").forEach(link => {

@@ -1,3 +1,7 @@
+INSERT INTO Pais (Nombre)
+VALUES
+    ('Colombia');
+
 INSERT INTO Estado_Entidad (Nombre)
 VALUES
     ('Activa'),
@@ -56,7 +60,7 @@ VALUES
     ('Bloqueado'),
     ('Eliminado');
 
-INSERT INTO Permiso(Nombre)
+INSERT INTO Permiso(Permiso)
 VALUES
     ('caso_crear'),
     ('caso_ver'),
@@ -79,7 +83,10 @@ VALUES
     ('dispositivo_ver'),
     ('dispositivo_eliminar'),
     ('estadisticas_ver'),
-    ('cuenta_ver');
+    ('cuenta_ver'),
+    ('cuenta_modificar_propio'),
+    ('cuenta_modificar'),
+    ('exportar_excel');
 
 INSERT INTO Rol (Nombre) 
 VALUES
@@ -170,7 +177,19 @@ VALUES
     (3,22),
     (4,22),
     (5,22),
-    (6,22);
+    (6,22),
+    (1,23),
+    (2,23),
+    (3,23),
+    (4,23),
+    (5,23),
+    (6,23),
+    (1,24),
+    (2,24),
+    (1,25),
+    (2,25),
+    (3,25),
+    (5,25);
 
 INSERT INTO Tipo_Documento (Nombre, Abreviatura) 
 VALUES 
