@@ -163,7 +163,7 @@ class Case_Service():
                     "Radicado": Caso_json["radicados"][0]["Radicado"], 
                     },
                 "Correo": Caso_json["usuario_creador"]["Correo"],
-                "Asunto": f"Caso {Caso_json["radicados"][0]["Radicado"]} creado"
+                "Asunto": f"Caso {Caso_json['radicados'][0]['Radicado']} creado"
             }
         )
         return Caso
@@ -370,7 +370,7 @@ class Case_Service():
                         "Radicado": Caso_json["radicados"][0]["Radicado"], 
                         "Estado": Estado_Correo.Nombre},
                     "Correo": Caso_json["usuario_creador"]["Correo"],
-                    "Asunto": f"Caso {Caso_json["radicados"][0]["Radicado"]} resuelto"
+                    "Asunto": f"Caso {Caso_json['radicados'][0]['Radicado']} resuelto"
                 }
             )    
         elif nuevo_estado != 3:
