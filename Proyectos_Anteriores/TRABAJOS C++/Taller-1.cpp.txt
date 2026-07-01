@@ -1,0 +1,191 @@
+#include<iostream>
+#include<conio.h>
+#include<windows.h>
+
+using namespace std;
+
+int main()
+{
+    const int Maximo = 100;
+
+    int Codigo[Maximo];
+    string Producto[Maximo];
+    float Precio[Maximo];
+    int Cantidad[Maximo];
+
+    int Total = 0;
+    int Opcion;
+    int Auto_Codigo = 1;
+    int Buscador;
+    int Posicion = -1;
+    int Opcion_Mod;
+    int Tipo;
+    bool Encontrado = false;
+    string Nombre;
+    char Respuesta;
+
+    do{
+        system("cls");
+        cout<<"====================="<<endl;
+        cout<<"CONTROL DE INVENTARIO"<<endl;
+        cout<<"====================="<<endl;
+        cout<<"1. Registrar producto"<<endl;
+        cout<<"2. Reporte general"<<endl;
+        cout<<"3. Buscar un producto"<<endl;
+        cout<<"4. Modificar un producto"<<endl;
+        cout<<"5. Salir"<<endl;
+        cout<<"====================="<<endl;
+        cout<<"Seleccione una opcion: "<<endl; 
+        cin>>Opcion;
+        
+        switch(Opcion)
+        {
+            case 1:{
+                do{
+                    system("cls");
+                    cout<<"REGISTRAR PRODUCTO\n";
+                    if(Total>=Maximo){
+                        cout<<"Limite maximo alcanzado\n";
+                        system("pause");
+                        break;
+                    }
+                    Codigo[Total] = Auto_Codigo++;
+                    cout<<"Codigo: "<<Codigo[Total]<<endl;
+                    cout<<"Nombre: ";
+                    cin>>Producto[Total];
+                    do{
+                        cout<<"Precio: ";
+                        cin>>Precio[Total];
+                        if(Precio[Total] < 0)
+                            cout<<"Precio incorrecto, no puede ser negativo\n";
+                    }
+                    while(Precio[Total] < 0);
+                    do{
+                        cout<<"Cantidad: ";
+                        cin>>Cantidad[Total];
+                        if(Cantidad[Total] < 0)
+                            cout<<"Cantidad incorrecta, no puede ser negativa\n";
+                    }
+                    while(Cantidad[Total] < 0);
+                    Total++;
+                    cout<<"Producto registrado correctamente\n";
+                    cout<<"Desea registrar otro producto? (s/n): ";
+                    cin>>Respuesta;
+
+                }
+                while(Respuesta=='s' || Respuesta=='S');
+                break;
+            }
+            case 2:{
+                system("cls");
+                cout<<"===============\n";
+                cout<<"REPORTE GENERAL\n";
+                cout<<"===============\n";
+                cout<<"CODIGO\tNOMBRE\tPRECIO\tCANTIDAD\tCOSTO\n";
+                for(int i = 0; i < Total; i++){
+                    cout<<Codigo[i]<<"\t"
+                        <<Producto[i]<<"\t"
+                        <<Precio[i]<<"\t"
+                        <<Cantidad[i]<<"\t"
+                        <<Precio[i]*Cantidad[i]<<endl;
+                }
+                system("pause");
+                break;
+            }
+            case 3:{
+                system("cls");
+                Encontrado = false;
+                Posicion = -1;
+                cout<<"Buscar por: 1.Codigo  2.Nombre: ";
+                cin>>Tipo;
+                if(Tipo == 1){
+                    cout<<"Codigo a buscar: ";
+                    cin>>Buscador;
+
+                    for(int i = 0; i < Total; i++){
+                        if(Buscador == Codigo[i]){
+                            cout<<"Encontrado: "<<Producto[i]<<" Precio:"<<Precio[i]<<" Cant:"<<Cantidad[i]<<endl;
+                            Encontrado = true;
+                            break;
+                        }
+                    }
+                }else{
+                    cout<<"Nombre a buscar: ";
+                    cin>>Nombre;
+
+                    for(int i = 0; i < Total; i++){
+                        if(Nombre == Producto[i]){
+                            cout<<"Encontrado: Codigo:"<<Codigo[i]<<" Precio:"<<Precio[i]<<" Cant:"<<Cantidad[i]<<endl;
+                            Encontrado = true;
+                            break;
+                        }
+                    }
+                }
+                if(!Encontrado)
+                    cout<<"Producto no encontrado\n";
+                system("pause");
+                break;
+            }
+            case 4:{
+                system("cls");
+                cout<<"Codigo del producto que desea modificar: ";
+                cin>>Buscador;
+
+                for(int i = 0; i < Total; i++){
+                    if(Buscador == Codigo[i]){
+                        Posicion = i;
+                        break;
+                    }
+                }
+
+                if(Posicion ==- 1){
+                    cout<<"Producto no encontrado\n";
+                }else{
+                    cout<<"Que desea modificar?\n";
+                    cout<<"1. Nombre\n2. Precio\n3. Cantidad\n";
+                    cin>>Opcion_Mod;
+
+                    switch(Opcion_Mod){
+                        case 1:
+                            cout<<"Nuevo nombre: ";
+                            cin>>Producto[Posicion];
+                            cout<<"Nombre modificado a: "<<Producto[Posicion]<<endl;
+                            break;
+                        case 2:
+                            do{
+                                cout<<"Nuevo precio: ";
+                                cin>>Precio[Posicion];
+                                if(Precio[Posicion] < 0)
+                                    cout<<"Precio incorrecto\n";
+                            }
+                            while(Precio[Posicion]<0);
+                                cout<<"Precio modificado a: "<<Precio[Posicion]<<endl;
+                            break;
+                        case 3:
+                            do{
+                                cout<<"Nueva cantidad: ";
+                                cin>>Cantidad[Posicion];
+                                if(Cantidad[Posicion] < 0)
+                                    cout<<"Cantidad incorrecta\n";
+                            }
+                            while(Cantidad[Posicion] < 0);
+                                cout<<"Cantidad modificada a: "<<Cantidad[Posicion]<<endl;
+                            break;
+                        default:
+                            cout<<"Opcion invalida\n";
+                    }
+                }
+                system("pause");
+                break;
+            }
+            case 5:{
+                cout<<"Saliendo del programa...\n";
+                break;
+            }
+            default:
+                cout<<"Opcion incorrecta\n";
+                system("pause");            
+        }
+    }while(Opcion!=5);
+    return 0;
+}

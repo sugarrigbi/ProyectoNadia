@@ -21,6 +21,8 @@ def Api_Auth_Login():
 @Rate_Limit.limit(DEFAULT_LIMIT, methods=["POST"])
 def Api_Auth_Login_Mfa():
     Data = request.get_json()
+    Ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+    Data["Client_IP"] = Ip    
 
     Respuesta = requests.post(f"{MICROSERVICE_URL}/login/mfa", json=Data, timeout=10)
     return jsonify(Respuesta.json()), Respuesta.status_code

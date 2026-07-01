@@ -1,4 +1,4 @@
-const API_BASE = 'https://p8kjdpww-5000.use2.devtunnels.ms';
+const API_BASE = 'https://bnstlf45-5000.use2.devtunnels.ms';
 
 if (document.getElementById("Formulario_Ayuda")){
     document.getElementById("Formulario_Ayuda").addEventListener("submit", async function(e){
