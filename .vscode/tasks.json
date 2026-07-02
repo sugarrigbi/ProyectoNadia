@@ -1,0 +1,102 @@
+{
+    "version":"2.0.0",
+    "tasks":[
+        {
+            "label": "Account_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Account_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Authenticator_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Authenticator_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Case_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Case_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },                
+        {
+            "label": "Entity_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Entity_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Forms_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Forms_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Notification_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\Notification_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "User_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\Microservices\\User_Service\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },  
+        {
+            "label": "API_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Back\\API\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Front_Service",
+            "type": "shell",
+            "command": "python -u 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Front\\Run.py'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },  
+        {
+            "label": "Redis_Service",
+            "type": "shell",
+            "command": "& 'C:\\Users\\Kevin Anzola\\Desktop\\Ingenieria_Sistemas\\Proyecto_GaiaLink2\\Stack\\Redis\\redis-server.exe'",
+            "presentation": {
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Run All",
+            "dependsOn":[
+                "Redis_Service",
+                "Front_Service",
+                "API_Service",
+                "User_Service",
+                "Notification_Service",
+                "Forms_Service",
+                "Entity_Service",
+                "Case_Service",
+                "Authenticator_Service",
+                "Account_Service"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": []
+        }    
+    ]
+}

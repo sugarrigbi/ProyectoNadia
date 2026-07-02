@@ -1,4 +1,4 @@
-const API_BASE = 'https://bnstlf45-5000.use2.devtunnels.ms';
+const API_BASE = 'https://74qrnf52-5000.use.devtunnels.ms';
 const BUCKET = 'https://gaialink.s3.us-east-1.amazonaws.com/';
 
 function CambiarTema() {
