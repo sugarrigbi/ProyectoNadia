@@ -1,0 +1,17 @@
+Plataforma inteligente de gestión e investigación de casos de restitución de bienes/mesa de ayuda
+	USUARIOS:
+		RUD Personas admin(Kevin)
+		Read
+		auditorias y validaciones, admin puede leer modificar y eliminar usuarios(Kevin)		
+	BASE DE DATOS:
+		4 Roles en MySQL de la DB con permisos(AWS)
+		contraseñas seguras en la DB(AWS)
+		respaldo y recuperaciones(politica de backup, automatica etc)(AWS)
+
+
+
+
+
+
+
+	

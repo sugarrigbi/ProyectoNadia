@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Utilidad.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>    
+</head>
+<body>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>    
+    <div class="Desktop">
+        <nav class="Hotbar">
+            <img class="Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+            <h1 class="Texto_Logo">Gaialink</h1>
+            <div class="Selector">
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector" data-lang="Inicio">Inicio</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place1" data-lang="Pagina">Página principal</a>
+                        <a href="/#Index_Place2" data-lang="Que_Es">¿Que es?</a>
+                    </div> 
+                </div>
+                <div class="Frame_Flecha">            
+                    <h3 class="Texto_Selector" data-lang="Nosotros">Nosotros</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="mision#Mision_Place1" data-lang="Mision">Mision</a> 
+                        <a href="mision#Mision_Place2" data-lang="Vision">Vision</a>
+                        <a href="/#Index_Place5" data-lang="Lideres">Lideres</a>
+                    </div>                    
+                </div>
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector" data-lang="Contacto">Contacto</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="/#Index_Place6" data-lang="Ayuda">Ayuda</a>
+                        <a href="/#Index_Place7" data-lang="Contactanos">Contactanos</a>
+                    </div>                    
+                </div>      
+                <div class="Frame_Flecha">
+                    <h3 class="Texto_Selector" data-lang="Servicios">Servicios</h3>
+                    <img class="Flecha_Hotbar" src="{{ url_for('static', filename='img/FlechaAbajo.svg') }}" alt="Flecha">
+                    <div class="Menu_Desplegable">
+                        <a href="soporte#Soporte_Place1"data-lang="Creacion">Creacion de tickets</a>
+                        <a href="soporte#Soporte_Place2"data-lang="Soporte">Soporte</a>
+                    </div>                    
+                </div>
+            </div>
+            <div class="Botones_Hotbar">
+                <div class="Frame_Flecha2">
+                    <h3 class="Texto_Selector2"><span data-lang="BotonIdioma">Español</span> <img id="logoIdioma" class="Imagen_Idioma" src="{{ url_for('static', filename='img/Español.svg') }}"></h3>
+                    <div class="Menu_Desplegable2">
+                        <button onclick="CambiarIdioma('es')">Español<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Español.svg') }}"></button>
+                        <button onclick="CambiarIdioma('en')">English<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Ingles.svg') }}"></button>
+                        <button onclick="CambiarIdioma('fr')">Français<img class="Imagen_Idioma" src="{{ url_for('static', filename='img/Frances.svg') }}"></button>
+                    </div> 
+                </div>         
+                <button class="Boton_Idioma" onclick="Enviar_Registro()" data-lang="Registrate">Registrate</button>
+                <button class="Boton_Ingresar" onclick="Enviar_Login()" data-lang="Ingresar">Ingresar</button>
+            </div>
+        </nav>
+        <div class="Redes">
+                <img class="Rectangulo_Redes" src="{{ url_for('static', filename='img/Redes.svg') }}" alt="Contenedor de Redes">
+                <div class="Redes_Contenedor">
+                    <a href="https://www.instagram.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Instagram1.svg') }}" alt="Instagram1"></a>
+                    <a href="https://www.facebook.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Facebook1.svg') }}" alt="Facebook1"></a>
+                    <a href="https://www.x.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Twitter1.svg') }}" alt="Twitter1"></a>
+                    <a href="https://www.youtube.com" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Youtube1.svg') }}" alt="Youtube1"></a>
+                    <a href="https://wa.me/573125261601" target="_blank"><img class="Imagen_Redes" src="{{ url_for('static', filename='img/Whatsapp1.svg') }}" alt="Whatsapp1"></a>
+                </div>
+        </div>            
+        <div class="Frame" id="Login_Place1">
+            <div class="Botones" data-aos="fade-right">
+                <button class="Boton_Superior" onclick="Enviar_Ayuda()">
+                    <img class="Boton_Superior_Imagen1" src="{{ url_for('static', filename='img/Ayuda.svg') }}" alt="Ayuda">
+                    Ayuda
+                </button>
+                <button class="Boton_Superior" onclick="Enviar_Home()">
+                    <img class="Boton_Superior_Imagen2" src="{{ url_for('static', filename='img/Volver.svg') }}" alt="Volver">
+                    Volver
+                </button>
+            </div>
+            <div class="Formulario" data-aos="fade-up">
+            <img class="Imagen_User" src="{{ url_for('static', filename='img/Usuario1.svg') }}" alt="Usuario">
+                <div class="Formulario_Contenedor">
+                    <h3 class="Formulario_Contenedor_Texto">Iniciar Sesión</h3>
+                </div>
+            {% if usuario_invalido %}
+                <div class="confirmacion_error" data-aos="fade-up">
+                    <ul>
+                        <li>El usuario ingresado no existe.</li>
+                    </ul>
+                </div>
+            {% endif %}
+            {% if intento_invalido %}
+                <div class="confirmacion_error" data-aos="fade-up">
+                    <ul>
+                        <li>El usuario no tiene estado de bloqueo.</li>
+                    </ul>
+                </div>
+            {% endif %}
+            {% if contraseña_invalida %}
+            <div class="confirmacion_error" data-aos="fade-up">
+                <ul>
+                    <li>La contraseña ingresada es incorrecta.</li>
+                    {% if intentos_restantes %}
+                        <li>Te quedan {{ intentos_restantes }} intento{{ 's' if intentos_restantes != 1 else '' }} antes de que tu cuenta se bloquee.</li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if permanente %}
+            <div class="confirmacion_error" data-aos="fade-up">
+                <ul>
+                    <li>
+                        Tu cuenta está bloqueada Permanentemente.
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if estado_bloqueado %}
+                        <div class="confirmacion_error" data-aos="fade-up">
+                    <ul>
+                        <li>
+                            Tu cuenta está bloqueada temporalmente.<br>
+                            Podrás volver a intentar en:
+                            <span id="tiempo-restante"></span>
+                        </li>
+                    </ul>
+                </div>
+                <script>
+                let desbloqueo = parseInt("{{ desbloqueo_timestamp }}") * 1000;
+                let span = document.getElementById("tiempo-restante");
+
+                function actualizarTemporizador() {
+                    let ahora = Date.now();
+                    let segundosTotales = Math.floor((desbloqueo - ahora) / 1000);
+
+                    if (segundosTotales <= 0) {
+                        span.textContent = "0:00";
+                        clearInterval(timer);
+                        return;
+                    }
+
+                    let horas = Math.floor(segundosTotales / 3600);
+                    let minutos = Math.floor((segundosTotales % 3600) / 60);
+                    let segundos = segundosTotales % 60;
+
+                    let texto = "";
+
+                    if (horas > 0) {
+                        texto = horas + ":" +
+                                (minutos < 10 ? "0" + minutos : minutos) + ":" +
+                                (segundos < 10 ? "0" + segundos : segundos);
+
+                    } else if (minutos > 0) {
+                        texto = minutos + ":" +
+                                (segundos < 10 ? "0" + segundos : segundos);
+
+                    } else {
+                        texto = segundos + "s";
+                    }
+                    span.textContent = texto;
+                }
+
+                actualizarTemporizador();
+                let timer = setInterval(actualizarTemporizador, 1000);
+                </script>
+            {% endif %}
+                <form class="Formulario1" method="POST">
+                    <div class="abc">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Usuario">Nombre de usuario</label></div>
+                        </div>
+                        <div class="Formulario1_Input">
+                            <input value="{{ datos2.usuario if datos2 else '' }}" id="Input_Usuario"class="Formulario1_Input_Input" type="text" required name="usuario">
+                        </div>
+                    </div>
+                    <div class="abc">
+                        <div class="FormularioRegistrarse_Input4">
+                            <div class="FormularioRegistrarse_Input2"><label for="Input_Contraseña">Contraseña</label></div>
+                        </div>                    
+                        <div class="Formulario1_Input">
+                            <input value="{{ datos2.contraseña if datos2 else '' }}" id="Input_Contraseña"class="Formulario1_Input_Input" type="password" required name="contraseña">
+                            <button type="button" id="verPassword" class="Boton_VerPassword"><img id="iconoOjo" class="Imagen_Ver" src="{{ url_for('static', filename='img/NoVer.svg') }}"></button>
+                            <h3 class="Formulario1_Texto1"><a class="Links" href="recuperar">¿Olvidaste tu contraseña?</a></h3>
+                        </div>
+                    </div>                   
+                    <input class="Formulario1_Boton" type="submit" placeholder="Enviar">
+                </form>
+                <div class="Formulario2"> 
+                    <a class="Links" href="ayuda">¿No puedes ingresar?</a>
+                    <h3 class="Formulario1_Texto">
+                        <span>¿No tienes una cuenta?</span>
+                        <a class="Links" onclick="Enviar_Registro()">Regístrate</a> 
+                    </h3>
+                </div>         
+            </div>
+            <div class="Fotter" data-aos="fade-up">
+            <h3 class="Fotter_Texto">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+            </div>
+        </div>
+        <div class="Frame8" data-aos="fade-up">
+            <div class="Frame8_Contenedor">
+                <div class="Lista1_Contenedor">
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo" data-lang="Inicio">Inicio</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place1" data-lang="Pagina">Pagina Principal</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place2" data-lang="Que_Es">¿Que es?</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo"data-lang="Nosotros">Nosotros</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place1" data-lang="Mision">Mision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="mision#Mision_Place2" data-lang="Vision">Vision</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place5" data-lang="Lideres">Lideres</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo" data-lang="Contacto">Contacto</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="ayuda" data-lang="Ayuda">Ayuda</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="/#Index_Place7" data-lang="Contactanos">Contactanos</a></li>
+                </ul>
+                <ul class="Lista1">
+                    <li class="Lista1_Titulo" data-lang="Servicios">Servicios</li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place1" data-lang="Creacion">Creacion de tickets</a></li>
+                    <li class="Lista1_Item"><a class="Lista1_Link" href="soporte#Soporte_Place2" data-lang="Soporte">Soporte</a></li>
+                </ul>
+                </div>
+                <div class="Lista2_Contenedor">
+                <ul class="Lista2">
+                    <li class="Lista2_Titulo" data-lang="Contactanos">Contactanos</li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Telefono.svg') }}" alt="Telefono"><span>314 4048151</span></li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Reloj.svg') }}" alt="Reloj"><span data-lang="Fecha">Lun a Vie 8:00 am – 6:00 pm</span></li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Correo.svg') }}" alt="Correo"><span>administrador@gaialink.com</span></li>
+                    <li class="Lista2_Item"><img class="Lista2_Imagen" src="{{ url_for('static', filename='img/Red.svg') }}" alt="Red"><a class="gaialink" href="https://www.gaialink.online">www.gaialink.online</a></li>
+                </ul>
+                </div>
+            </div>
+            <div class="Frame8_Contenedor2">
+                <div class="Logo2_Contenedor">
+                    <div class="Logo2_Contenedor4">
+                        <img class="Logo2_Contenedor_Logo" src="{{ url_for('static', filename='img/Logo.svg') }}" alt="Logo Gaialink">
+                        <h2 class="Logo2_Contenedor_Texto">Gaialink</h2>
+                    </div>
+                    <div class="Logo2_Contenedor_Redes">
+                        <a href="https://www.instagram.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Instagram2.svg') }}" alt="Instagram1"></a>
+                        <a href="https://www.facebook.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Facebook2.svg') }}" alt="Facebook1"></a>
+                        <a href="https://www.x.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Twitter2.svg') }}" alt="Twitter1"></a>
+                        <a href="https://www.youtube.com" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Youtube2.svg') }}" alt="Youtube1"></a>
+                        <a href="https://wa.me/573125261601" target="_blank"><img class="Logo2_Contenedor_Imagen" src="{{ url_for('static', filename='img/Whatsapp2.svg') }}" alt="Whatsapp1"></a>
+                    </div>              
+                </div>
+                <div class="Logo2_Contenedor2">
+                    <div class="Logo2_Linea"></div>
+                    <h3 class="Logo2_Contenedor2_Texto" data-lang="Footer">© 2025–2025 GaiaLink: conecta, impulsa y transforma el futuro digital.</h3>
+                    <div class="Logo2_Contenedor3">
+                        <a href="terminos#Terminos_Place2" class="Logo2_Contenedor2_Texto2" data-lang="Privacidad">Politica de Privacidad</a>
+                        <a href="terminos#Terminos_Place1" class="Logo2_Contenedor2_Texto2" data-lang="Terminos">Terminos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='traduccion.utilidades.js') }}"></script>
+</body>
+</html>
+

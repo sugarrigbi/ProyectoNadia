@@ -1,0 +1,160 @@
+GAIALINK — INFRAESTRUCTURA AWS
+
+Flujo general:
+VPC → Subnets → Gateway → Route table → Security Groups → RDS → EC2 → S3 → ALB/API → Route 53
+
+VPC:
+    gaialink-vpc : 172.30.0.0/16 : us-east-1a
+
+Subnets:
+    Subnet-api : gaialink-public-app : 172.30.1.0/24 : us-east-1a
+    Subnet-app : gaialink-private-app : 172.30.2.0/24 : us-east-1a
+    Subnet-db-1a : gaialink-private-db-1a : 172.30.3.0/24 : us-east-1a
+    Subnet-db-1b : gaialink-private-db-1b : 172.30.4.0/24 : us-east-1b
+
+Gateway:
+    gaialink-igw : us-east-1a
+
+Route table:
+    gaialink-public-rt
+
+Security Groups:
+    gaialink-sg-public-app:
+        Inbound: SSH-MyIP, HTTPS-AnyWhere, HTTP-AnyWhere
+        Outbound: All-Traffic
+
+    gaialink-sg-private-app:
+        Inbound: TCP-MicroServices, TCP-Redis, SSH-sg-public-app
+        Outbound: All-Traffic
+
+    gaialink-sg-private-rds:
+        Inbound: MySQL-sg-private-app, MySQL-MyIP
+        Outbound: All-Traffic
+
+RDS:
+    Subnet group: gaialink-db-subnet-group
+    Instancia: mysqlgaialink
+    Usuario: [VER SECRETS MANAGER — no guardar aquí]
+    Password: [VER SECRETS MANAGER — no guardar aquí]
+    Base de datos: gaialink
+
+EC2:
+    Par de claves: gaialink-key
+    Instancias: ec2-public-app, ec2-private-app
+
+    Conexión pública:
+        ssh -i "gaialink-key.pem" ec2-user@[DNS_PUBLICO_EC2]
+
+    Conexión privada (vía jump desde la pública):
+        ssh -i "gaialink-key.pem" ec2-user@[IP_PRIVADA_EC2]
+
+    BitVise (jump proxy):
+        host: [IP_PUBLICA_EC2]
+        port: 22
+        user-name: ec2-user
+        inicial-method: public-key
+        key: AWS
+        Nota: para conectar a la privada, en "login" va la IP privada,
+        en "proxy settings" va la IP pública (que actúa de proxy)
+
+    Setup inicial del servidor:
+        sudo dnf update -y                    : actualiza todo
+        sudo dnf install -y docker             : instalar docker
+        sudo systemctl start docker            : activar docker
+        sudo systemctl enable docker           : que inicie con la EC2
+        sudo usermod -aG docker ec2-user       : usar docker sin sudo
+
+        sudo dnf install -y nginx              : instalar nginx
+        sudo systemctl start nginx             : activar nginx
+        sudo systemctl enable nginx            : que inicie con la EC2
+
+    Docker Compose:
+        (Docker Compose define y corre múltiples containers a la vez
+        con un solo archivo docker-compose.yml)
+
+        sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
+
+    Buildx (para crear imágenes):
+        mkdir -p ~/.docker/cli-plugins
+        curl -Lo ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/latest/download/docker-buildx-linux-amd64
+        chmod +x ~/.docker/cli-plugins/docker-buildx
+        docker buildx version
+
+    Comandos útiles de Docker:
+        docker-compose down                    : baja los contenedores
+        docker system prune -a -f              : elimina imágenes no usadas
+        docker rmi gaialink-api                : elimina una imagen específica
+        docker-compose up -d --build           : levanta reconstruyendo
+        docker-compose up -d                   : levanta (uso normal, FINAL)
+
+Nginx (proxy reverso):
+    Nginx recibe el tráfico en 80/443 y lo redirige a las apps Flask.
+    Necesario porque Flask no maneja bien SSL directamente, y porque con
+    múltiples apps hace falta decidir a cuál mandar cada petición.
+
+    Crear config:
+        sudo nano /etc/nginx/conf.d/gaialink.conf
+
+    Contenido del config:
+        server {
+            listen 80;
+            server_name gaialink.online;
+
+            location / {
+                proxy_pass http://localhost:5009;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+            }
+
+            location /api/ {
+                rewrite ^/api/(.*) /$1 break;
+                proxy_pass http://localhost:5000;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+            }
+        }
+
+        server {
+            listen 80;
+            server_name api.gaialink.online;
+
+            location / {
+                proxy_pass http://localhost:5000;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+            }
+        }
+
+    Validar config:
+        sudo nginx -t
+
+    Recargar nginx:
+        sudo systemctl reload nginx
+
+Route 53:
+    1. Crear una Hosted Zone en Route 53 con el dominio (AWS genera 4
+       nameservers propios).
+    2. Apuntar el proveedor de dominio (ej. GoDaddy) a AWS, cambiando los
+       nameservers por los 4 de AWS. Esto le dice al mundo que quien
+       resuelve el dominio ahora es AWS.
+    3. Crear registros A en Route 53 apuntando gaialink.online y
+       api.gaialink.online a la IP pública del EC2.
+    4. Nginx en el EC2 recibe el tráfico y, según el dominio solicitado,
+       decide a qué app Flask enrutarlo.
+    5. Esperar la propagación DNS.
+
+HTTPS (Certbot):
+    sudo dnf install -y certbot python3-certbot-nginx
+    sudo certbot --nginx -d gaialink.online -d api.gaialink.online
+    (pide un correo de contacto, confirmar, y queda activo en ambos dominios)
+
+NAT Gateway:
+    gaialink-gateway-nat
+
+    La subnet privada no tenía salida a internet, lo que impedía el envío
+    de correos. Se agregó un NAT Gateway para permitir tráfico de SALIDA
+    (sin exponer tráfico de entrada), liberando el puerto 443 y el de SMTP
+    — si se limitaba solo al rango 5002-5008, el correo no salía porque
+    usa el puerto 443.

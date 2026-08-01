@@ -1,0 +1,166 @@
+{% extends "/homepage/base.html" %}
+{% block contenido %}
+    <!--Ayuda-->
+    <section id="Ayuda_Form" class="Fondo1">
+        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-2 pb-5">
+            <div class="row w-100 mt-3">
+                <div class="col-2 d-flex align-items-stretch justify-content-start">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="{{ url_for('Formulario') }}#Ayuda_Form">
+                        <img src="{{ url_for('static', filename='img/Ayuda.svg') }}" class="w-25">
+                        <span data-lang="login.Ayuda">
+                            Ayuda
+                        </span>
+                    </a> 
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex align-items-stretch justify-content-end">
+                    <a class="Bg_Azul4 d-inline-flex boton2 w-auto text-white gap-3 px-3 py-2 fsr-12 text-decoration-none fw-bold align-items-center justify-content-center" href="/">
+                        <img src="{{ url_for('static', filename='img/Volver.svg') }}" class="w-25">
+                        <span data-lang="login.Volver">
+                            Volver
+                        </span>
+                    </a>                    
+                </div>
+            </div>            
+            <div class="row w-100 d-flex align-items-center justify-content-center">
+                <form  id="Formulario_Ayuda" class="col-12 col-lg-6 col-xxl-5 Bg_Blanco Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-2 p-4">
+                    <img src="{{ url_for('static', filename='img/Ayuda2.svg') }}" class="w-19">
+                    <div class="Bg_Oscuro text-white p-3 py-2 d-flex align-items-center justify-content-center rounded-3">
+                        <h2 data-lang="formularios.Ayuda" class="fsr-10 m-0">
+                            Ayuda
+                        </h2>
+                    </div>
+                    <div id="Formulario_Ayuda_Mensaje" class="text-center p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                        Mensaje Generico
+                    </div>                    
+                    <div class="col-12 col-md-10">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="formularios.Nombre">
+                                Nombre 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input required type="text" class="form-control p-1 rounded-2 border-3" placeholder="" name="Nombre">
+                    </div>  
+                    <div class="col-12 col-md-10">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="formularios.Correo">
+                                Correo 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input required type="email" class="form-control p-1 rounded-2 border-3" placeholder="" name="Correo">
+                    </div>
+                    <div class="col-12 col-md-10">
+                        <label class="form-label fsr-13 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            <span data-lang="formularios.Como_Ayudarte">
+                                Como podemos ayudarte 
+                            </span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea required minlength="15" class="form-control p-1 rounded-2 border-3 rows-5" placeholder="" style="height: 100px;" name="Soporte"></textarea>
+                    </div>
+                    <button id="Formulario_Ayuda_Boton" data-lang="formularios.Enviar" href="/" class="Bg_Azul4 d-inline-flex align-items-center justify-content-center gap-2 boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
+                        Enviar
+                    </button>                                          
+                </form>
+            </div>
+        </div>
+    </section>
+    <!--Calificacion-->
+    <section id="Calificacion_Form" class="Fondo2">
+        <div class="container-fluid justify-content-start align-items-center d-flex flex-column gap-3 gap-md-5 pb-5 py-5">
+            <div class="row w-100 d-flex align-items-center justify-content-center">
+                <form id="Formulario_Calificanos" class="col-12 col-lg-6 col-xxl-5 Bg_Oscuro Bg_Sombra d-flex align-items-center justify-content-center flex-column rounded-3 gap-3 p-4">
+                    <img src="{{ url_for('static', filename='img/Message.svg') }}" class="w-19">
+                    <div class="Bg_Blanco text-dark p-3 py-2 d-flex align-items-center justify-content-center rounded-3">
+                        <h2 data-lang="formularios.Calificanos" class="fsr-10 m-0">
+                            Calificanos
+                        </h2>
+                    </div>
+                    <div id="Formulario_Calificanos_Mensaje" class="text-center p-2 fsr-12 d-flex align-items-center justify-content-center rounded-3 d-none w-auto">
+                        Mensaje Generico
+                    </div>                    
+                    <div class="col-12 col-md-10">
+                        <label data-lang="formularios.Calificas_Experiencia" class="form-label fsr-14 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 w-auto">
+                            ¿Cómo calificas la experiencia?
+                        </label>
+                        <select class="form-select rounded-2 border-3 p-1" required name="Pregunta1">
+                            <option data-lang="formularios.Selecciona_opcion" value="" selected disabled>
+                                Selecciona una opción
+                            </option>
+                            <option data-lang="formularios.Muy_malo" value="1">
+                                Muy malo
+                            </option>
+                            <option data-lang="formularios.Malo" value="2">
+                                Malo
+                            </option>
+                            <option data-lang="formularios.Regular" value="3">
+                                Regular
+                            </option>
+                            <option data-lang="formularios.Bueno" value="4">
+                                Bueno
+                            </option>
+                            <option data-lang="formularios.Muy_bueno" value="5">
+                                Muy bueno
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-10">
+                        <label data-lang="formularios.Facil_Usar" class="form-label fsr-14 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 w-auto">
+                            ¿Qué tan fácil te resultó usar la plataforma?
+                        </label>
+                        <select class="form-select rounded-2 border-3 p-1"  required name="Pregunta2">
+                            <option data-lang="formularios.Selecciona_opcion" value="" selected disabled>
+                                Selecciona una opción
+                            </option>
+                            <option data-lang="formularios.Muy_facil" value="1">
+                                Muy facil
+                            </option>
+                            <option data-lang="formularios.Facil" value="2">
+                                Facil
+                            </option>
+                            <option data-lang="formularios.Regular" value="3">
+                                Regular
+                            </option>
+                            <option data-lang="formularios.Dificil" value="4">
+                                Dificil
+                            </option>
+                            <option data-lang="formularios.Muy_dificil" value="5">
+                                Muy dificil
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-10">
+                        <label data-lang="formularios.Recomendarias_Gaialink" class="form-label fsr-14 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 w-auto">
+                            ¿Recomendarías GaiaLink a otras personas?
+                        </label>
+                        <select  required name="Pregunta3" class="form-select rounded-2 border-3">
+                            <option data-lang="formularios.Selecciona_opcion" value="" selected disabled>
+                                Selecciona una opción
+                            </option>
+                            <option data-lang="formularios.No" value="1">
+                                No
+                            </option>
+                            <option data-lang="formularios.No_Se" value="2">
+                                No lo se
+                            </option>
+                            <option data-lang="formularios.Si" value="3">
+                                Si
+                            </option>
+                        </select>
+                    </div>  
+                    <div class="col-12 col-md-10">
+                        <label data-lang="formularios.Mejorarias_Gaialink" class="form-label fsr-14 text-white px-3 py-1 rounded-3 Bg_Azul5 border-start border-5 border_azul2 align-items-center w-auto">
+                            ¿Qué mejorarías o agregarías a GaiaLink?
+                        </label>
+                        <textarea minlength="15" required name="Pregunta4" class="form-control rounded-2 border-3 rows-5" placeholder="" style="height: 100px;"></textarea>
+                    </div>                                      
+                    <button id="Formulario_Calificanos_Boton" data-lang="formularios.Enviar" href="/" class="Bg_Azul4 d-inline-flex align-items-center justify-content-center gap-2 boton2 w-auto text-white px-3 py-2 fsr-11 fs-md-4 text-decoration-none fw-bold border-0">
+                        Enviar
+                    </button>                   
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

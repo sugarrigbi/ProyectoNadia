@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/index.css') }}">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/Logo.svg') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>      
+    <script src="{{ url_for('static', filename='Scripts/dashboard/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>    
+    <title>Gaialink</title>
+</head>
+<body>
+    <div class="d-flex flex-row Bg_Blanco2">
+        <nav class="Bg_Morado text-white dvh-100 d-inline-flex gap-2 align-items-center flex-column py-3">
+            <div class="d-flex flex-row align-items-center justify-content-center gap-2 mx-3 mb-0 mx-md-5 mb-md-4">
+                <img class="icono-nav m-0" src="{{ url_for('static', filename='img/Logo.svg') }}"> 
+                <h2 class="fsr-9 m-0 d-none d-md-flex">
+                    Gaialink
+                </h2>
+            </div>
+            <div class="d-flex flex-column justify-content-between align-items-start w-100 h-100">
+                <ul class="nav flex-column w-100 d-flex justify-content-start gap-0 w-100">
+                    <li class="nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/inicio" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Home.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Inicio
+                            </h2>
+                        </a>
+                    </li>
+                    <li id="Nav_Casos_User" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/user/casos?page=1" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Casos.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Casos
+                            </h2>
+                        </a>
+                    </li>
+                    <li id="Nav_Casos_Admin" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/staff/casos?page=1" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Gear_Admin.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Casos
+                            </h2>
+                        </a>
+                    </li>
+                    <li id="Nav_Entidades_Admin" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/staff/entidades" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Entidades.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Entidades
+                            </h2>
+                        </a>                
+                    </li>
+                    <li class="nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/usuarios" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Usuario.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Usuarios
+                            </h2>
+                        </a>                     
+                    </li>
+                    <li id="Nav_Health_Admin" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/staff/health" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Health2.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Health Check
+                            </h2>
+                        </a>                
+                    </li>                    
+                    <li id="Nav_Estadisticas" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/estadisticas" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Estadsitica_Blanco.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Estadisticas
+                            </h2>
+                        </a>                
+                    </li>
+                    <li id="Nav_Forms_Admin" class="d-none nav-item d-flex justify-content-center justify-content-md-start w-100 nav-hover">
+                        <a href="/dashboard/forms" class="nav-link text-white flex-row d-flex gap-4 px-2 py-3 px-md-4 panel-link w-100 h-100 justify-content-center justify-content-md-start align-items-center">
+                            <img class="icono-nav" src="{{ url_for('static', filename='img/Form_White.svg') }}">
+                            <h2 class="fsr-13 m-0 align-items-center fw-light d-none d-md-flex">
+                                Formularios
+                            </h2>
+                        </a>
+                    </li>                                        
+                </ul>
+            </div>
+        </nav>
+        <div id="contenido" class="flex-grow-1 d-flex align-items-center justify-content-center vh-88 Bg_Blanco2">
+            <div class="d-flex justify-content-center align-items-center position-absolute wh-loading ">
+                <div class="w-100 h-100 position-relative rotate-315 ">
+                    <div class="vi-hi one w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi two w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi three w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi four w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi five w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>
+                    <div class="vi-hi six w-100 h-100 position-absolute Bg_Morado2 color_morado"></div>                  
+                </div>
+            </div>    
+        </div>
+    </div>
+</body>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });  
+</script>
+<script>
+    const Casos = {{ Casos|default([])|tojson }};
+    const Data = {{ Data|default([])|tojson }};
+</script>
+</html>

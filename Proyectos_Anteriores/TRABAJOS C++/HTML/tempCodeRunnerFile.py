@@ -1,2 +1,0 @@
-
-    elif Respuesta == 3:

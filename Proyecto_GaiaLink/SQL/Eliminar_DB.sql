@@ -1,0 +1,38 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE ayuda;
+TRUNCATE TABLE barrio;
+TRUNCATE TABLE calificanos;
+TRUNCATE TABLE caso;
+TRUNCATE TABLE caso_auditoria;
+TRUNCATE TABLE caso_discusion;
+TRUNCATE TABLE casos_a_casos;
+TRUNCATE TABLE ciudad;
+TRUNCATE TABLE contactanos;
+TRUNCATE TABLE departamento;
+TRUNCATE TABLE dispositivos;
+TRUNCATE TABLE dispositivos_auditoria;
+TRUNCATE TABLE entidad;
+TRUNCATE TABLE entidad_auditoria;
+TRUNCATE TABLE estado_caso;
+TRUNCATE TABLE estado_dispositivo;
+TRUNCATE TABLE estado_entidad;
+TRUNCATE TABLE estado_usuario;
+TRUNCATE TABLE incidente;
+TRUNCATE TABLE localidad;
+TRUNCATE TABLE pais;
+TRUNCATE TABLE permiso;
+TRUNCATE TABLE persona;
+TRUNCATE TABLE persona_auditoria;
+TRUNCATE TABLE prioridad;
+TRUNCATE TABLE radicado_caso;
+TRUNCATE TABLE rol;
+TRUNCATE TABLE rol_a_permiso;
+TRUNCATE TABLE tipo_documento;
+TRUNCATE TABLE tipo_formulario;
+TRUNCATE TABLE tipo_relacion;
+TRUNCATE TABLE usuario;
+TRUNCATE TABLE usuario_auditoria;
+TRUNCATE TABLE correo_auditoria;
+
+SET FOREIGN_KEY_CHECKS = 1;
