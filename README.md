@@ -109,18 +109,6 @@ Sistema de gestión desarrollado con una arquitectura basada en microservicios: 
 
 ---
 
-# 📊 Estadísticas
-
-<div align="center">
-
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=KevinAnzola&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github" alt="Estadísticas de GitHub">
-
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=KevinAnzola&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" alt="Lenguajes más utilizados">
-
-</div>
-
----
-
 # 🎯 Enfoque profesional
 
 Este repositorio refleja experiencia práctica en:
