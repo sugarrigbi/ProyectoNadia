@@ -58,7 +58,7 @@ Sistema de gestión desarrollado con una arquitectura basada en microservicios, 
 | Proyecto                                              | Descripción                                                                                                | Tecnologías                          |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | 🌱 [**GaiaLink**](./Proyecto_GaiaLink)                | Sistema web basado en microservicios, APIs REST y servicios desplegados en AWS.                            | Flask · MySQL · Redis · Docker · AWS |
-| 🤖 [**Discord Webhook Manager**](./Discord)           | Aplicación de escritorio para administrar mensajes, embeds, archivos e hilos mediante webhooks de Discord. | Python · CustomTkinter · aiohttp     |
+| 🤖 [**Discord Webhook**](./Discord)           | Aplicación de escritorio para administrar mensajes, embeds, archivos e hilos mediante webhooks de Discord. | Python · CustomTkinter · aiohttp     |
 | ☁️ [**Infraestructura AWS**](./Proyecto_AWS)          | Configuración de instancias EC2 públicas y privadas, bases de datos RDS y despliegue de servicios.         | AWS · Linux · Docker · Nginx         |
 | 📱 [**GaiaLink Mobile**](./Proyecto_Movil/GaiaLink)   | Exploración móvil de GaiaLink desarrollada con React Native y Expo.                                        | React Native · Expo · JavaScript     |
 | 🐍 [**GaiaLink Desktop**](./Proyecto_Python)          | Primer prototipo de GaiaLink desarrollado como aplicación de escritorio.                                   | Python · Tkinter                     |
