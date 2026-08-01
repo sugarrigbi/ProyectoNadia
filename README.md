@@ -5,7 +5,7 @@ formación en Tecnología en Desarrollo de Software (Fundación Universitaria
 San Mateo). Incluye trabajo en distintos lenguajes y tecnologías a medida
 que fui avanzando en la carrera.
 
-> 🚀 **¿Buscas mi proyecto más completo?** Revisa **[GaiaLink](ENLACE_AL_REPO_GAIALINK)**,
+> 🚀 **¿Buscas mi proyecto más completo?** Revisa **[GaiaLink](https://github.com/KevinAnzola/Ingenieria_Sistemas/gaialink)**,
 > un sistema de gestión de casos basado en microservicios (Flask, MySQL, AWS, Redis) —
 > mi trabajo más representativo como desarrollador.
 
