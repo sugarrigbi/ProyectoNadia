@@ -1,7 +1,30 @@
-# Entorno virtual
+# Entornos virtuales
 venv/
 env/
+.venv/
 
-# Archivos temporales
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Caché de Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Archivos de compilación
+build/
+dist/
+*.egg-info/
+
+# Configuración de editores
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
