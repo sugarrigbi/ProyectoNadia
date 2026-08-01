@@ -14,15 +14,17 @@ que fui avanzando en la carrera.
 | Carpeta | Descripción |
 |---|---|
 | `C#/app` | Ejercicios de lógica de programación en C# — listas, diccionarios, colecciones. |
-| `Proyecto_AWS` | [UNA LÍNEA: qué hace este proyecto de AWS] |
-| `Proyecto_GaiaLink` | Versión académica temprana de GaiaLink (ver repo dedicado arriba para la versión actual). |
-| `Proyecto_Nube` | [UNA LÍNEA: qué hace este proyecto de cloud] |
-| `Proyectos_Anteriores` | [UNA LÍNEA: qué contiene — ejercicios previos, entregas de clase, etc.] |
-| `templates2` | [UNA LÍNEA: qué son estos templates] |
+| `Discord` | Panel de administración de webhooks de Discord con interfaz gráfica (Python, CustomTkinter, aiohttp) — envío y edición de embeds, mensajes, hilos y archivos. |
+| `Proyecto_AWS` | Configuración de infraestructura en AWS: EC2 (instancia pública y privada) y RDS. |
+| `Proyecto_GaiaLink` | Versión académica de GaiaLink — backend, frontend, esquema SQL y stack de despliegue (ver repo dedicado arriba para la versión actual). |
+| `Proyecto_Movil/GaiaLink` | Versión/exploración móvil de GaiaLink. |
+| `Proyecto_Python` | Versión temprana de GaiaLink construida en Tkinter — interfaz de escritorio básica, previa a la migración a Flask/web. |
+| `Proyecto_Laura` | Landing page de invitación interactiva, con animaciones (AOS) y countdown en JavaScript. |
+| `Proyectos_Anteriores` | Trabajo acumulado a lo largo de la carrera de Ingeniería de Sistemas — ejercicios, talleres y entregas de distintas asignaturas. |
 
 ## Tecnologías utilizadas
 
-Python · Flask · JavaScript · C# · MySQL · AWS · HTML5 · CSS3
+Python · Flask · JavaScript · C# · MySQL · AWS · Discord API · HTML5 · CSS3
 
 ## Nota
 
