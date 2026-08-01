@@ -138,8 +138,26 @@ Este repositorio refleja experiencia práctica en:
 ## ¿Quieres ver mi proyecto más completo?
 
 [![GaiaLink](https://img.shields.io/badge/Ver_proyecto-GaiaLink-2EA44F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/KevinAnzola/Ingenieria_Sistemas/tree/main/Proyecto_GaiaLink)
+</div>
 
-<br><br>
+---
+
+# 📫 Contacto
+
+<div align="center">
+
+[![Gmail](https://img.shields.io/badge/Email-kevinanzgarz26%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kevinanzgarz26@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-KevinAnzola-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/KevinAnzola)
+
+<br>
+
+Abierto a oportunidades como **desarrollador junior** — escríbeme si quieres conversar sobre algún proyecto de este repositorio.
+
+</div>
+
+---
+
+<div align="center">
 
 ### ⭐ Gracias por visitar mi repositorio
 
